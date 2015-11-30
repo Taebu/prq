@@ -10,6 +10,7 @@
 	<![endif]-->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<link type="text/css" rel="stylesheet" href="/include/css/bootstrap.css" />
+	<script type="text/javascript" src="/include/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id="main">
@@ -18,7 +19,12 @@
 			<p>만들면서 배우는 CodeIgniter</p>
 			<small>실행 예2제</small>
 		</blockquote><!-- Header End -->
-
+<div class="page-header">
+<div class="row">
+		<div class="col-md-3">
+		left menu
+		</div><!-- .col-md-2 -->
+		<div class="col-md-9">
 		<nav id="gnb"><!-- gnb Start -->
 			<ul>
 				<li><a rel="external" href="/todo/index.php/main/lists/">todo 애플리케이션 프로그램</a></li> </ul>
@@ -33,7 +39,7 @@
 						<th scope="col">번호</th>
 						<th scope="col">내용</th>
 						<th scope="col">시작일</th>
-						<th scope="col">종료일</th>
+						<th scope="col">a종료일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -58,7 +64,9 @@
 				<p></p>
 			</div>
 		</article>
-		
+		</div><!-- .col-md-9 -->
+</div><!-- .row -->
+</div><!--.page-header-->
 		<footer id="footer">
 			<bockquote>
 				<p><a href="http:/www.cikorea.net/" class="azubu" target="blank">CodeIgniter한국사용자 포럼</a></p>

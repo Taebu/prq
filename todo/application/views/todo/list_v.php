@@ -9,8 +9,9 @@
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<link type="text/css" rel="stylesheet" href="/include/css/bootstrap.css" />
+  <link rel="stylesheet" href="/include/css/bootstrap.min.css">
+    <script src="/include/js/jquery.min.js"></script>
+  <script src="/include/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id="main">
@@ -28,7 +29,18 @@
 			<header>
 				<h1>Todo 목록</h1>
 			</header>
-			<table cellspacing="0" cellpadding="0" class="table table-striped">
+
+
+<div class="container-fluid">
+<div class="row">
+  <div class="col-sm-4">.col-sm-4</div>
+  <div class="col-sm-8">.col-sm-8</div>
+</div>
+
+	<div class="row">
+		<div class="col-lg-3">left-3</div>
+		<div class="col-lg-9">right-9
+			<table cellspacing="0" cellpadding="0" class="table table-striped" width=>
 				<thead>
 					<tr>
 						<th scope="col">번호</th>
@@ -58,6 +70,9 @@
 			<div>
 				<p></p>
 			</div>
+			</div><!-- .r9 -->
+			</div><!-- .row -->
+</div><!-- .container -->
 		</article>
 		
 		<footer id="footer">
