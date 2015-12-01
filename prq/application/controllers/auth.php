@@ -28,7 +28,7 @@ class Auth extends CI_Controller {
 	public function _remap($method)
  	{
  		//헤더 include
-        $this->load->view('header_v');
+//        $this->load->view('header_v');
 
 		if( method_exists($this, $method) )
 		{
@@ -36,7 +36,7 @@ class Auth extends CI_Controller {
 		}
 
 		//푸터 include
-		$this->load->view('footer_v');
+//		$this->load->view('footer_v');
     }
 
 	/**
@@ -78,13 +78,13 @@ class Auth extends CI_Controller {
 
 				$this->session->set_userdata($newdata);
 
-  				alert('로그인 되었습니다.', '/bbs/board/lists/ci_board/page/1');
+  				alert('로그인 되었습니다.', '/prq/');
   				exit;
    			}
    			else
    			{
    				//실패시
-  				alert('아이디나 비밀번호를 확인해 주세요.', '/bbs/board/lists/ci_board/page/1');
+  				alert('아이디나 비밀번호를 확인해 주세요.', '/prq/');
   				exit;
    			}
 
@@ -103,7 +103,7 @@ class Auth extends CI_Controller {
 		$this->session->sess_destroy();
 
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-		alert('로그아웃 되었습니다.', '/bbs/board/lists/ci_board/page/1');
+		alert('로그아웃 되었습니다.', '/prq/');
   		exit;
 	}
 

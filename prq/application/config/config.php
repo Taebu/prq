@@ -26,8 +26,8 @@ $config['base_url']	= 'http://prq.cashq.co.kr/prq/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
-//$config['index_page'] = 'index.php';
+//$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 /*
 |--------------------------------------------------------------------------
 | URI PROTOCOL

@@ -20,7 +20,8 @@ class Prq extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->lists();
+		//$this->lists();
+		$this->bs_index();
 	}
 
 	/**
@@ -30,15 +31,19 @@ class Prq extends CI_Controller {
 	public function _remap($method)
  	{
  		//헤더 include
-        $this->load->view('header_v');
+		//$this->load->view('header_v');
 
+		$this->load->view('header_v5_v');
+		
+        
 		if( method_exists($this, $method) )
 		{
 			$this->{"{$method}"}();
 		}
 
 		//푸터 include
-		$this->load->view('footer_v');
+		//this->load->view('footer_v');
+		$this->load->view('footer_v5_v');
     }
 
 	/**
@@ -95,7 +100,41 @@ class Prq extends CI_Controller {
 		$data['list'] = $this->board_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
 		$this->load->view('board/list_v', $data);
 	}
+	/**
+	 * bs_index
+	 */
+	public function bs_index()
+	{
+		$data['name']='Taebu';
+		$data['message_list']=array();
+		$product=array();
+		$product['utime']="09:00 pm";
+		$product['content']="해줘.";
+		$product['status']="success";
+		array_push($data['message_list'],$product);
 
+		$product['utime']="10:16 am";
+		$product['content']="또 해줘.";
+		$product['status']="primary";
+		array_push($data['message_list'],$product);
+
+		$product['utime']="08:22 pm";
+		$product['content']="안 해줘?";
+		$product['status']="default";
+		array_push($data['message_list'],$product);
+
+		$product['utime']="11:06 pm";
+		$product['content']="젠장.";
+		$product['status']="warning";
+		array_push($data['message_list'],$product);
+
+		$product['utime']="12:00 am";	
+		$product['content']="ㅋㅋㅋ";
+		$product['status']="danger";
+		array_push($data['message_list'],$product);
+//		$this->load->view('board/index_v',$data);
+		$this->load->view('board/dashv5_v',$data);
+	}
 	/**
 	 * 게시물 보기
 	 */
