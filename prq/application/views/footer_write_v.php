@@ -64,6 +64,8 @@
     <!-- Select2 -->
     <script src="/prq/include/js/plugins/select2/select2.full.min.js"></script>
 
+    <!-- DROPZONE -->
+    <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
     <script>
         $(document).ready(function(){
 
@@ -243,8 +245,37 @@
                 allowClear: true
             });
 
+			/*Dropzone*/
+            Dropzone.options.myAwesomeDropzone = {
+
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 100,
+                maxFiles: 1,
+
+                // Dropzone settings
+                init: function() {
+                    var myDropzone = this;
+
+                    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                    });
+                    this.on("sendingmultiple", function() {
+                    });
+                    this.on("successmultiple", function(files, response) {
+                    });
+                    this.on("errormultiple", function(files, response) {
+                    });
+                }
+
+            }
+			/*End Dropzone*/
 
         });
+		/*End $(function(){});*/
+
         var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
@@ -289,7 +320,7 @@
             values: [
                 "January", "February", "March",
                 "April", "May", "June",
-                "July", "August", "September",
+                "July", "August", "Se1ptember",
                 "October", "November", "December"
             ],
             type: 'single',
