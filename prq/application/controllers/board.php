@@ -29,16 +29,31 @@ class Board extends CI_Controller {
 	 */
 	public function _remap($method)
  	{
- 		//헤더 include
-        $this->load->view('header_v');
 
-		if( method_exists($this, $method) )
+		if($method=="write"||$method=="modify")
 		{
-			$this->{"{$method}"}();
-		}
+			//헤더 include
+			$this->load->view('header_write_v');
+			if( method_exists($this, $method) )
+			{
+				$this->{"{$method}"}();
+			}
 
-		//푸터 include
-		$this->load->view('footer_v');
+			//푸터 include		
+			$this->load->view('footer_write_v');
+		}else{
+			//헤더 include
+			$this->load->view('header_v5_v');
+
+			if( method_exists($this, $method) )
+			{
+				$this->{"{$method}"}();
+			}
+
+			//푸터 include		
+			$this->load->view('footer_v5_v');
+		}
+		
     }
 
 	/**
@@ -65,14 +80,52 @@ class Board extends CI_Controller {
 		}
 
 		//페이지네이션 라이브러리 로딩 추가
+		/*
+			<ul class="pagination pagination-lg">
+			<li><a href="/prq/board/lists/ci_board/page/1"><i class="fa fa-chevron-left"></i> <i class="fa fa-chevron-left"></i></a></li>
+			<li><a href="/prq/board/lists/ci_board/page/1"><i class="fa fa-chevron-left"></i></a></li>
+			<li><a href="/prq/board/lists/ci_board/page/1">1</a></li>
+			<li><a href="/prq/board/lists/ci_board/page/5">2</a></li>
+			<li><a href="/prq/board/lists/ci_board/page/10">3</a></li>
+			<li class="disabled"><a href="#">4</a></li>
+			<li><a href="/prq/board/lists/ci_board/page/20">5</a></li>
+			<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>&nbsp;</ul>
+		*/
 		$this->load->library('pagination');
 
-		//페이지네이션 설정
-		$config['base_url'] = '/bbs/board/lists/ci_board'.$page_url.'/page/'; //페이징 주소
+		/*
+		$config['base_url'] = '/prq/board/lists/ci_board'.$page_url.'/page/'; //페이징 주소
 		$config['total_rows'] = $this->board_m->get_list($this->uri->segment(3), 'count', '', '', $search_word); //게시물의 전체 갯수
-		$config['per_page'] = 5; //한 페이지에 표시할 게시물 수
+		$config['per_page'] = 10; //한 페이지에 표시할 게시물 수
 		$config['uri_segment'] = $uri_segment; //페이지 번호가 위치한 세그먼트
+		*/
 
+		$config = array(
+		//페이지네이션 기본 설정
+		'base_url'=> '/prq/board/lists/ci_board'.$page_url.'/page/',
+		'total_rows' => $this->board_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'per_page' => 5,
+		'uri_segment' => $uri_segment,
+
+		//페이지네이션 커스텀 설정 
+		'first_tag_open'	=> '<li>',
+		'first_tag_close'	=> '</li>',
+		'first_link'	=> '<i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>',
+		'last_link'	=> '<i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>',
+		'last_tag_open'	=> '<li>',
+		'last_tag_close'	=> '</li>',		
+		'next_link'	=> '<i class="fa fa-chevron-right"></i>',
+		'next_tag_open'	=> '<li>',
+		'next_tag_close'	=> '</li>',
+		'prev_link'	=> '<i class="fa fa-chevron-left"></i>',
+		'prev_tag_open'	=> '<li>',
+		'prev_tag_close'	=> '</li>',
+//		'cur_tag_open'	=> '<li class="disabled"><a href="#">',
+		'cur_tag_open'	=> '<li class="active"><a href="#">',
+		'cur_tag_close'	=> '</a></li>',
+		'num_tag_open'	=> '<li>',
+		'num_tag_close'	=> '</li>',
+		);
 		//페이지네이션 초기화
 		$this->pagination->initialize($config);
 		//페이징 링크를 생성하여 view에서 사용할 변수에 할당
@@ -159,13 +212,13 @@ class Board extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/bbs/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/bbs/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -178,7 +231,7 @@ class Board extends CI_Controller {
 		}
 		else
 		{
-			alert('로그인후 작성하세요', '/bbs/auth/login/');
+			alert('로그인후 작성하세요', '/prq/auth/login/');
 			exit;
 		}
  	}
@@ -211,7 +264,7 @@ class Board extends CI_Controller {
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/bbs/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+				alert('본인이 작성한 글이 아닙니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
 			}
 
@@ -227,7 +280,7 @@ class Board extends CI_Controller {
 				if ( !$this->input->post('subject', TRUE) AND !$this->input->post('contents', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
-					alert('비정상적인 접근입니다.', '/bbs/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('비정상적인 접근입니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -244,13 +297,13 @@ class Board extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/bbs/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/bbs/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 
@@ -266,7 +319,7 @@ class Board extends CI_Controller {
 		}
 		else
 		{
-			alert('로그인후 수정하세요', '/bbs/auth/login/');
+			alert('로그인후 수정하세요', '/prq/auth/login/');
 			exit;
 		}
  	}
@@ -290,7 +343,7 @@ class Board extends CI_Controller {
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/bbs/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('본인이 작성한 글이 아닙니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 				exit;
 			}
 
@@ -301,17 +354,17 @@ class Board extends CI_Controller {
 			if ( $return )
 			{
 				//삭제가 성공한 경우
-				alert('삭제되었습니다.', '/bbs/board/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
+				alert('삭제되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
 			}
 			else
 			{
 				//삭제가 실패한 경
-				alert('삭제 실패하였습니다.', '/bbs/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('삭제 실패하였습니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 			}
 		}
 		else
 		{
-			alert('로그인후 삭제하세요', '/bbs/auth/login/');
+			alert('로그인후 삭제하세요', '/prq/auth/login/');
 			exit;
 		}
  	}

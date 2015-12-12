@@ -92,11 +92,19 @@ $(document).ready(function () {
 
     // Append config box / Only for demo purpose
     // Uncomment on server mode to enable XHR calls
-    $.get("skin-config.html", function (data) {
+	/*
+    $.get("/prq/include/html/skin-config.html", function (data) {
         if (!$('body').hasClass('no-skin-config'))
             $('body').append(data);
     });
-
+	*/
+    $.get("/prq/include/html/skin-config.html")
+		.done(function (data) {
+        if (!$('body').hasClass('no-skin-config'))
+            $('body').append(data);
+		}).fail(function(){
+			alert("skin-config file exists");
+		});
     // Minimalize menu
     $('.navbar-minimalize').click(function () {
         $("body").toggleClass("mini-navbar");

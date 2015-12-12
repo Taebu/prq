@@ -121,9 +121,11 @@ class Board extends CI_Controller {
  	{
 		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
+
+		$this->load->helper('cookie');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//폼 검증 라이브러리 로드
 			$this->load->library('form_validation');
@@ -150,8 +152,8 @@ class Board extends CI_Controller {
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'subject' => $this->input->post('subject', TRUE),
 					'contents' => $this->input->post('contents', TRUE),
-					'user_id' => $this->session->userdata('username'),
-					'user_name' => $this->session->userdata('name'),
+					'user_id' => $this->input->cookie('username', TRUE),
+					'user_name' => $this->input->cookie('name', TRUE),
 				);
 
 				$result = $this->board_m->insert_board($write_data);
@@ -204,12 +206,13 @@ class Board extends CI_Controller {
 			$pages = 1;
 		}
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
 			$writer_id = $this->board_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
 
-			if( $writer_id->user_id != $this->session->userdata('username') )
+//			if( $writer_id->user_id != $this->session->userdata('username') ||$writer_id->user_id != $this->input->cookie('username', TRUE))
+			if($writer_id->user_id != $this->input->cookie('username', TRUE))
 			{
 				alert('본인이 작성한 글이 아닙니다.', '/bbs/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
@@ -278,9 +281,11 @@ class Board extends CI_Controller {
  	{
 		//경고창 헬퍼 로딩
 	 	$this->load->helper('alert');
+
+		$this->load->helper('cookie');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//삭제하려는 글의 작성자가 본인인지 검증
 			$table = $this->uri->segment(3);
@@ -288,7 +293,10 @@ class Board extends CI_Controller {
 
 			$writer_id = $this->board_m->writer_check($table, $board_id);
 
-			if( $writer_id->user_id != $this->session->userdata('username') )
+//			if( $writer_id->user_id != $this->session->userdata('username') )
+//			if( $writer_id->user_id != $this->session->userdata('username') ||$writer_id->user_id != $this->input->cookie('name') )
+			if( $writer_id->user_id != $this->session->userdata('username') ||$writer_id->user_id != $this->input->cookie('username', TRUE) )
+
 			{
 				alert('본인이 작성한 글이 아닙니다.', '/bbs/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 				exit;

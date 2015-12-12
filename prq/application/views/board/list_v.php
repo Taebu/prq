@@ -5,7 +5,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/bbs/board/lists/ci_board/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/board/lists/ci_board/q/'+$("#q").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -22,30 +22,52 @@
 		</header>
 
 		<div class="container-fluid">
-<div class="row">
-  <div class="col-sm-4">.col-sm-4</div>
-  <div class="col-sm-8">.col-sm-8</div>
-</div>
+
 
 	<div class="row">
-		<div class="col-lg-3">left-3</div>
-		<div class="col-lg-9">right-9
-				<div>
+
+
 <?php
-			echo form_open('bbs/board/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
+			echo form_open('prq/board/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
 ?>
 			<!--form id="bd_search" method="post" class="well form-search" -->
-				<i class="icon-search"></i> <input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> <input type="button" value="검색" id="search_btn" class="btn btn-primary" />
-			</form>
+
+<div class="row">
+		<div class="row col-lg-6">
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
 		</div>
+</div>
+<div class="row">
+		<div class="row col-lg-6">
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
+		</div>
+</div>
+<div class="row">
+		<div class="row col-lg-12">
+				<input type="button" value="검색" id="search_btn" class="btn btn-primary" />
+		</div>
+</div>
+
+			</form><!-- #bd_search -->
+
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">작성자</th>
-					<!-- <th scope="col">조회수</th> -->
-					<th scope="col">등록일</th>
+					<th scope="col"><input type="checkbox" name="chk_"></th>
+					<th scope="col">No</th>
+					<th scope="col">등록일자</th>
+					<th scope="col">총판ID</th>
+					<th scope="col">총판코드</th>
+					<th scope="col">구분</th>
+					<th scope="col">대리점</th>
+					<th scope="col">총판상태</th>
+					<th scope="col">비고</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -54,15 +76,19 @@ foreach ($list as $lt)
 {
 ?>
 				<tr>
-					<th scope="row">
-						<?php echo $lt->board_id;?>
-					</th>
+					<td scope="col"><input type="checkbox" name="chk_"></td>
+					<td scope="row"><?php echo $lt->board_id;?>
+					</td>
 					<td>
-					<a rel="external" href="/bbs/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->board_id;?>/page/<?php echo $page;?>"><?php echo $lt->subject;?></a></td>
+					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->board_id;?>/page/<?php echo $page;?>"><?php echo $lt->subject;?></a></td>
 					<td><?php echo $lt->user_name;?></td>
 					<!-- <td><?php echo $lt->hits;?></td> -->
 <!-- 					<td><time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>"><?php echo mdate("%M. %j, %Y", human_to_unix($lt->reg_date));?></time></td> -->
  					<td><time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>"><?php echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?></time></td> 
+ 					<td>총판</td> 
+ 					<td>46</td> 
+ 					<td>정상</td> 
+ 					<td>-</td> 
 				</tr>
 <?php
 }
@@ -71,11 +97,16 @@ foreach ($list as $lt)
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="5"><?php echo $pagination;?></th>
+					<th colspan="5" style="text-align:center">
+					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
 				</tr>
 			</tfoot>
 		</table>
-		<div><p><a href="/bbs/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(5);?>" class="btn btn-success">쓰기</a></p></div>
+
+
+
+</div>
+		<div><p><a href="/prq/board/write/prq_member/page/<?php echo $this->uri->segment(5);?>" class="btn btn-success">쓰기</a></p></div>
 	</article>
 </div>
 </div>

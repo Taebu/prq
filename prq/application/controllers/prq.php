@@ -105,9 +105,12 @@ class Prq extends CI_Controller {
 	 */
 	public function bs_index()
 	{
+
 		$data['name']='Taebu';
 		$data['message_list']=array();
+				/*
 		$product=array();
+		
 		$product['utime']="09:00 pm";
 		$product['content']="해줘.";
 		$product['status']="success";
@@ -132,7 +135,9 @@ class Prq extends CI_Controller {
 		$product['content']="ㅋㅋㅋ";
 		$product['status']="danger";
 		array_push($data['message_list'],$product);
-//		$this->load->view('board/index_v',$data);
+		
+		$this->load->view('board/index_v',$data);
+		*/
 		$this->load->view('board/dashv5_v',$data);
 	}
 	/**

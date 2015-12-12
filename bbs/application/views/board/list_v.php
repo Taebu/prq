@@ -28,9 +28,15 @@
 </div>
 
 	<div class="row">
-		<div class="col-lg-3">left-3</div>
+		<div class="col-lg-3">left-3
+		<?php echo date("Y-m-d H:i:s");?>
+		<?php
+
+		?>
+		</div>
 		<div class="col-lg-9">right-9
 				<div>
+
 <?php
 			echo form_open('bbs/board/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
 ?>

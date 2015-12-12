@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://prq.cashq.co.kr/bbs/';
+$config['base_url']	= 'http://prq.co.kr/bbs/';
 
 /*
 |--------------------------------------------------------------------------

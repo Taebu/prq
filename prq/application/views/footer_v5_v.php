@@ -3,7 +3,7 @@
                 10GB of <strong>250GB</strong> Free.
             </div>
             <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
+                <strong>Copyright</strong> ANP Company &copy; 2014-2015
             </div>
         </div>
         </div>
@@ -388,7 +388,7 @@
     </div>
 
     <!-- Mainly scripts -->
-    <script src="/prq/include/js/jquery-2.1.1.js"></script>
+
     <script src="/prq/include/js/bootstrap.min.js"></script>
     <script src="/prq/include/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/prq/include/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -405,6 +405,12 @@
     <!-- Custom and plugin javascript -->
     <script src="/prq/include/js/inspinia.js"></script>
     <script src="/prq/include/js/plugins/pace/pace.min.js"></script>
+
+
+
+   <!-- Input Mask-->
+    <script src="/prq/include/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+
 
     <!-- Sparkline -->
     <script src="/prq/include/js/plugins/sparkline/jquery.sparkline.min.js"></script>

@@ -21,10 +21,15 @@
 			<small>실행 예제</small>
 			<p>
 <?php
-if( @$this->session->userdata['logged_in'] == TRUE )
+if( @$this->session->userdata['logged_in'] == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 {
 ?>
-"<?php echo $this->session->userdata['name']?>"님 환영합니다. <a href="/bbs/auth/logout" class="btn">로그아웃</a>
+"<?php 
+//echo $this->session->userdata['name']?>
+<?php echo $this->input->cookie('name', TRUE);
+echo $this->input->cookie('username', TRUE);
+?>
+"님 환영합니다. <a href="/bbs/auth/logout" class="btn">로그아웃</a>
 <?php
 } else {
 ?>

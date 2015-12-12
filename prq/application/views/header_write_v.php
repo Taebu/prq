@@ -6,21 +6,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PRQ | Dashboard</title>
-    <script src="/prq/include/js/jquery-2.1.1.js"></script>
+    <title>INSPINIA | Advanced Form Elements</title>
+
     <link href="/prq/include/css/bootstrap.min.css" rel="stylesheet">
     <link href="/prq/include/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <!-- Toastr style -->
-    <link href="/prq/include/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/prq/include/css/plugins/iCheck/custom.css" rel="stylesheet">
 
-    <!-- Gritter -->
-    <link href="/prq/include/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="/prq/include/css/plugins/chosen/chosen.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/switchery/switchery.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="/prq/include/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/select2/select2.min.css" rel="stylesheet">
 
     <link href="/prq/include/css/animate.css" rel="stylesheet">
     <link href="/prq/include/css/style.css" rel="stylesheet">
 
-    <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
 </head>
 

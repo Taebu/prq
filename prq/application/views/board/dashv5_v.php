@@ -11,7 +11,8 @@
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                    <!-- <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span> -->
+                    <span class="m-r-sm text-muted welcome-message">PRQ 본사 관리자 1.0</span>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -112,7 +113,7 @@
 
                 <li>
 					<?php
-						if( @$this->session->userdata['logged_in'] == TRUE )
+						if( @$this->session->userdata['logged_in'] == TRUE   ||$this->input->cookie('logged_in', TRUE) == TRUE)
 					{?>
                     <a href="/prq/auth/logout">
                         <i class="fa fa-sign-out"></i> Log out
@@ -136,7 +137,7 @@
             <div class="wrapper wrapper-content animated fadeIn">
 
                 <div class="p-w-md m-t-sm">
-                    <div class="row">
+                    <div class="row" style="display:none">
 
                         <div class="col-sm-4">
                             <h1 class="m-b-xs">
@@ -146,7 +147,7 @@
                                 Sales in current month
                             </small>
                             <div id="sparkline1" class="m-b-sm"></div>
-                            <div class="row">
+                            <div class="row" style="display:none">
                                 <div class="col-xs-4">
                                     <small class="stats-label">Pages / Visit</small>
                                     <h4>236 321.80</h4>
@@ -171,7 +172,7 @@
                                 Sales in last 24h
                             </small>
                             <div id="sparkline2" class="m-b-sm"></div>
-                            <div class="row">
+                            <div class="row" style="display:none">
                                 <div class="col-xs-4">
                                     <small class="stats-label">Pages / Visit</small>
                                     <h4>166 781.80</h4>
@@ -242,7 +243,7 @@
 
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="display:none">
                         <div class="col-lg-12">
                             <div class="small pull-left col-md-3 m-l-lg m-t-md">
                                 <strong>Sales char</strong> have evolved over the years sometimes.
@@ -300,6 +301,10 @@
 
                                             <tbody>
                                             <tr>
+											    <td><div class="checkbox checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox3" value="option1">
+                                            <label for="inlineCheckbox3"></label>
+                                        </div></td>
                                                 <td>1</td>
                                                 <td>2015.11.27</td>
                                                 <td>A001</td>

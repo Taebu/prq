@@ -49,6 +49,7 @@ class Auth extends CI_Controller {
 
 		$this->load->helper('alert');
 
+		$this->load->helper('cookie');
 		//폼 검증할 필드와 규칙 사전 정의
 		$this->form_validation->set_rules('username', '아이디', 'required|alpha_numeric');
 		$this->form_validation->set_rules('password', '비밀번호', 'required');
@@ -77,6 +78,48 @@ class Auth extends CI_Controller {
 				);
 
 				$this->session->set_userdata($newdata);
+				//쿠키 생성
+				$cookie = array(
+                   'name'   => 'username',
+                   'value'  => $result->username,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/bbs/',
+                   'prefix' => '',
+               );
+
+				set_cookie($cookie);
+				$cookie = array(
+                   'name'   => 'name',
+                   'value'  => $result->name,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/bbs/',
+                   'prefix' => '',
+               );
+
+				set_cookie($cookie);
+
+				$cookie = array(
+                   'name'   => 'email',
+                   'value'  => $result->email,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/bbs/',
+                   'prefix' => '',
+               );
+
+				set_cookie($cookie);
+				$cookie = array(
+                   'name'   => 'logged_in',
+                   'value'  => TRUE,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/bbs/',
+                   'prefix' => '',
+               );
+
+				set_cookie($cookie);
 
   				alert('로그인 되었습니다.', '/bbs/board/lists/ci_board/page/1');
   				exit;
@@ -101,7 +144,48 @@ class Auth extends CI_Controller {
 		$this->load->helper('alert');
 
 		$this->session->sess_destroy();
+		//쿠키 파괴
+		$cookie = array(
+		   'name'   => 'username',
+		   'value'  => '',
+		   'expire' => '0',
+		   'domain' => $_SERVER['HTTP_HOST'],
+		   'path'   => '/bbs/',
+		   'prefix' => '',
+	   );
 
+		set_cookie($cookie);
+		$cookie = array(
+		   'name'   => 'name',
+		   'value'  => '',
+		   'expire' => '0',
+		   'domain' => $_SERVER['HTTP_HOST'],
+		   'path'   => '/bbs/',
+		   'prefix' => '',
+	   );
+
+		set_cookie($cookie);
+
+		$cookie = array(
+		   'name'   => 'email',
+		   'value'  => '',
+		   'expire' => '0',
+		   'domain' => $_SERVER['HTTP_HOST'],
+		   'path'   => '/bbs/',
+		   'prefix' => '',
+	   );
+
+		set_cookie($cookie);
+		$cookie = array(
+		   'name'   => 'logged_in',
+		   'value'  => FALSE,
+		   'expire' => '0',
+		   'domain' => $_SERVER['HTTP_HOST'],
+		   'path'   => '/bbs/',
+		   'prefix' => '',
+	   );
+
+		set_cookie($cookie);
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 		alert('로그아웃 되었습니다.', '/bbs/board/lists/ci_board/page/1');
   		exit;

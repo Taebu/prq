@@ -1,9 +1,9 @@
-	<!--<script type="text/javascript" src="/bbs/include/js/httpRequest.js"></script>-->
+	<!--<script type="text/javascript" src="/prq/include/js/httpRequest.js"></script>-->
 	<script type="text/javascript">
 	$(function(){
 		$("#comment_add").click(function(){
 			$.ajax({
-				url: "/bbs/ajax_board/ajax_comment_add",
+				url: "/prq/ajax_board/ajax_comment_add",
 				type: "POST",
 				data:{
 					"comment_contents":encodeURIComponent($("#input01").val()),
@@ -39,7 +39,7 @@
 
 		$(".comment_delete").click(function(){
 			$.ajax({
-				url: "/bbs/ajax_board/ajax_comment_delete",
+				url: "/prq/ajax_board/ajax_comment_delete",
 				type: "POST",
 				data:{
 					"csrf_test_name":getCookie('csrf_cookie_name'),
@@ -123,7 +123,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="4"><a href="/bbs/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/bbs/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/bbs/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/bbs/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
+					<th colspan="4"><a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
 				</tr>
 			</tfoot>
 		</table>
