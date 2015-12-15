@@ -40,6 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<p><a href="/sns/controlls/lists">CHAPTER_11. 모바일 웹프로젝트 프로젝트 (jQuery Mobile)2015-11-30 (월), 2015-11-30 (월) 완료</a></p>
 		<p><a href="/prq/">PRQ</a></p>
 		<p>코드 이그나이터를 설치후 볼 수 있는 화면 입니다. </p>
+		<p><?php echo getcwd();?></p>
 		</div><!-- #body -->
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. 

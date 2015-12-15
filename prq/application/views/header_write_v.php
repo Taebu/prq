@@ -23,7 +23,7 @@
 
     <link href="/prq/include/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
 
-    <!-- <link href="/prq/include/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet"> -->
+    <link href="/prq/include/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
 
     <link href="/prq/include/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 

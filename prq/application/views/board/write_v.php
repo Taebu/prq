@@ -55,13 +55,18 @@
         <div class="wrapper wrapper-content animated fadeInRight">
 		<?php 
 			$attributes = array(
-				'class' => 'form-horizontal dropzone', 
+				'class' => 'form-horizontal', 
 				'id' => 'my-awesome-dropzone'
 			);
-			echo form_open('board/write/ci_board', $attributes);
+//			echo form_open('board/write/ci_board', $attributes);
+echo form_open_multipart('/dropzone/upload', $attributes);
+
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
 		<input type="hidden" name="is_join" id="is_join" value="">
+		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
+		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
+		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
@@ -163,25 +168,35 @@
 							<div class="col-md-6">
 
 								<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
-                                    <div class="col-sm-10"><input type="file" class="form-control" name="mb_hp"> <span class="help-block m-b-none">사업자등록증을 기입해 주세요..</span>
+                                    <div class="col-sm-10">
+									<!-- <form id="my-awesome-dropzone1">my-awesome-dropzone1</form> --><form id="my-awesome-dropzone"  action="<?php echo site_url('/dropzone/upload'); ?>" action="/target" class="dropzone"></form>
+									<!-- <div id="my-awesome-dropzone1" class="dropzone" action="<?php echo site_url('/dropzone/upload'); ?>" ><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone1 -->
+									<div id="get-uploading-files">up file</div>
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">사업자등록증을 드래그 하거나 선택해 주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
-                                    <div class="col-sm-10"><div id="my-awesome-dropzone3">aa</div>
-									<input type="file" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+                                    <div class="col-sm-10">
+									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
+												<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
+												<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">을 드래그 하거나 선택해 주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">통장 사본</label>
                                     <div class="col-sm-10">
+									<div id="my-awesome-dropzone3" class="dropzone">
 
-                            <div class="dropzone-previews"></div>
-                            <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
-
-									<input type="file" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+									<div class="dz-default dz-message"></div>
+									</div><!-- #my-awesome-dropzone3 -->
+									
+									<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
+  
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">통장 사본을 드래그 하거나 선택해 주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -262,160 +277,8 @@ mb_hp=6545645646
 
 window.onload = function() {
 
-		Dropzone.autoDiscover = false;
-		$("#my-awesome-dropzone1").dropzone({
-			url: "uploads.php",
-			autoProcessQueue: false,
-			uploadMultiple: false,
-			parallelUploads: 1,
-			maxFiles: 1,
-			addRemoveLinks: true,
-			maxFileSize: 1000,
-			dictResponseError: "Ha ocurrido un error en el server",
-			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
-			complete: function(file)
-			{
-				if(file.status == "success")
-				{
-					alert("다음 파일이 성공적으로 업로드되었습니다: " + file.name);
-				}
-			},
-			error: function(file)
-			{
-				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
-				file.previewElement.parentNode.removeChild(file.previewElement);
-			},
-			removedfile: function(file, serverFileName)
-			{
-				var name = file.name;
-				$.ajax({
-					type: "POST",
-					url: "uploads.php?delete=true",
-					data: "filename="+name,
-					success: function(data)
-					{
-						var json = JSON.parse(data);
-						if(json.res == true)
-						{
-							var element;
-							(element = file.previewElement) != null ? 
-							element.parentNode.removeChild(file.previewElement) : 
-							false;
-							alert("요소를 제거: " + name); 
-						}
-					},error: function(data)
-					{
-						file.previewElement.parentNode.removeChild(file.previewElement);
-						alert("서버 에러 업로드 파일을 삭제 합니다." ); 
-						console.log("error");
-						console.log(file);
-						console.log(data);
-					}
-				});
-			}
-		});
-			/*End Dropzone*/		
-		$("#my-awesome-dropzone2").dropzone({
-			url: "uploads.php",
-			autoProcessQueue: false,
-			uploadMultiple: false,
-			parallelUploads: 1,
-			maxFiles: 1,
-			addRemoveLinks: true,
-			maxFileSize: 1000,
-			dictResponseError: "오류가 서버에서 발생",
-			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF',
-			complete: function(file)
-			{
-				if(file.status == "success")
-				{
-					alert("다음 파일이 성공적으로 업로드되었습니다: " + file.name);
-				}
-			},
-			error: function(file)
-			{
-				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
-				file.previewElement.parentNode.removeChild(file.previewElement);
-			},
-			removedfile: function(file, serverFileName)
-			{
-				var name = file.name;
-				$.ajax({
-					type: "POST",
-					url: "uploads.php?delete=true",
-					data: "filename="+name,
-					success: function(data)
-					{
-						var json = JSON.parse(data);
-						if(json.res == true)
-						{
-							var element;
-							(element = file.previewElement) != null ? 
-							element.parentNode.removeChild(file.previewElement) : 
-							false;
-							alert("요소를 제거: " + name); 
-						}
-					},error: function(data)
-					{
-						file.previewElement.parentNode.removeChild(file.previewElement);
-						alert("서버 에러 업로드 파일을 삭제 합니다." ); 
-						console.log("error");
-					}
-				});
-			}
-		});
-			/*End Dropzone*/		
-		$("#my-awesome-dropzone3").dropzone({
-			url: "uploads.php",
-			autoProcessQueue: false,
-			uploadMultiple: false,
-			parallelUploads: 1,
-			maxFiles: 1,
-			addRemoveLinks: true,
-			maxFileSize: 1000,
-			dictResponseError: "Ha ocurrido un error en el server",
-			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
-			complete: function(file)
-			{
-				if(file.status == "success")
-				{
-					alert("다음 파일이 성공적으로 업로드되었습니다: " + file.name);
-				}
-			},
-			error: function(file)
-			{
-				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
-				file.previewElement.parentNode.removeChild(file.previewElement);
-			},
-			removedfile: function(file, serverFileName)
-			{
-				var name = file.name;
-				$.ajax({
-					type: "POST",
-					url: "uploads.php?delete=true",
-					data: "filename="+name,
-					success: function(data)
-					{
-						var json = JSON.parse(data);
-						if(json.res == true)
-						{
-							var element;
-							(element = file.previewElement) != null ? 
-							element.parentNode.removeChild(file.previewElement) : 
-							false;
-							alert("요소를 제거: " + name); 
-						}
-					},error: function(data)
-					{
-						file.previewElement.parentNode.removeChild(file.previewElement);
-						alert("서버 에러 업로드 파일을 삭제 합니다." ); 
-						console.log("error");
-						console.log(file);
-						console.log(data);
-					}
-				});
-			}
-		});
+
+
 			/*End Dropzone*/		
 
 var focus=0,blur=0;
@@ -469,5 +332,5 @@ var focus=0,blur=0;
 			$( "#mb_id_assist" ).html(object.join(""));		
 		}
   });
-};
+}s;
 </script>

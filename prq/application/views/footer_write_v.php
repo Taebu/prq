@@ -68,7 +68,7 @@
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
     <script>
         $(document).ready(function(){
-
+/*
             var $image = $(".image-crop > img")
             $($image).cropper({
                 aspectRatio: 1.618,
@@ -244,38 +244,102 @@
                 placeholder: "Select a state",
                 allowClear: true
             });
+				*/
 
-			/*Dropzone*/
-            Dropzone.options.myAwesomeDropzone = {
 
-                autoProcessQueue: false,
-                uploadMultiple: true,
-                parallelUploads: 100,
-                maxFiles: 1,
+		Dropzone.autoDiscover = false;
 
-                // Dropzone settings
-                init: function() {
-                    var myDropzone = this;
+		function set_dropzone_config(id)
+		{
+			/* 총판 계약서*/
+			/* 통장 사본 */
+			/*
+				$("#my-awesome-dropzone1").dropzone(set_dropzone_config("mb_business_paper"));
+				$("#my-awesome-dropzone2").dropzone(set_dropzone_config("mb_distributors_paper"));
+				$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
+			*/
+			return {
+			url: "/prq/dropzone/upload/",
+			autoProcessQueue: true,
+			uploadMultiple: false,
+			parallelUploads: 1,
+			maxFiles: 1,
+			addRemoveLinks: true,
+			maxFileSize: 1000,
+			dictResponseError: "Ha ocurrido un error en el server",
+			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
+			complete: function(file,data)
+			{
+				if(file.status == "success")
+				{
+					alert("다음 파일이 성공적으로 업로드되었습니다: \n " + file.name);
+					//file.name
+					
+					var json = JSON.parse(data);
+					console.log(json);
+					$("#"+id).val(json.filename);
+				}
+			},
+			error: function(file)
+			{
+				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
+				file.previewElement.parentNode.removeChild(file.previewElement);
+			},
+			removedfile: function(file, serverFileName) 
+			{
+				var name = file.name;
+				$.ajax({
+					type: "POST",
+					url: "/prq/dropzone/delete",
+					data: "filename="+name,
+					success: function(data)
+					{
+						var json = JSON.parse(data);
+						if(json.res == true)
+						{
+							var element;
+							(element = file.previewElement) != null ? 
+							element.parentNode.removeChild(file.previewElement) : 
+							false;
+							alert("요소를 제거: " + name); 
+						}
+					},error: function(data)
+					{
+						file.previewElement.parentNode.removeChild(file.previewElement);
+						alert("서버 에러 업로드 파일을 삭제 합니다." ); 
+						console.log("error");
+					}
+				});
+			}
+		};
+		}
+/*
+		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
+		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
+		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+*/
+		/* 사업자 등록증 */
+		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("mb_business_paper"));
 
-                    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        myDropzone.processQueue();
-                    });
-                    this.on("sendingmultiple", function() {
-                    });
-                    this.on("successmultiple", function(files, response) {
-                    });
-                    this.on("errormultiple", function(files, response) {
-                    });
-                }
+		/* 총판 계약서*/
+		$("#my-awesome-dropzone2").dropzone(set_dropzone_config("mb_distributors_paper"));
 
-            }
-			/*End Dropzone*/
+		/* 통장 사본 */
+		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
+		/* my-awesome-dropzone3 */
 
+
+		/*getUplaodingFiles*/
+		$("#get-uploading-files").click(function(){
+			var myDropzone=Dropzone.forElement("#my-awesome-dropzone3");
+			console.log(myDropzone.getUploadingFiles());
+		});
+
+		/*End Dropzone*/		
         });
+		
 		/*End $(function(){});*/
-
+/*
         var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
@@ -369,7 +433,7 @@
             }
         });
 
-
+*/
     </script>
 
 </body>
