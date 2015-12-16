@@ -249,41 +249,78 @@
 
 		Dropzone.autoDiscover = false;
 
+
 		function set_dropzone_config(id)
 		{
+			var file_key=[];
+			/* 사업자등록증*/
+			file_key["mb_business_paper"]="BS";
 			/* 총판 계약서*/
+			file_key["mb_distributors_paper"]="DS";
 			/* 통장 사본 */
-			/*
-				$("#my-awesome-dropzone1").dropzone(set_dropzone_config("mb_business_paper"));
-				$("#my-awesome-dropzone2").dropzone(set_dropzone_config("mb_distributors_paper"));
-				$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
-			*/
+			file_key["mb_bank_paper"]="BK";
+
+			var param="";
+			if(id!="")
+			{
+				param=file_key[id]+"/";
+			}
+
 			return {
-			url: "/prq/dropzone/upload/",
+			url: "/prq/dropzone/upload/"+param,
 			autoProcessQueue: true,
 			uploadMultiple: false,
 			parallelUploads: 1,
 			maxFiles: 1,
 			addRemoveLinks: true,
-			maxFileSize: 1000,
+			maxFileSize: 1,
+				/**/
+                    dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",
+                    dictFallbackMessage: "이 브라우저는 드래그앤 드롭을 지원하지 않습니다.",
+                    dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+                    dictFileTooBig: "파일이 너무 큽니다.({{filesize}}MiB). 최대 가능 파일 사이즈 : {{maxFilesize}}MiB.",
+                    dictInvalidFileType: "업로드 할 수 없는 타입니다.",
+                    dictResponseError: "서버 에러 {{statusCode}} 코드.",
+                    dictCancelUpload: "업로드 취소",
+                    dictCancelUploadConfirmation: "정말 업로드를 취소 하시겠습니까?",
+                    dictRemoveFile: "파일 삭제",
+                    dictRemoveFileConfirmation: null,
+                    dictMaxFilesExceeded: "더이상 파일을 업로드 할 수 없습니다.",
+			/**/
 			dictResponseError: "Ha ocurrido un error en el server",
 			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
-			complete: function(file,data)
+			 init: function() {
+				this.on("addedfile", function() {
+				  if (this.files[1]!=null){
+
+					this.removeFile(this.files[0]);
+				  }
+				});
+			  },success: function(file,data)
 			{
+				var thisDropzone=this;
 				if(file.status == "success")
 				{
-					alert("다음 파일이 성공적으로 업로드되었습니다: \n " + file.name);
-					//file.name
-					
-					var json = JSON.parse(data);
-					console.log(json);
-					$("#"+id).val(json.filename);
+					//var json = JSON.parse(response);
+					console.log(data);
+					var element;
+					(element = file.previewElement) != null ? 
+					element.parentNode.removeChild(file.previewElement) : 
+					false;
+
+					$.each(data,function(key,value){
+						var mockfile={name:value.name,size:value.size};
+						$("#"+id).val(value.name);
+						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+value .name);
+					});
+
 				}
 			},
 			error: function(file)
 			{
-				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
-				file.previewElement.parentNode.removeChild(file.previewElement);
+///				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
+//				file.previewElement.parentNode.removeChild(file.previewElement);
 			},
 			removedfile: function(file, serverFileName) 
 			{
@@ -301,7 +338,7 @@
 							(element = file.previewElement) != null ? 
 							element.parentNode.removeChild(file.previewElement) : 
 							false;
-							alert("요소를 제거: " + name); 
+							//alert("요소를 제거: " + name); 
 						}
 					},error: function(data)
 					{
@@ -326,14 +363,6 @@
 
 		/* 통장 사본 */
 		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
-		/* my-awesome-dropzone3 */
-
-
-		/*getUplaodingFiles*/
-		$("#get-uploading-files").click(function(){
-			var myDropzone=Dropzone.forElement("#my-awesome-dropzone3");
-			console.log(myDropzone.getUploadingFiles());
-		});
 
 		/*End Dropzone*/		
         });

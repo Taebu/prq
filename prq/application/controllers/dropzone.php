@@ -74,14 +74,21 @@ class Dropzone extends CI_Controller {
 			$tempFile = $_FILES['file']['tmp_name'];
 			$fileName = $_FILES['file']['name'];
 			$targetPath = getcwd() . '/uploads/';
+			
 			//$targetFile = $targetPath . $fileName ;
-		//	move_uploaded_file($tempFile, $targetFile);
-		//$this->uri->segment(3);
+			//	move_uploaded_file($tempFile, $targetFile);
+			
+			$prefix="DF";
+			if($this->uri->segment(3)!=""){
+				$prefix=$this->uri->segment(3);
+			}
 			$chk_file = explode(".", $fileName);
 			$extension = $chk_file[sizeof($chk_file)-1];
-			$fileName= "DS_test.".$extension;
-	//    $file_newname = confirmFname($file_newname,$uploaddir);
-			if ($_FILES['file']["error"] > 0){
+			$fileName= $prefix."_".time().".".$extension;
+			//  $file_newname = confirmFname($file_newname,$uploaddir);
+			
+			if ($_FILES['file']["error"] > 0)
+			{
 				$errmsg = "에러코드: " . $_FILES['file']["error"];
 			}else {
 				$targetFile = $targetPath . $fileName ;
@@ -90,7 +97,15 @@ class Dropzone extends CI_Controller {
 				// with out model just for example
 				// $this->load->database(); // load database
 				// $this->db->insert('file_table',array('file_name' => $fileName));
-				echo json_encode(array("filename" => $fileName));
+				
+				$result=array();
+				$obj['name']=$fileName;
+				$obj['size']=filesize($targetFile);
+				$result[]=$obj;
+//				echo json_encode(array("filename" => $fileName));
+				header("Content-type: text/json");
+				header("Content-type: application/json");
+				echo json_encode($result);
 			}
 		}
 	}

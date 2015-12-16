@@ -56,7 +56,7 @@
 		<?php 
 			$attributes = array(
 				'class' => 'form-horizontal', 
-				'id' => 'my-awesome-dropzone'
+				'id' => 'write_action'
 			);
 //			echo form_open('board/write/ci_board', $attributes);
 echo form_open_multipart('/dropzone/upload', $attributes);
@@ -126,13 +126,13 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">비밀번호</label>
-                                    <div class="col-sm-10"><input type="password" class="form-control" name="password">
+                                    <div class="col-sm-10"><input type="password" class="form-control" name="mb_password">
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
                                 
 								<div class="form-group"><label class="col-sm-2 control-label">비밀번호 확인</label>
-                                    <div class="col-sm-10"><input type="password" class="form-control" name="password_2">
+                                    <div class="col-sm-10"><input type="password" class="form-control" name="mb_password_2">
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -168,11 +168,8 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 							<div class="col-md-6">
 
 								<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
-                                    <div class="col-sm-10">
-									<!-- <form id="my-awesome-dropzone1">my-awesome-dropzone1</form> --><form id="my-awesome-dropzone"  action="<?php echo site_url('/dropzone/upload'); ?>" action="/target" class="dropzone"></form>
-									<!-- <div id="my-awesome-dropzone1" class="dropzone" action="<?php echo site_url('/dropzone/upload'); ?>" ><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone1 -->
-									<div id="get-uploading-files">up file</div>
-									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">사업자등록증을 드래그 하거나 선택해 주세요.</span>
+                                    <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"사업자등록증"을 드래그 하거나 선택해 주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -182,7 +179,7 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 												<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 												<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">을 드래그 하거나 선택해 주세요.</span>
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"총판 계약서"를 드래그 하거나 선택해 주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -196,31 +193,31 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 									
 									<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
   
-									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">통장 사본을 드래그 하거나 선택해 주세요.</span>
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"통장 사본"을 드래그 하거나 선택해 주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankname"> <span class="help-block m-b-none">"거래은행"을 기입해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">계좌번호</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_banknum"> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">예금주</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">예금주를 기입해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">비고</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -249,6 +246,7 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 	*/
 	function set_ds(){
 			var param=$("#write_action").serialize();
+			console.c
 /*
 is_join=TRUE&
 mb_id=4645689986489564&
@@ -266,7 +264,7 @@ mb_hp=564654564654&
 mb_hp=564564564564&
 mb_hp=6545645646
 */
-			if($("#is_join").val()=="TRUE"){
+		if($("#is_join").val()=="TRUE"){
 			$("#form_data").html(param);
 		}
 
@@ -332,5 +330,5 @@ var focus=0,blur=0;
 			$( "#mb_id_assist" ).html(object.join(""));		
 		}
   });
-}s;
+};
 </script>
