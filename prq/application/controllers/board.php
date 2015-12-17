@@ -10,7 +10,8 @@ class Board extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->database();
-        $this->load->model('board_m');
+//		$this->load->model('board_m');
+		$this->load->model('member_m');
 		$this->load->helper('form');
 		$this->load->helper(array('url','date'));
 	}
@@ -103,7 +104,7 @@ class Board extends CI_Controller {
 		$config = array(
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/board/lists/ci_board'.$page_url.'/page/',
-		'total_rows' => $this->board_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'total_rows' => $this->member_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,
 
@@ -145,7 +146,7 @@ class Board extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->board_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['list'] = $this->member_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
 		$this->load->view('board/list_v', $data);
 	}
 
@@ -158,10 +159,10 @@ class Board extends CI_Controller {
 		$board_id = $this->uri->segment(5);
 
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
- 		$data['views'] = $this->board_m->get_view($table, $board_id);
+ 		$data['views'] = $this->member_m->get_view($table, $board_id);
 
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
- 		$data['comment_list'] = $this->board_m->get_comment($table, $board_id);
+ 		$data['comment_list'] = $this->member_m->get_comment($table, $board_id);
 
  		//view 호출
  		$this->load->view('board/view_v', $data);
@@ -182,11 +183,12 @@ class Board extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('subject', '제목', 'required');
-			$this->form_validation->set_rules('contents', '내용', 'required');
+			$this->form_validation->set_rules('mb_id', '제목', 'required');
+			$this->form_validation->set_rules('mb_password', '내용', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
+				$this->load->model('member_m');
 				//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 				$uri_array = $this->segment_explode($this->uri->uri_string());
 
@@ -199,6 +201,7 @@ class Board extends CI_Controller {
 					$pages = 1;
 				}
 
+/*
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'subject' => $this->input->post('subject', TRUE),
@@ -206,8 +209,30 @@ class Board extends CI_Controller {
 					'user_id' => $this->session->userdata('username'),
 					'user_name' => $this->session->userdata('name'),
 				);
+*/
 
-				$result = $this->board_m->insert_board($write_data);
+				$write_data = array(
+					'table' => $this->uri->segment(3), //게시판 테이블명
+					'mb_id' => $this->input->post('mb_id', TRUE),
+					'mb_email' => $this->input->post('mb_email', TRUE),
+					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
+					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
+					'mb_addr3' => $this->input->post('mb_add3', TRUE),
+					'mb_password' => $this->input->post('mb_passsword', TRUE),
+					'mb_hp' => $this->input->post('mb_hp', TRUE),
+					'mb_business_num' => $this->input->post('mb_business', TRUE),
+					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
+					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
+					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
+					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
+					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
+					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
+					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
+					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
+				);
+//				$result = $this->board_m->insert_board($write_data);
+
+				$result = $this->member_m->insert_board($write_data);
 
 				if ( $result )
 				{

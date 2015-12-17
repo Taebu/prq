@@ -27,10 +27,31 @@ echo form_open('board/write/ci_board', $attributes);
 		      </div>
 
 		      <div class="form-actions">
-		        <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
+		        <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성</button> -->
+				
+
 		        <button class="btn" onclick="document.location.reload()">취소</button>
 		      </div>
 		    </div>
 		  </fieldset>
 		</form>
+				<button class="btn" onclick="set_member()">작성</button>
 	</article>
+
+	<script type="text/javascript">
+	function set_member(){
+	var param=$("#write_action").serialize();
+	
+    $.ajax({
+        url:"/bbs/board/write/ci_board",
+		type: "POST",
+        data:param,
+        cache: false,
+        async: false,
+        success: function(data) {
+            console.log(data);
+        }
+    });		
+
+}
+	</script>

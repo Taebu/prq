@@ -58,8 +58,8 @@
 				'class' => 'form-horizontal', 
 				'id' => 'write_action'
 			);
-//			echo form_open('board/write/ci_board', $attributes);
-echo form_open_multipart('/dropzone/upload', $attributes);
+			echo form_open('board/write/prq_member', $attributes);
+//echo form_open_multipart('/dropzone/upload', $attributes);
 
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
@@ -222,22 +222,35 @@ echo form_open_multipart('/dropzone/upload', $attributes);
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-                                <div class="form-group">
+
+			  <div class="controls">
+		        <p class="help-block"><?php echo validation_errors(); ?></p>
+		      </div>
+
+<div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <button class="btn btn-white" type="reset">취소</button>
-                                        <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button>
+
                                     </div>
-                                </div><!-- .form-group -->
+                                </div>
+				<!-- 						      <div class="form-actions">
+										      		        <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
+										      		        <button class="btn" onclick="document.location.reload()">취소</button>
+										      		      </div> -->
+
+								<!-- .form-group -->
 
 								<div class="row"><div class="col-md-12">
 									<textarea id="form_data">#form_data</textarea><!-- #form_data -->
 								</div></div>
 							</div><!-- .col-md-6 Right Menu-->
+							                                        <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button>
 							</div><!-- .row -->
 						</div><!-- .ibox-content -->
                     </div><!-- .ibox float-e-margins -->
                 </div><!-- .col-lg-12 -->
 			</div><!-- .row -->
+
         </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
 	/*
@@ -246,7 +259,7 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 	*/
 	function set_ds(){
 			var param=$("#write_action").serialize();
-			console.c
+	
 /*
 is_join=TRUE&
 mb_id=4645689986489564&
@@ -266,6 +279,8 @@ mb_hp=6545645646
 */
 		if($("#is_join").val()=="TRUE"){
 			$("#form_data").html(param);
+		//	$("#write_action").submit();
+		set_member();
 		}
 
 		if($("#is_join").val()=="FALSE"){
@@ -277,11 +292,10 @@ window.onload = function() {
 
 
 
-			/*End Dropzone*/		
+/*End Dropzone*/	
 
 var focus=0,blur=0;
-		$( "#mb_id" )
-  .focusout(function() {
+		$( "#mb_id" ).focusout(function() {
     focus++; 
 		var object=[];
 
@@ -324,6 +338,7 @@ var focus=0,blur=0;
 
 		if($("#is_join").val()=="TRUE"){
 			$( "#mb_id_assist" ).html(object.join(""));		
+			
 		}
 
 		if($("#is_join").val()=="FALSE"){
@@ -331,4 +346,20 @@ var focus=0,blur=0;
 		}
   });
 };
+
+function set_member(){
+	var param=$("#write_action").serialize();
+
+    $.ajax({
+		url:"/prq/board/write/prq_member",
+		type: "POST",
+        data:param,
+        cache: false,
+        async: false,
+        success: function(data) {
+            console.log(data);
+        }
+    });		
+
+}
 </script>

@@ -173,8 +173,8 @@ class Prq extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('subject', '제목', 'required');
-			$this->form_validation->set_rules('contents', '내용', 'required');
+//			$this->form_validation->set_rules('subject', '제목', 'required');
+//			$this->form_validation->set_rules('contents', '내용', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -189,7 +189,7 @@ class Prq extends CI_Controller {
 				{
 					$pages = 1;
 				}
-
+/*
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'subject' => $this->input->post('subject', TRUE),
@@ -197,8 +197,29 @@ class Prq extends CI_Controller {
 					'user_id' => $this->session->userdata('username'),
 					'user_name' => $this->session->userdata('name'),
 				);
+*/
 
-				$result = $this->board_m->insert_board($write_data);
+				$write_data = array(
+					'mb_id' => $this->input->post('mb_id', TRUE),
+					'mb_email' => $this->input->post('mb_email', TRUE),
+					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
+					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
+					'mb_addr3' => $this->input->post('mb_add3', TRUE),
+					'mb_password' => $this->input->post('mb_passsword', TRUE),
+					'mb_hp' => $this->input->post('mb_hp', TRUE),
+					'mb_business_num' => $this->input->post('mb_business', TRUE),
+					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
+					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
+					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
+					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
+					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
+					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
+					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
+					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
+				);
+//				$result = $this->board_m->insert_board($write_data);
+
+				$result = $this->member_m->insert_board($write_data);
 
 				if ( $result )
 				{

@@ -12,7 +12,7 @@
  * @author Taebu,Moon <mtaebu@gmail.com>
  * @version 1.0
  */
-class Memeber_m extends CI_Model
+class Member_m extends CI_Model
 {
     function __construct()
     {
@@ -33,7 +33,9 @@ class Memeber_m extends CI_Model
     function get_list($table='prq_member', $type='', $offset='', $limit='', $search_word='')
     {
 		$sword= ' WHERE 1=1 ';
-
+		if($table==""){
+		$table='prq_member';
+		}
 		if ( $search_word != '' )
      	{
      		//검색어가 있을 경우의 처리
@@ -47,9 +49,9 @@ class Memeber_m extends CI_Model
      		//페이징이 있을 경우의 처리
      		$limit_query = ' LIMIT '.$offset.', '.$limit;
      	}
-		$table='ci_board';
+//		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table." ".$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY mb_no DESC".$limit_query;
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )
@@ -79,10 +81,10 @@ class Memeber_m extends CI_Model
     function get_view($table, $id)
     {
     	//조회수 증가
-    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
-   		$this->db->query($sql0);
+//    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
+//   		$this->db->query($sql0);
 
-    	$sql = "SELECT * FROM ".$table." WHERE board_id='".$id."'";
+    	$sql = "SELECT * FROM ".$table." WHERE mb_no='".$id."'";
    		$query = $this->db->query($sql);
 
      	//게시물 내용 반환
@@ -106,7 +108,7 @@ class Memeber_m extends CI_Model
 			'mb_addr1' => $arrays['mb_addr1'],
 			'mb_addr2' => $arrays['mb_addr2'],
 			'mb_addr3' => $arrays['mb_addr3'],
-			'password' => $arrays['password'],
+			'mb_password' => $arrays['mb_password'],
 			'mb_hp' => $arrays['mb_hp'],
 			'mb_business_num' => $arrays['mb_business_num'],
 			'mb_exactcaculation_ratio' => $arrays['mb_exactcaculation_ratio'],
@@ -222,7 +224,7 @@ class Memeber_m extends CI_Model
 	 */
     function get_comment($table, $id)
     {
-    	$sql = "SELECT * FROM ".$table." WHERE board_pid='".$id."' ORDER BY board_id DESC";
+    	$sql = "SELECT * FROM ".$table." WHERE mb_no='".$id."' ORDER BY mb_no DESC";
    		$query = $this->db->query($sql);
 
      	//댓글 리스트 반환

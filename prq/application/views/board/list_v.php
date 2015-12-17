@@ -23,39 +23,95 @@
 
 		<div class="container-fluid">
 
-
-	<div class="row">
-
-
-<?php
+    <div class='row'>
+	<?php
 			echo form_open('prq/board/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
 ?>
 			<!--form id="bd_search" method="post" class="well form-search" -->
 
-<div class="row">
-		<div class="row col-lg-6">
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-		</div>
-</div>
-<div class="row">
-		<div class="row col-lg-6">
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-				<input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" class="input-medium search-query" /> 
-		</div>
-</div>
-<div class="row">
-		<div class="row col-lg-12">
-				<input type="button" value="검색" id="search_btn" class="btn btn-primary" />
-		</div>
-</div>
+		<?php 
+			$attributes = array(
+				'class' => 'form-horizontal', 
+				'id' => 'write_action'
+			);
+//			echo form_open('board/write/ci_board', $attributes);
+echo form_open_multipart('/dropzone/upload', $attributes);
 
+		?>
+
+		<!-- id="my-awesome-dropzone" class="" -->
+        <div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>총판 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div><!-- .ibox-title -->
+                        <div class="ibox-content">
+    <div class='row'>
+        <div class='col-sm-6'>    
+            <div class='form-group'>
+                <label for="user_title">등록일자</label>
+                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+        <div class='col-sm-6'>
+            <div class='form-group'>
+                <label for="user_firstname">상태</label>
+                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+    </div><!-- .row -->
+    <div class='row'>
+        <div class='col-sm-6'>    
+            <div class='form-group'>
+                <label for="user_title">총판명</label>
+                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+        <div class='col-sm-6'>
+            <div class='form-group'>
+                <label for="user_firstname">총판ID</label>
+                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+    </div><!-- .row -->
+    <div class='row'>
+        <div class='col-sm-12'>
+            <div class='form-group'>
+                <label for="user_email">총판 목록</label>
+                <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
+            </div>
+        </div>
+    </div><!-- .row -->
+    <div class='row'>
+	<div class='col-sm-12 right'>
+            <div class='form-group'><input type="button" value="검색" id="search_btn" class="btn btn-primary" /> </div>
+        </div>
+    </div>
 			</form><!-- #bd_search -->
+</div>
+	</div>
+	</div><!-- .row -->
 
+<div class='row'>
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
@@ -77,14 +133,14 @@ foreach ($list as $lt)
 ?>
 				<tr>
 					<td scope="col"><input type="checkbox" name="chk_"></td>
-					<td scope="row"><?php echo $lt->board_id;?>
-					</td>
+					<td scope="row"><?php echo $lt->mb_no;?></td>
 					<td>
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->board_id;?>/page/<?php echo $page;?>"><?php echo $lt->subject;?></a></td>
-					<td><?php echo $lt->user_name;?></td>
-					<!-- <td><?php echo $lt->hits;?></td> -->
-<!-- 					<td><time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>"><?php echo mdate("%M. %j, %Y", human_to_unix($lt->reg_date));?></time></td> -->
- 					<td><time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>"><?php echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?></time></td> 
+					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_business_paper;?></a></td>
+					<td><?php echo $lt->mb_id;?></td>
+					<td><?php echo $lt->mb_id;?></td>
+ 					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
+					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
+					<?php echo $lt->mb_business_paper;?>	</td>
  					<td>총판</td> 
  					<td>46</td> 
  					<td>정상</td> 
@@ -102,12 +158,8 @@ foreach ($list as $lt)
 				</tr>
 			</tfoot>
 		</table>
-
-
-
 </div>
-		<div><p><a href="/prq/board/write/prq_member/page/<?php echo $this->uri->segment(5);?>" class="btn btn-success">쓰기</a></p></div>
+<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="/prq/board/write/prq_member/page/<?php echo $this->uri->segment(5);?>" class="btn btn-success">쓰기</a></div></div>
 	</article>
-</div>
-</div>
-</div><!-- .container-fluid -->
+
+	

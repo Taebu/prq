@@ -5,7 +5,7 @@
             <div>
                 <strong>Copyright</strong> ANP Company &copy; 2014-2015
             </div>
-        </div>
+        </div><!-- .footer -->
         </div>
         <div id="right-sidebar">
             <div class="sidebar-container">
@@ -384,8 +384,8 @@
 
 
 
-        </div>
-    </div>
+        </div><!-- #right-sidebar -->
+    </div><!-- #wrapper -->
 
     <!-- Mainly scripts -->
 
