@@ -285,7 +285,7 @@
                     <li class="active">
                         <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/board/lists/prq_member/">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
                     <li>

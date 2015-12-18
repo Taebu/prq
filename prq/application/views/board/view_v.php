@@ -276,7 +276,7 @@
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">대표자 명</label>
-                                    <div class="col-sm-10"><?php echo $views->mb_password;?> <span class="help-block m-b-none">대표자명을 기입해 주세요..</span>
+                                    <div class="col-sm-10"><?php echo $views->mb_ceoname;?> <span class="help-block m-b-none">대표자명을 기입해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -313,8 +313,8 @@
 							<div class="col-md-6">
 								<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
                                     <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<?php echo $views->mb_business_paper;?>
-									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"사업자등록증"을 드래그 하거나 선택해 주세요.</span>
+									<img src="/prq/uploads/<?php echo $views->mb_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -322,10 +322,10 @@
 								<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<?php echo $views->mb_business_paper;?>
+									<img src="/prq/uploads/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 												<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 												<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"총판 계약서"를 드래그 하거나 선택해 주세요.</span>
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -336,18 +336,16 @@
 
 									<div class="dz-default dz-message"></div>
 									</div><!-- #my-awesome-dropzone3 -->
-									<?php echo $views->mb_business_paper;?>
+									<img src="/prq/uploads/<?php echo $views->mb_bank_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 									<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
   
-									<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"통장 사본"을 드래그 하거나 선택해 주세요.</span>
+									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-                                    <div class="col-sm-10"><?php echo $views->mb_bankname;?>
-<input type="text" class="form-control" name="mb_bankname"> <span class="help-block m-b-none">"거래은행"을 기입해 주세요..</span>
-                                    </div><!-- .col-sm-10 -->
+                                    <div class="col-sm-10"><?php echo $views->mb_bankname;?></div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
@@ -374,10 +372,9 @@
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
 		      </div>
 
-<div class="form-group">
+								<div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-                                        <button class="btn btn-white" type="reset">취소</button>
-
+<a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
                                     </div>
                                 </div>
 				<!-- 						      <div class="form-actions">
@@ -391,7 +388,7 @@
 									<textarea id="form_data">#form_data</textarea><!-- #form_data -->
 								</div></div>
 							</div><!-- .col-md-6 Right Menu-->
-							                                        <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button>
+
 							</div><!-- .row -->
 						</div><!-- .ibox-content -->
                     </div><!-- .ibox float-e-margins -->

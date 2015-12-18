@@ -249,7 +249,7 @@
 
 		Dropzone.autoDiscover = false;
 
-
+		
 		function set_dropzone_config(id)
 		{
 			var file_key=[];
@@ -291,6 +291,23 @@
 			dictResponseError: "Ha ocurrido un error en el server",
 			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
 			 init: function() {
+				
+				var mode=$("#mode").val();
+
+				if(mode=="modify"){
+					var thisDropzone=this;
+					var object=[];
+					object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});
+					console.log(object);
+					$.each(object,function(key,value){
+						var mockfile={name:value.name,size:value.size};
+						$("#"+id).val(value.name);
+						$("#"+id+"_size").val(value.size);
+						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+value.name);
+					});
+				}
+
 				this.on("addedfile", function() {
 				  if (this.files[1]!=null){
 
@@ -313,6 +330,7 @@
 					$.each(data,function(key,value){
 						var mockfile={name:value.name,size:value.size};
 						$("#"+id).val(value.name);
+						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+value .name);
 					});

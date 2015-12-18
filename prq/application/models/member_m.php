@@ -102,27 +102,28 @@ class Member_m extends CI_Model
 	 */
 	function insert_board($arrays)
  	{
-		$insert_array = array(
-			'mb_id' => $arrays['mb_id'],
-			'mb_email' => $arrays['mb_email'],
-			'mb_addr1' => $arrays['mb_addr1'],
-			'mb_addr2' => $arrays['mb_addr2'],
-			'mb_addr3' => $arrays['mb_addr3'],
-			'mb_password' => $arrays['mb_password'],
-			'mb_hp' => $arrays['mb_hp'],
-			'mb_business_num' => $arrays['mb_business_num'],
-			'mb_exactcaculation_ratio' => $arrays['mb_exactcaculation_ratio'],
-			'mb_bankname' => $arrays['mb_bankname'],
-			'mb_banknum' => $arrays['mb_banknum'],
-			'mb_bankholder' => $arrays['mb_bankholder'],
-			'mb_bigo' => $arrays['mb_bigo'],
-			'mb_business_paper' => $arrays['mb_business_paper'],
-			'mb_distributors_paper' => $arrays['mb_distributors_paper'],
-			'mb_bank_paper' => $arrays['mb_bank_paper']
-		);
-
-		$result = $this->db->insert($arrays['table'], $insert_array);
-
+			$sql_array=array();
+			$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
+			$sql_array[]="mb_id='".$arrays['mb_id']."',";
+			$sql_array[]="mb_email ='".$arrays['mb_email']."',";
+			$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
+			$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
+			$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
+			$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
+			$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
+			$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
+			$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
+			$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
+			$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
+			$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
+			$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
+			$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
+			$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
+			$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
+			$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+			$sql_array[]="mb_datetime=now();";
+		$sql=join("",$sql_array);
+		$result = $this->db->query($sql);
 		//결과 반환
 		return $result;
  	}
@@ -136,6 +137,7 @@ class Member_m extends CI_Model
 	 */
 	function modify_board($arrays)
  	{
+/*
 		$modify_array = array(
 				'subject' => $arrays['subject'],
 				'contents' => $arrays['contents']
@@ -146,7 +148,34 @@ class Member_m extends CI_Model
 		);
 
 		$result = $this->db->update($arrays['table'], $modify_array, $where);
+*/
 
+		$sql_array=array();
+		$sql_array[]="UPDATE ".$arrays['table']." SET ";
+//		$sql_array[]="mb_id='".$arrays['mb_id']."',";
+		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
+		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
+		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
+		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
+		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
+		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
+		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
+		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
+		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
+		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
+		$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
+		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
+		$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
+		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
+		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
+		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
+		$sql_array[]="mb_distributors_paper_size ='".$arrays['mb_distributors_paper_size']."',";
+		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
+		$sql_array[]="mb_datetime=now() ";
+		$sql_array[]="where mb_no='".$arrays['mb_no']."' ";
+		$sql=join("",$sql_array);
+		$result = $this->db->query($sql);
 		//결과 반환
 		return $result;
  	}
@@ -181,7 +210,7 @@ class Member_m extends CI_Model
 	 */
 	function writer_check($table, $board_id)
 	{
-		$sql = "SELECT user_id FROM ".$table." WHERE board_id = '".$board_id."'";
+		$sql = "SELECT mb_id FROM ".$table." WHERE mb_no = '".$board_id."'";
 
 		$query = $this->db->query($sql);
 

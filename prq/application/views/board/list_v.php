@@ -135,9 +135,9 @@ foreach ($list as $lt)
 					<td scope="col"><input type="checkbox" name="chk_"></td>
 					<td scope="row"><?php echo $lt->mb_no;?></td>
 					<td>
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_business_paper;?></a></td>
+					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
 					<td><?php echo $lt->mb_id;?></td>
-					<td><?php echo $lt->mb_id;?></td>
+					<td></td>
  					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
 					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
 					<?php echo $lt->mb_business_paper;?>	</td>
@@ -159,7 +159,9 @@ foreach ($list as $lt)
 			</tfoot>
 		</table>
 </div>
+</div>
+</div>
 <div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="/prq/board/write/prq_member/page/<?php echo $this->uri->segment(5);?>" class="btn btn-success">쓰기</a></div></div>
 	</article>
-
+</div>
 	

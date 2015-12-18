@@ -142,6 +142,9 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	/*
+	fn logout();
+	로그 아웃을 합니다.	*/
 	public function logout()
 	{
 		$this->load->helper('alert');
@@ -198,6 +201,21 @@ class Auth extends CI_Controller {
   		exit;
 	}
 
+	/**
+	 * 아이디 중복 체크
+	 */
+	public function chk_id()
+	{
+		$this->load->helper('alert');
+		$auth_data = array(
+		'mb_id' => $this->input->post('mb_id', TRUE)
+		);
+		$result = $this->auth_m->chk_id($auth_data);
+		$json=array();
+		$json['success']=$result;
+		//alert('체크.'.$result."  ->".$this->input->post('mb_id', TRUE), '/prq/');
+		echo  json_encode($json);
+	}
 }
 
 /* End of file auth.php */

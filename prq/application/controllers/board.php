@@ -183,8 +183,8 @@ class Board extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('mb_id', '제목', 'required');
-			$this->form_validation->set_rules('mb_password', '내용', 'required');
+			$this->form_validation->set_rules('mb_id', '아이디', 'required');
+			$this->form_validation->set_rules('mb_password', '비밀번호', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -217,10 +217,11 @@ class Board extends CI_Controller {
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
 					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
-					'mb_addr3' => $this->input->post('mb_add3', TRUE),
-					'mb_password' => $this->input->post('mb_passsword', TRUE),
+					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
+					'mb_password' => $this->input->post('mb_password', TRUE),
 					'mb_hp' => $this->input->post('mb_hp', TRUE),
-					'mb_business_num' => $this->input->post('mb_business', TRUE),
+					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
+					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
 					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
 					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
 					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
@@ -229,6 +230,9 @@ class Board extends CI_Controller {
 					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
 					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
 					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
+					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
+					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
+					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE),
 				);
 //				$result = $this->board_m->insert_board($write_data);
 
@@ -285,24 +289,24 @@ class Board extends CI_Controller {
 		if( @$this->session->userdata('logged_in') == TRUE )
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
-			$writer_id = $this->board_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
-
+			$writer_id = $this->member_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+/*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
 				alert('본인이 작성한 글이 아닙니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
 			}
-
+*/
 			//폼 검증 라이브러리 로드
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('subject', '제목', 'required');
-			$this->form_validation->set_rules('contents', '내용', 'required');
+			$this->form_validation->set_rules('mb_addr1', '주소1', 'required');
+			$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
-				if ( !$this->input->post('subject', TRUE) AND !$this->input->post('contents', TRUE) )
+				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
 					alert('비정상적인 접근입니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
@@ -310,6 +314,7 @@ class Board extends CI_Controller {
 				}
 
 				//var_dump($_POST);
+				/*
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'board_id' => $this->uri->segment(5), //게시물번호
@@ -317,7 +322,35 @@ class Board extends CI_Controller {
 					'contents' => $this->input->post('contents', TRUE)
 				);
 
-				$result = $this->board_m->modify_board($modify_data);
+				$result = $this->member_m->modify_board($modify_data);
+*/
+				$modify_data = array(
+					'table' => $this->uri->segment(3), //게시판 테이블명
+					'mb_no' => $this->uri->segment(5), //게시판 번호
+					'mb_id' => $this->input->post('mb_id', TRUE),
+					'mb_email' => $this->input->post('mb_email', TRUE),
+					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
+					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
+					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
+					'mb_password' => $this->input->post('mb_password', TRUE),
+					'mb_hp' => $this->input->post('mb_hp', TRUE),
+					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
+					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
+					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
+					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
+					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
+					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
+					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
+					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
+					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
+					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
+					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
+					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
+					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
+				);
+//				$result = $this->board_m->insert_board($write_data);
+
+				$result = $this->member_m->modify_board($modify_data);
 
 				if ( $result )
 				{
@@ -336,7 +369,7 @@ class Board extends CI_Controller {
 			else
 			{
 				//게시물 내용 가져오기
-				$data['views'] = $this->board_m->get_view($this->uri->segment(3), $this->uri->segment(5));
+				$data['views'] = $this->member_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 
 				//쓰기폼 view 호출
 				$this->load->view('board/modify_v', $data);
@@ -364,7 +397,7 @@ class Board extends CI_Controller {
 			$table = $this->uri->segment(3);
 			$board_id = $this->uri->segment(5);
 
-			$writer_id = $this->board_m->writer_check($table, $board_id);
+			$writer_id = $this->member_m->writer_check($table, $board_id);
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
@@ -373,7 +406,7 @@ class Board extends CI_Controller {
 			}
 
 			//게시물 번호에 해당하는 게시물 삭제
-			$return = $this->board_m->delete_content($this->uri->segment(3), $this->uri->segment(5));
+			$return = $this->member_m->delete_content($this->uri->segment(3), $this->uri->segment(5));
 
 			//게시물 목록으로 돌아가기
 			if ( $return )
