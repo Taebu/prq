@@ -48,7 +48,9 @@ class Member_m extends CI_Model
      	{
      		//페이징이 있을 경우의 처리
      		$limit_query = ' LIMIT '.$offset.', '.$limit;
-     	}
+     	}else{
+		
+		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY mb_no DESC".$limit_query;
@@ -95,39 +97,82 @@ class Member_m extends CI_Model
 
 	/**
 	 * 게시물 입력
-	 *
 	 * @author Jongwon Byun <advisor@cikorea.net>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
 	function insert_board($arrays)
  	{
-			$sql_array=array();
-			$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
-			$sql_array[]="mb_id='".$arrays['mb_id']."',";
-			$sql_array[]="mb_email ='".$arrays['mb_email']."',";
-			$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
-			$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
-			$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
-			$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-			$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
-			$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
-			$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
-			$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
-			$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
-			$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
-			$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
-			$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
-			$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
-			$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
-			$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
-			$sql_array[]="mb_datetime=now();";
+		$sql_array = array(
+			'mb_pcode' => $arrays['mb_pcode']
+		);
+
+		$mb_code=get_code($arrays);
+
+		$sql_array=array();
+		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
+		$sql_array[]="mb_id='".$arrays['mb_id']."',";
+		$sql_array[]="mb_code='".$mb_code."',";
+		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
+		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
+		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
+		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
+		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
+		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
+		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
+		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
+		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
+		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
+		$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
+		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
+		$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
+		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
+		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
+		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+		$sql_array[]="mb_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환
 		return $result;
  	}
 
+	/**
+	 * 멤버의 회원 가입 코드를 가져온다. 
+	 * 1. 조회 : 기존 코드의 최대값을 조회
+	 * 2. 실제 적용될 코드값 조회
+
+	 *
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param array $arrays 멤버아이디 , 멤버가입코드
+	 * @return row 입력 성공한 코드 반환.
+	 */
+	function get_code($arrays)
+ 	{
+		/* 1. 조회 : 기존 코드의 최대값+1 을 조회 */
+		$sql_array=array();
+		$sql_array[]="SELECT MAX(mb_no)+1 mb_no FROM prq_member_code where ";
+		$sql_array[]="`mb_pcode`='".$arrays['mb_pcode']."';";
+
+		$sql=join("",$sql_array);
+		$query = $this->db->query($sql);
+		$row = $query->row();
+		$mb_no=$row->mb_no;
+
+		/* 2. 실제 적용될 코드값 조회 */
+		$sql_array=array();
+		$sql_array[]="select ";
+		$sql_array[]="concat('".$arrays['mb_pcode']."',";
+		$sql_array[]="substring(10000+".$mb_no.",2,5)) ";
+		$sql_array[]="mb_code;";
+
+		$sql=join("",$sql_array);
+		$query = $this->db->query($sql);
+		$row = $query->row();
+		$result=$row->mb_code;
+
+		//결과 반환
+		return $result;
+ 	}
 	/**
 	 * 게시물 수정
 	 *
@@ -191,7 +236,7 @@ class Member_m extends CI_Model
 	function delete_content($table, $no)
  	{
 		$delete_array = array(
-				'board_id' => $no
+			'board_id' => $no
 		);
 
 		$result = $this->db->delete($table, $delete_array);

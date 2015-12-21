@@ -201,6 +201,11 @@ class Board extends CI_Controller {
 					$pages = 1;
 				}
 
+				$get_code_data= array(
+					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
+				);
+				$mb_code = $this->member_m->get_code($get_code_data);
+
 /*
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
@@ -209,7 +214,7 @@ class Board extends CI_Controller {
 					'user_id' => $this->session->userdata('username'),
 					'user_name' => $this->session->userdata('name'),
 				);
-*/
+*/				
 
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
@@ -234,12 +239,14 @@ class Board extends CI_Controller {
 					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
 					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE),
 				);
-//				$result = $this->board_m->insert_board($write_data);
+				//$result = $this->board_m->insert_board($write_data);
 
 				$result = $this->member_m->insert_board($write_data);
 
 				if ( $result )
 				{
+					/*성공시 insert 코드 */
+					$result = $this->member_m->insert_code($write_data);
 					//글 작성 성공시 게시판 목록으로
 					alert('입력되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
