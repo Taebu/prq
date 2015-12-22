@@ -201,10 +201,10 @@ class Board extends CI_Controller {
 					$pages = 1;
 				}
 
-				$get_code_data= array(
-					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
-				);
-				$mb_code = $this->member_m->get_code($get_code_data);
+//				$get_code_data= array(
+//					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
+//				);
+//				$mb_code = $this->member_m->get_code($get_code_data);
 
 /*
 				$write_data = array(
@@ -219,6 +219,8 @@ class Board extends CI_Controller {
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'mb_id' => $this->input->post('mb_id', TRUE),
+					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
+					'mb_code' => $this->input->post('mb_code', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
 					'mb_addr2' => $this->input->post('mb_addr2', TRUE),

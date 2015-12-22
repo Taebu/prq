@@ -15,6 +15,12 @@
 			var keycode = window.event.keyCode;
 			if(keycode == 13) $("#search_btn").click();
 		}
+
+		function set_write(){
+		$('#bd_search').attr('action', "/prq/board/write/prq_member/page/1");
+          $("#bd_search").submit();		
+		
+		}
 	</script>
 	<article id="board_area">
 		<header>
@@ -29,23 +35,15 @@
 ?>
 			<!--form id="bd_search" method="post" class="well form-search" -->
 
-		<?php 
-			$attributes = array(
-				'class' => 'form-horizontal', 
-				'id' => 'write_action'
-			);
-//			echo form_open('board/write/ci_board', $attributes);
-echo form_open_multipart('/dropzone/upload', $attributes);
-
-		?>
-
+<input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
+<input type="hidden" name="mb_code" id="mb_code" value="DS">
 		<!-- id="my-awesome-dropzone" class="" -->
         <div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>총판 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -82,13 +80,13 @@ echo form_open_multipart('/dropzone/upload', $attributes);
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="user_title">총판명</label>
+                <label for="user_title"><span class="mb_gname">총판</span>명</label>
                 <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="user_firstname">총판ID</label>
+                <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
                 <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
@@ -96,7 +94,7 @@ echo form_open_multipart('/dropzone/upload', $attributes);
     <div class='row'>
         <div class='col-sm-12'>
             <div class='form-group'>
-                <label for="user_email">총판 목록</label>
+                <label for="user_email"><span class="mb_gname">총판</span> 목록</label>
                 <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
             </div>
         </div>
@@ -112,17 +110,25 @@ echo form_open_multipart('/dropzone/upload', $attributes);
 	</div><!-- .row -->
 
 <div class='row'>
+		<?php 
+			$attributes = array(
+				'class' => 'form-horizontal', 
+				'id' => 'write_action'
+			);
+			echo form_open('board/write/ci_board', $attributes);
+		?>
+	<div class='col-sm-12'>
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
 					<th scope="col"><input type="checkbox" name="chk_"></th>
 					<th scope="col">No</th>
 					<th scope="col">등록일자</th>
-					<th scope="col">총판ID</th>
-					<th scope="col">총판코드</th>
+					<th scope="col"><span class="mb_gname">총판</span>ID</th>
+					<th scope="col"><span class="mb_gname">총판</span>코드</th>
 					<th scope="col">구분</th>
 					<th scope="col">대리점</th>
-					<th scope="col">총판상태</th>
+					<th scope="col"><span class="mb_gname">총판</span>상태</th>
 					<th scope="col">비고</th>
 				</tr>
 			</thead>
@@ -141,7 +147,7 @@ foreach ($list as $lt)
  					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
 					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
 					<?php echo $lt->mb_business_paper;?>	</td>
- 					<td>총판</td> 
+ 					<td><span class="mb_gname">총판</span></td> 
  					<td>46</td> 
  					<td>정상</td> 
  					<td>-</td> 
@@ -161,7 +167,7 @@ foreach ($list as $lt)
 </div>
 </div>
 </div>
-<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="/prq/board/write/prq_member/page/<?php echo $this->uri->segment(5);?>" class="btn btn-success">쓰기</a></div></div>
+<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
 	</article>
 </div>
 	

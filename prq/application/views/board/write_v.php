@@ -1,15 +1,15 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2>총판 등록Basic Form</h2>
+<h2><span class="mb_gname">총판</span> 등록</h2>
 <ol class="breadcrumb">
 <li>
 <a href="index.html">Home</a>
 </li>
 <li>
-<a>총판관리</a>
+<a><span class="mb_gname">총판</span>관리</a>
 </li>
 <li class="active">
-<strong>총판 등록 Basic Form</strong>
+<strong><span class="mb_gname">총판</span> 등록</strong>
 </li>
 </ol>
 </div>
@@ -29,6 +29,9 @@ echo form_open('/board/write/prq_member', $attributes);
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
+<input type="hidden" name="is_member" id="is_member">
+<input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+<input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
@@ -36,7 +39,7 @@ echo form_open('/board/write/prq_member', $attributes);
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5>총판 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+<h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
 <div class="ibox-tools">
 <a class="collapse-link">
 <i class="fa fa-chevron-up"></i>
@@ -60,8 +63,11 @@ echo form_open('/board/write/prq_member', $attributes);
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist">총판아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 아이디
+
+
+</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">총판</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -123,7 +129,7 @@ echo form_open('/board/write/prq_member', $attributes);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 정산비율</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"> <span class="help-block m-b-none">정산 비율</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -139,12 +145,12 @@ echo form_open('/board/write/prq_member', $attributes);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 계약서</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 <!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 <!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"총판 계약서"를 드래그 하거나 선택해 주세요.</span>
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"<span class="mb_gname">총판</span> 계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -220,7 +226,7 @@ echo form_open('/board/write/prq_member', $attributes);
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
 /*
-server에 총판을 등록 합니다.
+server에 <span class="mb_gname">총판</span>을 등록 합니다.
 
 */
 function set_ds(){
@@ -248,10 +254,8 @@ type: "POST",
 data:"mb_id="+mb_id,
 dataType:"json",
 success: function(data) {
-	result=data.success;
-	
-	return result;
-}
+	$("#is_member").val(data.success);	
+	}
 });
 
 
@@ -265,13 +269,15 @@ function chk_vali_id(){
 focus++; 
 var object=[];
 var mb_id=$("#mb_id").val();
+chk_duplicate_id(mb_id);
+
 if (mb_id.length<4)
 {
 object.push("<span  class=\"text-danger\">");
 object.push("아이디 길이가 너무 적습니다. 4자 이상");
 $("#is_join").val("FALSE");
 //}else if ($( "#mb_id" ).val()!="erm00")	{
-}else if (chk_duplicate_id(mb_id)){
+}else if ($("#is_member").val()){
 object.push("<span  class=\"text-success\">");
 object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
 $("#is_join").val("TRUE");
@@ -284,11 +290,24 @@ object.push("</span>");
 $( "#mb_id_assist" ).html(object.join(""));
 }
 
+/*mb_code로 등록 정보 변경*/
+function chg_gname(){
+	var chk_code=$("#mb_code").val();
+	switch (chk_code)
+	{
+	case "DS":
+	$(".mb_gname").html("총판");
+	break;
+	case "PT":
+	$(".mb_gname").html("대리점");
+	break;
+	case "FR":
+	$(".mb_gname").html("가맹점");
+	break;
+	}
+}
 
 window.onload = function() {
-
-
-
 
 $( "#mb_id" ).focusout(function() {
 chk_vali_id();
@@ -313,5 +332,9 @@ console.log(data);
 });		
 
 }
-};
+/*mb_code로 등록 정보 변경*/
+chg_gname();
+};/*window.onload = function() {..}*/
+
+
 </script>

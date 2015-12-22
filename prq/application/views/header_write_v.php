@@ -45,7 +45,24 @@
 	<link href="/prq/include/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/prq/include/css/plugins/dropzone/dropzone.css" rel="stylesheet">
 
-
+<script type="text/javascript">
+function set_menu_write(id){
+//	var chk_code=$("#mb_code").val();
+	switch (id)
+	{
+	case "DS":
+	$(".mb_gname").html("총판");
+	break;
+	case "PT":
+	$(".mb_gname").html("대리점");
+	break;
+	case "FR":
+	$(".mb_gname").html("가맹점");
+	break;
+	}
+	$("#mb_code").val(id);
+}
+</script>
 </head>
 
 <body>
@@ -306,21 +323,47 @@
                             PRQ
                         </div>
                     </li>
-                    <li class="active">
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
+					<?php if($this->input->post('mb_code',TRUE)=="DS"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?>
+                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/board/lists/prq_member/">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="javascript:set_menu_write('DS');">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                        </ul>
+                    </li>
+					<?php if($this->input->post('mb_code',TRUE)=="PT"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?>
+                        <a href="#">
+						<i class="fa fa-th-large"></i>
+						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="javascript:set_menu_write('PT');">대리점 목록</a></li>
+                        </ul>
+                    </li>
+                    </li>
+					<?php if($this->input->post('mb_code',TRUE)=="FR"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="active"><a href="javascript:set_menu_write('FR');">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">
-						<i class="fa fa-diamond"></i>
-						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">대리점</span><span class="fa arrow"></span></a>
+						<i class="fa fa-pie-chart"></i>
+						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="graph_flot.html">대리점 목록</a></li>
+                            <li><a href="graph_flot.html">상점 목록</a></li>
                         </ul>
                     </li>
-
 				</ul>
             </div>
         </nav>

@@ -207,12 +207,15 @@ class Auth extends CI_Controller {
 	public function chk_id()
 	{
 		$this->load->helper('alert');
+		$mb_id=$this->input->post('mb_id', TRUE);
 		$auth_data = array(
 		'mb_id' => $this->input->post('mb_id', TRUE)
 		);
 		$result = $this->auth_m->chk_id($auth_data);
 		$json=array();
 		$json['success']=$result;
+		$json['mb_id']=$mb_id;
+		
 		//alert('체크.'.$result."  ->".$this->input->post('mb_id', TRUE), '/prq/');
 		echo  json_encode($json);
 	}

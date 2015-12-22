@@ -95,6 +95,8 @@ class Member_m extends CI_Model
     	return $result;
     }
 
+
+
 	/**
 	 * 게시물 입력
 	 * @author Jongwon Byun <advisor@cikorea.net>
@@ -107,12 +109,21 @@ class Member_m extends CI_Model
 			'mb_pcode' => $arrays['mb_pcode']
 		);
 
-		$mb_code=get_code($arrays);
-
+		$mb_code=$this->get_code($arrays);
+		$prq_code=$this->get_member_code($arrays['mb_pcode']);
+		/*
+		$prq_code['mb_gcode']: G8
+		mb_code: TS0000
+		mb_gname_eng:
+		mb_gname_kor:
+		*/
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_code='".$mb_code."',";
+		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";
+		$sql_array[]="mb_gname_eng='".$prq_code->mb_gname_eng."',";
+		$sql_array[]="mb_gname_kor='".$prq_code->mb_gname_kor."',";
 		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
 		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
@@ -129,6 +140,43 @@ class Member_m extends CI_Model
 		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
 		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
 		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+		$sql_array[]="mb_datetime=now();";
+		$sql=join("",$sql_array);
+		$result = $this->db->query($sql);
+		//결과 반환
+		return $result;
+ 	}
+
+	/**
+	 * 회원 코드 입력
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
+	 * @return boolean 입력 성공여부
+	 */
+	function insert_code($arrays)
+ 	{
+
+		/*
+		$prq_code['mb_gcode']: G8
+		mb_code: TS0000
+		mb_gname_eng:
+		mb_gname_kor:
+		
+mysql> select * from prq_member_code;
++-------+---------+-------+----------+---------------------+
+| mb_no | mb_code | mb_id | mb_pcode | mb_datetime         |
++-------+---------+-------+----------+---------------------+
+|     1 | DS0001  | erm00 | DS       | 2015-12-21 12:30:40 |
+|     2 | DS0002  | erm01 | DS       | 2015-12-21 12:31:14 |
+|     1 | AD0001  | admin | AD       | 2015-12-21 12:32:23 |
++-------+---------+-------+----------+---------------------+
+
+		*/
+		$sql_array=array();
+		$sql_array[]="INSERT INTO prq_member_code SET ";
+		$sql_array[]="mb_id='".$arrays['mb_id']."',";
+		$sql_array[]="mb_code='".$arrays['mb_code']."',";
+		$sql_array[]="mb_pcode='".$arrays['mb_pcode']."',";
 		$sql_array[]="mb_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
@@ -172,6 +220,33 @@ class Member_m extends CI_Model
 
 		//결과 반환
 		return $result;
+ 	}
+
+	/**
+	 * 멤버의 회원 가입 코드를 가져온다. 
+	 * 1. 조회 : 기존 코드의 최대값을 조회
+	 * 2. 실제 적용될 코드값 조회
+
+	 *
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param array $arrays 멤버아이디 , 멤버가입코드
+	 * @return row 입력 성공한 코드 반환.
+	 */
+	function get_member_code($code)
+ 	{
+//		if(isset($code)
+		/* 1. 조회 : 기존 코드의 최대값을 조회 */
+		$sql_array=array();
+		$sql_array[]="select * ";
+		$sql_array[]="from prq_code ";
+		$sql_array[]="where mb_pcode='".$code."';";
+
+		$sql=join("",$sql_array);
+		$query = $this->db->query($sql);
+		$row = $query->row();
+
+		//결과 반환
+		return $row;
  	}
 	/**
 	 * 게시물 수정
@@ -308,5 +383,5 @@ class Member_m extends CI_Model
     }
 }
 
-/* End of file board_m.php */
-/* Location: ./application/models/board_m.php */
+/* End of file member_m.php */
+/* Location: ./prq/application/models/member_m.php */
