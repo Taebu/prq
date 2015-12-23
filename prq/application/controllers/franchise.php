@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * 게시판 메인 controller.
- *
- * @author Jongwon, Byun <advisor@cikorea.net>
+ * 충판 메인 controller.
+ * 생성 : 2015-12-23 (수)
+ * @author Taebu,Moon<mtaebu@gmail.com>
  */
-class Board extends CI_Controller {
+class Franchise extends CI_Controller {
 
  	function __construct()
 	{
@@ -103,7 +103,7 @@ class Board extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/board/lists/prq_member'.$page_url.'/page/',
+		'base_url'=> '/prq/distributors/lists/prq_member'.$page_url.'/page/',
 		'total_rows' => $this->member_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,
@@ -147,7 +147,7 @@ class Board extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->member_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
-		$this->load->view('board/list_v', $data);
+		$this->load->view('distributors/list_v', $data);
 	}
 
 	/**
@@ -165,7 +165,7 @@ class Board extends CI_Controller {
  		$data['comment_list'] = $this->member_m->get_comment($table, $board_id);
 
  		//view 호출
- 		$this->load->view('board/view_v', $data);
+ 		$this->load->view('distributors/view_v', $data);
  	}
 
  	/**
@@ -241,9 +241,9 @@ class Board extends CI_Controller {
 					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
 					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE),
 				);
-				//$result = $this->board_m->insert_board($write_data);
+				//$result = $this->distributors_m->insert_distributors($write_data);
 
-				$result = $this->member_m->insert_board($write_data);
+				$result = $this->member_m->insert_distributors($write_data);
 
 				if ( $result )
 				{
@@ -261,13 +261,13 @@ class Board extends CI_Controller {
 					);					
 					$result = $this->member_m->insert_code($write_data);
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -279,7 +279,7 @@ class Board extends CI_Controller {
 				$this->load->view('store/write_v');	
 				}else{
 				//쓰기폼 view 호출
-				$this->load->view('board/write_v');
+				$this->load->view('distributors/write_v');
 				}
 			}
 		}
@@ -318,7 +318,7 @@ class Board extends CI_Controller {
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/distributors_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
 			}
 */
@@ -334,7 +334,7 @@ class Board extends CI_Controller {
 				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
-					alert('비정상적인 접근입니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('비정상적인 접근입니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -342,12 +342,12 @@ class Board extends CI_Controller {
 				/*
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
-					'board_id' => $this->uri->segment(5), //게시물번호
+					'distributors_id' => $this->uri->segment(5), //게시물번호
 					'subject' => $this->input->post('subject', TRUE),
 					'contents' => $this->input->post('contents', TRUE)
 				);
 
-				$result = $this->member_m->modify_board($modify_data);
+				$result = $this->member_m->modify_distributors($modify_data);
 */
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
@@ -373,20 +373,20 @@ class Board extends CI_Controller {
 					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
 					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
 				);
-//				$result = $this->board_m->insert_board($write_data);
+//				$result = $this->distributors_m->insert_distributors($write_data);
 
-				$result = $this->member_m->modify_board($modify_data);
+				$result = $this->member_m->modify_distributors($modify_data);
 
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 
@@ -397,7 +397,7 @@ class Board extends CI_Controller {
 				$data['views'] = $this->member_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 
 				//쓰기폼 view 호출
-				$this->load->view('board/modify_v', $data);
+				$this->load->view('distributors/modify_v', $data);
 			}
 		}
 		else
@@ -426,7 +426,7 @@ class Board extends CI_Controller {
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 				exit;
 			}
 
@@ -437,12 +437,12 @@ class Board extends CI_Controller {
 			if ( $return )
 			{
 				//삭제가 성공한 경우
-				alert('삭제되었습니다.', '/prq/board/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
+				alert('삭제되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
 			}
 			else
 			{
 				//삭제가 실패한 경
-				alert('삭제 실패하였습니다.', '/prq/board/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('삭제 실패하였습니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 			}
 		}
 		else
@@ -496,5 +496,5 @@ class Board extends CI_Controller {
 	}
 }
 
-/* End of file board.php */
-/* Location: ./application/controllers/board.php */
+/* End of file franchise.php */
+/* Location: ./prq/application/controllers/franchise.php */

@@ -1,15 +1,15 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2><span class="mb_gname">총판</span> 등록</h2>
+<h2><span class="mb_gname">상점</span> 등록</h2>
 <ol class="breadcrumb">
 <li>
 <a href="index.html">Home</a>
 </li>
 <li>
-<a><span class="mb_gname">총판</span>관리</a>
+<a><span class="mb_gname">상점</span>관리</a>
 </li>
 <li class="active">
-<strong><span class="mb_gname">총판</span> 등록</strong>
+<strong><span class="mb_gname">상점</span> 등록</strong>
 </li>
 </ol>
 </div>
@@ -39,7 +39,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+<h5><span class="mb_gname">상점</span> 등록 정보 입니다. <small>상점의 정보 및 계약서를 작성해 주세요.</small></h5>
 <div class="ibox-tools">
 <a class="collapse-link">
 <i class="fa fa-chevron-up"></i>
@@ -153,7 +153,7 @@ if($mb_code=="PT"){?>
 <div class="col-md-6">
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
-<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
+<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message">사업자 등록증</div></div><!-- #my-awesome-dropzone1 -->
 <!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"사업자등록증"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -208,6 +208,36 @@ if($mb_code=="PT"){?>
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">상단문구(고정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">상단 문구 변하지 않습니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">하단문구(고정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">모두홈피 URL 주소 (수정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo" value="http://sjhero18.moodu.at"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
 </div>
@@ -216,9 +246,9 @@ if($mb_code=="PT"){?>
 <div class="col-sm-4 col-sm-offset-2">
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
 <button class="btn btn-white" type="reset">취소</button>
+</div><!-- .col-md-12 -->
+<!-- .row -->
 
-</div>
-</div>
 <!-- 						      <div class="form-actions">
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
 <button class="btn" onclick="document.location.reload()">취소</button>

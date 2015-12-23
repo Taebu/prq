@@ -25,25 +25,31 @@
 
 function set_menu_write(id){
 //	var chk_code=$("#mb_code").val();
+	$("#mb_code").val(id);
 	switch (id)
 	{
 	case "DS":
 	$(".mb_gname").html("총판");
 	$('#bd_search').attr('action', "/prq/board/lists/prq_member/page/1");
-	$("#bd_search").submit();		
+	$("#bd_search").submit();
 	break;
 	case "PT":
 	$(".mb_gname").html("대리점");
 	$('#bd_search').attr('action', "/prq/board/lists/prq_member/page/1");
-	$("#bd_search").submit();		
+	$("#bd_search").submit();
 	break;
 	case "FR":
 	$(".mb_gname").html("가맹점");
 	$('#bd_search').attr('action', "/prq/board/lists/prq_member/page/1");
-	$("#bd_search").submit();		
+	$("#bd_search").submit();
+	break;
+	case "ST":
+	$(".mb_gname").html("상점");
+	$('#bd_search').attr('action', "/prq/board/lists/prq_store/page/1");
+	$("#bd_search").submit();
 	break;
 	}
-	$("#mb_code").val(id);
+	
 }
 
 

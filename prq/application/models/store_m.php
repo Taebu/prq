@@ -12,7 +12,7 @@
  * @author Taebu,Moon <mtaebu@gmail.com>
  * @version 1.0
  */
-class Member_m extends CI_Model
+class Store_m extends CI_Model
 {
     function __construct()
     {
@@ -388,5 +388,5 @@ mysql> select * from prq_member_code;
     }
 }
 
-/* End of file member_m.php */
-/* Location: ./prq/application/models/member_m.php */
+/* End of file store_m.php */
+/* Location: ./prq/application/models/store_m.php */
