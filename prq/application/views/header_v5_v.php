@@ -319,45 +319,51 @@ function chg_gname(){
                             PRQ
                         </div>
                     </li>
-					<?php if($this->input->post('mb_code',TRUE)=="DS"){
+					<?php if($this->uri->segment(1)=="distributors"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
 					 }?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="javascript:set_menu_write('DS');">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/distributors/lists/">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
-					<?php if($this->input->post('mb_code',TRUE)=="PT"){
+					<?php if($this->uri->segment(1)=="partner"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
 					 }?>
+
                         <a href="#">
 						<i class="fa fa-th-large"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="javascript:set_menu_write('PT');">대리점 목록</a></li>
+                            <li><a href="/prq/partner/lists/">대리점 목록</a></li>
                         </ul>
                     </li>
                     </li>
-					<?php if($this->input->post('mb_code',TRUE)=="FR"){
+					<?php if($this->uri->segment(1)=="franchise"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
 					 }?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="javascript:set_menu_write('FR');">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/franchise/lists/">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
-                    <li>
+					<?php if($this->uri->segment(1)=="store"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?>
+
                         <a href="#">
 						<i class="fa fa-pie-chart"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="graph_flot.html">상점 목록</a></li>
+                            <li><a href="/prq/store/lists/">상점 목록</a></li>
                         </ul>
                     </li>
 				</ul>

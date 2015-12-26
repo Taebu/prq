@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * 충판 메인 controller.
+ * 상점 메인 controller.
  * 생성 : 2015-12-23 (수)
  * @author Taebu,Moon<mtaebu@gmail.com>
  */
@@ -96,14 +96,14 @@ class Store extends CI_Controller {
 
 		/*
 		$config['base_url'] = '/prq/board/lists/ci_board'.$page_url.'/page/'; //페이징 주소
-		$config['total_rows'] = $this->board_m->get_list($this->uri->segment(3), 'count', '', '', $search_word); //게시물의 전체 갯수
+		$config['total_rows'] = $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word); //게시물의 전체 갯수
 		$config['per_page'] = 10; //한 페이지에 표시할 게시물 수
 		$config['uri_segment'] = $uri_segment; //페이지 번호가 위치한 세그먼트
 		*/
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/distributors/lists/prq_member'.$page_url.'/page/',
+		'base_url'=> '/prq/store/lists/prq_member'.$page_url.'/page/',
 		'total_rows' => $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,
@@ -147,7 +147,7 @@ class Store extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->store_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
-		$this->load->view('distributors/list_v', $data);
+		$this->load->view('store/list_v', $data);
 	}
 
 	/**
@@ -165,7 +165,7 @@ class Store extends CI_Controller {
  		$data['comment_list'] = $this->store_m->get_comment($table, $board_id);
 
  		//view 호출
- 		$this->load->view('distributors/view_v', $data);
+ 		$this->load->view('store/view_v', $data);
  	}
 
  	/**
@@ -261,26 +261,21 @@ class Store extends CI_Controller {
 					);					
 					$result = $this->store_m->insert_code($write_data);
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
 			}
 			else
 			{
-				if($this->uri->segment(3)=="prq_store"){
 				//쓰기폼 view 호출
 				$this->load->view('store/write_v');	
-				}else{
-				//쓰기폼 view 호출
-				$this->load->view('distributors/write_v');
-				}
 			}
 		}
 		else
@@ -318,7 +313,7 @@ class Store extends CI_Controller {
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/distributors_id/'.$this->uri->segment(5).'/page/'.$pages);
+				alert('본인이 작성한 글이 아닙니다.', '/prq/store/view/'.$this->uri->segment(3).'/store_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
 			}
 */
@@ -334,7 +329,7 @@ class Store extends CI_Controller {
 				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
-					alert('비정상적인 접근입니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('비정상적인 접근입니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -380,13 +375,13 @@ class Store extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/store/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 
@@ -397,7 +392,7 @@ class Store extends CI_Controller {
 				$data['views'] = $this->store_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 
 				//쓰기폼 view 호출
-				$this->load->view('distributors/modify_v', $data);
+				$this->load->view('store/modify_v', $data);
 			}
 		}
 		else
@@ -426,7 +421,7 @@ class Store extends CI_Controller {
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('본인이 작성한 글이 아닙니다.', '/prq/store/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 				exit;
 			}
 
@@ -437,12 +432,12 @@ class Store extends CI_Controller {
 			if ( $return )
 			{
 				//삭제가 성공한 경우
-				alert('삭제되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
+				alert('삭제되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
 			}
 			else
 			{
 				//삭제가 실패한 경
-				alert('삭제 실패하였습니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('삭제 실패하였습니다.', '/prq/store/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 			}
 		}
 		else

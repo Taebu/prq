@@ -1,15 +1,15 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2><span class="mb_gname">총판</span> 등록</h2>
+<h2><span class="mb_gname">대리점</span> 등록</h2>
 <ol class="breadcrumb">
 <li>
 <a href="index.html">Home</a>
 </li>
 <li>
-<a><span class="mb_gname">총판</span>관리</a>
+<a><span class="mb_gname">대리점</span>관리</a>
 </li>
 <li class="active">
-<strong><span class="mb_gname">총판</span> 등록</strong>
+<strong><span class="mb_gname">대리점</span> 등록</strong>
 </li>
 </ol>
 </div>
@@ -23,7 +23,7 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-echo form_open('/board/write/prq_member', $attributes);
+echo form_open('/partner/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 ?>
@@ -39,7 +39,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+<h5><span class="mb_gname">대리점</span> 등록 정보 입니다. <small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
 <div class="ibox-tools">
 <a class="collapse-link">
 <i class="fa fa-chevron-up"></i>
@@ -348,7 +348,7 @@ chk_vali_id();
 });
 
 /*mb_code로 등록 정보 변경*/
-chg_gname();
+//chg_gname();
 };/*window.onload = function() {..}*/
 
 

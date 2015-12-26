@@ -12,7 +12,7 @@
  * @author Taebu,Moon <mtaebu@gmail.com>
  * @version 1.0
  */
-class Member_m extends CI_Model
+class Franchise_m extends CI_Model
 {
     function __construct()
     {

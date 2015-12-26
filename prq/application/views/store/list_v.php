@@ -5,7 +5,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/board/lists/ci_board/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/store/lists/ci_board/q/'+$("#q").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -17,7 +17,7 @@
 		}
 
 		function set_write(){
-		$('#bd_search').attr('action', "/prq/board/write/prq_member/page/1");
+		$('#bd_search').attr('action', "/prq/store/write/prq_member/page/1");
           $("#bd_search").submit();		
 		
 		}
@@ -31,19 +31,19 @@
 
     <div class='row'>
 	<?php
-			echo form_open('prq/board/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
+			echo form_open('prq/store/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
 ?>
 			<!--form id="bd_search" method="post" class="well form-search" -->
 
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
-<input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE)?$this->input->post('mb_code',TRUE):'DS';?>">
+<input type="hidden" name="mb_code" id="mb_code" value="ST">
 		<!-- id="my-awesome-dropzone" class="" -->
         <div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5><span class="mb_gname">상점</span>  리스트 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>

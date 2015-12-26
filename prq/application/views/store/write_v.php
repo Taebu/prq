@@ -23,7 +23,7 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-echo form_open('/board/write/prq_member', $attributes);
+echo form_open('/store/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 ?>
@@ -378,7 +378,7 @@ chk_vali_id();
 });
 
 /*mb_code로 등록 정보 변경*/
-chg_gname();
+//chg_gname();
 };/*window.onload = function() {..}*/
 
 

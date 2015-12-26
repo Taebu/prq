@@ -5,7 +5,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/board/lists/ci_board/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/partner/lists/ci_board/q/'+$("#q").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -17,7 +17,7 @@
 		}
 
 		function set_write(){
-		$('#bd_search').attr('action', "/prq/board/write/prq_member/page/1");
+		$('#bd_search').attr('action', "/prq/partner/write/prq_member/page/1");
           $("#bd_search").submit();		
 		
 		}
@@ -31,19 +31,19 @@
 
     <div class='row'>
 	<?php
-			echo form_open('prq/board/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
+			echo form_open('prq/partner/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
 ?>
 			<!--form id="bd_search" method="post" class="well form-search" -->
 
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
-<input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE)?$this->input->post('mb_code',TRUE):'DS';?>">
+<input type="hidden" name="mb_code" id="mb_code" value="PT">
 		<!-- id="my-awesome-dropzone" class="" -->
         <div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5><span class="mb_gname">대리점</span>  입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -80,13 +80,13 @@
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="user_title"><span class="mb_gname">총판</span>명</label>
+                <label for="user_title"><span class="mb_gname">대리점</span>명</label>
                 <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
+                <label for="user_firstname"><span class="mb_gname">대리점</span>ID</label>
                 <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
@@ -94,7 +94,7 @@
     <div class='row'>
         <div class='col-sm-12'>
             <div class='form-group'>
-                <label for="user_email"><span class="mb_gname">총판</span> 목록</label>
+                <label for="user_email"><span class="mb_gname">대리점</span> 목록</label>
                 <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
             </div>
         </div>
@@ -124,11 +124,11 @@
 					<th scope="col"><input type="checkbox" name="chk_"></th>
 					<th scope="col">No</th>
 					<th scope="col">등록일자</th>
-					<th scope="col"><span class="mb_gname">총판</span>ID</th>
-					<th scope="col"><span class="mb_gname">총판</span>코드</th>
+					<th scope="col"><span class="mb_gname">대리점</span>ID</th>
+					<th scope="col"><span class="mb_gname">대리점</span>코드</th>
 					<th scope="col">구분</th>
 					<th scope="col">대리점</th>
-					<th scope="col"><span class="mb_gname">총판</span>상태</th>
+					<th scope="col"><span class="mb_gname">대리점</span>상태</th>
 					<th scope="col">비고</th>
 				</tr>
 			</thead>
