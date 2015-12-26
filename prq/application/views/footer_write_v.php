@@ -265,7 +265,12 @@
 			{
 				param=file_key[id]+"/";
 			}
-
+			var prefix_path="";
+			prefix_path=$("#mb_imgprefix").val();
+			if(prefix_path!="")
+			{
+				param+=prefix_path+"/";
+			}
 			return {
 			url: "/prq/dropzone/upload/"+param,
 			autoProcessQueue: true,
@@ -304,7 +309,7 @@
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+value.name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#mb_imgprefix").val()+"/"+value.name);
 					});
 				}
 
@@ -332,7 +337,7 @@
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+value .name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#mb_imgprefix").val()+"/"+value.name);
 					});
 
 				}
@@ -348,7 +353,7 @@
 				$.ajax({
 					type: "POST",
 					url: "/prq/dropzone/delete",
-					data: "filename="+name,
+					data: "filename="+name+"&mb_imgprefix="+$("#mb_imgprefix").val(),
 					success: function(data)
 					{
 						var json = JSON.parse(data);

@@ -62,8 +62,6 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
-<?php 
-if($mb_code=="PT"){?>
 <div class="form-group"><label class="col-sm-2 control-label">총판 협력사
 </label>
 <div class="col-sm-10"><select name="mb_pcode" id="">
@@ -76,18 +74,24 @@ if($mb_code=="PT"){?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-<?php }?>
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 아이디
+
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">대리점</span> 아이디
 
 
 </label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">총판</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">대리점</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">비밀번호</label>
 <div class="col-sm-10"><input type="password" class="form-control" name="mb_password">
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">이미지 파일 경로</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_imgprefix" value="<?php echo date("Ym");?>">
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -143,7 +147,7 @@ if($mb_code=="PT"){?>
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 정산비율</label>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">대리점</span> 정산비율</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"> <span class="help-block m-b-none">정산 비율</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -159,12 +163,12 @@ if($mb_code=="PT"){?>
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 계약서</label>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">대리점</span> 계약서</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 <!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 <!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"<span class="mb_gname">총판</span> 계약서"를 드래그 하거나 선택해 주세요.</span>
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"<span class="mb_gname">대리점</span> 계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -240,7 +244,7 @@ if($mb_code=="PT"){?>
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
 /*
-server에 <span class="mb_gname">총판</span>을 등록 합니다.
+server에 <span class="mb_gname">대리점</span>을 등록 합니다.
 
 */
 function set_ds(){

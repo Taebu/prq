@@ -163,16 +163,16 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>총판 수정 Basic Form</h2>
+                    <h2>대리점 수정 Basic Form</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">Home</a>
                         </li>
                         <li>
-                            <a>총판관리</a>
+                            <a>대리점관리</a>
                         </li>
                         <li class="active">
-                            <strong>총판 수정 Basic Form</strong>
+                            <strong>대리점 수정 Basic Form</strong>
                         </li>
                     </ol>
                 </div>
@@ -186,7 +186,7 @@
 				'class' => 'form-horizontal', 
 				'id' => 'write_action'
 			);
-			echo form_open('board/write/prq_member', $attributes);
+			echo form_open('partner/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 
 		?>
@@ -199,7 +199,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>총판 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5>대리점 등록 정보 입니다. <small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -223,7 +223,7 @@
 							<div class="col-md-6">
 							<!-- <form method="get" class="form-horizontal"> -->
                                 
-								<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
+								<div class="form-group"><label class="col-sm-2 control-label">대리점 아이디</label>
                                     <div class="col-sm-10">
 									<?php echo $views->mb_id;?>
 									<?php
@@ -295,7 +295,7 @@
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
+								<div class="form-group"><label class="col-sm-2 control-label">대리점 정산비율</label>
                                     <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio" value="<?php echo $views->mb_exactcaculation_ratio;?>"> <span class="help-block m-b-none">정산 비율</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
@@ -319,7 +319,7 @@
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
+								<div class="form-group"><label class="col-sm-2 control-label">대리점 계약서</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 									<img src="/prq/uploads/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
@@ -374,7 +374,10 @@
 
 								<div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-<a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
+<a href="/prq/partner/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> 
+<a href="/prq/partner/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> 
+<a href="/prq/partner/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> 
+<a href="/prq/partner/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
                                     </div>
                                 </div>
 				<!-- 						      <div class="form-actions">
@@ -398,7 +401,7 @@
         </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
 	/*
-	server에 총판을 등록 합니다.
+	server에 대리점을 등록 합니다.
 
 	*/
 	function set_ds(){

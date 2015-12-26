@@ -394,7 +394,7 @@ class Partner extends CI_Controller {
 				$data['views'] = $this->partner_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 
 				//쓰기폼 view 호출
-				$this->load->view('distributors/modify_v', $data);
+				$this->load->view('partner/modify_v', $data);
 			}
 		}
 		else

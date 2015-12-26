@@ -43,13 +43,13 @@ window.onload = function() {
 
 	<div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2>총판 수정Basic Form</h2>
+<h2>대리점 수정Basic Form</h2>
 <ol class="breadcrumb">
 <li><a href="/">Home</a></li><li>
-<a href="/prq/board/lists/prq_member/">총판관리</a>
+<a href="/prq/board/lists/prq_member/">대리점관리</a>
 </li>
 <li class="active">
-<strong>총판 수정 Basic Form</strong>
+<strong>대리점 수정 Basic Form</strong>
 </li>
 </ol>
 </div>
@@ -85,7 +85,7 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5>총판 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
+<h5>대리점 등록 정보 입니다. <small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
 <div class="ibox-tools">
 <a class="collapse-link">
 <i class="fa fa-chevron-up"></i>
@@ -109,8 +109,8 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">총판아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+<div class="form-group"><label class="col-sm-2 control-label">대리점 아이디</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">대리점아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -160,7 +160,7 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
+<div class="form-group"><label class="col-sm-2 control-label">대리점 정산비율</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"  value="<?php echo $views->mb_exactcaculation_ratio;?>"> <span class="help-block m-b-none">정산 비율</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -176,12 +176,12 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
+<div class="form-group"><label class="col-sm-2 control-label">대리점 계약서</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 <!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 <!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"총판 계약서"를 드래그 하거나 선택해 주세요.</span>
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"대리점 계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

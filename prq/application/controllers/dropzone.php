@@ -73,8 +73,14 @@ class Dropzone extends CI_Controller {
 		{
 			$tempFile = $_FILES['file']['tmp_name'];
 			$fileName = $_FILES['file']['name'];
-			$targetPath = getcwd() . '/uploads/';
-			
+			$mb_imgprefix="";
+			if($this->uri->segment(4)!=""){
+				$mb_imgprefix=$this->uri->segment(4)."/";
+			}
+			$targetPath = getcwd() . '/uploads/'.$mb_imgprefix;
+			if(!is_dir($targetPath)){
+			mkdir($targetPath,0700);
+			}
 			//$targetFile = $targetPath . $fileName ;
 			//	move_uploaded_file($tempFile, $targetFile);
 			
@@ -82,6 +88,8 @@ class Dropzone extends CI_Controller {
 			if($this->uri->segment(3)!=""){
 				$prefix=$this->uri->segment(3);
 			}
+
+
 			$chk_file = explode(".", $fileName);
 			$extension = $chk_file[sizeof($chk_file)-1];
 			$fileName= $prefix."_".time().".".$extension;
@@ -117,11 +125,13 @@ class Dropzone extends CI_Controller {
 		move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/".$file
 		*/
 		$name = $_POST["filename"];
+		$mb_imgprefix = $_POST["mb_imgprefix"];
+		
 //		$name = "106745763.jpg";
 		
-		if(file_exists(getcwd().'/uploads/'.$name))
+		if(file_exists(getcwd().'/uploads/'.$mb_imgprefix."/".$name))
 		{
-			unlink(getcwd().'/uploads/'.$name);
+			unlink(getcwd().'/uploads/'.$mb_imgprefix."/".$name);
 //			$link = mysql_connect("localhost", "root", "");
 //			mysql_select_db("dropzone", $link);
 //			mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);

@@ -35,6 +35,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo date("Ym");?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -62,25 +63,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
-<?php 
-if($mb_code=="PT"){?>
-<div class="form-group"><label class="col-sm-2 control-label">총판 협력사
-</label>
-<div class="col-sm-10"><select name="mb_pcode" id="">
-	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
-	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
-	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-	<option value="A0005">파알큐(문성준_총판)(A0005)</option>
-
-</select> <span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-<?php }?>
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 아이디
-
-
-</label>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">총판</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
