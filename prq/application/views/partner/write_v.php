@@ -64,13 +64,14 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <!-- <form method="get" class="form-horizontal"> -->
 <div class="form-group"><label class="col-sm-2 control-label">총판 협력사
 </label>
-<div class="col-sm-10"><select name="mb_pcode" id="">
+<div class="col-sm-10"><!-- <select name="mb_pcode" id="">
 	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
 	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
 	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-	<option value="A0005">파알큐(문성준_총판)(A0005)</option>
-
-</select> <span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
+	
+</select> --> 
+<select name="mb_pcode" id="mb_pcode"></select><!-- #mb_pcode -->
+<span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -325,6 +326,7 @@ function chg_gname(){
 	}
 }
 
+/*set_member(){...}*/
 function set_member(){
 var param=$("#write_action").serialize();
 
@@ -340,6 +342,23 @@ console.log(data);
 });		
 
 }
+
+
+/*get_pcode(){...}*/
+function get_pcode(){
+var object=[];
+$.ajax({
+url:"/prq/partner/ajax/mb_pcode",
+data:"mb_code=DS0001",
+success:function(data){
+$.each(data.posts,function(key,val){
+object.push('<option value="'+val.mb_code+'">'+val.mb_ceoname+'('+val.mb_code+')</option>');
+});
+$("#mb_pcode").html(object.join(""));
+}
+});
+}
+
 
 window.onload = function() {
 

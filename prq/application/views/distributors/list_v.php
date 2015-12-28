@@ -9,6 +9,8 @@
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
+			/*버튼 비활성화.*/
+			chk_btn_status();
 		});
 
 		function board_search_enter(form) {
@@ -20,6 +22,45 @@
 		$('#bd_search').attr('action', "/prq/distributors/write/prq_member/page/1");
           $("#bd_search").submit();		
 		
+		}
+
+		function chg_list(code){
+			var param=$("#write_action").serialize();
+			if(param=="")
+			{
+				alert("하나 이상 선택 하셔야 합니다.");
+				return;
+			}
+
+			$.ajax({
+				url:"/prq/ajax/chg_status",
+					data:param,
+					dataType:"json",
+					type:"POST",
+					success:function(data){
+						if(data.success){
+							alert("변경에 성공하였습니다.");
+							$.each(data.posts,function(key,val){
+								$("#status_"+val.mb_no).html(val.mb_status);
+							});
+						}
+						if(!data.success){
+							alert("변경에 실패하였습니다.");
+						}
+					}
+			});
+			alert(code+" : "+param);
+		}
+
+		function chk_btn_status(){
+			var param=$("#write_action").serialize();
+			
+			if(param.indexOf("chk_seq")<0)
+			{
+				$(".btn_area [class*='btn-']").addClass("disabled").prop('disabled', true); 
+			}else{
+				$(".btn_area [class*='btn-']").removeClass("disabled").prop('disabled', false); 
+			}
 		}
 	</script>
 	<article id="board_area">
@@ -118,16 +159,25 @@
 			echo form_open('board/write/ci_board', $attributes);
 		?>
 	<div class='col-sm-12'>
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wait');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('process');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list();">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list();">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list();">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list();">해지</button>
+</div><!-- .btn_area -->
+
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col"><input type="checkbox" name="chk_"></th>
+					<th scope="col"><input type="checkbox"></th>
 					<th scope="col">No</th>
 					<th scope="col">등록일자</th>
 					<th scope="col"><span class="mb_gname">총판</span>ID</th>
 					<th scope="col"><span class="mb_gname">총판</span>코드</th>
-					<th scope="col">구분</th>
-					<th scope="col">대리점</th>
+					<!-- <th scope="col">구분</th> -->
+					<!-- <th scope="col">대리점</th> -->
 					<th scope="col"><span class="mb_gname">총판</span>상태</th>
 					<th scope="col">비고</th>
 				</tr>
@@ -138,20 +188,24 @@ foreach ($list as $lt)
 {
 ?>
 				<tr>
-					<td scope="col"><input type="checkbox" name="chk_"></td>
+					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
 					<td scope="row"><?php echo $lt->mb_no;?></td>
 					<td>
 					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
 					<td><?php echo $lt->mb_id;?></td>
 					<td><?php echo $lt->mb_code;?></td>
-					<td><?php echo $lt->mb_gname_kor;?></td>
-					<td><?php echo $lt->mb_gname_eng;?></td>
+					<!-- <td><?php echo $lt->mb_gname_kor;?></td> -->
+					<!-- <td><?php echo $lt->mb_gname_eng;?></td> -->
+					<!-- <td><?php echo $lt->mb_business_paper;?></td> -->
  					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
 					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
-					<?php echo $lt->mb_business_paper;?>	</td>
+					
+					<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span>
+					</td>
  					<td><span class="mb_gname">총판</span></td> 
- 					<td>46</td> 
- 					<td>정상</td> 
+ 					<td>46	</td> 
+ 					<td>
+			</td> 
  					<td>-</td> 
 				</tr>
 <?php
@@ -161,15 +215,24 @@ foreach ($list as $lt)
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="5" style="text-align:center">
+					<th colspan="12" style="text-align:center">
 					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
 				</tr>
 			</tfoot>
 		</table>
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+</div><!-- .btn_area -->
+
+
 </div>
 </div>
 </div>
 <div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
 	</article>
-</div>
 	
