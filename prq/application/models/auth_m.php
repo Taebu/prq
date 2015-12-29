@@ -20,7 +20,7 @@ class Auth_m extends CI_Model
 	 * @return array
 	 */
     function login($auth)
-    {
+    {/*
 		$sql=array();
 		$sql[]="SELECT ";
 		$sql[]="username, ";
@@ -32,7 +32,17 @@ class Auth_m extends CI_Model
 		$sql[]="username = '".$auth['username']."' ";
 		$sql[]="AND password = '".$auth['password']."' ";
 		$query = $this->db->query(join("",$sql));
+*/
 
+		$sql=array();
+		$sql[]="SELECT * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]="WHERE ";
+		$sql[]="mb_id = '".$auth['username']."' ";
+		$sql[]="AND mb_password = password('".$auth['password']."'); ";
+
+		$query = $this->db->query(join("",$sql));
 		if ( $query->num_rows() > 0 )
 		{
 			//맞는 데이터가 있다면 해당 내용 반환

@@ -26,6 +26,7 @@ $attributes = array(
 echo form_open('/partner/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
+$mb_code=$this->input->cookie('mb_code', TRUE);
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
@@ -64,23 +65,35 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <!-- <form method="get" class="form-horizontal"> -->
 <div class="form-group"><label class="col-sm-2 control-label">총판 협력사
 </label>
-<div class="col-sm-10"><!-- <select name="mb_pcode" id="">
+<div class="col-sm-10">
+<?php 
+$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+echo $mb_gcode;
+?>
+<select name="mb_pcode" id="">
 	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
 	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
 	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-	
-</select> --> 
+</select>
+
 <select name="mb_pcode" id="mb_pcode"></select><!-- #mb_pcode -->
+<?php echo $mb_code;?>
 <span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
+
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">대리점</span> 아이디
 
 
 </label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">대리점</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">대리점</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.
+<?php echo $this->input->ip_address();?>
+<?php echo $this->agent->referrer();;?>
+
+
+</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -348,7 +361,7 @@ console.log(data);
 function get_pcode(){
 var object=[];
 $.ajax({
-url:"/prq/partner/ajax/mb_pcode",
+url:"/prq/ajax/mb_pcode/",
 data:"mb_code=DS0001",
 success:function(data){
 $.each(data.posts,function(key,val){
@@ -372,6 +385,9 @@ chk_vali_id();
 
 /*mb_code로 등록 정보 변경*/
 //chg_gname();
+/*총판 코드 가져오기*/
+get_pcode();
+
 };/*window.onload = function() {..}*/
 
 

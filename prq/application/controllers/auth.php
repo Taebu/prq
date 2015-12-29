@@ -72,9 +72,12 @@ class Auth extends CI_Controller {
    			{
    				//세션 생성
 				$newdata = array(
-                   'username'  => $result->username,
-                   'name'  => $result->name,
-                   'email'     => $result->email,
+                   'username'  => $result->mb_gname_eng,
+                   'name'  => $result->mb_id,
+                   'mb_name'  => $result->mb_ceoname,
+                   'email'     => $result->mb_email,
+                   'mb_gcode'     => $result->mb_gcode,
+                   'mb_code'     => $result->mb_code,
                    'logged_in' => TRUE
 				);
 
@@ -83,7 +86,37 @@ class Auth extends CI_Controller {
 				//쿠키 생성
 				$cookie = array(
                    'name'   => 'username',
-                   'value'  => $result->username,
+                   'value'  => $result->mb_gname_eng,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/prq/',
+                   'prefix' => '',
+               );
+				set_cookie($cookie);
+
+				$cookie = array(
+                   'name'   => 'mb_gcode',
+                   'value'  => $result->mb_gcode,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/prq/',
+                   'prefix' => '',
+               );
+				set_cookie($cookie);
+
+				$cookie = array(
+                   'name'   => 'mb_code',
+                   'value'  => $result->mb_code,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/prq/',
+                   'prefix' => '',
+               );
+				set_cookie($cookie);
+
+				$cookie = array(
+                   'name'   => 'mb_name',
+                   'value'  => $result->mb_ceoname,
                    'expire' => '86500',
                    'domain' => $_SERVER['HTTP_HOST'],
                    'path'   => '/prq/',
@@ -93,7 +126,7 @@ class Auth extends CI_Controller {
 				set_cookie($cookie);
 				$cookie = array(
                    'name'   => 'name',
-                   'value'  => $result->name,
+                   'value'  => $result->mb_id,
                    'expire' => '86500',
                    'domain' => $_SERVER['HTTP_HOST'],
                    'path'   => '/prq/',
@@ -104,7 +137,7 @@ class Auth extends CI_Controller {
 
 				$cookie = array(
                    'name'   => 'email',
-                   'value'  => $result->email,
+                   'value'  => $result->mb_email,
                    'expire' => '86500',
                    'domain' => $_SERVER['HTTP_HOST'],
                    'path'   => '/prq/',
@@ -112,6 +145,7 @@ class Auth extends CI_Controller {
                );
 
 				set_cookie($cookie);
+
 				$cookie = array(
                    'name'   => 'logged_in',
                    'value'  => TRUE,

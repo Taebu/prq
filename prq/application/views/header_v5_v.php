@@ -20,6 +20,10 @@
     <link href="/prq/include/css/animate.css" rel="stylesheet">
     <link href="/prq/include/css/style.css" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <link href="/prq/include/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+
     <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 <script type="text/javascript">
 
@@ -289,9 +293,10 @@ function chg_gname(){
                              </span>
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php //echo $this->session->userdata['name'];?>
-							<?php echo $this->input->cookie('name', TRUE);?>
+							<?php echo $this->input->cookie('mb_name', TRUE);?> (<?php echo $this->input->cookie('name', TRUE);?>)
 							</strong>
-                             </span> <span class="text-muted text-xs block">Web Developer<b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">
+							 <?php echo $this->input->cookie('username', TRUE);?><b class="caret"></b></span> </span> </a>
 						<?php }else{?>
                             <img alt="image" class="img-circle" src="/prq/include/img/profile_small_x.png" /> 
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">

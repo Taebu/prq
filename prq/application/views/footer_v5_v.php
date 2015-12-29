@@ -416,6 +416,9 @@
     <script src="/prq/include/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 
 
+    <!-- Sweet alert -->
+    <script src="/prq/include/js/plugins/sweetalert/sweetalert.min.js"></script>
+
     <script>
         $(document).ready(function() {
 

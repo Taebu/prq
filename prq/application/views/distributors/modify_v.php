@@ -81,6 +81,8 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size" value="<?php echo $views->mb_business_paper_size;?>">
 <input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size" value="<?php echo $views->mb_distributors_paper_size;?>">
 <input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size" value="<?php echo $views->mb_bank_paper_size;?>">
+<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo $views->mb_imgprefix;?>">
+
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">

@@ -224,6 +224,7 @@ class Distributors extends CI_Controller {
 					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
 //					'mb_code' => $this->input->post('mb_code', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
+					'mb_imgprefix' => $this->input->post('mb_imgprefix', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
 					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
 					'mb_addr3' => $this->input->post('mb_addr3', TRUE),

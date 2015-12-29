@@ -39,9 +39,12 @@ class Distributors_m extends CI_Model
 		if ( $search_word != '' )
      	{
      		//검색어가 있을 경우의 처리
-     		$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+     		$sword = ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
      	}
-
+		$mb_code=$this->input->cookie('mb_code', TRUE);
+		if( strlen($mb_code)>2){
+			$sword = ' and mb_code= "'.$mb_code.'" ';
+		}
     	$limit_query = '';
 
     	if ( $limit != '' OR $offset != '' )
@@ -53,7 +56,7 @@ class Distributors_m extends CI_Model
 		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY mb_no DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table." where 1=1 ".$sword."  ORDER BY mb_no DESC".$limit_query;
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )
@@ -103,7 +106,7 @@ class Distributors_m extends CI_Model
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function insert_board($arrays)
+	function insert_distributors($arrays)
  	{
 		$sql_array = array(
 			'mb_pcode' => $arrays['mb_pcode']
@@ -119,6 +122,7 @@ class Distributors_m extends CI_Model
 		*/
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
+		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_code='".$mb_code."',";
 		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";

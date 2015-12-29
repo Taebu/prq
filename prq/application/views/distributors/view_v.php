@@ -191,10 +191,16 @@
 
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
+		<input type="hidden" id="mode" value="view">
 		<input type="hidden" name="is_join" id="is_join" value="">
-		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
-		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
-		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
+<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
+<input type="hidden" name="mb_bank_paper" id="mb_bank_paper" value="<?php echo $views->mb_bank_paper;?>">
+
+<input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size" value="<?php echo $views->mb_business_paper_size;?>">
+<input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size" value="<?php echo $views->mb_distributors_paper_size;?>">
+<input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size" value="<?php echo $views->mb_bank_paper_size;?>">
+		<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo $views->mb_imgprefix;?>">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
@@ -313,8 +319,9 @@
 							<div class="col-md-6">
 								<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
                                     <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<img src="/prq/uploads/<?php echo $views->mb_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
+									<div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -322,7 +329,7 @@
 								<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<img src="/prq/uploads/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 												<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 												<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
@@ -336,7 +343,7 @@
 
 									<div class="dz-default dz-message"></div>
 									</div><!-- #my-awesome-dropzone3 -->
-									<img src="/prq/uploads/<?php echo $views->mb_bank_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_bank_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 									<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
   
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
@@ -374,7 +381,7 @@
 
 								<div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-<a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
+<a href="/prq/<?php echo $this->uri->segment(1);?>/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/<?php echo $this->uri->segment(1);?>/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/<?php echo $this->uri->segment(1);?>/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/<?php echo $this->uri->segment(1);?>/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
                                     </div>
                                 </div>
 				<!-- 						      <div class="form-actions">
@@ -495,7 +502,7 @@ function set_member(){
 	var param=$("#write_action").serialize();
 
     $.ajax({
-		url:"/prq/board/write/prq_member",
+		url:"/prq/distributors/write/prq_member",
 		type: "POST",
         data:param,
         cache: false,

@@ -299,7 +299,7 @@
 				
 				var mode=$("#mode").val();
 
-				if(mode=="modify"){
+				if(mode=="modify"||mode=="view"){
 					var thisDropzone=this;
 					var object=[];
 					object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});

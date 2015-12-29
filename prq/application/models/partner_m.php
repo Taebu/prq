@@ -32,16 +32,22 @@ class Partner_m extends CI_Model
 	 */
     function get_list($table='prq_member', $type='', $offset='', $limit='', $search_word='')
     {
-		$sword= ' WHERE 1=1 ';
+		$sword= ' and  1=1 ';
 		if($table==""){
 		$table='prq_member';
 		}
 		if ( $search_word != '' )
      	{
      		//검색어가 있을 경우의 처리
-     		$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+     		$sword = ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
      	}
+		
 
+		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
+		if( strlen($mb_pcode)>2){
+			$sword.= ' and mb_pcode= "DS0007" ';
+		}
+					$sword.= ' and mb_pcode= "DS0007" ';
     	$limit_query = '';
 
     	if ( $limit != '' OR $offset != '' )
@@ -53,7 +59,7 @@ class Partner_m extends CI_Model
 		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY mb_no DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table." WHERE 1=1 ".$sword."  ORDER BY mb_no DESC".$limit_query;
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )

@@ -133,15 +133,16 @@
 				</tr>
 			</thead>
 			<tbody>
-<?php
-foreach ($list as $lt)
-{
-?>
+<?php 
+if(count($list)==0){
+echo "<tr><td colspan='12' style='text-align:center'>목록이 없습니다. </td>";
+}
+
+foreach ($list as $lt){?>
 				<tr>
 					<td scope="col"><input type="checkbox" name="chk_"></td>
 					<td scope="row"><?php echo $lt->mb_no;?></td>
-					<td>
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
+					<td>	<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
 					<td><?php echo $lt->mb_id;?></td>
 					<td><?php echo $lt->mb_code;?></td>
 					<td><?php echo $lt->mb_gname_kor;?></td>
@@ -154,10 +155,7 @@ foreach ($list as $lt)
  					<td>정상</td> 
  					<td>-</td> 
 				</tr>
-<?php
-}
-?>
-
+<?php }?>
 			</tbody>
 			<tfoot>
 				<tr>

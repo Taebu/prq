@@ -14,6 +14,8 @@ class Partner extends CI_Controller {
 //		$this->load->model('member_m');
 		$this->load->model('partner_m');
 		$this->load->helper('form');
+		//$this->load->helper('agent');
+		$this->load->library('user_agent');
 		$this->load->helper(array('url','date'));
 	}
 

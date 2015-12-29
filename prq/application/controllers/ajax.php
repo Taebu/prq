@@ -31,11 +31,15 @@ class Ajax extends CI_Controller {
 		{
 			$this->load->model('ajax_m');
 
-			$chk_seq = $this->input->post("chk_seq", TRUE);;
+			$chk_seq = $this->input->post("chk_seq", TRUE);
+			$mb_status = $this->input->post("mb_status", TRUE);
+			$mb_reason = $this->input->post("mb_reason", TRUE);
 			$join_chk_seq=join(",",$chk_seq);
 //			if ( $comment_contents != '')
 //			{
 				$write_data = array(
+					'mb_status'=>$mb_status,
+					'mb_reason'=>$mb_reason,
 					'join_chk_seq' => $join_chk_seq
 				);
 
