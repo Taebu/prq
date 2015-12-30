@@ -286,6 +286,7 @@ function set_menu_write(id){
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <span>
 
+
 					<?php
 						if( @$this->session->userdata['logged_in'] == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 					{?>
@@ -293,9 +294,10 @@ function set_menu_write(id){
                              </span>
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php //echo $this->session->userdata['name'];?>
-							<?php echo $this->input->cookie('name', TRUE);?>
+							<?php echo $this->input->cookie('mb_name', TRUE);?> (<?php echo $this->input->cookie('name', TRUE);?>)
 							</strong>
-                             </span> <span class="text-muted text-xs block">Web Developer<b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">
+							 <?php echo $this->input->cookie('username', TRUE);?><b class="caret"></b></span> </span> </a>
 						<?php }else{?>
                             <img alt="image" class="img-circle" src="/prq/include/img/profile_small_x.png" /> 
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -317,6 +319,7 @@ function set_menu_write(id){
 								<li><a href="/prq/auth/">LogIn</a></li>
 						<?php }?>
 
+
                             </ul>
                         </div>
                         <div class="logo-element">
@@ -330,7 +333,7 @@ function set_menu_write(id){
 					 }?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/distributors/lists/">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php if($this->uri->segment(1)=="partner"){
@@ -342,7 +345,7 @@ function set_menu_write(id){
 						<i class="fa fa-th-large"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/partner/lists/">대리점 목록</a></li>
+                            <li><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
                         </ul>
                     </li>
                     </li>
@@ -353,7 +356,7 @@ function set_menu_write(id){
 					 }?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/franchise/lists/">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php if($this->uri->segment(1)=="store"){
@@ -366,7 +369,7 @@ function set_menu_write(id){
 						<i class="fa fa-pie-chart"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/store/lists/">상점 목록</a></li>
+                            <li><a href="/prq/store/lists/prq_member/page/1">상점 목록</a></li>
                         </ul>
                     </li>
 				</ul>

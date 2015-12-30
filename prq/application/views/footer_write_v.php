@@ -306,10 +306,14 @@
 					console.log(object);
 					$.each(object,function(key,value){
 						var mockfile={name:value.name,size:value.size};
+						/*파일이 경로가 존재한다면*/
+						if(value.name!="")
+						{
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#mb_imgprefix").val()+"/"+value.name);
+						}
 					});
 				}
 

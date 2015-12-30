@@ -30,8 +30,9 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
 <input type="hidden" name="is_member" id="is_member">
-<input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
-<input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+<input type="hidden" name="mb_gtype" id="mb_gtype" value="DS">
+<!-- mb_code는 자동으로 생성 되도록 설계 -->
+<input type="hidden" name="mb_pcode" id="mb_pcode" value="AD0001">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
@@ -51,7 +52,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <ul class="dropdown-menu dropdown-user">
 <li><a href="#">Config option 1</a>
 </li>
-<li><a href="#">Config option 2</a>
+<li><a href="#">Config option 2</a> 
 </li>
 </ul>
 <a class="close-link">

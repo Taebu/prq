@@ -34,11 +34,14 @@ class Ajax extends CI_Controller {
 			$chk_seq = $this->input->post("chk_seq", TRUE);
 			$mb_status = $this->input->post("mb_status", TRUE);
 			$mb_reason = $this->input->post("mb_reason", TRUE);
+			$mb_id = $this->input->cookie('name', TRUE);
 			$join_chk_seq=join(",",$chk_seq);
 //			if ( $comment_contents != '')
 //			{
 				$write_data = array(
+					'prq_table'=>'prq_member',
 					'mb_status'=>$mb_status,
+					'mb_id'=>$mb_id,
 					'mb_reason'=>$mb_reason,
 					'join_chk_seq' => $join_chk_seq
 				);
@@ -94,6 +97,18 @@ class Ajax extends CI_Controller {
 		{
 			echo "9000"; //로그인 필요 에러
 		}
+	}
+
+	function mb_pcode(){
+		$this->load->model('ajax_m');
+		$mb_code=$this->input->get("mb_code", TRUE);
+		$write_data = array(
+			'mb_gcode'=>'G1'
+		);
+
+//		$result = $this->board_m->insert_comment($write_data);
+		$result = $this->ajax_m->get_pcode($write_data);
+		echo $result;
 	}
 }
 

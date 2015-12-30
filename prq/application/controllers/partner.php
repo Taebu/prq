@@ -10,11 +10,8 @@ class Partner extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->database();
-//		$this->load->model('board_m');
-//		$this->load->model('member_m');
 		$this->load->model('partner_m');
 		$this->load->helper('form');
-		//$this->load->helper('agent');
 		$this->load->library('user_agent');
 		$this->load->helper(array('url','date'));
 	}
@@ -26,6 +23,7 @@ class Partner extends CI_Controller {
 	{
 		$this->lists();
 	}
+	
 
 	/**
 	 * 사이트 헤더, 푸터를 자동으로 추가해준다.
@@ -150,6 +148,7 @@ class Partner extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->partner_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['controllers'] = $this;
 		$this->load->view('partner/list_v', $data);
 	}
 
@@ -223,6 +222,8 @@ class Partner extends CI_Controller {
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
+					'mb_imgprefix' => $this->input->post('mb_imgprefix', TRUE),
+					'mb_gcode' => $this->input->post('mb_gcode', TRUE),
 //					'mb_code' => $this->input->post('mb_code', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
@@ -246,7 +247,8 @@ class Partner extends CI_Controller {
 				);
 				//$result = $this->distributors_m->insert_distributors($write_data);
 
-				$result = $this->partner_m->insert_distributors($write_data);
+				//$result = $this->partner_m->insert_distributors($write_data);
+				$result = $this->partner_m->insert_partner($write_data);
 
 				if ( $result )
 				{
@@ -492,6 +494,31 @@ class Partner extends CI_Controller {
 		}
 		$seg_exp = explode("/", $seg);
 		return $seg_exp;
+	}
+
+	function get_status($code)
+	{
+		switch ($code) {
+		case "wa":
+			$result='<button type="button" class="btn btn-default btn-xs">대기</button>';
+			break;
+		case "pr":
+			$result='<button type="button" class="btn btn-primary btn-xs">처리중</button>';
+			break;
+		case "ac":
+			$result='<button type="button" class="btn btn-success btn-xs">승인</button>';
+			break;
+		case "ad":
+			$result='<button type="button" class="btn btn-danger btn-xs">승인거부</button>';
+			break;
+		case "ec":
+			$result='<button type="button" class="btn btn-info btn-xs">연계완료</button>';
+			break;
+		case "ca":
+			$result='<button type="button" class="btn btn-warning btn-xs">해지</button>';
+			break;
+		}
+		return $result;
 	}
 }
 

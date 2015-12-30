@@ -331,7 +331,7 @@ function chg_gname(){
 					 }?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/distributors/lists/">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php if($this->uri->segment(1)=="partner"){
@@ -344,7 +344,7 @@ function chg_gname(){
 						<i class="fa fa-th-large"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/partner/lists/">대리점 목록</a></li>
+                            <li><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
                         </ul>
                     </li>
                     </li>
@@ -355,7 +355,7 @@ function chg_gname(){
 					 }?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/franchise/lists/">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php if($this->uri->segment(1)=="store"){
@@ -368,7 +368,7 @@ function chg_gname(){
 						<i class="fa fa-pie-chart"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/store/lists/">상점 목록</a></li>
+                            <li><a href="/prq/store/lists/prq_member/page/1">상점 목록</a></li>
                         </ul>
                     </li>
 				</ul>

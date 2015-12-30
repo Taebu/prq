@@ -170,6 +170,4 @@ foreach ($list as $lt)
 </div>
 </div>
 <div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
-	</article>
-</div>
-	
+</article>

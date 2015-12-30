@@ -637,3 +637,24 @@ CREATE TABLE `prq_log` (
   PRIMARY KEY (`mb_id`,`prq_table`,`mb_datetime`)
 ) DEFAULT CHARSET=utf8;
 
+
+ALTER TABLE `prq_log` DROP PRIMARY KEY;
+
+-- 2015-12-30 (수) mb_gtype char(2) 추가
+alter table prq_member add `mb_gtype` char(2) not NULL default 'AD' after `mb_gcode`;
+
+alter table prq_member_code add `mb_gtype` char(2) not NULL default 'AD' after `mb_pcode`;
+
+
+
+mysql> update  prq_member_code set mb_gtype=mb_pcode;
+Query OK, 11 rows affected (0.00 sec)
+Rows matched: 12  Changed: 11  Warnings: 0
+
+
+-- 컬럼 위치 변경 mb_pcode -> mb_gtype 
+
+alter table prq_member_code change mb_pcode mb_pcode char(6) default '';
+alter table prq_member_code change mb_pcode mb_pcode char(6) after `mb_no`;
+alter table prq_member_code change mb_gtype mb_gtype char(2) after `mb_no`;
+

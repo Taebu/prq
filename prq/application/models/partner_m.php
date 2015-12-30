@@ -57,7 +57,7 @@ class Partner_m extends CI_Model
      	}else{
 		
 		}
-//		$table="ci_board";
+		//$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 		$sql = "SELECT * FROM ".$table." WHERE 1=1 ".$sword."  ORDER BY mb_no DESC".$limit_query;
    		$query = $this->db->query($sql);
@@ -109,7 +109,7 @@ class Partner_m extends CI_Model
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function insert_board($arrays)
+	function insert_partner($arrays)
  	{
 		$sql_array = array(
 			'mb_pcode' => $arrays['mb_pcode']
@@ -125,6 +125,7 @@ class Partner_m extends CI_Model
 		*/
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
+		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_code='".$mb_code."',";
 		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";
@@ -152,7 +153,6 @@ class Partner_m extends CI_Model
 		//결과 반환
 		return $result;
  	}
-
 	/**
 	 * 회원 코드 입력
 	 * @author Jongwon Byun <advisor@cikorea.net>
@@ -392,6 +392,11 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
+	function test()
+	{
+		$str='PT';
+		return  $this->get_member_code($str);
+	}
 }
 
 /* End of file partner_m.php */

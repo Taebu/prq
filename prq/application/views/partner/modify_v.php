@@ -74,6 +74,8 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
+
+<input type="hidden" name="mb_no" id="mb_no" value="<?php echo $views->mb_no;?>">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper" value="<?php echo $views->mb_bank_paper;?>">

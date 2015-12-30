@@ -31,16 +31,18 @@ $mb_code=$this->input->cookie('mb_code', TRUE);
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
 <input type="hidden" name="is_member" id="is_member">
-<input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
-<input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+<input type="hidden" name="mb_code" id="mb_code">
+<input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $mb_code;?>">
+<input type="hidden" name="mb_gtype" id="mb_gtype" value="DS">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo date("Ym");?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5><span class="mb_gname">대리점</span> 등록 정보 입니다. <small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
+<h5><span class="mb_gname">대리점</span> 등록 정보 입니다. <?php echo $mb_code;?><small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
 <div class="ibox-tools">
 <a class="collapse-link">
 <i class="fa fa-chevron-up"></i>
@@ -68,17 +70,24 @@ $mb_code=$this->input->cookie('mb_code', TRUE);
 <div class="col-sm-10">
 <?php 
 $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-echo $mb_gcode;
+if($mb_gcode=="G1"||$mb_gcode=="G2"){
 ?>
-<select name="mb_pcode" id="">
+<select name="mb_pcode" id="mb_pcode">
 	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
 	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
 	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-</select>
+</select><!-- #mb_pcode -->
+<span class="help-block m-b-none">총판협력사를 선택해 주세요.</span>
+<?php 
+}else if($mb_gcode=="G3"){
+echo $this->input->cookie('name', TRUE);
+echo "(".$mb_code.")";
+//echo '<input type="hidden" name="mb_pcode" value="'.$mb_code.'">';
+}else{
+echo "대리점을 등록할 권한이 없습니다.";
+}
+?>
 
-<select name="mb_pcode" id="mb_pcode"></select><!-- #mb_pcode -->
-<?php echo $mb_code;?>
-<span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -277,49 +286,68 @@ $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 
 
 
-function chk_duplicate_id(mb_id)
-{
-var result=false;
-$.ajax({
-url:"/prq/auth/chk_id",
-type: "POST",
-data:"mb_id="+mb_id,
-dataType:"json",
-success: function(data) {
-	$("#is_member").val(data.success);	
-	}
-});
 
-
-}
 
 /*End Dropzone*/	
 
 var focus=0,blur=0;
-
-function chk_vali_id(){
-focus++; 
-var object=[];
-var mb_id=$("#mb_id").val();
-chk_duplicate_id(mb_id);
-
-if (mb_id.length<4)
+function chk_duplicate_id()
 {
-object.push("<span  class=\"text-danger\">");
-object.push("아이디 길이가 너무 적습니다. 4자 이상");
-$("#is_join").val("FALSE");
-//}else if ($( "#mb_id" ).val()!="erm00")	{
-}else if ($("#is_member").val()){
-object.push("<span  class=\"text-success\">");
-object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
-$("#is_join").val("TRUE");
-}else{
-object.push("<span  class=\"text-danger\">");
-object.push("이미 사용중이거나 탈퇴한 아이디입니다.");	
-$("#is_join").val("FALSE");
+
+
+	focus++; 
+	var object=[];
+	var mb_id=$("#mb_id").val();
+	
+
+	if (mb_id.length<4)
+	{
+		object.push("<span  class=\"text-danger\">");
+		object.push("아이디 길이가 너무 적습니다. 4자 이상");
+		object.push("</span>");
+		$("#is_join").val("FALSE");
+		//}else if ($( "#mb_id" ).val()!="erm00")	{
+		$( "#mb_id_assist" ).html(object.join(""));
+		return;
+	}
+
+
+
+	var result=false;
+	$.ajax({
+	url:"/prq/auth/chk_id",
+	type: "POST",
+	data:"mb_id="+mb_id,
+	dataType:"json",
+	success: function(data) {
+		console.log(data.success);
+		console.log(data);
+		$("#is_member").val(data.success);	
+		chk_vali_id();
+		}
+	});
+
+
 }
-object.push("</span>");
-$( "#mb_id_assist" ).html(object.join(""));
+
+
+
+function chk_vali_id()
+{
+	var object=[];
+	console.log("&gt;"+$("#is_member").val());
+	var is_dupid=eval($("#is_member").val());
+	if (is_dupid){
+	object.push("<span  class=\"text-success\">");
+	object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
+	$("#is_join").val("TRUE");
+	}else{
+	object.push("<span  class=\"text-danger\">");
+	object.push("이미 사용중이거나 탈퇴한 아이디입니다.");	
+	$("#is_join").val("FALSE");
+	}
+	object.push("</span>");
+	$( "#mb_id_assist" ).html(object.join(""));
 }
 
 /*mb_code로 등록 정보 변경*/
@@ -344,7 +372,7 @@ function set_member(){
 var param=$("#write_action").serialize();
 
 $.ajax({
-url:"/prq/board/write/prq_member",
+url:"/prq/partner/write/prq_member",
 type: "POST",
 data:param,
 cache: false,
@@ -362,8 +390,10 @@ function get_pcode(){
 var object=[];
 $.ajax({
 url:"/prq/ajax/mb_pcode/",
-data:"mb_code=DS0001",
+data:"mb_code="+$("#mb_pcode").val(),
+dataType:"json",
 success:function(data){
+
 $.each(data.posts,function(key,val){
 object.push('<option value="'+val.mb_code+'">'+val.mb_ceoname+'('+val.mb_code+')</option>');
 });
@@ -376,11 +406,13 @@ $("#mb_pcode").html(object.join(""));
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
-chk_vali_id();
+//chk_vali_id();
+chk_duplicate_id();
 })
 .blur(function() {
 blur++;
-chk_vali_id();
+//chk_vali_id();
+chk_duplicate_id();
 });
 
 /*mb_code로 등록 정보 변경*/

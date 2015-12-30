@@ -39,11 +39,13 @@ class Distributors_m extends CI_Model
 		if ( $search_word != '' )
      	{
      		//검색어가 있을 경우의 처리
-     		$sword = ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+     		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
      	}
+		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
 		$mb_code=$this->input->cookie('mb_code', TRUE);
 		if( strlen($mb_code)>2){
-			$sword = ' and mb_code= "'.$mb_code.'" ';
+			$sword .= ' and mb_code= "'.$mb_code.'" ';
+		}
 		}
     	$limit_query = '';
 
@@ -56,7 +58,7 @@ class Distributors_m extends CI_Model
 		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table." where 1=1 ".$sword."  ORDER BY mb_no DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table.$sword."  ORDER BY mb_no DESC".$limit_query;
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )

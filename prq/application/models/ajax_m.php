@@ -94,6 +94,8 @@ class Ajax_m extends CI_Model
 		$ip_addr= $this->input->ip_address();
 		$referrer=$this->agent->referrer();
 		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		$prq_table=$array['prq_table'];
 
 /*
 drop table `prq_log`;
@@ -119,10 +121,10 @@ CREATE TABLE `prq_log` (
 
 			$sql=array();
 			$sql[]="INSERT INTO `prq_log` SET ";
-			$sql[]=" mb_id='"."admin"."', ";
+			$sql[]=" mb_id='".$mb_id."', ";
 			$sql[]=" lo_ip='".$ip_addr."', ";
 			$sql[]=" mb_no='".$an."', ";
-			$sql[]=" prq_table='prq_member', ";
+			$sql[]=" prq_table='".$prq_table."', ";
 			$sql[]=" lo_how='ajax', ";
 			$sql[]=" lo_reason='".$lo_reason."', ";
 			$sql[]=" lo_status='".$array['mb_status']."', ";
@@ -161,7 +163,45 @@ CREATE TABLE `prq_log` (
 		}
 		return $result;
 	}
+	
+	
+	function get_pcode($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+	
 
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]="mb_code,";
+		$sql[]="mb_id,";
+		$sql[]="mb_ceoname ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]="where ";
+		$sql[]="mb_gcode='G3';";
+		$join_sql=join("",$sql);
+//		$json['query']=$join_sql;
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+
+		foreach($query->result_array() as $list){
+			/*방법 1 각 객체를 변경*/
+			//$items=array();
+			//$items['mb_code']=$list['mb_code'];
+			//$items['mb_ceoname']=$list['mb_ceoname'];
+			//array_push($json['posts'],$items);
+			/*방법 2 각 객체 그대로*/
+			array_push($json['posts'],$list);
+		}
+
+		echo json_encode($json);
+		//print_r($array);
+		//echo $join_sql;
+	}
 }
 
 /* End of file auth_m.php */

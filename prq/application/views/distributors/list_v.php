@@ -251,7 +251,8 @@
 		?>
 	<div class='col-sm-12'>
 <?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-if($mb_gcode=="G01"){?>
+
+if($mb_gcode=="G1"){?>
 <div class="btn_area">
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
@@ -309,7 +310,7 @@ foreach ($list as $lt)
 			<tfoot>
 				<tr>
 					<th colspan="12" style="text-align:left">
-<?php if($mb_gcode=="G01"){?>
+					<?php if($mb_gcode=="G1"){?>
 					<div class="btn_area">
 					<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
 					<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
