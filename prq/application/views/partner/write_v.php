@@ -290,6 +290,10 @@ $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 
 /*End Dropzone*/	
 
+/**
+* fn chk_duplicate_id()
+ 아이디 길이 체크 후 중복 체크
+*/
 var focus=0,blur=0;
 function chk_duplicate_id()
 {
@@ -326,12 +330,12 @@ function chk_duplicate_id()
 		chk_vali_id();
 		}
 	});
-
-
 }
 
-
-
+/*
+chk_vali_id();
+아이디 유효성 여부 검사
+*/
 function chk_vali_id()
 {
 	var object=[];

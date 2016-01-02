@@ -72,7 +72,8 @@ class Distributors extends CI_Controller {
 		//주소중에서 q(검색어) 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 		$uri_array = $this->segment_explode($this->uri->uri_string());
 
-		if( in_array('q', $uri_array) ) {
+		if( in_array('q', $uri_array) ) 
+		{
 			//주소에 검색어가 있을 경우의 처리. 즉 검색시
 			$search_word = urldecode($this->url_explode($uri_array, 'q'));
 
@@ -207,7 +208,7 @@ class Distributors extends CI_Controller {
 //					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
 //				);
 //				$mb_code = $this->distributors_m->get_code($get_code_data);
-
++
 /*
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
@@ -221,6 +222,7 @@ class Distributors extends CI_Controller {
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'mb_id' => $this->input->post('mb_id', TRUE),
+					'mb_name' => $this->input->post('mb_name', TRUE),
 					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
 //					'mb_code' => $this->input->post('mb_code', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
@@ -277,13 +279,8 @@ class Distributors extends CI_Controller {
 			}
 			else
 			{
-				if($this->uri->segment(3)=="prq_store"){
-				//쓰기폼 view 호출
-				$this->load->view('store/write_v');	
-				}else{
 				//쓰기폼 view 호출
 				$this->load->view('distributors/write_v');
-				}
 			}
 		}
 		else
@@ -356,6 +353,7 @@ class Distributors extends CI_Controller {
 					'table' => $this->uri->segment(3), //게시판 테이블명
 					'mb_no' => $this->uri->segment(5), //게시판 번호
 					'mb_id' => $this->input->post('mb_id', TRUE),
+					'mb_name' => $this->input->post('mb_name', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
 					'mb_addr2' => $this->input->post('mb_addr2', TRUE),

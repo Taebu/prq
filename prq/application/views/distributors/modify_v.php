@@ -21,7 +21,7 @@ function modify_ds(){
 var param=$("#write_action").serialize();
 
 $.ajax({
-url:"/prq/board/modify/prq_member/board_id/5",
+url:"/prq/distributors/modify/prq_member/board_id/5",
 type: "POST",
 data:param,
 cache: false,
@@ -35,7 +35,7 @@ function showDropzone (){
 //	$("#my-awesome-dropzone1").html("...");
 }
 window.onload = function() {
-//	/prq/board/write/prq_member
+//	/prq/distributors/write/prq_member
 //showDropzone();
 };
 </script>
@@ -46,7 +46,7 @@ window.onload = function() {
 <h2>총판 수정Basic Form</h2>
 <ol class="breadcrumb">
 <li><a href="/">Home</a></li><li>
-<a href="/prq/board/lists/prq_member/">총판관리</a>
+<a href="/prq/distributors/lists/prq_member/">총판관리</a>
 </li>
 <li class="active">
 <strong>총판 수정 Basic Form</strong>
@@ -63,9 +63,9 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-//echo form_open('/board/modify/prq_member', $attributes);
+//echo form_open('/distributors/modify/prq_member', $attributes);
 
-echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
+echo form_open('/distributors/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
 
 //echo form_open_multipart('/dropzone/upload', $attributes);
 
@@ -74,6 +74,7 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
+<input type="hidden" name="mb_no" id="mb_no" value="<?php echo $views->mb_no;?>">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper" value="<?php echo $views->mb_bank_paper;?>">
@@ -113,6 +114,12 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 
 <div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">총판아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">총판 상호</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_name" name="mb_name" value="<?php echo $views->mb_name;?>"> <span class="help-block m-b-none" id="mb_id_assist">총판상호를 등록 합니다. 중복 된 상호를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

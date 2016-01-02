@@ -70,6 +70,12 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_name">총판</span> 상호</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_name" name="mb_name"> <span class="help-block m-b-none" id="mb_name_assist"><span class="mb_gname">총판</span>상호를 등록 합니다. 중복 된 상호를 등록할 수 없습니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label">비밀번호</label>
 <div class="col-sm-10"><input type="password" class="form-control" name="mb_password">
 </div><!-- .col-sm-10 -->
@@ -222,11 +228,11 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .row -->
 
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
-<script type="text/javascript">
-/*
-server에 <span class="mb_gname">총판</span>을 등록 합니다.
 
-*/
+<script type="text/javascript">
+/**
+* server에 <span class="mb_gname">총판</span>을 등록 합니다.
+**/
 function set_ds(){
 var param=$("#write_action").serialize();
 if($("#is_join").val()=="TRUE"){
@@ -239,53 +245,65 @@ if($("#is_join").val()=="FALSE"){
 $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 }
 }
-
-
-
-
-function chk_duplicate_id(mb_id)
-{
-var result=false;
-$.ajax({
-url:"/prq/auth/chk_id",
-type: "POST",
-data:"mb_id="+mb_id,
-dataType:"json",
-success: function(data) {
-	$("#is_member").val(data.success);	
-	}
-});
-
-
-}
-
 /*End Dropzone*/	
 
+/**
+* fn chk_duplicate_id()
+ 아이디 길이 체크 후 중복 체크
+*/
 var focus=0,blur=0;
-
-function chk_vali_id(){
-focus++; 
-var object=[];
-var mb_id=$("#mb_id").val();
-chk_duplicate_id(mb_id);
-
-if (mb_id.length<4)
+function chk_duplicate_id()
 {
-object.push("<span  class=\"text-danger\">");
-object.push("아이디 길이가 너무 적습니다. 4자 이상");
-$("#is_join").val("FALSE");
-//}else if ($( "#mb_id" ).val()!="erm00")	{
-}else if ($("#is_member").val()){
-object.push("<span  class=\"text-success\">");
-object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
-$("#is_join").val("TRUE");
-}else{
-object.push("<span  class=\"text-danger\">");
-object.push("이미 사용중이거나 탈퇴한 아이디입니다.");	
-$("#is_join").val("FALSE");
+	focus++; 
+	var object=[];
+	var mb_id=$("#mb_id").val();
+	
+	if (mb_id.length<4)
+	{
+		object.push("<span  class=\"text-danger\">");
+		object.push("아이디 길이가 너무 적습니다. 4자 이상");
+		object.push("</span>");
+		$("#is_join").val("FALSE");
+		//}else if ($( "#mb_id" ).val()!="erm00")	{
+		$( "#mb_id_assist" ).html(object.join(""));
+		return;
+	}
+
+	var result=false;
+	$.ajax({
+	url:"/prq/auth/chk_id",
+	type: "POST",
+	data:"mb_id="+mb_id,
+	dataType:"json",
+	success: function(data) {
+		console.log(data.success);
+		console.log(data);
+		$("#is_member").val(data.success);	
+		chk_vali_id();
+		}
+	});
 }
-object.push("</span>");
-$( "#mb_id_assist" ).html(object.join(""));
+
+/*
+chk_vali_id();
+아이디 유효성 여부 검사
+*/
+function chk_vali_id()
+{
+	var object=[];
+	console.log("&gt;"+$("#is_member").val());
+	var is_dupid=eval($("#is_member").val());
+	if (is_dupid){
+	object.push("<span  class=\"text-success\">");
+	object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
+	$("#is_join").val("TRUE");
+	}else{
+	object.push("<span  class=\"text-danger\">");
+	object.push("이미 사용중이거나 탈퇴한 아이디입니다.");	
+	$("#is_join").val("FALSE");
+	}
+	object.push("</span>");
+	$( "#mb_id_assist" ).html(object.join(""));
 }
 
 /*mb_code로 등록 정보 변경*/
@@ -309,7 +327,7 @@ function set_member(){
 var param=$("#write_action").serialize();
 
 $.ajax({
-url:"/prq/board/write/prq_member",
+url:"/prq/distributors/write/prq_member",
 type: "POST",
 data:param,
 cache: false,
@@ -324,16 +342,16 @@ console.log(data);
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
-chk_vali_id();
+	//chk_vali_id();
+	chk_duplicate_id();
 })
 .blur(function() {
-blur++;
-chk_vali_id();
+	blur++;
+	//	chk_vali_id();
+	chk_duplicate_id();
 });
 
-/*mb_code로 등록 정보 변경*/
-chg_gname();
+	/*mb_code로 등록 정보 변경*/
+	//chg_gname();
 };/*window.onload = function() {..}*/
-
-
 </script>

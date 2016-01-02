@@ -354,10 +354,15 @@
 			removedfile: function(file, serverFileName) 
 			{
 				var name = file.name;
+				var param="filename="+name;
+				
+				param+="&mb_imgprefix="+$("#mb_imgprefix").val();
+				param+="&mb_no="+$("#mb_no").val();
+				param+="&mb_removetype="+id;
 				$.ajax({
 					type: "POST",
 					url: "/prq/dropzone/delete",
-					data: "filename="+name+"&mb_imgprefix="+$("#mb_imgprefix").val(),
+					data:param,
 					success: function(data)
 					{
 						var json = JSON.parse(data);
@@ -368,11 +373,15 @@
 							element.parentNode.removeChild(file.previewElement) : 
 							false;
 							//alert("요소를 제거: " + name); 
+							$("#"+id).val("");
+							$("#"+id+"_paper").val("");
 						}
 					},error: function(data)
 					{
 						file.previewElement.parentNode.removeChild(file.previewElement);
 						alert("서버 에러 업로드 파일을 삭제 합니다." ); 
+						$("#"+id).val("");
+						$("#"+id+"_paper").val("");
 						console.log("error");
 					}
 				});

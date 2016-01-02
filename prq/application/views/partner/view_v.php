@@ -223,7 +223,7 @@
 							<div class="col-md-6">
 							<!-- <form method="get" class="form-horizontal"> -->
                                 <div class="form-group"><label class="col-sm-2 control-label">총판 부모 코드</label>
-                                    <div class="col-sm-10"><?php echo $views->mb_gtype;?><?php echo $views->mb_pcode;?><span class="help-block m-b-none">총판 부모 코드.</span>
+                                    <div class="col-sm-10"><?php echo $views->mb_pcode;?><span class="help-block m-b-none">총판 부모 코드.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

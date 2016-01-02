@@ -40,9 +40,8 @@
 		}
 		
 
-		function swal_status(code){
-
-			
+		function swal_status(code)
+		{
 			swal({
 				title: "정말 변경 하시겠습니까?",
 				text: "해당 리스트를 \""+get_status(code)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
@@ -82,10 +81,34 @@
 								$("#status_"+val.mb_no).html(val.mb_status);
 							});
 						}
-						if(!data.success){
-							//alert("변경에 실패하였습니다.");
-							swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
+						console.log(data);
+						console.log(data=="9000");
+						if(data=="9000"){
+							//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+							swal({   
+								title: "로그인!",
+								text: "로그인 되지 않았습니다. 로그인 하시겠습니까?",
+								type: "warning",
+								showCancelButton: true,
+								closeOnConfirm: false,
+								animation: "slide-from-top"
+							}, 
+							function(inputValue)
+							{
+								/*취소를 눌렀을 때*/
+								if (inputValue === false) return false;
+
+								swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+								
+								setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+								;
+							});	
 						}
+
+//						if(!data.success){
+							//alert("변경에 실패하였습니다.");
+//							swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
+//						}
 					}
 				});
 
@@ -131,6 +154,7 @@
 			});
 			*/
 		}
+
 		function chk_btn_status(){
 			var param=$("#write_action").serialize();
 			
@@ -332,7 +356,7 @@ foreach ($list as $lt)
 </div>
 </div>
 <div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> 
-<?php if($mb_gcode=="G01"){?>
+<?php if($mb_gcode=="G1"){?>
 <a href="javascript:set_write();" class="btn btn-success">쓰기</a><?php }?></div></div>
 	</article>
 	

@@ -123,7 +123,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="4"><a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
+					<th colspan="4"><a href="/prq/distributors/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/distributors/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/distributors/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/distributors/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -257,7 +257,13 @@
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-                                <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
+                                <div class="form-group"><label class="col-sm-2 control-label">총판 상호</label>
+                                    <div class="col-sm-10"><?php echo $views->mb_name;?><span class="help-block m-b-none">총판 상호 입니다..</span>
+                                    </div><!-- .col-sm-10 -->
+                                </div><!-- .form-group -->
+								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+								<div class="form-group"><label class="col-sm-2 control-label">이메일</label>
                                     <div class="col-sm-10"><?php echo $views->mb_email;?><span class="help-block m-b-none">이메일을 기입해주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->

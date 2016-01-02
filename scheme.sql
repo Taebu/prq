@@ -658,3 +658,36 @@ alter table prq_member_code change mb_pcode mb_pcode char(6) default '';
 alter table prq_member_code change mb_pcode mb_pcode char(6) after `mb_no`;
 alter table prq_member_code change mb_gtype mb_gtype char(2) after `mb_no`;
 
+
+
+-- 2015-12-31 (목)
+
+
+/* 대분류 총판 */
+CREATE TABLE prq_dscode (
+  ds_code char(6) NOT NULL default '',
+  ds_name varchar(50) default NULL,
+  PRIMARY KEY  (ds_code)
+);
+
+/* 중분류 대리점 : pt_code에 ds_code를 포함한다. */
+CREATE TABLE prq_ptcode (
+  pt_code varchar(12) NOT NULL default '',
+  pt_name varchar(50) default NULL,
+  PRIMARY KEY  (pt_code)
+);
+
+/* 소분류 가맹점 fr_code에 ds_code를 포함한다. */
+CREATE TABLE prq_frcode (
+  fr_code varchar(18) NOT NULL default '',
+  fr_name varchar(50) default NULL,
+  view_index int(11) default NULL,
+  PRIMARY KEY  (fr_code)
+);
+
+
+-- 이와 같이 추가 하고 실제 code 만들어 질 때 내부적으로 이렇게 관리 되도록 변경 할 것
+
+
+ALTER TABLE `prq_member` add `prq_fcode` char(18) NOT NULL default '' after `mb_no`;
+
