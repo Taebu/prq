@@ -1,6 +1,7 @@
         <div class="footer">
             <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
+			Page rendered in <strong>{elapsed_time}</strong> seconds. {memory_usage}
+                <!-- 10GB of <strong>250GB</strong> Free. -->
             </div>
             <div>
                 <strong>Copyright</strong> ANP Company &copy; 2014-2015

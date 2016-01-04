@@ -691,3 +691,6 @@ CREATE TABLE prq_frcode (
 
 ALTER TABLE `prq_member` add `prq_fcode` char(18) NOT NULL default '' after `mb_no`;
 
+-- 2016-01-04 (월)
+alter table prq_log add prq_fcode char(18) default '' after mb_no;
+

@@ -30,24 +30,36 @@ class Ajax extends CI_Controller {
 		if( @$this->session->userdata('logged_in') == TRUE )
 		{
 			$this->load->model('ajax_m');
+			
+			$table=$this->uri->segment(3);
 
 			$chk_seq = $this->input->post("chk_seq", TRUE);
 			$mb_status = $this->input->post("mb_status", TRUE);
+			$ds_name = $this->input->post("ds_name", TRUE);
+
 			$mb_reason = $this->input->post("mb_reason", TRUE);
 			$mb_id = $this->input->cookie('name', TRUE);
 			$join_chk_seq=join(",",$chk_seq);
+			$join_ds_code=join("','",$chk_seq);
+
 //			if ( $comment_contents != '')
 //			{
 				$write_data = array(
-					'prq_table'=>'prq_member',
+					'prq_table'=>$table,
 					'mb_status'=>$mb_status,
+					'ds_name'=>$ds_name,
 					'mb_id'=>$mb_id,
 					'mb_reason'=>$mb_reason,
-					'join_chk_seq' => $join_chk_seq
+					'join_chk_seq' => $join_chk_seq,
+					'join_ds_code' => $join_ds_code
 				);
 
 //				$result = $this->board_m->insert_comment($write_data);
-				$result = $this->ajax_m->chg_status($write_data);
+				if($table=="prq_member"){
+					$result = $this->ajax_m->chg_status($write_data);
+				}else if($table!="prq_member"){
+					$result = $this->ajax_m->chg_status_code($write_data);
+				}
 //			}
 //			else
 //			{

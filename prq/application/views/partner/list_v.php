@@ -70,7 +70,7 @@
 				/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
 				param=param+"&mb_reason="+inputValue;
 				$.ajax({
-				url:"/prq/ajax/chg_status",
+				url:"/prq/ajax/chg_status/prq_member",
 					data:param,
 					dataType:"json",
 					type:"POST",

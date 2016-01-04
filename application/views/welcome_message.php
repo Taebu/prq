@@ -38,7 +38,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<p><a href="/bbs/board/view/ci_board/board_id/31/page/1">CHAPTER_9. Ajax :jQuery</a></p>
 		<p><a href="/sns/">CHAPTER_10. 사진 SNS 프로젝트 2015-11-30 (월), 2015-11-30 (월) 완료</a></p>
 		<p><a href="/sns/controlls/lists">CHAPTER_11. 모바일 웹프로젝트 프로젝트 (jQuery Mobile)2015-11-30 (월), 2015-11-30 (월) 완료</a></p>
-		<p><a href="/prq/">PRQ</a></p>
+		<p><a href="/prq/distributors/lists/prq_member/page/1">PRQ</a></p>
+		
 		<p>코드 이그나이터를 설치후 볼 수 있는 화면 입니다. </p>
 		<p><?php echo getcwd();?></p>
 		</div><!-- #body -->

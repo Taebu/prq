@@ -78,7 +78,7 @@ class Ajax_m extends CI_Model
 	{
 
 		$sql=array();
-		$sql[]="update `prq_member` set ";
+		$sql[]="update `".$array['prq_table']."` set ";
 		$sql[]=" mb_status='".$array['mb_status']."' ";
 		$sql[]="WHERE ";
 		$sql[]="mb_no in (".$array['join_chk_seq'].");";
@@ -97,21 +97,6 @@ class Ajax_m extends CI_Model
 		$mb_id=$array['mb_id'];
 		$prq_table=$array['prq_table'];
 
-/*
-drop table `prq_log`;
-CREATE TABLE `prq_log` (
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
-  `lo_ip` varchar(255) NOT NULL DEFAULT '',
-  `mb_no` int(11) NOT NULL DEFAULT '0',
-  `prq_table` varchar(255) NOT NULL DEFAULT '',
-  `lo_status` varchar(255) NOT NULL DEFAULT '',
-  `lo_how` varchar(255) NOT NULL DEFAULT '',
-  `lo_reason`  varchar(255) NOT NULL DEFAULT '',
-  `lo_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`mb_id`,`prq_table`,`lo_datetime`)
-) DEFAULT CHARSET=utf8;
-
-*/
 		foreach($arr_no as $an)
 		{
 			$items=array();
@@ -134,10 +119,73 @@ CREATE TABLE `prq_log` (
 		}
 
 		echo json_encode($json);
-		//print_r($array);
-		//echo $join_sql;
 	}
 
+	/**/
+	function chg_status_code($array)
+	{
+		$sql=array();
+		$json=array();
+		$json['posts']=array();
+		if($array['mb_status']=="delete")
+		{
+			$sql[]="delete from `".$array['prq_table']."` ";
+			$sql[]="WHERE ";
+			$sql[]="ds_code in ('".$array['join_ds_code']."');";
+			$join_sql=join("",$sql);
+			$query = $this->db->query($join_sql);
+			$json['success']=$query;
+		}
+		$ds_name=$array['ds_name'];
+
+
+
+
+
+		
+		$arr_no= explode (",", $array['join_chk_seq']);
+		
+		$ip_addr= $this->input->ip_address();
+		$referrer=$this->agent->referrer();
+		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		$prq_table=$array['prq_table'];
+
+		foreach($arr_no as $an)
+		{
+			if($array['mb_status']=="modify")
+			{
+				$sql=array();
+				$sql[]="update `".$array['prq_table']."` set ";
+				$sql[]=" ds_name='".$ds_name[$an]."' ";
+				$sql[]="WHERE ";
+				$sql[]="ds_code in ('".$an."');";
+				$join_sql=join("",$sql);
+				$query = $this->db->query($join_sql);
+			}
+			$json['success']=$query;
+			$items=array();
+			$items['mb_status']=$array['mb_status'];
+			$items['ds_code']=$an;
+			array_push($json['posts'],$items);
+
+			$sql=array();
+			$sql[]="INSERT INTO `prq_log` SET ";
+			$sql[]=" mb_id='".$mb_id."', ";
+			$sql[]=" lo_ip='".$ip_addr."', ";
+//			$sql[]=" mb_no='".$an."', ";
+			$sql[]=" prq_fcode='".$an."', ";
+			$sql[]=" prq_table='".$prq_table."', ";
+			$sql[]=" lo_how='ajax', ";
+			$sql[]=" lo_reason='".$lo_reason."', ";
+			$sql[]=" lo_status='".$array['mb_status']."', ";
+			$sql[]=" lo_datetime=now(); ";
+			$join_sql=join("",$sql);
+			$query = $this->db->query($join_sql);
+		}
+
+		echo json_encode($json);
+	}
 
 	function get_status($code)
 	{

@@ -27,7 +27,8 @@
     <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 <script type="text/javascript">
 
-function set_menu_write(id){
+function set_menu_write(id)
+{
 //	var chk_code=$("#mb_code").val();
 	$("#mb_code").val(id);
 	switch (id)
@@ -323,6 +324,30 @@ function chg_gname(){
                         <div class="logo-element">
                             PRQ
                         </div>
+                    </li>
+					<?php if($this->uri->segment(1)=="codes"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?>
+                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+					<?php if($this->uri->segment(3)=="prq_dscode"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                           <?php if($this->uri->segment(3)=="prq_ptcode"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?><a href="/prq/codes/lists/prq_ptcode/page/1">대리점 코드 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                           <?php if($this->uri->segment(3)=="prq_frcode"){
+					echo '<li class="active">';
+					 }else{
+					echo '<li>';
+					 }?><a href="/prq/codes/lists/prq_frcode/page/1">가맹점 코드 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                        </ul>
                     </li>
 					<?php if($this->uri->segment(1)=="distributors"){
 					echo '<li class="active">';

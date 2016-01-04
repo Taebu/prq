@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * 충판 메인 controller.
- * 생성 : 2015-12-23 (수)
+ * 생성 : 2016-01-04 (월)
  * @author Taebu,Moon<mtaebu@gmail.com>
  */
-class Distributors extends CI_Controller {
+class codes extends CI_Controller {
 
  	function __construct()
 	{
@@ -12,7 +12,7 @@ class Distributors extends CI_Controller {
 		$this->load->database();
 //		$this->load->model('board_m');
 //		$this->load->model('member_m');
-		$this->load->model('distributors_m');
+		$this->load->model('codes_m');
 		$this->load->helper('form');
 		$this->load->helper(array('url','date'));
 	}
@@ -105,8 +105,8 @@ class Distributors extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/distributors/lists/prq_member'.$page_url.'/page/',
-		'total_rows' => $this->distributors_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'base_url'=> '/prq/codes/lists/prq_dscode'.$page_url.'/page/',
+		'total_rows' => $this->codes_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,
 
@@ -148,9 +148,9 @@ class Distributors extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->distributors_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['list'] = $this->codes_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
 		$data['controllers'] = $this;
-		$this->load->view('distributors/list_v', $data);
+		$this->load->view('codes/list_v', $data);
 	}
 
 	/**
@@ -162,13 +162,13 @@ class Distributors extends CI_Controller {
 		$board_id = $this->uri->segment(5);
 
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
- 		$data['views'] = $this->distributors_m->get_view($table, $board_id);
+ 		$data['views'] = $this->codes_m->get_view($table, $board_id);
 
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
- 		$data['comment_list'] = $this->distributors_m->get_comment($table, $board_id);
+ 		$data['comment_list'] = $this->codes_m->get_comment($table, $board_id);
 
  		//view 호출
- 		$this->load->view('distributors/view_v', $data);
+ 		$this->load->view('codes/view_v', $data);
  	}
 
  	/**
@@ -186,12 +186,12 @@ class Distributors extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('mb_id', '아이디', 'required');
-			$this->form_validation->set_rules('mb_password', '비밀번호', 'required');
-
-			if ( $this->form_validation->run() == TRUE )
+			$this->form_validation->set_rules('ds_code', '총판코드', 'required');
+			$this->form_validation->set_rules('ds_name', '코드네임', 'required');
+			$ds_name=$this->input->post('ds_name', TRUE);
+			if ( $this->form_validation->run() == TRUE&&!is_array($ds_name) )
 			{
-				$this->load->model('distributors_m');
+				$this->load->model('codes_m');
 				//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 				$uri_array = $this->segment_explode($this->uri->uri_string());
 
@@ -204,73 +204,24 @@ class Distributors extends CI_Controller {
 					$pages = 1;
 				}
 
-//				$get_code_data= array(
-//					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
-//				);
-//				$mb_code = $this->distributors_m->get_code($get_code_data);
-+
-/*
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
-					'subject' => $this->input->post('subject', TRUE),
-					'contents' => $this->input->post('contents', TRUE),
-					'user_id' => $this->session->userdata('username'),
-					'user_name' => $this->session->userdata('name'),
+					'ds_name' => $this->input->post('ds_name', TRUE),
+					'ds_code' => $this->input->post('ds_code', TRUE)
 				);
-*/				
 
-				$write_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'mb_name' => $this->input->post('mb_name', TRUE),
-					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
-//					'mb_code' => $this->input->post('mb_code', TRUE),
-					'mb_email' => $this->input->post('mb_email', TRUE),
-					'mb_imgprefix' => $this->input->post('mb_imgprefix', TRUE),
-					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
-					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
-					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
-					'mb_password' => $this->input->post('mb_password', TRUE),
-					'mb_hp' => $this->input->post('mb_hp', TRUE),
-					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
-					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
-					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
-					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
-					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
-					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
-					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
-					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
-					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
-					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
-					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
-					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
-				);
-				$result = $this->distributors_m->insert_distributors($write_data);
+				$result = $this->codes_m->insert_codes($write_data);
 
 				if ( $result )
 				{
-					/*성공시 insert 코드 
-						$sql_array[]="mb_id='".$arrays['mb_id']."',";
-						$sql_array[]="mb_code='".$arrays['mb_code']."',";
-						$sql_array[]="mb_pcode='".$arrays['mb_pcode']."',";
-					*/
-					
-					$write_data = array(
-						'mb_no' => $GLOBALS['mb_no'],
-						'mb_id' => $this->input->post('mb_id', TRUE),
-						'mb_pcode' => $this->input->post('mb_pcode', TRUE),
-						'mb_code' => $GLOBALS['mb_code']
-					);					
-					$result = $this->distributors_m->insert_code($write_data);
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/codes/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/codes/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -278,7 +229,7 @@ class Distributors extends CI_Controller {
 			else
 			{
 				//쓰기폼 view 호출
-				$this->load->view('distributors/write_v');
+				$this->load->view('codes/write_v');
 			}
 		}
 		else
@@ -312,11 +263,11 @@ class Distributors extends CI_Controller {
 		if( @$this->session->userdata('logged_in') == TRUE )
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
-			$writer_id = $this->distributors_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+			$writer_id = $this->codes_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/distributors_id/'.$this->uri->segment(5).'/page/'.$pages);
+				alert('본인이 작성한 글이 아닙니다.', '/prq/codes/view/'.$this->uri->segment(3).'/codes_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
 			}
 */
@@ -324,68 +275,37 @@ class Distributors extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('mb_addr1', '주소1', 'required');
-			$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
+			$this->form_validation->set_rules('ds_code', '주소1', 'required');
+			$this->form_validation->set_rules('ds_name', '주소2', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
-				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
+				if ( !$this->input->post('ds_name', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
-					alert('비정상적인 접근입니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('비정상적인 접근입니다.', '/prq/codes/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
-				//var_dump($_POST);
-				/*
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
-					'distributors_id' => $this->uri->segment(5), //게시물번호
-					'subject' => $this->input->post('subject', TRUE),
-					'contents' => $this->input->post('contents', TRUE)
+					'ds_code' => $this->input->post('ds_code', TRUE),
+					'ds_name' => $this->input->post('ds_name', TRUE)
 				);
 
-				$result = $this->distributors_m->modify_distributors($modify_data);
-*/
-				$modify_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'mb_no' => $this->uri->segment(5), //게시판 번호
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'mb_name' => $this->input->post('mb_name', TRUE),
-					'mb_email' => $this->input->post('mb_email', TRUE),
-					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
-					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
-					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
-					'mb_password' => $this->input->post('mb_password', TRUE),
-					'mb_hp' => $this->input->post('mb_hp', TRUE),
-					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
-					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
-					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
-					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
-					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
-					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
-					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
-					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
-					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
-					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
-					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
-					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
-				);
-//				$result = $this->distributors_m->insert_distributors($write_data);
 
-				$result = $this->distributors_m->modify_distributors($modify_data);
+				$result = $this->codes_m->modify_codes($modify_data);
 
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/codes/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/codes/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 
@@ -393,10 +313,10 @@ class Distributors extends CI_Controller {
 			else
 			{
 				//게시물 내용 가져오기
-				$data['views'] = $this->distributors_m->get_view($this->uri->segment(3), $this->uri->segment(5));
+				$data['views'] = $this->codes_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 
 				//쓰기폼 view 호출
-				$this->load->view('distributors/modify_v', $data);
+				$this->load->view('codes/modify_v', $data);
 			}
 		}
 		else
@@ -421,27 +341,27 @@ class Distributors extends CI_Controller {
 			$table = $this->uri->segment(3);
 			$board_id = $this->uri->segment(5);
 
-			$writer_id = $this->distributors_m->writer_check($table, $board_id);
+			$writer_id = $this->codes_m->writer_check($table, $board_id);
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('본인이 작성한 글이 아닙니다.', '/prq/codes/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 				exit;
 			}
 
 			//게시물 번호에 해당하는 게시물 삭제
-			$return = $this->distributors_m->delete_content($this->uri->segment(3), $this->uri->segment(5));
+			$return = $this->codes_m->delete_content($this->uri->segment(3), $this->uri->segment(5));
 
 			//게시물 목록으로 돌아가기
 			if ( $return )
 			{
 				//삭제가 성공한 경우
-				alert('삭제되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
+				alert('삭제되었습니다.', '/prq/codes/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
 			}
 			else
 			{
 				//삭제가 실패한 경
-				alert('삭제 실패하였습니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('삭제 실패하였습니다.', '/prq/codes/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 			}
 		}
 		else
@@ -521,5 +441,5 @@ class Distributors extends CI_Controller {
 	}
 }
 
-/* End of file distributors.php */
-/* Location: ./application/controllers/distributors.php */
+/* End of file codes.php */
+/* Location: ./application/controllers/codes.php */
