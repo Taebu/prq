@@ -20,7 +20,7 @@
 
 		function set_write()
 		{
-			$('#write_action').attr('action', "/prq/codes/write/prq_dscode/page/1");
+			$('#write_action').attr('action', "/prq/codes/write/prq_ptcode/page/1");
 			$("#write_action").submit();		
 		}
 

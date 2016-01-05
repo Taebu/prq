@@ -149,8 +149,26 @@ class codes extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->codes_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+
+		/**/
+		$data['get_max_dscode'] = $this->codes_m->get_max_dscode();
 		$data['controllers'] = $this;
-		$this->load->view('codes/list_v', $data);
+		$write_view=$this->uri->segment(3);
+		if($write_view=="prq_dscode")
+		{
+			$this->load->view('codes/ds/list_v', $data);
+		}
+
+		if($write_view=="prq_ptcode")
+		{
+			$this->load->view('codes/pt/list_v', $data);
+		}
+
+		if($write_view=="prq_frcode")
+		{
+			$this->load->view('codes/fr/list_v', $data);
+		}
+
 	}
 
 	/**
@@ -229,7 +247,21 @@ class codes extends CI_Controller {
 			else
 			{
 				//쓰기폼 view 호출
-				$this->load->view('codes/write_v');
+				$write_view=$this->uri->segment(3);
+				if($write_view=="prq_dscode")
+				{
+					$this->load->view('codes/ds/write_v');
+				}
+
+				if($write_view=="prq_ptcode")
+				{
+					$this->load->view('codes/pt/write_v');
+				}
+
+				if($write_view=="prq_frcode")
+				{
+					$this->load->view('codes/fr/write_v');
+				}
 			}
 		}
 		else

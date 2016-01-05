@@ -59,7 +59,19 @@ class Codes_m extends CI_Model
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 //		$sql = "SELECT * FROM ".$table.$sword."  ORDER BY mb_no DESC".$limit_query;
-		$order="  ORDER BY ds_code ";
+		$prq_code=$this->uri->segment(3);
+		switch($prq_code)
+		{
+			case "prq_dscode":
+			$order="  ORDER BY ds_code ";
+			break;
+			case "prq_ptcode":
+			$order="  ORDER BY pt_code ";
+			break;
+			case "prq_frcode":
+			$order="  ORDER BY fr_code ";
+			break;
+		}
 		//$order="";
 		$sql = "SELECT * FROM ".$table.$sword.$order.$limit_query;
    		$query = $this->db->query($sql);
@@ -371,7 +383,7 @@ class Codes_m extends CI_Model
 	 * @author Jongwon Byun <advisor@cikorea.net>
 	 * @return array
 	 */
-    function get_max_code()
+    function get_max_dscode()
     {
     	$sql = "select max(ds_code) max_ds_code from prq_dscode;";
    		$query = $this->db->query($sql);
