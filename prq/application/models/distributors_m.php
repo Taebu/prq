@@ -115,6 +115,7 @@ class Distributors_m extends CI_Model
 		);
 
 		$mb_code=$this->get_code($arrays);
+		$prq_fcode=$this->get_dscode();
 		$prq_code=$this->get_member_code($arrays['mb_gtype']);
 		/*
 		$prq_code['mb_gcode']: G8
@@ -126,7 +127,8 @@ class Distributors_m extends CI_Model
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_name='".$arrays['mb_name']."',";
-		$sql_array[]="mb_pcode='".$arrays['mb_pcode']."',";
+		$sql_array[]="prq_fcode='".$prq_fcode."',";
+		$sql_array[]="mb_fcode='".$arrays['mb_fcode']."',";
 		$sql_array[]="mb_code='".$mb_code."',";
 		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
 		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";

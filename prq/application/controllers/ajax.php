@@ -9,6 +9,7 @@ class Ajax extends CI_Controller {
  	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('ajax_m');
 	}
 
 	/**
@@ -29,7 +30,7 @@ class Ajax extends CI_Controller {
 	{
 		if( @$this->session->userdata('logged_in') == TRUE )
 		{
-			$this->load->model('ajax_m');
+
 			
 			$table=$this->uri->segment(3);
 
@@ -111,8 +112,8 @@ class Ajax extends CI_Controller {
 		}
 	}
 
-	function mb_pcode(){
-		$this->load->model('ajax_m');
+	function mb_pcode()
+	{
 		$mb_code=$this->input->get("mb_code", TRUE);
 		$write_data = array(
 			'mb_gcode'=>'G1'
@@ -120,6 +121,27 @@ class Ajax extends CI_Controller {
 
 //		$result = $this->board_m->insert_comment($write_data);
 		$result = $this->ajax_m->get_pcode($write_data);
+		echo $result;
+	}
+
+	/* get_dscode() */
+	function get_dscode()
+	{
+		$result = $this->ajax_m->get_dscode();
+		echo $result;
+	}
+
+	/* get_ptcode() */
+	function get_ptcode()
+	{
+		$result = $this->ajax_m->get_ptcode();
+		echo $result;
+	}
+
+	/* get_frcode() */
+	function get_frcode()
+	{
+		$result = $this->ajax_m->get_frcode();
 		echo $result;
 	}
 }

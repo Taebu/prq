@@ -233,17 +233,20 @@ $mb_code=$this->input->post('mb_code',TRUE);
 /**
 * server에 <span class="mb_gname">총판</span>을 등록 합니다.
 **/
-function set_ds(){
-var param=$("#write_action").serialize();
-if($("#is_join").val()=="TRUE"){
-$("#form_data").html(param);
-//	$("#write_action").submit();
-set_member();
-}
+function set_ds()
+{
+	var param=$("#write_action").serialize();
+	if($("#is_join").val()=="TRUE")
+	{
+		$("#form_data").html(param);
+		//	$("#write_action").submit();
+		set_member();
+	}
 
-if($("#is_join").val()=="FALSE"){
-$("#form_data").html("<span  class=\"text-danger\">가입불</span>");
-}
+	if($("#is_join").val()=="FALSE")
+	{
+		$("#form_data").html("<span  class=\"text-danger\">가입불</span>");
+	}
 }
 /*End Dropzone*/	
 

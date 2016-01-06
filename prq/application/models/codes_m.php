@@ -126,9 +126,20 @@ class Codes_m extends CI_Model
 	function insert_codes($arrays)
  	{
 		$sql_array=array();
-		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
-		$sql_array[]="ds_name='".$arrays['ds_name']."',";
-		$sql_array[]="ds_code='".$arrays['ds_code']."';";
+		if($arrays['table']=="prq_dscode")
+		{
+			$sql = "select count(*) from prq_dscode where ds_code = '".$arrays['ds_code']."' ";
+			$result_count = $this->db->query($sql);
+			$cat_count = mysql_result($result_count, 0,0);
+			if($cat_count > 0) 
+			{ 
+				echo "<script>alert('\\n코드 $mid_code 은(는) 이미 생성된 코드이니, 목록에서 처리하세요.\\t');</script>";
+			} else { 
+				$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
+				$sql_array[]="ds_name='".$arrays['ds_name']."',";
+				$sql_array[]="ds_code='".$arrays['ds_code']."';";
+			}
+		}
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환

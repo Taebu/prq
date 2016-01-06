@@ -246,6 +246,7 @@ class Distributors extends CI_Controller {
 					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
 					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
 				);
+
 				$result = $this->distributors_m->insert_distributors($write_data);
 
 				if ( $result )

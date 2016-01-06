@@ -250,6 +250,109 @@ class Ajax_m extends CI_Model
 		//print_r($array);
 		//echo $join_sql;
 	}
+
+	/*2016-01-06 (수)
+	get_dscode()
+
+	모든 총판 코드를 반환한다.
+	*/
+	function get_dscode()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_dscode` ";
+//		$sql[]=" where ds_code like 'rs%' ";
+		$sql[]=" order by ds_code ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
+	/*
+	get_ptcode()
+	모든 대리점 코드를 반환한다.
+	*/
+	function get_ptcode()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_ptcode` ";
+//		$sql[]=" where ds_code like 'rs%' ";
+		$sql[]=" order by pt_code ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
+	/*
+	get_frcode()
+	모든 가맹점 코드를 반환한다.
+	*/
+	function get_frcode()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_frcode` ";
+//		$sql[]=" where ds_code like 'rs%' ";
+		$sql[]=" order by fr_code ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
 }
 
 /* End of file auth_m.php */

@@ -56,7 +56,7 @@ $ds_code=$this->input->post('ds_code',TRUE);
 <div class="row">
 <div class="col-md-4"><label>총판 코드</label>
 	<div class="form-inline">
-	<select name="ds_code"  class="form-control" id="ds_code" size='10' style='width:100%'>
+	<select name="ds_code"  class="form-control" id="ds_code" size='10' style='width:100%' onchange="javascript:search_ptcode(this.value)">
 		<option value="DS0001" selected>[DS0001] 캐시큐1</option>
 		<option value="DS0002">[DS0002] 캐시큐2</option>
 		<option value="DS0003">[DS0003] 캐시큐3</option>
@@ -145,9 +145,6 @@ $ds_code=$this->input->post('ds_code',TRUE);
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->
 </div><!-- .col-lg-12 -->
-</div><!-- .row -->
-
-</div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 
 <script type="text/javascript">
 /**
@@ -262,29 +259,75 @@ console.log(data);
 
 function get_dscode()
 {
-	var object = [];
-	object.push({"code":"DS0001","name":"캐시큐"});
-	object.push({"code":"DS0002","name":"우동배"});
-
-	var sel_obj=[];
-	for(var i in object)
-	{
-		if("DS0001"==object[i]['code']){
-
-			sel_obj.push('<option value='+object[i]['code']+' selected>');
+	
+	$.ajax({
+	url:"/prq/ajax/get_dscode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		console.log(data.success);
+		console.log(data.posts);
+		var object = [];
+		$.each(data.posts,function(key,val){
+		if("DS0001"==val.ds_code){
+			object.push('<option value='+val.ds_code+' selected>');
 		}else{
-			sel_obj.push('<option value='+object[i]['code']+'>');
+			object.push('<option value='+val.ds_code+'>');
 		}
-		sel_obj.push('['+object[i]['code']+']');
-
-		sel_obj.push(object[i]['name']);
-		sel_obj.push('</option>');
-	}
-
-	var result=sel_obj.join("");
-	$("#ds_code").html(result);
+		object.push('['+val.ds_code+']');
+		object.push(val.ds_name);
+		object.push('</option>');
+		});
+//		$("#is_member").val(data.success);	
+//		chk_vali_id();
+		var result=object.join("");
+		$("#ds_code").html(result);
+		}
+	});
 }
 
+var pt_code="";
+
+function get_ptcode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_ptcode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		pt_code=data.posts;
+//		$("#is_member").val(data.success);	
+//		chk_vali_id();
+		search_ptcode("DS0001");
+		
+
+		}
+	});
+}
+
+function search_ptcode(ds_code)
+{
+	var object = [];
+	$.each(pt_code,function(key,val){
+	if(val.pt_code.indexOf(ds_code)>-1)
+	{
+		if("DS0001"==val.pt_code){
+			object.push('<option value='+val.pt_code+' selected>');
+		}else{
+			object.push('<option value='+val.pt_code+'>');
+		}
+		object.push('['+val.pt_code+']');
+		object.push(val.pt_name);
+		object.push('</option>');
+	}
+	});
+	var result=object.join("");
+	$("#pt_code").html(result);
+	chg_ptcode("DS0001PT0001");
+}
 /*
 
 */
@@ -295,7 +338,13 @@ function chg_ptcode(v)
 	$("#display_dscode").html(ds_code);
 	$("#display_ptcode").html(v);
 	$("#span_pt_code").html(ds_code+""+v);
-	$("#edit_pt_name").val(ds_code+"_"+v);
+	var search_code=v;
+	console.log(search_code);
+	$.each(pt_code,function(key,val){
+		if(val.pt_code.indexOf(search_code)>-1)
+		$("#edit_pt_name").val(val.pt_name);
+//	$("#edit_pt_name").val(ds_code+"_"+v);
+	});
 }
 window.onload = function() {
 
@@ -311,6 +360,13 @@ $( "#mb_id" ).focusout(function() {
 
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();
+	/*총판 코드 가져 오기*/
 	get_dscode();
+
+	/*대리점 코드 가져 오기*/
+	get_ptcode();
+	
+	/*초기 대리점 코드 설정*/
+	
 };/*window.onload = function() {..}*/
 </script>

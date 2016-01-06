@@ -266,28 +266,26 @@ echo "대리점을 등록할 권한이 없습니다.";
 
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
+var is_idchecking=false;
+
 /*
 server에 <span class="mb_gname">대리점</span>을 등록 합니다.
-
 */
-function set_ds(){
-var param=$("#write_action").serialize();
-if($("#is_join").val()=="TRUE"){
-$("#form_data").html(param);
-//	$("#write_action").submit();
-set_member();
+function set_ds()
+{
+	var param=$("#write_action").serialize();
+	if($("#is_join").val()=="TRUE")
+	{
+		$("#form_data").html(param);
+		//	$("#write_action").submit();
+		set_member();
+	}
+
+	if($("#is_join").val()=="FALSE")
+	{
+		$("#form_data").html("<span  class=\"text-danger\">가입불</span>");
+	}
 }
-
-if($("#is_join").val()=="FALSE"){
-$("#form_data").html("<span  class=\"text-danger\">가입불</span>");
-}
-}
-
-
-
-
-
-
 /*End Dropzone*/	
 
 /**
@@ -297,13 +295,11 @@ $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 var focus=0,blur=0;
 function chk_duplicate_id()
 {
-
-
+	is_idchecking=true;
 	focus++; 
 	var object=[];
 	var mb_id=$("#mb_id").val();
 	
-
 	if (mb_id.length<4)
 	{
 		object.push("<span  class=\"text-danger\">");
@@ -314,8 +310,6 @@ function chk_duplicate_id()
 		$( "#mb_id_assist" ).html(object.join(""));
 		return;
 	}
-
-
 
 	var result=false;
 	$.ajax({
@@ -341,88 +335,88 @@ function chk_vali_id()
 	var object=[];
 	console.log("&gt;"+$("#is_member").val());
 	var is_dupid=eval($("#is_member").val());
-	if (is_dupid){
-	object.push("<span  class=\"text-success\">");
-	object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
-	$("#is_join").val("TRUE");
+	if (is_dupid)
+	{
+		object.push("<span  class=\"text-success\">");
+		object.push("\""+$( "#mb_id" ).val()+"\" 멋진 아이디네요.");
+		$("#is_join").val("TRUE");
 	}else{
-	object.push("<span  class=\"text-danger\">");
-	object.push("이미 사용중이거나 탈퇴한 아이디입니다.");	
-	$("#is_join").val("FALSE");
+		object.push("<span  class=\"text-danger\">");
+		object.push("이미 사용중이거나 탈퇴한 아이디입니다.");	
+		$("#is_join").val("FALSE");
 	}
 	object.push("</span>");
 	$( "#mb_id_assist" ).html(object.join(""));
 }
 
 /*mb_code로 등록 정보 변경*/
-function chg_gname(){
+function chg_gname()
+{
 	var chk_code=$("#mb_code").val();
 	switch (chk_code)
 	{
 	case "DS":
-	$(".mb_gname").html("총판");
-	break;
+		$(".mb_gname").html("총판");
+		break;
 	case "PT":
-	$(".mb_gname").html("대리점");
-	break;
+		$(".mb_gname").html("대리점");
+		break;
 	case "FR":
-	$(".mb_gname").html("가맹점");
-	break;
+		$(".mb_gname").html("가맹점");
+		break;
 	}
 }
 
 /*set_member(){...}*/
-function set_member(){
-var param=$("#write_action").serialize();
+function set_member()
+{
+	var param=$("#write_action").serialize();
 
-$.ajax({
-url:"/prq/partner/write/prq_member",
-type: "POST",
-data:param,
-cache: false,
-async: false,
-success: function(data) {
-console.log(data);
+	$.ajax({
+		url:"/prq/partner/write/prq_member",
+		type: "POST",
+		data:param,
+		cache: false,
+		async: false,
+		success: function(data) {
+		console.log(data);
+		}
+	});
 }
-});		
-
-}
-
 
 /*get_pcode(){...}*/
-function get_pcode(){
-var object=[];
-$.ajax({
-url:"/prq/ajax/mb_pcode/",
-data:"mb_code="+$("#mb_pcode").val(),
-dataType:"json",
-success:function(data){
-
-$.each(data.posts,function(key,val){
-object.push('<option value="'+val.mb_code+'">'+val.mb_ceoname+'('+val.mb_code+')</option>');
-});
-$("#mb_pcode").html(object.join(""));
+function get_pcode()
+{
+	var object=[];
+	$.ajax({
+	url:"/prq/ajax/mb_pcode/",
+	data:"mb_code="+$("#mb_pcode").val(),
+	dataType:"json",
+	success:function(data){
+		$.each(data.posts,function(key,val){
+		object.push('<option value="'+val.mb_code+'">'+val.mb_ceoname+'('+val.mb_code+')</option>');
+		});
+		$("#mb_pcode").html(object.join(""));
+	}
+	});
 }
-});
-}
-
 
 window.onload = function() {
 
-$( "#mb_id" ).focusout(function() {
-//chk_vali_id();
-chk_duplicate_id();
-})
-.blur(function() {
-blur++;
-//chk_vali_id();
-chk_duplicate_id();
-});
+	$( "#mb_id" ).focusout(function() {
+	//chk_vali_id();
+	chk_duplicate_id();
+	})
+	.blur(function() {
+	blur++;
+	//chk_vali_id();
+	chk_duplicate_id();
+	});
 
-/*mb_code로 등록 정보 변경*/
-//chg_gname();
-/*총판 코드 가져오기*/
-get_pcode();
+	/*mb_code로 등록 정보 변경*/
+	//chg_gname();
+	/*총판 코드 가져오기*/
+	get_pcode();
 
 };/*window.onload = function() {..}*/
 
