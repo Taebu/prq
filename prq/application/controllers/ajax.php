@@ -144,6 +144,35 @@ class Ajax extends CI_Controller {
 		$result = $this->ajax_m->get_frcode();
 		echo $result;
 	}
+
+
+	public function set_ptcode()
+	{
+		$json['success']=false;
+		if( @$this->session->userdata('logged_in') == TRUE )
+		{
+			
+			$table=$this->uri->segment(3);
+
+			$mode = $this->input->post("mode", TRUE);
+			$pt_code_new = $this->input->post("pt_code_new", TRUE);
+			$pt_name = $this->input->post("pt_name", TRUE);
+			$edit_pt_name = $this->input->post("edit_pt_name", TRUE);
+
+			$write_data = array(
+				'mode'=>$mode,
+				'pt_code_new'=>$pt_code_new,
+				'pt_name'=>$pt_name,
+				'edit_pt_name'=>$edit_pt_name
+			);
+			$result = $this->ajax_m->insert_ptcode($write_data);
+			echo $result;
+		}
+		else
+		{
+			echo json_encode($json); //로그인 필요 에러
+		}
+	}
 }
 
 /* End of file ajax_board.php */

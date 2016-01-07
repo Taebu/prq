@@ -224,12 +224,12 @@ $next_code="DS0001";
 
 foreach ($list as $lt)
 {
-$code = substr($lt->ds_code,2,6);
+$code = substr($lt->pt_code,2,6);
 ?>
 <tr>
-<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->ds_code;?>" onclick="chk_btn_status()"></td>
-<td scope="row"><?php echo $lt->ds_code;?></td>
-<td><input type='text' id='name_<?php echo $code;?>' name="ds_name[<?php echo $lt->ds_code;?>]" value='<?php echo $lt->ds_name;?>' class='ed'></td></td>
+<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->pt_code;?>" onclick="chk_btn_status()"></td>
+<td scope="row"><?php echo $lt->pt_code;?></td>
+<td><input type='text' id='name_<?php echo $code;?>' name="pt_name[<?php echo $lt->pt_code;?>]" value='<?php echo $lt->pt_name;?>' class='ed'></td></td>
 </tr>
 <?php
 if($code != 9999) $next_code = $code + 1;
@@ -243,13 +243,13 @@ if($code != 9999) $next_code = $code + 1;
 					<?php if($mb_gcode=="G1"){?>
 					<div class="btn_area">
 					<?php
-					if($next_code!="DS0001")
+					if($next_code!="pt0001")
 					{
-						$next_code=substr($get_max_dscode[0]->max_ds_code,2,6);
+//						$next_code=substr($get_max_ptcode[0]->max_pt_code,2,6);
 						$next_code=10001+$next_code;
-						$ds_code="DS".substr($next_code,1,5);
+						$pt_code="PT".substr($next_code,1,5);
 					}else{
-					$ds_code="DS0001";
+					$ds_code="PT0001";
 					}
 					?>
 				<button type="button" class="btn btn-sm btn-default" onclick="chg_list('modify');">수정</button>
@@ -261,7 +261,7 @@ if($code != 9999) $next_code = $code + 1;
 				</tr>
 			</tfoot>
 		</table>
-<input type="hidden" name="ds_code"  id="ds_code" value="<?php echo $ds_code;?>">
+<input type="hidden" name="pt_code"  id="pt_code" value="<?php echo $pt_code;?>">
 </div>
 </div>
 </div>

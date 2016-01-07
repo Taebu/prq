@@ -105,7 +105,8 @@ class codes extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/codes/lists/prq_dscode'.$page_url.'/page/',
+//		'base_url'=> '/prq/codes/lists/prq_dscode'.$page_url.'/page/',
+		'base_url'=> '/prq/codes/lists/'.$this->uri->segment(3).$page_url.'/page/',
 		'total_rows' => $this->codes_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,

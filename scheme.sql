@@ -694,3 +694,17 @@ ALTER TABLE `prq_member` add `prq_fcode` char(18) NOT NULL default '' after `mb_
 -- 2016-01-04 (월)
 alter table prq_log add prq_fcode char(18) default '' after mb_no;
 
+-- 2016-01-07 (목)
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0001',fr_name="가맹점1";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0002',fr_name="가맹점2";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0003',fr_name="가맹점3";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0004',fr_name="가맹점4";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0005',fr_name="가맹점5";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0006',fr_name="가맹점6";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0007',fr_name="가맹점7";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0008',fr_name="가맹점8";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0009',fr_name="가맹점9";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0010',fr_name="가맹점10";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0011',fr_name="가맹점11";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0012',fr_name="가맹점12";
+insert into `prq_frcode` set fr_code='DS0001PT0001FR0013',fr_name="가맹점13";

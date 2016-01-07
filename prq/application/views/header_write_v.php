@@ -342,12 +342,13 @@ function set_menu_write(id){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
-					 }?><a href="/prq/codes/lists/prq_ptcode/page/1">대리점 코드 목록 <span class="label label-primary pull-right">NEW</span></a></li>
-                           <?php if($this->uri->segment(3)=="prq_frcode"){
+					 }?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+						   <?php if($this->uri->segment(3)=="prq_frcode"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
-					 }?><a href="/prq/codes/lists/prq_frcode/page/1">가맹점 코드 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+					 }?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+
                         </ul>
                     </li>
 					<?php if($this->uri->segment(1)=="distributors"){

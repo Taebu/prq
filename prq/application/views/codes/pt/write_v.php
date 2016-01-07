@@ -28,7 +28,8 @@ echo form_open('/codes/write/prq_ptcode', $attributes);
 $ds_code=$this->input->post('ds_code',TRUE);
 
 ?>
-
+<input type="hidden" name="mode" id="mode">
+<input type="hidden" name="pt_code_new" id="pt_code_new">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -104,11 +105,12 @@ $ds_code=$this->input->post('ds_code',TRUE);
 <div class="col-md-4"><label>대리점 코드</label>
 <div id="display_dscode">DS0001</div>
 <div id="display_ptcode">PT0001</div>
+<div id="pt_code_new"></div>
 </div>
 <div class="col-md-6"><label>대리점 분류명</label>
-<input type="text"  class="form-control" name="" id=""></div>
+<input type="text"  class="form-control" name="pt_name" id="pt_name" onclick="javascript:search_ptcode($('#ds_code').val());"></div>
 <div class="col-md-2"><label>처리</label>
-<div><input type="button" value="추가" class="btn btn-primary" ></div>
+<div><input type="button" value="추가" class="btn btn-primary" onclick="javascript:set_ptcode()"></div>
 </div>
 
 </div><!-- col-md-12 -->
@@ -311,6 +313,8 @@ function get_ptcode()
 function search_ptcode(ds_code)
 {
 	var object = [];
+	var chk_max_ptcode=[];
+	
 	$.each(pt_code,function(key,val){
 	if(val.pt_code.indexOf(ds_code)>-1)
 	{
@@ -319,22 +323,38 @@ function search_ptcode(ds_code)
 		}else{
 			object.push('<option value='+val.pt_code+'>');
 		}
+		chk_max_ptcode.push(val.pt_code);
 		object.push('['+val.pt_code+']');
 		object.push(val.pt_name);
 		object.push('</option>');
 	}
 	});
+	if(chk_max_ptcode.length>0)
+	{
+	var max_pt_code=chk_max_ptcode[chk_max_ptcode.length-1];
+
+	var next_code_index=Number(max_pt_code.substr(8,12));
+	console.log("is array next code index -> "+next_code_index);
+	}else{
+	var next_code_index=0;
+	console.log("is not array next code index -> "+next_code_index);
+	}
+	next_code_index=10001+next_code_index;
+	var next_code_string=next_code_index.toString();
+	var pt_code_new="PT"+next_code_string.substr(1,5);
 	var result=object.join("");
 	$("#pt_code").html(result);
-	chg_ptcode("DS0001PT0001");
+	chg_ptcode(ds_code+""+pt_code_new);
 }
+
+
 /*
 
 */
 function chg_ptcode(v)
 {
 	var ds_code=$("#ds_code").val();
-
+	$("#pt_code_new").val(v);
 	$("#display_dscode").html(ds_code);
 	$("#display_ptcode").html(v);
 	$("#span_pt_code").html(ds_code+""+v);
@@ -346,17 +366,39 @@ function chg_ptcode(v)
 //	$("#edit_pt_name").val(ds_code+"_"+v);
 	});
 }
+
+
+function set_ptcode()
+{
+	if($("#pt_name").val()==""||$("#pt_name").val().length<2){
+		alert("길이가 너무 적거나 공백입니다.");
+		$("#pt_name").focus();
+		return;
+	}
+	$("#mode").val("add");
+	var param =$("#write_action").serialize();
+	alert(param);
+	
+	$.ajax({
+	url:"/prq/ajax/set_ptcode/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+		console.log(data);
+		if(data.success){
+			alert('입력 성공');
+			$(location).attr('href',document.URL);
+		}else{
+			alert(data.result);
+		}
+	}
+	});
+	
+}
+
 window.onload = function() {
 
-$( "#mb_id" ).focusout(function() {
-	//chk_vali_id();
-	chk_duplicate_id();
-})
-.blur(function() {
-	blur++;
-	//	chk_vali_id();
-	chk_duplicate_id();
-});
 
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();

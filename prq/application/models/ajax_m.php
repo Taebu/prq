@@ -353,7 +353,44 @@ class Ajax_m extends CI_Model
 		}
 		echo json_encode($json);
 	}
-}
+
+	
+	function insert_ptcode($array)
+	{
+		$json=array();
+		$json['success']=false;
+	
+		if($array['mode']=="add")
+		{
+			$sql=array();
+			$sql[]="select * from `prq_ptcode` where ";
+			$sql[]="pt_code='".$array['pt_code_new']."';";
+
+			$join_sql=join("",$sql);
+	//		$json['query']=$join_sql;
+			$query = $this->db->query($join_sql);
+			if($query->num_rows()>0)
+			{
+				$json['result']="이미 존재하는 코드이니 삭제나 수정 바랍니다.";
+				$json['sql']=$join_sql;
+			}else if($query->num_rows()==0){
+
+				$sql=array();
+				$sql[]="insert into `prq_ptcode` set ";
+				$sql[]="pt_code='".$array['pt_code_new']."',";
+				$sql[]="pt_name='".$array['pt_name']."';";
+
+				$join_sql=join("",$sql);
+				$query = $this->db->query($join_sql);
+				$json['success']=$query;
+				$json['result']="코드 입력이 성공 되었습니다.";
+			}
+		}
+		echo json_encode($json);
+	}
+
+
+	}
 
 /* End of file auth_m.php */
 /* Location: ./application/models/auth_m.php */
