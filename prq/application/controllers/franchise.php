@@ -223,6 +223,7 @@ class Franchise extends CI_Controller {
 					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
 //					'mb_code' => $this->input->post('mb_code', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
+					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
 					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
 					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
@@ -350,6 +351,7 @@ class Franchise extends CI_Controller {
 					'mb_no' => $this->uri->segment(5), //게시판 번호
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
+					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
 					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
 					'mb_addr3' => $this->input->post('mb_addr3', TRUE),

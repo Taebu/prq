@@ -218,6 +218,12 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">생년월일</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_birth" value="<?php echo $views->mb_birth;?>"> <span class="help-block m-b-none">생년월일 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label">비고</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo" value="<?php echo $views->mb_bigo;?>"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->

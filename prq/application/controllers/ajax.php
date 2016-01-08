@@ -145,7 +145,7 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 
-
+	/* set_ptcode */
 	public function set_ptcode()
 	{
 		$json['success']=false;
@@ -166,6 +166,35 @@ class Ajax extends CI_Controller {
 				'edit_pt_name'=>$edit_pt_name
 			);
 			$result = $this->ajax_m->insert_ptcode($write_data);
+			echo $result;
+		}
+		else
+		{
+			echo json_encode($json); //로그인 필요 에러
+		}
+	}
+
+	/* set_frcode */
+	public function set_frcode()
+	{
+		$json['success']=false;
+		if( @$this->session->userdata('logged_in') == TRUE )
+		{
+			
+			$table=$this->uri->segment(3);
+
+			$mode = $this->input->post("mode", TRUE);
+			$fr_code_new = $this->input->post("fr_code_new", TRUE);
+			$fr_name = $this->input->post("fr_name", TRUE);
+			$edit_fr_name = $this->input->post("edit_fr_name", TRUE);
+
+			$write_data = array(
+				'mode'=>$mode,
+				'fr_code_new'=>$fr_code_new,
+				'fr_name'=>$fr_name,
+				'edit_fr_name'=>$edit_fr_name
+			);
+			$result = $this->ajax_m->insert_frcode($write_data);
 			echo $result;
 		}
 		else

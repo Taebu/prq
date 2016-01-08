@@ -72,19 +72,25 @@ if($mb_code=="PT"){?>
 	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
 	<option value="A0005">파알큐(문성준_총판)(A0005)</option>
 
-</select> <span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
+</select> <span class="help-block m-b-none">총판협력사를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 <?php }?>
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">가맹점</span> 아이디
+
+<div class="form-group">
+	<label for="fr_code" class="col-sm-2 control-label">PRQ 코드</label>
+	<div class="col-sm-10"><select name="prq_fcode"  class="form-control" id="prq_fcode" size='10'></select>
+	<span class="help-block m-b-none">PRQ 코드를 선택 합니다.</span></div><!-- .col-sm-10 -->
+</div><!-- .form-inline-->
 
 
-</label>
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">가맹점</span> 아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">가맹점</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 
 <div class="form-group"><label class="col-sm-2 control-label">비밀번호</label>
 <div class="col-sm-10"><input type="password" class="form-control" name="mb_password">
@@ -97,6 +103,13 @@ if($mb_code=="PT"){?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">가맹점</span> 명</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_name" name="mb_name"> <span class="help-block m-b-none"><span class="mb_gname">가맹점</span>명 등록 합니다. </span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 
 <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_email" name="mb_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
@@ -128,8 +141,8 @@ if($mb_code=="PT"){?>
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">휴대폰 번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+<div class="form-group"><label class="col-sm-2 control-label">대표 연락처</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">대표 연락처를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -201,40 +214,134 @@ if($mb_code=="PT"){?>
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">생년월일</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_birth"  data-mask="999999"> <span class="help-block m-b-none">생년월일 기입해 주세요.예) 80년 4월 5일인 경우 800405</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label">비고</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+</div><!-- .col-md-6 Right Menu-->
 
+
+<div class="row">
+<div class="col-md-12">
+<div class="ibox-title"><h5>CID, KT 정보</h5>&nbsp;&nbsp;<small>CID 정보를 기입 합니다.</small></div><!-- .ibox-title -->
+<div class="ibox-content">
+<!-- <h3>Switcher</h3>
+<p>Is iOS 7 style switches for your checkboxes.</p> -->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">전화번호 1</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">매장코드 1</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+</div><!-- .col-md-6 Left Menu-->
+
+<div class="col-md-6">
+
+<div class="form-group"><label class="col-sm-2 control-label">전화번호 2</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">매장코드 2</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .ibox-content -->
+</div><!-- .col-md-12 -->
+</div><!-- .row -->
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="ibox-title"><h5>가맹점주 핸드폰 정보</h5>&nbsp;&nbsp;<small>가맹점 핸드폰 정보를 기입 합니다.</small></div><!-- .ibox-title -->
+<div class="ibox-content">
+<!-- <h3>Switcher</h3>
+<p>Is iOS 7 style switches for your checkboxes.</p> -->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">발송번호</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">발송될 핸드폰번호를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="form-group"><label class="col-sm-2 control-label">안드로이드버전</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder" value="0.4"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="form-group"><label class="col-sm-2 control-label">문자발송</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder" value="190"> <span class="help-block m-b-none">월간,수신처 중복 제외.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">문자구분</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">MMS.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="form-group"><label class="col-sm-2 control-label">단말기</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder" value="SHV-E160S"> <span class="help-block m-b-none">단말기 모델명을 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="form-group"><label class="col-sm-2 control-label">중복발송제한</label>
+<div class="col-sm-10"><select name="" id="">
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+</select>일 <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .ibox-content -->
+</div><!-- .col-md-12 -->
+</div><!-- .row -->
+<div class="col-md-12">
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
-</div>
+</div></div>
+</div><!-- .row -->
 
+<div class="row">
+<div class="col-md-12">
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
-<button class="btn btn-white" type="reset">취소</button>
+<button class="btn btn-white" type="reset">취소</button></div><!-- .col-sm-4 .col-sm-offset-2 -->
+</div><!-- .form-group -->
+</div></div><!-- .row -->
 
-</div>
-</div>
-<!-- 						      <div class="form-actions">
-<button type="submit" class="btn btn-primary" id="write_btn">작성</button>
-<button class="btn" onclick="document.location.reload()">취소</button>
-</div> -->
-
-<!-- .form-group -->
-
-<div class="row"><div class="col-md-12">
-<textarea id="form_data">#form_data</textarea><!-- #form_data -->
-</div></div>
-</div><!-- .col-md-6 Right Menu-->
-<button class="btn btn-primary" type="button" onclick="set_ds()">저장</button>
-</div><!-- .row -->
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->
 </div><!-- .col-lg-12 -->
+</div>
+<div class="ibox float-e-margins">
+
 </div><!-- .row -->
 
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
@@ -337,6 +444,69 @@ console.log(data);
 
 }
 
+
+/*가맹점 코드를 불러 옵니다.*/
+var fr_code="";
+function get_frcode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_frcode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		fr_code=data.posts;
+		console.log(fr_code);
+//		$("#is_member").val(data.success);	
+//		chk_vali_id();
+		search_frcode("DS0001PT0001");
+		}
+	});
+}
+
+
+/*pt_code로 fr 코드를 탐색 합니다.
+*/
+function search_frcode(spt_code)
+{
+	var object = [];
+	var chk_max_frcode=[];
+	
+	$.each(fr_code,function(key,val){
+//	if(val.fr_code.indexOf(spt_code)>-1)
+//	{
+		if(spt_code+"FR0001"==val.fr_code){
+			object.push('<option value='+val.fr_code+' selected>');
+		}else{
+			object.push('<option value='+val.fr_code+'>');
+		}
+		chk_max_frcode.push(val.fr_code);
+		object.push('['+val.fr_code+']');
+		object.push(val.fr_name);
+		object.push('</option>');
+//	}
+	});
+	if(chk_max_frcode.length>0)
+	{
+	var max_fr_code=chk_max_frcode[chk_max_frcode.length-1];
+	console.log(max_fr_code);
+	console.log(max_fr_code.substr(14,18));
+	var next_code_index=Number(max_fr_code.substr(14,18));
+	console.log("is array next code index -> "+next_code_index);
+	}else{
+	var next_code_index=0;
+	console.log("is not array next code index -> "+next_code_index);
+	}
+	next_code_index=10001+next_code_index;
+	var next_code_string=next_code_index.toString();
+	var fr_code_new="FR"+next_code_string.substr(1,5);
+	var result=object.join("");
+	$("#prq_fcode").html(result);
+//	chg_frcode(spt_code+""+fr_code_new);
+}
+
+
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -347,9 +517,11 @@ blur++;
 chk_vali_id();
 });
 
-/*mb_code로 등록 정보 변경*/
-//chg_gname();
+
+	/*mb_code로 등록 정보 변경*/
+	//chg_gname();
+
+	/*가맹점 코드 가져 오기*/
+	get_frcode();
 };/*window.onload = function() {..}*/
-
-
 </script>
