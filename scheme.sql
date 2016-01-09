@@ -411,9 +411,12 @@ CREATE TABLE `prq_login` (
 
 drop  TABLE `prq_member`;
 
-CREATE TABLE `prq_member` (
+Create Table: CREATE TABLE `prq_member` (
   `mb_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `prq_fcode` char(18) NOT NULL DEFAULT '',
   `mb_gcode` char(3) NOT NULL DEFAULT 'G8',
+  `mb_gtype` char(2) NOT NULL DEFAULT 'AD',
+  `mb_pcode` char(6) NOT NULL DEFAULT 'AD0001',
   `mb_code` char(6) NOT NULL DEFAULT 'TS0000',
   `mb_gname_eng` varchar(255) NOT NULL DEFAULT '',
   `mb_gname_kor` varchar(255) NOT NULL DEFAULT '',
@@ -478,6 +481,12 @@ CREATE TABLE `prq_member` (
   `mb_8` varchar(255) NOT NULL DEFAULT '',
   `mb_9` varchar(255) NOT NULL DEFAULT '',
   `mb_10` varchar(255) NOT NULL DEFAULT '',
+  `mb_ceoname` varchar(255) DEFAULT '',
+  `mb_imgprefix` char(6) DEFAULT '201501',
+  `mb_business_paper_size` int(10) unsigned DEFAULT '0',
+  `mb_distributors_paper_size` int(10) unsigned DEFAULT '0',
+  `mb_bank_paper_size` int(10) unsigned DEFAULT '0',
+  `mb_status` enum('wa','pr','ac','ad','ec','ca') NOT NULL DEFAULT 'wa',
   PRIMARY KEY (`mb_no`),
   UNIQUE KEY `mb_id` (`mb_id`),
   KEY `mb_today_login` (`mb_today_login`),
@@ -708,3 +717,45 @@ insert into `prq_frcode` set fr_code='DS0001PT0001FR0010',fr_name="가맹점10";
 insert into `prq_frcode` set fr_code='DS0001PT0001FR0011',fr_name="가맹점11";
 insert into `prq_frcode` set fr_code='DS0001PT0001FR0012',fr_name="가맹점12";
 insert into `prq_frcode` set fr_code='DS0001PT0001FR0013',fr_name="가맹점13";
+
+-- 2016-01-09 (토)
+-- prq_member 참고...
+
+DROP TABLE `prq_store`;
+
+CREATE TABLE `prq_store` (
+  `st_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `prq_fcode` char(18) NOT NULL DEFAULT '',
+  `st_category` varchar(255) NOT NULL DEFAULT '',
+  `st_name` varchar(255) NOT NULL DEFAULT '',
+  `st_tel` varchar(255) NOT NULL DEFAULT '',
+  `st_open` char(5) NOT NULL DEFAULT '09:00',
+  `st_closed` char(5) NOT NULL DEFAULT '19:00',
+  `st_alltime` enum('off','on') NOT NULL DEFAULT 'off',
+  `st_closingdate` varchar(255) NOT NULL DEFAULT '',
+  `st_destination` varchar(255) NOT NULL DEFAULT '',
+  `st_intro` varchar(255) NOT NULL DEFAULT '',
+  `st_password` varchar(255) NOT NULL DEFAULT '',
+  `st_nick` varchar(255) NOT NULL DEFAULT '',
+  `st_nick_date` date NOT NULL DEFAULT '0000-00-00',
+  `st_email` varchar(255) NOT NULL DEFAULT '',
+  `st_homepage` varchar(255) NOT NULL DEFAULT '',
+  `st_business_name` varchar(255) NOT NULL DEFAULT '',
+  `st_business_paper` varchar(255) NOT NULL DEFAULT '',
+  `st_business_paper_size` int(10) unsigned DEFAULT '0',
+  `st_thumb_paper` varchar(255) NOT NULL DEFAULT '',
+  `st_thumb_paper_size` int(10) unsigned DEFAULT '0',
+  `st_menu_paper` varchar(255) NOT NULL DEFAULT '',
+  `st_menu_paper_size` int(10) unsigned DEFAULT '0',
+  `st_main_paper` varchar(255) NOT NULL DEFAULT '',
+  `st_main_paper_size` int(10) unsigned DEFAULT '0',
+  `st_modoo_url` varchar(255) NOT NULL DEFAULT '',
+  `st_top_msg` varchar(255) NOT NULL DEFAULT '',
+  `st_middle_msg` varchar(2000) NOT NULL DEFAULT '',
+  `st_bottom_msg` varchar(255) NOT NULL DEFAULT '',
+  `st_business_num` varchar(255) NOT NULL DEFAULT '',
+  `st_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `st_status` enum('wa','pr','ac','ad','ec','ca') NOT NULL DEFAULT 'wa',
+  PRIMARY KEY (`st_no`),
+  KEY `st_datetime` (`st_datetime`)
+) DEFAULT CHARSET=utf8;

@@ -156,6 +156,10 @@ foreach ($list as $lt)
 				</tr>
 <?php
 }
+
+if(!$list){
+echo "<tr><td colspan=9 style='text-align:center'>상점 리스트가 존재 하지 않습니다.</td></tr>";
+}
 ?>
 
 			</tbody>

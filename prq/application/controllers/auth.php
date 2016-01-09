@@ -77,6 +77,7 @@ class Auth extends CI_Controller {
                    'mb_name'  => $result->mb_ceoname,
                    'email'     => $result->mb_email,
                    'mb_gcode'     => $result->mb_gcode,
+                   'prq_fcode'     => $result->prq_fcode,
                    'mb_code'     => $result->mb_code,
                    'logged_in' => TRUE
 				);
@@ -149,6 +150,17 @@ class Auth extends CI_Controller {
 				$cookie = array(
                    'name'   => 'logged_in',
                    'value'  => TRUE,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/prq/',
+                   'prefix' => '',
+               );
+
+				set_cookie($cookie);
+
+				$cookie = array(
+                   'name'   => 'prq_fcode',
+                   'value'  => $result->prq_fcode,
                    'expire' => '86500',
                    'domain' => $_SERVER['HTTP_HOST'],
                    'path'   => '/prq/',

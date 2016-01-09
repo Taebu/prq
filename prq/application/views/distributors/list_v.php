@@ -197,6 +197,10 @@
         <div class="wrapper wrapper-content animated fadeInRight">
 			<div class="row">
                 <div class="col-lg-12">
+					<?php
+					//print_r($this->session);
+					//print_r($this->input);
+					?>
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5><span class="mb_gname">총판</span> 등록 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
@@ -294,6 +298,7 @@ if($mb_gcode=="G1"){?>
 					<th scope="col">등록일자</th>
 					<th scope="col"><span class="mb_gname">총판</span>ID</th>
 					<th scope="col"><span class="mb_gname">총판</span>코드</th>
+					<th scope="col">PRQ 코드</th>
 					<!-- <th scope="col">구분</th> -->
 					<!-- <th scope="col">대리점</th> -->
 					<th scope="col"><span class="mb_gname">총판</span>상태</th>
@@ -313,6 +318,7 @@ foreach ($list as $lt)
 					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
 					<td><?php echo $lt->mb_id;?></td>
 					<td><?php echo $lt->mb_code;?></td>
+					<td><?php echo $lt->prq_fcode;?></td>
 					<!-- <td><?php echo $lt->mb_gname_kor;?></td> -->
 					<!-- <td><?php echo $lt->mb_gname_eng;?></td> -->
 					<!-- <td><?php echo $lt->mb_business_paper;?></td> -->

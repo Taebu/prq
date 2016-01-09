@@ -288,6 +288,7 @@ function chg_gname(){
                         <div class="dropdown profile-element"> <span>
 
 					<?php
+					
 						if( @$this->session->userdata['logged_in'] == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 					{?>
                             <img alt="image" class="img-circle" src="/prq/include/img/profile_small_mtb.jpg" />
@@ -325,19 +326,26 @@ function chg_gname(){
                             PRQ
                         </div>
                     </li>
-					<?php if($this->uri->segment(1)=="codes"){
+					<?php 
+					$mb_gcode=$this->session->userdata['mb_gcode'];
+					if($this->uri->segment(1)=="codes"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
 					 }?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-					<?php if($this->uri->segment(3)=="prq_dscode"){
+					<?php 
+					if($mb_gcode=="G1"||$mb_gcode=="G2"){
+					if($this->uri->segment(3)=="prq_dscode"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
 					 }?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록<span class="label label-primary pull-right">NEW</span></a></li>
-                           <?php if($this->uri->segment(3)=="prq_ptcode"){
+                    <?php 
+					 }/* 관리자 총판 구룹만 관리 하는 메뉴G1,G2 */
+					
+					if($this->uri->segment(3)=="prq_ptcode"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';

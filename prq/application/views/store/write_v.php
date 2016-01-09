@@ -60,40 +60,50 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .ibox-title -->
 <div class="ibox-content">
 <div class="row">
+
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
-<?php 
-if($mb_code=="PT"){?>
-<div class="form-group"><label class="col-sm-2 control-label">총판 협력사
+<div class="form-group"><label class="col-sm-2 control-label">가맹점선택
 </label>
-<div class="col-sm-10"><select name="mb_pcode" id="">
-	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
-	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
-	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-	<option value="A0005">파알큐(문성준_총판)(A0005)</option>
-
-</select> <span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
+<div class="col-sm-10"><select name="prq_fcode" id="prq_fcode" class="form-control" >
+	<option value="FR0001">네네치킨(FR0001)</option>
+	<option value="FR0002">네네치킨(FR0002)</option>
+	<option value="FR0003">네네치킨(FR0003)</option>
+	<option value="FR0004">네네치킨(FR0004)</option>
+	<option value="FR0005">네네치킨(FR0005)</option>
+</select> <span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-<?php }?>
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 아이디
 
-
+<div class="form-group"><label class="col-sm-2 control-label">카테고리 선택
 </label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">총판</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+<div class="col-sm-10"><select name="st_category" id="st_category" class="form-control" >
+	<option value="W01">치킨(W01)</option>
+	<option value="W02">치킨(W02)</option>
+	<option value="W03">치킨(W03)</option>
+	<option value="W04">치킨(W04)</option>
+	<option value="W05">치킨(W05)</option>
+	<option value="W06">치킨(W06)</option>
+	<option value="W07">치킨(W07)</option>
+	<option value="W08">치킨(W08)</option>
+	<option value="W09">치킨(W09)</option>
+	<option value="W10">치킨(W10)</option>
+	<option value="W11">치킨(W11)</option>
+</select> <span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">비밀번호</label>
-<div class="col-sm-10"><input type="password" class="form-control" name="mb_password">
+<div class="form-group"><label class="col-sm-2 control-label">매장 명</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name"> <span class="help-block m-b-none">매장명을 등록 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">비밀번호 확인</label>
-<div class="col-sm-10"><input type="password" class="form-control" name="mb_password_2">
+
+<div class="form-group"><label class="col-sm-2 control-label">전화번호</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_tel" id="st_tel"> <span class="help-block m-b-none">연락처를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -103,24 +113,51 @@ if($mb_code=="PT"){?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
 
-<div class="form-group"><label class="col-sm-2 control-label">주소1</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_addr1" name="mb_addr1"> <span class="help-block m-b-none">시군구를 등록해 주세요..</span>
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">영업시간
+</label>
+<div class="col-sm-5"><span class="help-block m-b-none">시작 09:00</span><input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled>
+<div class="checkbox checkbox-primary">
+<input id="checkbox2" type="checkbox" checked="">
+<label for="checkbox2">24시간</label></div><!-- checkbox-primary -->
+
+</div><!-- .col-sm-5 -->
+<div class="col-sm-5"><span class="help-block m-b-none">종료 19:00</span><input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled> 
+</div><!-- .col-sm-5 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">휴무일</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_closingdate" name="st_closingdate"> <span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">주소2</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_addr2" name="mb_addr2"> <span class="help-block m-b-none">동읍면리.</span>
+<div class="form-group"><label class="col-sm-2 control-label">배달지역</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name"> <span class="help-block m-b-none">매장명을 등록 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">주소3</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_addr3" name="mb_addr3"> <span class="help-block m-b-none">상세주소</span>
+
+<div class="form-group"><label class="col-sm-2 control-label">매장소개</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_intro" id="st_intro"> <span class="help-block m-b-none">매장 소개를 간단하게 적어주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">이메일</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_email" name="st_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 RightMenu-->
+
+
+<div class="col-md-12">
+<h3>매장 서류</h3>
 
 <div class="form-group"><label class="col-sm-2 control-label">대표자 명</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_ceoname"> <span class="help-block m-b-none">대표자명을 기입해 주세요..</span>
@@ -147,10 +184,10 @@ if($mb_code=="PT"){?>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"> <span class="help-block m-b-none">정산 비율</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
+</div><!-- .col-md-12 Left Menu-->
 
-</div><!-- .col-md-6 Left Menu-->
 
-<div class="col-md-6">
+<div class="col-md-12">
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
 <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message">사업자 등록증</div></div><!-- #my-awesome-dropzone1 -->

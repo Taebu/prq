@@ -65,6 +65,30 @@ $mb_code=$this->input->cookie('mb_code', TRUE);
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
+
+
+<div class="form-group">
+	<label for="pt_code" class="col-sm-2 ">대리점 코드</label>
+	<div class="col-sm-10">
+	<select name="prq_fcode"  class="form-control" id="prq_fcode" style='width:100%' onchange="javascript:chg_ptcode(this.value)"
+	 onclick="javascript:chg_ptcode(this.value)">
+		<option value="PT0001">[PT0001] 캐시큐1</option>
+		<option value="PT0002">[PT0002] 캐시큐2</option>
+		<option value="PT0003">[PT0003] 캐시큐3</option>
+		<option value="PT0004">[PT0004] 캐시큐4</option>
+		<option value="PT0005">[PT0005] 캐시큐5</option>
+		<option value="PT0006">[PT0006] 캐시큐6</option>
+		<option value="PT0007">[PT0007] 캐시큐7</option>
+		<option value="PT0008">[PT0008] 캐시큐8</option>
+		<option value="PT0009">[PT0009] 캐시큐9</option>
+		<option value="PT0010">[PT0010] 캐시큐10</option>
+		<option value="PT0011">[PT0011] 캐시큐11</option>
+	</select>
+	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>
+	</div><!-- .col-sm-10 -->
+</div><!-- .form-inline-->
+
+
 <div class="form-group"><label class="col-sm-2 control-label">총판 협력사
 </label>
 <div class="col-sm-10">
@@ -401,6 +425,67 @@ function get_pcode()
 	});
 }
 
+
+var pt_code="";
+
+function get_ptcode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_ptcode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		pt_code=data.posts;
+//		$("#is_member").val(data.success);	
+//		chk_vali_id();
+		search_ptcode("DS0001");
+		
+
+		}
+	});
+}
+
+function search_ptcode(ds_code)
+{
+	var object = [];
+	var chk_max_ptcode=[];
+	
+	$.each(pt_code,function(key,val){
+//	if(val.pt_code.indexOf(ds_code)>-1)
+//	{
+		if("DS0001"==val.pt_code){
+			object.push('<option value='+val.pt_code+' selected>');
+		}else{
+			object.push('<option value='+val.pt_code+'>');
+		}
+		chk_max_ptcode.push(val.pt_code);
+		object.push('['+val.pt_code+']');
+		object.push(val.pt_name);
+		object.push('</option>');
+//	}
+	});
+	if(chk_max_ptcode.length>0)
+	{
+	var max_pt_code=chk_max_ptcode[chk_max_ptcode.length-1];
+
+	var next_code_index=Number(max_pt_code.substr(8,12));
+	console.log("is array next code index -> "+next_code_index);
+	}else{
+	var next_code_index=0;
+	console.log("is not array next code index -> "+next_code_index);
+	}
+	next_code_index=10001+next_code_index;
+	var next_code_string=next_code_index.toString();
+	var pt_code_new="PT"+next_code_string.substr(1,5);
+	var result=object.join("");
+//	$("#pt_code").html(result);
+	$("#prq_fcode").html(result);
+//	chg_ptcode(ds_code+""+pt_code_new);
+}
+
+
 window.onload = function() {
 
 	$( "#mb_id" ).focusout(function() {
@@ -417,7 +502,9 @@ window.onload = function() {
 	//chg_gname();
 	/*총판 코드 가져오기*/
 	get_pcode();
-
+	
+	//대리점 코드 가져오기
+	get_ptcode();
 };/*window.onload = function() {..}*/
 
 

@@ -107,10 +107,23 @@ echo form_open('/distributors/modify/'.$this->uri->segment(3).'/board_id/'.$this
 </a>
 </div>
 </div><!-- .ibox-title -->
+
 <div class="ibox-content">
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
+
+<div class="form-group"><label class="col-sm-2 control-label">PRQ CODE</label>
+<div class="col-sm-10"><?php echo $views->prq_fcode;?> <span class="help-block m-b-none">PRQ CODE 입니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">그룹 코드</label>
+<div class="col-sm-10"><?php echo $views->mb_gcode;?> <span class="help-block m-b-none">멤버 그룹입니다. G4는 대리점 코드 입니다. .</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">총판아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>

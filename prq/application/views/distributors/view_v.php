@@ -228,9 +228,16 @@
 						<div class="row">
 							<div class="col-md-6">
 							<!-- <form method="get" class="form-horizontal"> -->
-                                
+                                <div class="form-group"><label class="col-sm-2 control-label">PRQ 코드</label>
+                                    <div class="col-sm-10"><?php echo $views->prq_fcode;?><span class="help-block m-b-none">PRQ 코드 입니다..</span>
+                                    </div><!-- .col-sm-10 -->
+                                </div><!-- .form-group -->
+								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+								
 								<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
                                     <div class="col-sm-10">
+									<?php //print_r($views);?>
+									
 									<?php echo $views->mb_id;?>
 									<?php
 									/*
