@@ -120,8 +120,8 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </label>
 <div class="col-sm-5"><span class="help-block m-b-none">시작 09:00</span><input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled>
 <div class="checkbox checkbox-primary">
-<input id="checkbox2" type="checkbox" checked="">
-<label for="checkbox2">24시간</label></div><!-- checkbox-primary -->
+<input id="st_alltime"  name="st_alltime" type="checkbox" checked="" onclick="javascript:chk_btn_status();">
+<label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
 
 </div><!-- .col-sm-5 -->
 <div class="col-sm-5"><span class="help-block m-b-none">종료 19:00</span><input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled> 
@@ -404,6 +404,23 @@ console.log(data);
 
 }
 
+function chk_btn_status()
+{
+	var param=$("#write_action").serialize();
+//			$(".btn_area [lass*='btn-']").toggleClass("disabled",param.indexOf("chk_seq")<0).prop('disabled', param.indexOf("chk_seq")<0);
+	
+	if(param.indexOf("st_alltime")<0)
+	{
+		$("#st_open").addClass("disabled").prop('disabled', true); 
+		$("#st_closed").addClass("disabled").prop('disabled', true); 
+	}else{
+		$("#st_open").removeClass("disabled").prop('disabled', false); 
+		$("#st_closed").removeClass("disabled").prop('disabled', false); 
+	}
+	
+}
+
+
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -416,6 +433,9 @@ chk_vali_id();
 
 /*mb_code로 등록 정보 변경*/
 //chg_gname();
+
+/*24시간인지 체크*/
+chk_btn_status();
 };/*window.onload = function() {..}*/
 
 

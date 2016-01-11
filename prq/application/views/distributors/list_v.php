@@ -157,6 +157,7 @@
 
 		function chk_btn_status(){
 			var param=$("#write_action").serialize();
+//			$(".btn_area [lass*='btn-']").toggleClass("disabled",param.indexOf("chk_seq")<0).prop('disabled', param.indexOf("chk_seq")<0);
 			
 			if(param.indexOf("chk_seq")<0)
 			{
@@ -164,6 +165,7 @@
 			}else{
 				$(".btn_area [class*='btn-']").removeClass("disabled").prop('disabled', false); 
 			}
+			
 		}
 
 		function get_status(code)
