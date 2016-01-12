@@ -32,9 +32,15 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <input type="hidden" name="is_member" id="is_member">
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
-<input type="hidden" name="mb_business_paper" id="mb_business_paper">
-<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
-<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="st_store_paper" id="st_store_paper">
+<input type="hidden" name="st_thumbnail_paper" id="st_thumbnail_paper">
+<input type="hidden" name="st_menuimg_paper" id="st_menuimg_paper">
+<input type="hidden" name="st_mainimg_paper" id="st_mainimg_paper">
+<input type="hidden" name="st_store_paper_size" id="st_store_paper_size">
+<input type="hidden" name="st_thumbnail_paper_size" id="st_thumbnail_paper_size">
+<input type="hidden" name="st_menuimg_paper_size" id="st_menuimg_paper_size">
+<input type="hidden" name="st_mainimg_paper_size" id="st_mainimg_paper_size">
+<input type="hidden" name="st_imgprefix" id="st_imgprefix" value="<?php echo date("Ym");?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -78,19 +84,32 @@ $mb_code=$this->input->post('mb_code',TRUE);
 
 <div class="form-group"><label class="col-sm-2 control-label">카테고리 선택
 </label>
-<div class="col-sm-10"><select name="st_category" id="st_category" class="form-control" >
-	<option value="W01">치킨(W01)</option>
-	<option value="W02">치킨(W02)</option>
-	<option value="W03">치킨(W03)</option>
-	<option value="W04">치킨(W04)</option>
-	<option value="W05">치킨(W05)</option>
-	<option value="W06">치킨(W06)</option>
-	<option value="W07">치킨(W07)</option>
-	<option value="W08">치킨(W08)</option>
-	<option value="W09">치킨(W09)</option>
-	<option value="W10">치킨(W10)</option>
-	<option value="W11">치킨(W11)</option>
-</select> <span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
+<div class="col-sm-10">
+<!-- <select name="type" style="width: 228px; height: 38px; "> -->
+<select name="st_category" id="st_category" class="form-control" >
+<option value="W01">치킨</option>
+<option value="W02">피자</option>
+<option value="W03">중국집</option>
+<option value="W04">한식/분식</option>
+<option value="W05" selected="">닭발/오리/기타</option>
+<option value="W06">야식/찜/탕 </option>
+<option value="W07">족발/보쌈</option>
+<option value="W08">일식/회/기타</option>
+<option value="W09">오락/레저</option>
+<option value="W10">건강/뷰티</option>
+<option value="W11">꽃배달</option>
+<option value="W12">병원/약국</option>
+<option value="W13">집수리</option>
+<option value="W14">학원</option>
+<option value="W15">이사/용달/퀵</option>
+<option value="W16">부동산</option>
+<option value="W17">청소/파출부</option>
+<option value="W18">자동차</option>
+<option value="W19">컴퓨터/인터넷</option>
+<option value="W20">기타</option>
+<option value="W21">소셜</option>
+<option value="W00">할인</option>
+</select><span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -118,19 +137,30 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-md-6">
 <div class="form-group"><label class="col-sm-2 control-label">영업시간
 </label>
-<div class="col-sm-5"><span class="help-block m-b-none">시작 09:00</span><input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled>
+<div class="col-sm-5"><span class="help-block m-b-none">시작 09:00</span><input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled value="12:00">
 <div class="checkbox checkbox-primary">
 <input id="st_alltime"  name="st_alltime" type="checkbox" checked="" onclick="javascript:chk_btn_status();">
 <label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
 
 </div><!-- .col-sm-5 -->
-<div class="col-sm-5"><span class="help-block m-b-none">종료 19:00</span><input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled> 
+<div class="col-sm-5"><span class="help-block m-b-none">종료 19:00</span><input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled value="01:00"> 
 </div><!-- .col-sm-5 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">휴무일</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_closingdate" name="st_closingdate"> <span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
+<div class="col-sm-5">
+ <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4"  id="st_closingdate" name="st_closingdate[]">
+                <option value="">Select</option>
+                <option value="일요일">일요일</option>
+                <option value="월요일">월요일</option>
+                <option value="화요일">화요일</option>
+                <option value="수요일">수요일</option>
+                <option value="목요일">목요일</option>
+                <option value="금요일">금요일</option>
+                <option value="토요일">토요일</option>
+				</select>
+<span class="help-block m-b-none">휴무일을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -159,69 +189,47 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-md-12">
 <h3>매장 서류</h3>
 
-<div class="form-group"><label class="col-sm-2 control-label">대표자 명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_ceoname"> <span class="help-block m-b-none">대표자명을 기입해 주세요..</span>
+<div class="form-group"><label class="col-sm-2 control-label">계약서</label>
+<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message">계약서</div></div><!-- #my-awesome-dropzone1 -->
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">휴대폰 번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_hp"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group">
-<label class="col-sm-2 col-sm-2 control-label">사업자등록번호</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" data-mask="999-99-99999" placeholder="" name="mb_business_num" id="mb_business_num">
-<span class="help-block">999-99-99999</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 정산비율</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"> <span class="help-block m-b-none">정산 비율</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-</div><!-- .col-md-12 Left Menu-->
-
-
-<div class="col-md-12">
-
-<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
-<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message">사업자 등록증</div></div><!-- #my-awesome-dropzone1 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"사업자등록증"을 드래그 하거나 선택해 주세요.</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 계약서</label>
+<div class="form-group"><label class="col-sm-2 control-label">썸네일 이미지</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
-<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"<span class="mb_gname">총판</span> 계약서"를 드래그 하거나 선택해 주세요.</span>
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"썸네일 이미지"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">통장 사본</label>
+<div class="form-group"><label class="col-sm-2 control-label">메뉴 이미지</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone3" class="dropzone">
 
 <div class="dz-default dz-message"></div>
 </div><!-- #my-awesome-dropzone3 -->
 
-<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"메뉴 이미지"을 드래그 하거나 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"통장 사본"을 드래그 하거나 선택해 주세요.</span>
+<div class="form-group"><label class="col-sm-2 control-label">대표 이미지</label>
+<div class="col-sm-10">
+<div id="my-awesome-dropzone4" class="dropzone">
+
+<div class="dz-default dz-message"></div>
+</div><!-- #my-awesome-dropzone4 -->
+
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"대표 이미지"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankname"> <span class="help-block m-b-none">"거래은행"을 기입해 주세요..</span>
+<div class="col-sm-10"><input typ  e="text" class="form-control" name="mb_bankname"> <span class="help-block m-b-none">"거래은행"을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -252,19 +260,22 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="row">
 <div class="col-md-12">
 <div class="form-group"><label class="col-sm-2 control-label">상단문구(고정)</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">상단 문구 변하지 않습니다.</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_top_msg">
+<span class="help-block m-b-none">상단 문구 변하지 않습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
+<div class="col-sm-10">
+<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
+<span class="help-block m-b-none">중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">하단문구(고정)</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_bottom_msg"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -281,12 +292,14 @@ $mb_code=$this->input->post('mb_code',TRUE);
 
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
-<button type="submit" class="btn btn-primary" id="write_btn">작성</button>
+<!-- <button type="submit" class="btn btn-primary" id="write_btn">작성</button> -->
+<button class="btn btn-primary" type="button" onclick="set_ds()">저장...</button>
 <button class="btn btn-white" type="reset">취소</button>
 </div><!-- .col-md-12 -->
 <!-- .row -->
 
-<!-- 						      <div class="form-actions">
+<!--
+<div class="form-actions">
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
 <button class="btn" onclick="document.location.reload()">취소</button>
 </div> -->
@@ -294,7 +307,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <!-- .form-group -->
 
 <div class="row"><div class="col-md-12">
-<textarea id="form_data">#form_data</textarea><!-- #form_data -->
+<textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
 </div></div>
 </div><!-- .col-md-6 Right Menu-->
 <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button>
@@ -312,10 +325,13 @@ server에 <span class="mb_gname">총판</span>을 등록 합니다.
 */
 function set_ds(){
 var param=$("#write_action").serialize();
+param=param.replace(/&/gi, "\n&");
+$("#form_data").html(param);
+
 if($("#is_join").val()=="TRUE"){
 $("#form_data").html(param);
 //	$("#write_action").submit();
-set_member();
+//set_member();
 }
 
 if($("#is_join").val()=="FALSE"){
@@ -409,7 +425,7 @@ function chk_btn_status()
 	var param=$("#write_action").serialize();
 //			$(".btn_area [lass*='btn-']").toggleClass("disabled",param.indexOf("chk_seq")<0).prop('disabled', param.indexOf("chk_seq")<0);
 	
-	if(param.indexOf("st_alltime")<0)
+	if(param.indexOf("st_alltime")>0)
 	{
 		$("#st_open").addClass("disabled").prop('disabled', true); 
 		$("#st_closed").addClass("disabled").prop('disabled', true); 
@@ -436,6 +452,9 @@ chk_vali_id();
 
 /*24시간인지 체크*/
 chk_btn_status();
+
+/*멀티 셀렉트 구현 chosen-select */
+$(".chosen-select").chosen();
 };/*window.onload = function() {..}*/
 
 

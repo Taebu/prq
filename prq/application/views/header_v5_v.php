@@ -401,7 +401,7 @@ function chg_gname(){
 						<i class="fa fa-pie-chart"></i>
 						<!-- <i class="fa fa-bar-chart-o"></i> --> <span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/store/lists/prq_member/page/1">상점 목록</a></li>
+                            <li><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
                         </ul>
                     </li>
 				</ul>

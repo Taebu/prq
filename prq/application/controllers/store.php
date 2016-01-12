@@ -41,7 +41,7 @@ class Store extends CI_Controller {
 			}
 
 			//푸터 include		
-			$this->load->view('footer_write_v');
+			$this->load->view('footer_store_write_v');
 		}else{
 			//헤더 include
 			$this->load->view('header_v5_v');
@@ -103,7 +103,7 @@ class Store extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/store/lists/prq_member'.$page_url.'/page/',
+		'base_url'=> '/prq/store/lists/prq_store'.$page_url.'/page/',
 		'total_rows' => $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,
