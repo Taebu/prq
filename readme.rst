@@ -1,14 +1,9 @@
 ###################
-What is CodeIgniter
+PRQ는 무엇인가?
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+PRQ는 각 핸드폰 단말기의 무료 MMS를 이용 원하는 서비스를 할 수 있도록 서비스 합니다. 
+
 
 *******************
 Release Information
