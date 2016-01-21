@@ -23,7 +23,7 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-echo form_open('/distributors/write/prq_member', $attributes);
+echo form_open('/distributors/write/prq_member/page/1', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 ?>
@@ -64,6 +64,18 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
+<div class="form-group"><label class="col-sm-2 control-label">PRQ CODE</label>
+<div class="col-sm-10"> <select name="prq_fcode" id="prq_fcode" class="form-control">
+	<option value="DS0001" disabled>[DS0001] cashq[msjhero  사용중]</option>
+	<option value="DS0002">[DS0002] cashq 사용가능</option>
+	<option value="DS0003" disabled>[DS0003] cashq [anptown  사용중]</option>
+	<option value="DS0004">[DS0004] cashq 사용가능</option>
+	<option value="DS0005">[DS0005] cashq 사용가능</option>
+</select><span class="help-block m-b-none" >총판  CODE를 선택합니다. 총판 코드를 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">총판</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
@@ -342,6 +354,80 @@ console.log(data);
 
 }
 
+
+
+/*가맹점 코드를 불러 옵니다.*/
+var ds_code="";
+function get_dscode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_dscode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		ds_code=data.posts;
+		console.log(ds_code);
+//		$("#is_member").val(data.success);	
+//		chk_vali_id();
+		search_dscode("DS0003");
+		}
+	});
+}
+
+
+/*pt_code로 fr 코드를 탐색 합니다.
+*/
+function search_dscode(spt_code)
+{
+	var object = [];
+	var chk_max_dscode=[];
+	var arr =["DS0001","DS0002"];
+	$.each(ds_code,function(key,val){
+//	if(val.fr_code.indexOf(spt_code)>-1)
+//	{
+		if(spt_code==val.ds_code){
+			object.push('<option value='+val.ds_code+' selected>');
+		}else{
+			if($.inArray(val.ds_code,arr)>-1){
+			object.push('<option value='+val.ds_code+' disabled>');
+			}else{
+			object.push('<option value='+val.ds_code+'>');
+			}
+		}
+		chk_max_dscode.push(val.ds_code);
+		if($.inArray(val.ds_code,arr)>-1){
+		object.push('['+val.ds_code+']');
+		object.push(val.ds_name+" 이미 사용 중입니다.");
+		
+		}else{
+		object.push('['+val.ds_code+']');
+		object.push(val.ds_name);
+		}
+		object.push('</option>');
+//	}
+	});
+
+	if(chk_max_dscode.length>0)
+	{
+	var max_ds_code=chk_max_dscode[chk_max_dscode.length-1];
+	console.log(max_ds_code);
+	console.log(max_ds_code.substr(0,6));
+	var next_code_index=Number(max_ds_code.substr(0,6));
+	console.log("is array next code index -> "+next_code_index);
+	}else{
+	var next_code_index=0;
+	console.log("is not array next code index -> "+next_code_index);
+	}
+	next_code_index=10001+next_code_index;
+	var next_code_string=next_code_index.toString();
+	var ds_code_new="DS"+next_code_string.substr(1,5);
+	var result=object.join("");
+	$("#prq_fcode").html(result);
+//	chg_frcode(spt_code+""+fr_code_new);
+}
+
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -356,5 +442,9 @@ $( "#mb_id" ).focusout(function() {
 
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();
+
+	/* 총판 코드  prq_fcode 불러오기*/
+	get_dscode();
+
 };/*window.onload = function() {..}*/
 </script>

@@ -472,18 +472,28 @@ function search_frcode(spt_code)
 {
 	var object = [];
 	var chk_max_frcode=[];
-	
+	var arr =["DS0001PT0001FR0002","DS0001PT0001FR0003"];
 	$.each(fr_code,function(key,val){
 //	if(val.fr_code.indexOf(spt_code)>-1)
 //	{
 		if(spt_code+"FR0001"==val.fr_code){
 			object.push('<option value='+val.fr_code+' selected>');
 		}else{
+			if($.inArray(val.fr_code,arr)>-1){
+			object.push('<option value='+val.fr_code+' disabled>');
+			}else{
 			object.push('<option value='+val.fr_code+'>');
+			}
 		}
 		chk_max_frcode.push(val.fr_code);
+		if($.inArray(val.fr_code,arr)>-1){
+		object.push('['+val.fr_code+']');
+		object.push(val.fr_name+" 이미 사용 중입니다.");
+		
+		}else{
 		object.push('['+val.fr_code+']');
 		object.push(val.fr_name);
+		}
 		object.push('</option>');
 //	}
 	});

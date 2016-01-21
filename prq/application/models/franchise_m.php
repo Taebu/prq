@@ -103,7 +103,7 @@ class Franchise_m extends CI_Model
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function insert_board($arrays)
+	function insert_franchise($arrays)
  	{
 		$sql_array = array(
 			'mb_pcode' => $arrays['mb_pcode']

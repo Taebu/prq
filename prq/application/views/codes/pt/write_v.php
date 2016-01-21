@@ -26,10 +26,13 @@ $attributes = array(
 echo form_open('/codes/write/prq_ptcode', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $ds_code=$this->input->post('ds_code',TRUE);
-
+$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
+$prq_fcode=@$this->session->userdata['prq_fcode'];
 ?>
 <input type="hidden" name="mode" id="mode">
 <input type="hidden" name="pt_code_new" id="pt_code_new">
+<input type="hidden" name="mb_gcode" id="mb_gcode" value="<?php echo $mb_gcode;?>">
+<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $prq_fcode;?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -258,7 +261,7 @@ console.log(data);
 
 }
 
-
+/* 개발자 관리자인 경우 */
 function get_dscode()
 {
 	
@@ -285,6 +288,34 @@ function get_dscode()
 //		chk_vali_id();
 		var result=object.join("");
 		$("#ds_code").html(result);
+		}
+	});
+}
+
+/* 총판인 경우 */
+function get_sel_dscode(ds)
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_dscode/"+ds,
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		console.log(data.success);
+		console.log(data.posts);
+		var object = [];
+		$.each(data.posts,function(key,val){
+			object.push('<option value='+val.ds_code+' selected>');
+			object.push('['+val.ds_code+']');
+			object.push(val.ds_name);
+			object.push('</option>');
+		});
+//		$("#is_member").val(data.success);	
+//		chk_vali_id();
+		var result=object.join("");
+		$("#ds_code").html(result);
+		search_ptcode(ds);
 		}
 	});
 }
@@ -402,11 +433,22 @@ window.onload = function() {
 
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();
-	/*총판 코드 가져 오기*/
-	get_dscode();
 
-	/*대리점 코드 가져 오기*/
-	get_ptcode();
+	var gcode=$("#mb_gcode").val();
+	/*총판 코드 가져 오기*/
+	if(gcode=="G3")
+	{
+		get_ptcode();
+		/* 로그인한  총판 코드 불러 오기 */
+		var ds=$("#prq_fcode").val();
+		get_sel_dscode(ds);	
+	}else{
+		/* 모든 총판 코드 불러 오기 */
+		get_dscode();
+		/*대리점 코드 가져 오기*/
+		get_ptcode();
+	}
+
 	
 	/*초기 대리점 코드 설정*/
 	

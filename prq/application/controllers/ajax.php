@@ -127,7 +127,15 @@ class Ajax extends CI_Controller {
 	/* get_dscode() */
 	function get_dscode()
 	{
-		$result = $this->ajax_m->get_dscode();
+		$dscode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_dscode($dscode);
+		echo $result;
+	}
+
+	/* get_used_dscode() */
+	function get_used_dscode()
+	{
+		$result = $this->ajax_m->get_used_dscode();
 		echo $result;
 	}
 
@@ -201,6 +209,44 @@ class Ajax extends CI_Controller {
 		{
 			echo json_encode($json); //로그인 필요 에러
 		}
+	}
+
+
+	/* get_id */
+	public function get_id()
+	{
+		$json['success']=false;
+
+			
+			$user_id=$this->uri->segment(3);
+			$mac_addr=$this->uri->segment(4);
+
+			$write_data = array(
+				'user_id'=>$user_id,
+				'mac_addr'=>$mac_addr
+			);
+			$result = $this->ajax_m->get_id($write_data);
+			echo $result;
+	}
+
+	/* get_email */
+	public function get_email()
+	{
+		$json['success']=false;
+
+			
+//			$mb_email=$this->uri->segment(3);
+//			$mac_addr=$this->uri->segment(4);
+
+			$mb_email=$this->input->get("mb_email", TRUE);
+			$mac_addr=$this->input->get("mb_addr", TRUE);
+
+			$write_data = array(
+				'mb_email'=>$mb_email,
+				'mac_addr'=>$mac_addr
+			);
+			$result = $this->ajax_m->get_email($write_data);
+			echo $result;
 	}
 }
 

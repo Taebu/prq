@@ -256,7 +256,7 @@ class Ajax_m extends CI_Model
 
 	모든 총판 코드를 반환한다.
 	*/
-	function get_dscode()
+	function get_dscode($ds_code)
 	{
 		$json=array();
 		$json['success']=false;
@@ -265,7 +265,10 @@ class Ajax_m extends CI_Model
 		$sql[]=" * ";
 		$sql[]="FROM ";
 		$sql[]="`prq_dscode` ";
-//		$sql[]=" where ds_code like 'rs%' ";
+		if(isset($ds_code)&&strlen($ds_code)>3)
+		{
+			$sql[]=" where ds_code='".$ds_code."' ";
+		}
 		$sql[]=" order by ds_code ";
 
 
@@ -286,6 +289,40 @@ class Ajax_m extends CI_Model
 		echo json_encode($json);
 	}
 
+	/*2016-01-15 (금)
+	get_used_dscode()
+
+	사용 중인 모든 총판 코드를 반환한다.
+	*/
+	function get_used_dscode()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]=" where ds_code like 'rs%' ";
+		$sql[]=" order by ds_code ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
 	/*
 	get_ptcode()
 	모든 대리점 코드를 반환한다.
@@ -296,7 +333,7 @@ class Ajax_m extends CI_Model
 		$json['success']=false;
 		$sql=array();
 		$sql[]="SELECT ";
-		$sql[]=" * ";
+		$sql[]=" * ";	
 		$sql[]="FROM ";
 		$sql[]="`prq_ptcode` ";
 //		$sql[]=" where ds_code like 'rs%' ";
@@ -436,7 +473,69 @@ class Ajax_m extends CI_Model
 	}
 
 
+	/*
+	2016-01-18 (월)
+	get_id()
+
+	가입중인 아이디를 반환한다.
+	*/
+	function get_id($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]=" where mb_id like '%".$array['user_id']."%' ";
+	
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		
+		echo $json['success']?"TRUE":"FALSE";
+		echo ",01030372004";
+		//echo $this->input->ip_address();
 	}
+
+
+	/*
+	2016-01-19 (화)
+	get_email()
+
+	가입중인 이메일 여부를 반환한다.
+	*/
+	function get_email($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]=" where mb_email like '%".$array['mb_email']."%' ";
+	
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		
+		echo $json['success']?"TRUE":"FALSE";
+		echo ",01030372004";
+		//echo $this->input->ip_address();
+	}
+}
 
 /* End of file auth_m.php */
 /* Location: ./application/models/auth_m.php */

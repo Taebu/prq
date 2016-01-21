@@ -26,11 +26,15 @@ $attributes = array(
 echo form_open('/codes/write/prq_frcode', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $ds_code=$this->input->post('ds_code',TRUE);
-
+$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
+$prq_fcode=@$this->session->userdata['prq_fcode'];
 ?>
+
 <input type="hidden" name="mode" id="mode">
 <input type="hidden" name="pt_code_new" id="pt_code_new">
 <input type="hidden" name="fr_code_new" id="fr_code_new">
+<input type="hidden" name="mb_gcode" id="mb_gcode" value="<?php echo $mb_gcode;?>">
+<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $prq_fcode;?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -55,6 +59,8 @@ $ds_code=$this->input->post('ds_code',TRUE);
 </div>
 </div><!-- .ibox-title -->
 <div class="ibox-content">
+<?php 
+if($mb_gcode=="G1"||$mb_gcode=="G2"){?>
 <div class="row">
 <div class="col-md-3"><label>총판 코드</label>
 	<div class="form-inline">
@@ -73,16 +79,46 @@ $ds_code=$this->input->post('ds_code',TRUE);
 <div class="col-md-3">
 	<div class="form-inline">
 	<label for="fr_code">가맹점 코드</label>
-	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' ></select>
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled></select>
 	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
 	</div><!-- .form-inline-->
 </div><!-- col-md-3 -->
 <div class="col-md-3"><label>가맹점 수정</label>
 <span id="span_fr_code">..</span>
+<input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name" disabled><input type="button" value="수정" class="btn btn-primary" ><input type="button" value="삭제" class="btn btn-danger" >
+</div><!-- col-md-4 -->
+</div><!-- row-->
+<?php 
+}?>
+
+<?php 
+/* 총판인 경우 */
+if($mb_gcode=="G3")
+{?>
+<div class="row">
+<div class="col-md-4">
+	<div class="form-inline">
+	<label for="pt_code">대리점 코드</label>
+	<input type="hidden" name="ds_code"  class="form-control" id="ds_code" value="<?php echo $prq_fcode;?>">
+	<select name="pt_code"  class="form-control" id="pt_code" size='10'   style='width:100%' onchange="javascript:chg_ptcode(this.value);search_frcode(this.value);"
+	 onclick="javascript:chg_ptcode(this.value)"></select>
+	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>
+	</div><!-- .form-inline-->
+</div><!-- col-md-4 -->
+<div class="col-md-4">
+	<div class="form-inline">
+	<label for="fr_code">가맹점 코드</label>
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' ></select>
+	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
+	</div><!-- .form-inline-->
+</div><!-- col-md-4 -->
+<div class="col-md-4"><label>가맹점 수정</label>
+<span id="span_fr_code">..</span>
 <input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name"><input type="button" value="수정" class="btn btn-primary" ><input type="button" value="삭제" class="btn btn-danger" >
 </div><!-- col-md-4 -->
-
 </div><!-- row-->
+<?php 
+}?>
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="row">
@@ -131,7 +167,7 @@ $ds_code=$this->input->post('ds_code',TRUE);
 </div><!-- .row -->
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->
-</div><!-- .col-lg-12 -->
+<!-- </div> --><!-- .col-lg-12 -->
 
 <script type="text/javascript">
 /**
@@ -276,8 +312,9 @@ function get_dscode()
 
 /*대리점 코드를 불러 옵니다.*/
 var pt_code="";
-function get_ptcode()
+function get_ptcode(code)
 {
+	var ds_code=code==""?"DS0001":code;
 	
 	$.ajax({
 	url:"/prq/ajax/get_ptcode/",
@@ -288,7 +325,7 @@ function get_ptcode()
 		pt_code=data.posts;
 //		$("#is_member").val(data.success);	
 //		chk_vali_id();
-		search_ptcode("DS0001");
+		search_ptcode(ds_code);
 		}
 	});
 }
@@ -317,7 +354,17 @@ function search_ptcode(ds_code)
 {
 	var object = [];
 	var chk_max_ptcode=[];
-	
+	var is_pt=$("#pt_code").val()===null;
+	if(is_pt){
+		$("#edit_fr_name").prop('disabled', true); 
+		$("#fr_code").prop('disabled', true); 
+		$("#fr_name").prop('disabled', true); 
+		
+	}else{
+		$("#edit_fr_name").prop('disabled', false); 
+		$("#fr_code").prop('disabled', false); 	
+		$("#fr_name").prop('disabled', false); 	
+	}	
 	$.each(pt_code,function(key,val){
 	if(val.pt_code.indexOf(ds_code)>-1)
 	{
@@ -356,7 +403,16 @@ function search_frcode(spt_code)
 {
 	var object = [];
 	var chk_max_frcode=[];
-	
+	var is_pt=$("#pt_code").val()===null;
+	if(is_pt){
+		$("#edit_fr_name").prop('disabled', true); 
+		$("#fr_code").prop('disabled', true); 
+		$("#fr_name").prop('disabled', true); 
+	}else{
+		$("#edit_fr_name").prop('disabled', false); 
+		$("#fr_code").prop('disabled', false); 	
+		$("#fr_name").prop('disabled', false); 	
+	}
 	$.each(fr_code,function(key,val){
 	if(val.fr_code.indexOf(spt_code)>-1)
 	{
@@ -470,15 +526,31 @@ window.onload = function() {
 
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();
+
+	var mb_gcode=$("#mb_gcode").val();
+	/* 관리자인 경우 */
+	if(mb_gcode=="G2"||mb_gcode=="G1")
+	{
 	/*총판 코드 가져 오기*/
 	get_dscode();
 
 	/*대리점 코드 가져 오기*/
-	get_ptcode();
+	var ds_code="";
+	get_ptcode(ds_code);
 	
 	/*가맹점 코드 가져 오기*/
 	get_frcode();
-
+	}
+	/* 총판인 경우 */
+	if(mb_gcode=="G3")
+	{
+	/*대리점 코드 가져 오기*/
+	var ds_code=$("#prq_fcode").val();
+	get_ptcode(ds_code);
+	
+	/*가맹점 코드 가져 오기*/
+	get_frcode();
+	}
 	/*초기 대리점 코드 설정*/
 	
 };/*window.onload = function() {..}*/

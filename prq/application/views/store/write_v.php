@@ -89,7 +89,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <select name="st_category" id="st_category" class="form-control" >
 <option value="W01">치킨</option>
 <option value="W02">피자</option>
-<option value="W03">중국집</option>
+<option value="W03">중국집</optio>
 <option value="W04">한식/분식</option>
 <option value="W05" selected="">닭발/오리/기타</option>
 <option value="W06">야식/찜/탕 </option>

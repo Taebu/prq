@@ -26,7 +26,7 @@ $attributes = array(
 echo form_open('/codes/write/prq_dscode', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $ds_code=$this->input->post('ds_code',TRUE);
-
+$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
 ?>
 
 <div class="row">
@@ -57,7 +57,7 @@ $ds_code=$this->input->post('ds_code',TRUE);
 <div class="col-md-12">
 <!-- <form method="get" class="form-horizontal"> -->
 <div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">총판</span> 코드</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="ds_code" name="ds_code" value="<?php echo $ds_code;?>"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">총판</span>코드를 등록 합니다. 중복 된 코드를 등록할 수 없습니다.</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="ds_code" name="ds_code" value="<?php echo $ds_code;?>"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname"><?php echo $mb_gcode;?>총판</span>코드를 등록 합니다. 중복 된 코드를 등록할 수 없습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

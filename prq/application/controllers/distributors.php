@@ -208,7 +208,7 @@ class Distributors extends CI_Controller {
 //					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
 //				);
 //				$mb_code = $this->distributors_m->get_code($get_code_data);
-+
+
 /*
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
@@ -220,11 +220,11 @@ class Distributors extends CI_Controller {
 */				
 
 				$write_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
+					'table' => 'prq_member', 
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'mb_name' => $this->input->post('mb_name', TRUE),
 					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
-//					'mb_code' => $this->input->post('mb_code', TRUE),
+					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_imgprefix' => $this->input->post('mb_imgprefix', TRUE),
 					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
@@ -245,7 +245,7 @@ class Distributors extends CI_Controller {
 					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
 					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
 					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
-				);
+					);
 
 				$result = $this->distributors_m->insert_distributors($write_data);
 

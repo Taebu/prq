@@ -116,7 +116,7 @@ class Auth extends CI_Controller {
 				set_cookie($cookie);
 
 				$cookie = array(
-                   'name'   => 'mb_name',
+                   'name'   => 'mb_ceoname',
                    'value'  => $result->mb_ceoname,
                    'expire' => '86500',
                    'domain' => $_SERVER['HTTP_HOST'],
@@ -169,14 +169,24 @@ class Auth extends CI_Controller {
 
 				set_cookie($cookie);
 
+				$cookie = array(
+                   'name'   => 'prq_fcode',
+                   'value'  => $result->prq_fcode,
+                   'expire' => '86500',
+                   'domain' => $_SERVER['HTTP_HOST'],
+                   'path'   => '/prq/',
+                   'prefix' => '',
+               );
+				set_cookie($cookie);
 
-  				alert('로그인 되었습니다.', '/prq/');
+//  			alert('로그인 되었습니다.', '/prq/');
+				alert('로그인 되었습니다.', '/prq/distributors/lists/prq_member/page/1');
   				exit;
    			}
    			else
    			{
    				//실패시
-  				alert('아이디나 비밀번호를 확인해 주세요.', '/prq/');
+  				alert('아이디나 비밀번호를 확인해 주세요.', '/prq/auth');
   				exit;
    			}
 
