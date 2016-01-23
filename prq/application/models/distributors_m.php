@@ -114,15 +114,6 @@ class Distributors_m extends CI_Model
 			'mb_pcode' => $arrays['mb_pcode']
 		);
 
-//		$mb_code=$this->get_code($arrays);
-//		$prq_fcode=$this->get_dscode();
-		$prq_code=$this->get_member_code($arrays['mb_gtype']);
-		/*
-		$prq_code['mb_gcode']: G8
-		mb_code: TS0000
-		mb_gname_eng:
-		mb_gname_kor:
-		*/
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
@@ -131,9 +122,9 @@ class Distributors_m extends CI_Model
 //		$sql_array[]="mb_fcode='".$arrays['mb_fcode']."',";
 //		$sql_array[]="mb_code='".$mb_code."',";
 		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
-		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";
-		$sql_array[]="mb_gname_eng='".$prq_code->mb_gname_eng."',";
-		$sql_array[]="mb_gname_kor='".$prq_code->mb_gname_kor."',";
+		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
+		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
+		$sql_array[]="mb_gname_kor='".$arrays['mb_gname_kor']."',";
 		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
 		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
@@ -329,7 +320,7 @@ class Distributors_m extends CI_Model
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
 		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
 		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
+//		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
 		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
 		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
 		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";

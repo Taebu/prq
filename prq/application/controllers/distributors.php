@@ -223,7 +223,10 @@ class Distributors extends CI_Controller {
 					'table' => 'prq_member', 
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'mb_name' => $this->input->post('mb_name', TRUE),
-					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
+					'mb_gcode' => $this->input->post('mb_gcode', TRUE),
+					'mb_gtype' => $this->input->post('mb_gtype', TRUE),
+					'mb_gname_eng' => $this->input->post('mb_gname_eng', TRUE),
+					'mb_gname_kor' => $this->input->post('mb_gname_kor', TRUE),
 					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_imgprefix' => $this->input->post('mb_imgprefix', TRUE),
@@ -243,8 +246,7 @@ class Distributors extends CI_Controller {
 					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
 					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
 					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
-					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
+					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE)
 					);
 
 				$result = $this->distributors_m->insert_distributors($write_data);
@@ -256,14 +258,15 @@ class Distributors extends CI_Controller {
 						$sql_array[]="mb_code='".$arrays['mb_code']."',";
 						$sql_array[]="mb_pcode='".$arrays['mb_pcode']."',";
 					*/
-					
+					/*
 					$write_data = array(
 						'mb_no' => $GLOBALS['mb_no'],
 						'mb_id' => $this->input->post('mb_id', TRUE),
 						'mb_pcode' => $this->input->post('mb_pcode', TRUE),
 						'mb_code' => $GLOBALS['mb_code']
 					);					
-					$result = $this->distributors_m->insert_code($write_data);
+					*/
+					//$result = $this->distributors_m->insert_code($write_data);
 					//글 작성 성공시 게시판 목록으로
 					alert('입력되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;

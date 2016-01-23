@@ -1,3 +1,11 @@
+<style type="text/css">
+option:disabled {
+    background: rgb(51, 122, 183);
+    color:white;
+	font-weight: 900 !important;
+	padding:5px;
+}
+</style>
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
 <h2><span class="mb_gname">총판</span> 등록</h2>
@@ -31,11 +39,18 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <input type="hidden" name="is_join" id="is_join" value="">
 <input type="hidden" name="is_member" id="is_member">
 <input type="hidden" name="mb_gtype" id="mb_gtype" value="DS">
+<input type="hidden" name="mb_gcode" id="mb_gcode" value="G3">
+<input type="hidden" name="mb_gname_eng" id="mb_gname_eng" value="Distributors">
+<input type="hidden" name="mb_gname_kor" id="mb_gname_kor" value="총판">
 <!-- mb_code는 자동으로 생성 되도록 설계 -->
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="AD0001">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size">
+<input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size">
+<input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size">
+
 <input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo date("Ym");?>">
 <div class="row">
 <div class="col-lg-12">
@@ -65,13 +80,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
 <div class="form-group"><label class="col-sm-2 control-label">PRQ CODE</label>
-<div class="col-sm-10"> <select name="prq_fcode" id="prq_fcode" class="form-control">
-	<option value="DS0001" disabled>[DS0001] cashq[msjhero  사용중]</option>
-	<option value="DS0002">[DS0002] cashq 사용가능</option>
-	<option value="DS0003" disabled>[DS0003] cashq [anptown  사용중]</option>
-	<option value="DS0004">[DS0004] cashq 사용가능</option>
-	<option value="DS0005">[DS0005] cashq 사용가능</option>
-</select><span class="help-block m-b-none" >총판  CODE를 선택합니다. 총판 코드를 선택해 주세요.</span>
+<div class="col-sm-10"> <select name="prq_fcode" id="prq_fcode" class="form-control"></select><span class="help-block m-b-none" >총판  CODE를 선택합니다. 총판 코드를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -356,7 +365,7 @@ console.log(data);
 
 
 
-/*가맹점 코드를 불러 옵니다.*/
+/*총판 코드를 불러 옵니다.*/
 var ds_code="";
 function get_dscode()
 {
@@ -371,19 +380,52 @@ function get_dscode()
 		console.log(ds_code);
 //		$("#is_member").val(data.success);	
 //		chk_vali_id();
+			get_used_dscode();
+		}
+	});
+}
+
+/*사용 중인 총판 코드를 불러 옵니다.*/
+var used_ds_code=[];
+function get_used_dscode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_used_dscode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+
+			$.each(data.posts,function(key,val){
+				used_ds_code.push(val.prq_fcode);
+			});
+	
+		//search_dscode("DS0003");
 		search_dscode("DS0003");
 		}
 	});
 }
 
 
-/*pt_code로 fr 코드를 탐색 합니다.
+/*
+총판코드로 사용중인 코드를  비활성화 합니다.
 */
 function search_dscode(spt_code)
 {
+	spt_code="";
 	var object = [];
 	var chk_max_dscode=[];
-	var arr =["DS0001","DS0002"];
+	/*서버에서 실제 사용중인 코드를 불러 온다. */
+	var arr =used_ds_code;
+	console.log("사용 중인 코드 갯수 : "+used_ds_code.length);
+	console.log("등록한 코드 갯수 : "+ds_code.length);
+
+	if(ds_code.length==used_ds_code.length){
+		alert("총판 코드를 모두 소진하여 \n 더 이상 총판 등록이 불가능 합니다.\n 리스트로 돌아갑니다.");
+		$(location).attr('href','/prq/distributors/lists/prq_member/page/1');
+	}
+	/* ds_code는 이미 get_dscode인 부모 코드에서 불러 온다.*/
 	$.each(ds_code,function(key,val){
 //	if(val.fr_code.indexOf(spt_code)>-1)
 //	{
@@ -398,11 +440,11 @@ function search_dscode(spt_code)
 		}
 		chk_max_dscode.push(val.ds_code);
 		if($.inArray(val.ds_code,arr)>-1){
-		object.push('['+val.ds_code+']');
-		object.push(val.ds_name+" 이미 사용 중입니다.");
+		object.push('['+val.ds_code+'] ');
+		object.push(val.ds_name+" [사용 중] ");
 		
 		}else{
-		object.push('['+val.ds_code+']');
+		object.push('['+val.ds_code+'] ');
 		object.push(val.ds_name);
 		}
 		object.push('</option>');

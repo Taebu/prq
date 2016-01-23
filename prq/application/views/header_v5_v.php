@@ -73,7 +73,6 @@ $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
 /* START 관리자 인 경우 */
 if($mb_gcode=='G1'||$mb_gcode=='G2'){
 ?>
-
 		<nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">

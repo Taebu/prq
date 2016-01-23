@@ -300,11 +300,11 @@ class Ajax_m extends CI_Model
 		$json['success']=false;
 		$sql=array();
 		$sql[]="SELECT ";
-		$sql[]=" * ";
+		$sql[]=" prq_fcode,mb_id,mb_gcode ";
 		$sql[]="FROM ";
 		$sql[]="`prq_member` ";
-		$sql[]=" where ds_code like 'rs%' ";
-		$sql[]=" order by ds_code ";
+		$sql[]=" where mb_gcode='G3' ";
+		$sql[]=" order by prq_fcode ";
 
 
 		$join_sql=join("",$sql);

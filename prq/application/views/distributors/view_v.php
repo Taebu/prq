@@ -229,13 +229,7 @@
 							<div class="col-md-6">
 							<!-- <form method="get" class="form-horizontal"> -->
                                 <div class="form-group"><label class="col-sm-2 control-label">PRQ 코드</label>
-                                    <div class="col-sm-10">
-									<select name="" id="" class="form-control">
-										<option value="DS0001">DS0001 사용가능</option>
-										<option value="DS0002"  disabled>DS0002 msjhero19  사용중</option>
-										<option value="DS0003" selected>DS0003 msjhero18</option>
-									</select>
-									<?php echo $views->prq_fcode;?><span class="help-block m-b-none">PRQ 코드 입니다..</span>
+                                    <div class="col-sm-10"><?php echo $views->prq_fcode;?><span class="help-block m-b-none">PRQ 코드 입니다..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -321,7 +315,7 @@
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio" value="<?php echo $views->mb_exactcaculation_ratio;?>"> <span class="help-block m-b-none">정산 비율</span>
+                                    <div class="col-sm-10"><?php echo $views->mb_exactcaculation_ratio;?> <span class="help-block m-b-none">정산 비율</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 
@@ -411,7 +405,7 @@
 								<!-- .form-group -->
 
 								<div class="row"><div class="col-md-12">
-									<textarea id="form_data">#form_data</textarea><!-- #form_data -->
+									<!-- <textarea id="form_data">#form_data</textarea> --><!-- #form_data -->
 								</div></div>
 							</div><!-- .col-md-6 Right Menu-->
 

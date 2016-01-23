@@ -79,7 +79,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"){?>
 <div class="col-md-3">
 	<div class="form-inline">
 	<label for="fr_code">가맹점 코드</label>
-	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled></select>
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);"></select>
 	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
 	</div><!-- .form-inline-->
 </div><!-- col-md-3 -->
@@ -445,6 +445,21 @@ function search_frcode(spt_code)
 	$("#fr_code").html(result);
 	chg_frcode(spt_code+""+fr_code_new);
 }
+
+function changed_frcode(fcode)
+{
+	$.each(fr_code,function(key,val){
+		if(val.fr_code==fcode)
+		{
+			
+			$("#edit_fr_name").val(val.fr_name);
+		}
+
+//	$("#edit_pt_name").val(ds_code+"_"+v);
+	});
+	$("#span_fr_code").html(fcode);
+
+}
 /*
 
 */
@@ -460,7 +475,12 @@ function chg_ptcode(v)
 	var i=0;
 	$.each(fr_code,function(key,val){
 		if(val.fr_code.indexOf(search_code)>-1)
-		$("#edit_fr_name").val(val.fr_name);
+		{
+			if(val.fr_code==$("#fr_code").val())
+			{
+				$("#edit_fr_name").val(val.fr_name);
+			}
+		}
 		i++;
 //	$("#edit_pt_name").val(ds_code+"_"+v);
 	});
