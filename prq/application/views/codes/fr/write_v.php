@@ -79,13 +79,18 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"){?>
 <div class="col-md-3">
 	<div class="form-inline">
 	<label for="fr_code">가맹점 코드</label>
-	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);"></select>
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);chg_frcode(this.value)"
+	 onclick="javascript:changed_frcode(this.value);chg_frcode(this.value)"
+	></select>
+
 	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
 	</div><!-- .form-inline-->
 </div><!-- col-md-3 -->
 <div class="col-md-3"><label>가맹점 수정</label>
 <span id="span_fr_code">..</span>
-<input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name" disabled><input type="button" value="수정" class="btn btn-primary" ><input type="button" value="삭제" class="btn btn-danger" >
+<input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name" disabled>
+<input type="button" value="수정" class="btn btn-primary"  onclick="javascript:set_frcode('modify')">
+<input type="button" value="삭제" class="btn btn-danger"  onclick="javascript:set_frcode('delete')">
 </div><!-- col-md-4 -->
 </div><!-- row-->
 <?php 
@@ -108,13 +113,17 @@ if($mb_gcode=="G3")
 <div class="col-md-4">
 	<div class="form-inline">
 	<label for="fr_code">가맹점 코드</label>
-	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' ></select>
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);chg_frcode(this.value)"
+	 onclick="javascript:changed_frcode(this.value);chg_frcode(this.value)"
+	></select>
 	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
 	</div><!-- .form-inline-->
 </div><!-- col-md-4 -->
 <div class="col-md-4"><label>가맹점 수정</label>
 <span id="span_fr_code">..</span>
-<input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name"><input type="button" value="수정" class="btn btn-primary" ><input type="button" value="삭제" class="btn btn-danger" >
+<input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name">
+<input type="button" value="수정" class="btn btn-primary"  onclick="javascript:set_frcode('modify')">
+<input type="button" value="삭제" class="btn btn-danger"  onclick="javascript:set_frcode('delete')">
 </div><!-- col-md-4 -->
 </div><!-- row-->
 <?php 
@@ -131,7 +140,7 @@ if($mb_gcode=="G3")
 <div class="col-md-6"><label>가맹점 분류명</label>
 <input type="text"  class="form-control" name="fr_name" id="fr_name" onclick="javascript:search_frcode($('#pt_code').val());"></div>
 <div class="col-md-2"><label>처리</label>
-<div><input type="button" value="추가" class="btn btn-primary" onclick="javascript:set_frcode()"></div>
+<div><input type="button" value="추가" class="btn btn-primary" onclick="javascript:set_frcode('add')"></div>
 </div>
 
 </div><!-- col-md-12 -->
@@ -512,33 +521,95 @@ function chg_frcode(v)
 	}
 }
 
-function set_frcode()
+function set_frcode(mode)
 {
-	if($("#fr_name").val()==""||$("#fr_name").val().length<2){
-		alert("길이가 너무 적거나 공백입니다.");
-		$("#fr_name").focus();
-		return;
-	}
-	$("#mode").val("add");
-	var param =$("#write_action").serialize();
-	alert(param);
-	
-	$.ajax({
-	url:"/prq/ajax/set_frcode/",
-	type: "POST",
-	data:param,
-	dataType:"json",
-	success: function(data) {
-		console.log(data);
-		if(data.success){
-			alert('입력 성공');
-			$(location).attr('href',document.URL);
-		}else{
-			alert(data.result);
+	/* 코드 추가 */
+	if(mode=="add")
+	{
+		if($("#fr_name").val()==""||$("#fr_name").val().length<2){
+			alert("길이가 너무 적거나 공백입니다.");
+			$("#fr_name").focus();
+			return;
 		}
+		$("#mode").val("add");
+		var param =$("#write_action").serialize();
+		alert(param);
+		
+		$.ajax({
+		url:"/prq/ajax/set_frcode/",
+		type: "POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+			console.log(data);
+			if(data.success){
+				alert('입력 성공');
+				$(location).attr('href',document.URL);
+			}else{
+				alert(data.result);
+			}
+		}
+		});
 	}
-	});
-	
+
+	/* 코드 수정 */
+	if(mode=="modify")
+	{
+		if($("#edit_fr_name").val()==""||$("#edit_fr_name").val().length<2){
+			alert("길이가 너무 적거나 공백입니다.");
+			$("#edit_fr_name").focus();
+			return;
+		}
+		$("#mode").val("modify");
+		var param =$("#write_action").serialize();
+		alert(param);
+		
+		$.ajax({
+		url:"/prq/ajax/set_frcode/",
+		type: "POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+			console.log(data);
+			if(data.success){
+				alert('수정 성공');
+				$(location).attr('href',document.URL);
+			}else{
+				alert(data.result);
+			}
+		}
+		});
+	}
+
+	/* 코드 추가 */
+	if(mode=="delete")
+	{
+		if($("#edit_fr_name").val()==""||$("#edit_fr_name").val().length<2){
+			alert("길이가 너무 적거나 공백입니다.");
+			$("#fr_name").focus();
+			return;
+		}
+		$("#mode").val("delete");
+		var param =$("#write_action").serialize();
+		alert(param);
+		
+		$.ajax({
+		url:"/prq/ajax/set_frcode/",
+		type: "POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+			console.log(data);
+			if(data.success){
+				alert('삭제 성공');
+				$(location).attr('href',document.URL);
+			}else{
+				alert(data.result);
+			}
+		}
+		});
+	}
+
 }
 
 window.onload = function() {
@@ -574,4 +645,5 @@ window.onload = function() {
 	/*초기 대리점 코드 설정*/
 	
 };/*window.onload = function() {..}*/
-</script>
+</script> 
+

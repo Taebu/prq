@@ -282,7 +282,9 @@
 	<div class='col-sm-12'>
 <?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
-if($mb_gcode=="G1"){?>
+if($mb_gcode=="G1"||$mb_gcode=="G2")
+{
+?>
 <div class="btn_area">
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
@@ -299,12 +301,13 @@ if($mb_gcode=="G1"){?>
 					<th scope="col">No</th>
 					<th scope="col">등록일자</th>
 					<th scope="col"><span class="mb_gname">총판</span>ID</th>
-					<th scope="col"><span class="mb_gname">총판</span>코드</th>
+					<!-- <th scope="col"><span class="mb_gname">총판</span>코드</th> -->
 					<th scope="col">PRQ 코드</th>
 					<!-- <th scope="col">구분</th> -->
 					<!-- <th scope="col">대리점</th> -->
 					<th scope="col"><span class="mb_gname">총판</span>상태</th>
 					<th scope="col">비고</th>
+					<th scope="col">대리점</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -319,20 +322,16 @@ foreach ($list as $lt)
 					<!-- <a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td> -->
 					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
 					<td><?php echo $lt->mb_id;?></td>
-					<td><?php echo $lt->mb_code;?></td>
+				<!-- 	<td><?php echo $lt->mb_code;?></td> -->
 					<td><?php echo $lt->prq_fcode;?></td>
 					<!-- <td><?php echo $lt->mb_gname_kor;?></td> -->
 					<!-- <td><?php echo $lt->mb_gname_eng;?></td> -->
 					<!-- <td><?php echo $lt->mb_business_paper;?></td> -->
  					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
 					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
-					<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span>
-					</td>
+					<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
  					<td><span class="mb_gname">총판</span></td> 
- 					<td>46	</td> 
- 					<td>
-			</td> 
- 					<td>-</td> 
+ 					<td>0/5</td> 
 				</tr>
 <?php
 }

@@ -323,11 +323,12 @@ class Ajax_m extends CI_Model
 		}
 		echo json_encode($json);
 	}
+
 	/*
 	get_ptcode()
 	모든 대리점 코드를 반환한다.
 	*/
-	function get_ptcode()
+	function get_ptcode($ds_code)
 	{
 		$json=array();
 		$json['success']=false;
@@ -336,6 +337,11 @@ class Ajax_m extends CI_Model
 		$sql[]=" * ";	
 		$sql[]="FROM ";
 		$sql[]="`prq_ptcode` ";
+		if(isset($ds_code)&&strlen($ds_code)>3)
+		{
+			$sql[]=" where pt_code like '".$ds_code."PT____' ";
+		}
+
 //		$sql[]=" where ds_code like 'rs%' ";
 		$sql[]=" order by pt_code ";
 
@@ -356,6 +362,43 @@ class Ajax_m extends CI_Model
 		}
 		echo json_encode($json);
 	}
+
+
+	/*2016-01-25 (월)
+	get_used_ptcode()
+
+	사용 중인 모든 대리점 코드를 반환한다.
+	*/
+	function get_used_ptcode()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" prq_fcode,mb_id,mb_gcode ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]=" where mb_gcode='G4' ";
+		$sql[]=" order by prq_fcode ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
 
 	/*
 	get_frcode()
@@ -428,6 +471,47 @@ class Ajax_m extends CI_Model
 				$json['result']="코드 입력이 성공 되었습니다.";
 			}
 		}
+	
+		/* 수정 하기 */
+		if($array['mode']=="modify")
+		{
+			$sql=array();
+			$sql[]="update `prq_ptcode` set ";
+			$sql[]=" pt_name='".$array['edit_pt_name']."'";
+			$sql[]=" where pt_code='".$array['pt_code_new']."';";
+
+			$join_sql=join("",$sql);
+			//$json['query']=$ojin_sql;
+			$query = $this->db->query($join_sql);
+			if($query)
+			{
+				$json['result']="수정 성공.";
+				$json['sql']=$join_sql;
+				$json['success']=true;
+			}else{
+				$json['result']="수정 실패.";
+			}
+		}
+
+		/* 삭제 하기 */
+		if($array['mode']=="delete")
+		{
+			$sql=array();
+			$sql[]="delete from `prq_ptcode` where ";
+			$sql[]="pt_code='".$array['pt_code_new']."';";
+
+			$join_sql=join("",$sql);
+	//		$json['query']=$join_sql;
+			$query = $this->db->query($join_sql);
+			if($query)
+			{
+				$json['result']="삭제 성공.";
+				$json['success']=true;
+			}else{
+				$json['sql']=$join_sql;
+				$json['result']="삭제 실패.";
+			}
+		}
 		echo json_encode($json);
 	}
 
@@ -442,7 +526,8 @@ class Ajax_m extends CI_Model
 	{
 		$json=array();
 		$json['success']=false;
-	
+
+		/* 추가 하기*/
 		if($array['mode']=="add")
 		{
 			$sql=array();
@@ -467,6 +552,47 @@ class Ajax_m extends CI_Model
 				$query = $this->db->query($join_sql);
 				$json['success']=$query;
 				$json['result']="코드 입력이 성공 되었습니다.";
+			}
+		}
+	
+		/* 수정 하기 */
+		if($array['mode']=="modify")
+		{
+			$sql=array();
+			$sql[]="update `prq_frcode` set ";
+			$sql[]=" fr_name='".$array['edit_fr_name']."'";
+			$sql[]=" where fr_code='".$array['fr_code_new']."';";
+
+			$join_sql=join("",$sql);
+			//$json['query']=$ojin_sql;
+			$query = $this->db->query($join_sql);
+			if($query)
+			{
+				$json['result']="수정 성공.";
+				$json['sql']=$join_sql;
+				$json['success']=true;
+			}else{
+				$json['result']="수정 실패.";
+			}
+		}
+
+		/* 삭제 하기 */
+		if($array['mode']=="delete")
+		{
+			$sql=array();
+			$sql[]="delete from `prq_frcode` where ";
+			$sql[]="fr_code='".$array['fr_code_new']."';";
+
+			$join_sql=join("",$sql);
+	//		$json['query']=$join_sql;
+			$query = $this->db->query($join_sql);
+			if($query)
+			{
+				$json['result']="삭제 성공.";
+				$json['success']=true;
+			}else{
+				$json['sql']=$join_sql;
+				$json['result']="삭제 실패.";
 			}
 		}
 		echo json_encode($json);

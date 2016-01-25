@@ -142,9 +142,19 @@ class Ajax extends CI_Controller {
 	/* get_ptcode() */
 	function get_ptcode()
 	{
-		$result = $this->ajax_m->get_ptcode();
+		$ptcode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_ptcode($ptcode);
 		echo $result;
 	}
+
+	/* get_used_ptcode() */
+	function get_used_ptcode()
+	{
+		$ptcode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_used_ptcode($ptcode);
+		echo $result;
+	}
+
 
 	/* get_frcode() */
 	function get_frcode()

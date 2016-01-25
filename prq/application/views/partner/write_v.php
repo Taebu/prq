@@ -425,28 +425,116 @@ function get_pcode()
 	});
 }
 
-
+/*******************************************************************************************************************/
+/*대리점 코드를 불러 옵니다.*/
 var pt_code="";
-
 function get_ptcode()
 {
-	
 	$.ajax({
-	url:"/prq/ajax/get_ptcode/",
+	url:"/prq/ajax/get_ptcode/DS0003",
 	type: "POST",
 	data:"",
 	dataType:"json",
 	success: function(data) {
-		pt_code=data.posts;
+		ds_code=data.posts;
+		console.log(ds_code);
 //		$("#is_member").val(data.success);	
 //		chk_vali_id();
-		search_ptcode("DS0001");
-		
-
+			get_used_ptcode();
 		}
 	});
 }
 
+/*사용 중인 대리점 코드를 불러 옵니다.*/
+var used_pt_code=[];
+function get_used_ptcode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_used_ptcode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+
+			$.each(data.posts,function(key,val){
+				used_pt_code.push(val.prq_fcode);
+			});
+	
+		//search_dscode("DS0003");
+		search_ptcode("DS0003");
+		}
+	});
+}
+
+
+/*
+대리점코드로 사용중인 코드를  비활성화 합니다.
+*/
+function search_ptcode(spt_code)
+{
+	spt_code="";
+	var object = [];
+	var chk_max_dscode=[];
+	/*서버에서 실제 사용중인 코드를 불러 온다. */
+	var arr =used_pt_code;
+	console.log("사용 중인 코드 갯수 : "+used_pt_code.length);
+	console.log("등록한 코드 갯수 : "+pt_code.length);
+
+	if(pt_code.length==used_pt_code.length){
+		alert("대리점 코드를 모두 소진하여 \n 더 이상 대리점 등록이 불가능 합니다.\n 리스트로 돌아갑니다.");
+		$(location).attr('href','/prq/partner/lists/prq_member/page/1');
+	}
+	/* pt_code는 이미 get_dscode인 부모 코드에서 불러 온다.*/
+	$.each(pt_code,function(key,val){
+//	if(val.fr_code.indexOf(spt_code)>-1)
+//	{
+		if(spt_code==val.pt_code){
+			object.push('<option value='+val.pt_code+' selected>');
+		}else{
+			if($.inArray(val.pt_code,arr)>-1){
+			object.push('<option value='+val.pt_code+' disabled>');
+			}else{
+			object.push('<option value='+val.pt_code+'>');
+			}
+		}
+		chk_max_dscode.push(val.pt_code);
+		if($.inArray(val.pt_code,arr)>-1){
+		object.push('['+val.pt_code+'] ');
+		object.push(val.pt_name+" [사용 중] ");
+		
+		}else{
+		object.push('['+val.pt_code+'] ');
+		object.push(val.pt_name);
+		}
+		object.push('</option>');
+//	}
+	});
+
+	if(chk_max_dscode.length>0)
+	{
+	var max_pt_code=chk_max_dscode[chk_max_dscode.length-1];
+	console.log(max_pt_code);
+	console.log(max_pt_code.substr(0,6));
+	var next_code_index=Number(max_pt_code.substr(0,6));
+	console.log("is array next code index -> "+next_code_index);
+	}else{
+	var next_code_index=0;
+	console.log("is not array next code index -> "+next_code_index);
+	}
+	next_code_index=10001+next_code_index;
+	var next_code_string=next_code_index.toString();
+	var pt_code_new="DS"+next_code_string.substr(1,5);
+	var result=object.join("");
+	$("#prq_fcode").html(result);
+//	chg_frcode(spt_code+""+fr_code_new);
+}
+
+
+
+/*******************************************************************************************************************/
+
+/*
 function search_ptcode(ds_code)
 {
 	var object = [];
@@ -484,8 +572,8 @@ function search_ptcode(ds_code)
 	$("#prq_fcode").html(result);
 //	chg_ptcode(ds_code+""+pt_code_new);
 }
-
-
+*/
+/* 모든 정보를 불러 오면 아래 코드를 실행합니다.*/
 window.onload = function() {
 
 	$( "#mb_id" ).focusout(function() {
@@ -504,6 +592,14 @@ window.onload = function() {
 	get_pcode();
 	
 	//대리점 코드 가져오기
+	/* 
+	2016-01-25 (월)
+	fn get_ptcode();
+	대리점 코드   prq_fcode 불러오기
+	아래 함수는 get_used_ptcode를 불러서 이미 사용 중인 코드를 호출 합니다.
+	그 후 search_ptcode 를 호출 하여 이미 사용중인 코드가 모두 소진 되면 
+	입력을 할 수 없도록 대리점 리스트로 돌아 갑니다.
+	*/
 	get_ptcode();
 };/*window.onload = function() {..}*/
 

@@ -98,7 +98,9 @@ $prq_fcode=@$this->session->userdata['prq_fcode'];
 </div><!-- col-md-4 -->
 <div class="col-md-4"><label>대리점 수정</label>
 <span id="span_pt_code">..</span>
-<input type="text"  class="form-control" name="edit_pt_name" id="edit_pt_name"><input type="button" value="수정" class="btn btn-primary" ><input type="button" value="삭제" class="btn btn-danger" >
+<input type="text"  class="form-control" name="edit_pt_name" id="edit_pt_name">
+<input type="button" value="수정" class="btn btn-primary" onclick="javascript:set_ptcode('modify');">
+<input type="button" value="삭제" class="btn btn-danger"  onclick="javascript:set_ptcode('delete');">
 </div><!-- col-md-4 -->
 
 </div><!-- row-->
@@ -106,14 +108,14 @@ $prq_fcode=@$this->session->userdata['prq_fcode'];
 
 <div class="row">
 <div class="col-md-4"><label>대리점 코드</label>
-<div id="display_dscode">DS0001</div>
-<div id="display_ptcode">PT0001</div>
+총판 코드  : <div id="display_dscode">DS0001</div>
+대리점 코드  : <div id="display_ptcode">PT0001</div>
 <div id="pt_code_new"></div>
 </div>
 <div class="col-md-6"><label>대리점 분류명</label>
 <input type="text"  class="form-control" name="pt_name" id="pt_name" onclick="javascript:search_ptcode($('#ds_code').val());"></div>
 <div class="col-md-2"><label>처리</label>
-<div><input type="button" value="추가" class="btn btn-primary" onclick="javascript:set_ptcode()"></div>
+<div><input type="button" value="추가" class="btn btn-primary" onclick="javascript:set_ptcode('add');"></div>
 </div>
 
 </div><!-- col-md-12 -->
@@ -149,7 +151,7 @@ $prq_fcode=@$this->session->userdata['prq_fcode'];
 </div><!-- .row -->
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->
-</div><!-- .col-lg-12 -->
+<!-- </div> --><!-- .col-lg-12 -->
 
 <script type="text/javascript">
 /**
@@ -399,33 +401,96 @@ function chg_ptcode(v)
 }
 
 
-function set_ptcode()
+function set_ptcode(mode)
 {
-	if($("#pt_name").val()==""||$("#pt_name").val().length<2){
-		alert("길이가 너무 적거나 공백입니다.");
-		$("#pt_name").focus();
-		return;
-	}
-	$("#mode").val("add");
-	var param =$("#write_action").serialize();
-	alert(param);
-	
-	$.ajax({
-	url:"/prq/ajax/set_ptcode/",
-	type: "POST",
-	data:param,
-	dataType:"json",
-	success: function(data) {
-		console.log(data);
-		if(data.success){
-			alert('입력 성공');
-			$(location).attr('href',document.URL);
-		}else{
-			alert(data.result);
+
+	if(mode=="add")
+	{
+		if($("#pt_name").val()==""||$("#pt_name").val().length<2){
+			alert("길이가 너무 적거나 공백입니다.");
+			$("#pt_name").focus();
+			return;
 		}
+		$("#mode").val("add");
+		var param =$("#write_action").serialize();
+		alert(param);
+		
+		$.ajax({
+		url:"/prq/ajax/set_ptcode/",
+		type: "POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+			console.log(data);
+			if(data.success){
+				alert('입력 성공');
+				$(location).attr('href',document.URL);
+			}else{
+				alert(data.result);
+			}
+		}
+		});
 	}
-	});
-	
+
+
+	if(mode=="modify")
+	{
+		if($("#edit_pt_name").val()==""||$("#edit_pt_name").val().length<2){
+			alert("길이가 너무 적거나 공백입니다.");
+			$("#edit_pt_name").focus();
+			return;
+		}
+		$("#mode").val("modify");
+		var param =$("#write_action").serialize();
+		//alert(param);
+
+		$.ajax({
+		url:"/prq/ajax/set_ptcode/",
+		type: "POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+			console.log(data);
+			if(data.success){
+				alert('수정 성공');
+				$(location).attr('href',document.URL);
+			}else{
+				alert(data.result);
+			}
+		}
+		});
+
+	}
+
+	if(mode=="delete")
+	{
+		if($("#edit_pt_name").val()==""||$("#edit_pt_name").val().length<2){
+			alert("길이가 너무 적거나 공백입니다.");
+			$("#edit_pt_name").focus();
+			return;
+		}
+		$("#mode").val("delete");
+		var param =$("#write_action").serialize();
+		//alert(param);
+
+		$.ajax({
+		url:"/prq/ajax/set_ptcode/",
+		type: "POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+			console.log(data);
+			if(data.success){
+				alert('삭제 성공');
+				$(location).attr('href',document.URL);
+			}else{
+				alert(data.result);
+			}
+		}
+		});
+
+	}
+
 }
 
 window.onload = function() {

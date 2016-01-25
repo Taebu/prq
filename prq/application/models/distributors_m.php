@@ -42,9 +42,9 @@ class Distributors_m extends CI_Model
      		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
      	}
 		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
-		$mb_code=$this->input->cookie('mb_code', TRUE);
-		if( strlen($mb_code)>2){
-			$sword .= ' and mb_code= "'.$mb_code.'" ';
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		if( strlen($prq_fcode)>2){
+			$sword .= ' and prq_fcode= "'.$prq_fcode.'" ';
 		}
 		}
     	$limit_query = '';

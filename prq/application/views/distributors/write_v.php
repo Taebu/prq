@@ -470,6 +470,8 @@ function search_dscode(spt_code)
 //	chg_frcode(spt_code+""+fr_code_new);
 }
 
+
+/* 모든 정보를 불러 오면 아래 코드를 실행합니다.*/
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -485,7 +487,14 @@ $( "#mb_id" ).focusout(function() {
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();
 
-	/* 총판 코드  prq_fcode 불러오기*/
+	/* 
+	2016-01-25 (월)
+	fn get_dscode();
+	총판 코드   prq_fcode 불러오기
+	아래 함수는 get_used_dscode를 불러서 이미 사용 중인 코드를 호출 합니다.
+	그 후 search_dscode 를 호출 하여 이미 사용중인 코드가 모두 소진 되면 
+	입력을 할 수 없도록 총판 리스트로 돌아 갑니다.
+	*/
 	get_dscode();
 
 };/*window.onload = function() {..}*/
