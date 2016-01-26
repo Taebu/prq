@@ -1,3 +1,11 @@
+<style type="text/css">
+option:disabled {
+    background: rgb(51, 122, 183);
+    color:white;
+	font-weight: 900 !important;
+	padding:5px;
+}
+</style>
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
 <h2><span class="mb_gname">대리점</span> 등록</h2>
@@ -27,22 +35,30 @@ echo form_open('/partner/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 $mb_code=$this->input->cookie('mb_code', TRUE);
+$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
 <input type="hidden" name="is_member" id="is_member">
 <input type="hidden" name="mb_code" id="mb_code">
+<input type="hidden" name="mb_gtype" id="mb_gtype" value="PT">
+<input type="hidden" name="mb_gcode" id="mb_gcode" value="G4">
+<input type="hidden" name="mb_gname_eng" id="mb_gname_eng" value="Partner">
+<input type="hidden" name="mb_gname_kor" id="mb_gname_kor" value="대리점">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $mb_code;?>">
-<input type="hidden" name="mb_gtype" id="mb_gtype" value="DS">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size">
+<input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size">
+<input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size">
 <input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo date("Ym");?>">
+<input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5><span class="mb_gname">대리점</span> 등록 정보 입니다. <?php echo $mb_code;?><small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
+<h5><span class="mb_gname">대리점</span> 등록 정보 입니다. <small>대리점의 정보 및 계약서를 작성해 주세요.</small></h5>
 <div class="ibox-tools">
 <a class="collapse-link">
 <i class="fa fa-chevron-up"></i>
@@ -65,8 +81,6 @@ $mb_code=$this->input->cookie('mb_code', TRUE);
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
-
-
 <div class="form-group">
 	<label for="pt_code" class="col-sm-2 ">대리점 코드</label>
 	<div class="col-sm-10">
@@ -84,7 +98,7 @@ $mb_code=$this->input->cookie('mb_code', TRUE);
 		<option value="PT0010">[PT0010] 캐시큐10</option>
 		<option value="PT0011">[PT0011] 캐시큐11</option>
 	</select>
-	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>
+	<span class="help-block m-b-none">대리점코드를 선택 합니다.</span>
 	</div><!-- .col-sm-10 -->
 </div><!-- .form-inline-->
 
@@ -104,8 +118,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"){
 <span class="help-block m-b-none">총판협력사를 선택해 주세요.</span>
 <?php 
 }else if($mb_gcode=="G3"){
-echo $this->input->cookie('name', TRUE);
-echo "(".$mb_code.")";
+echo $this->input->cookie('name', TRUE);echo "(".$prq_fcode.")";
 //echo '<input type="hidden" name="mb_pcode" value="'.$mb_code.'">';
 }else{
 echo "대리점을 등록할 권한이 없습니다.";
@@ -116,14 +129,11 @@ echo "대리점을 등록할 권한이 없습니다.";
 </div><!-- .form-group -->
 
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
 <div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">대리점</span> 아이디
-
-
 </label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">대리점</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.
-<?php echo $this->input->ip_address();?>
-<?php echo $this->agent->referrer();;?>
+<?php //echo $this->input->ip_address();?>
+<?php //echo $this->agent->referrer();;?>
 
 
 </span>
@@ -430,14 +440,15 @@ function get_pcode()
 var pt_code="";
 function get_ptcode()
 {
+	var ds_code=$("#ds_code").val();
 	$.ajax({
-	url:"/prq/ajax/get_ptcode/DS0003",
+	url:"/prq/ajax/get_ptcode/"+ds_code,
 	type: "POST",
 	data:"",
 	dataType:"json",
 	success: function(data) {
-		ds_code=data.posts;
-		console.log(ds_code);
+		pt_code=data.posts;
+		console.log(pt_code);
 //		$("#is_member").val(data.success);	
 //		chk_vali_id();
 			get_used_ptcode();
@@ -447,6 +458,7 @@ function get_ptcode()
 
 /*사용 중인 대리점 코드를 불러 옵니다.*/
 var used_pt_code=[];
+
 function get_used_ptcode()
 {
 	
@@ -456,11 +468,12 @@ function get_used_ptcode()
 	data:"",
 	dataType:"json",
 	success: function(data) {
-
+		console.log(data.posts.length);
+			if(data.posts.length>0){
 			$.each(data.posts,function(key,val){
 				used_pt_code.push(val.prq_fcode);
 			});
-	
+			}
 		//search_dscode("DS0003");
 		search_ptcode("DS0003");
 		}

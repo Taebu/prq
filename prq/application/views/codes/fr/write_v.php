@@ -3,7 +3,7 @@
 <h2><span class="mb_gname">가맹점 코드</span> 등록</h2>
 <ol class="breadcrumb">
 <li>
-<a href="index.html">Home</a>
+<a href="/prq/">Home</a>
 </li>
 <li>
 <a>코드 관리</a>
@@ -99,6 +99,39 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"){?>
 <?php 
 /* 총판인 경우 */
 if($mb_gcode=="G3")
+{?>
+<div class="row">
+<div class="col-md-4">
+	<div class="form-inline">
+	<label for="pt_code">대리점 코드</label>
+	<input type="hidden" name="ds_code"  class="form-control" id="ds_code" value="<?php echo $prq_fcode;?>">
+	<select name="pt_code"  class="form-control" id="pt_code" size='10'   style='width:100%' onchange="javascript:chg_ptcode(this.value);search_frcode(this.value);"
+	 onclick="javascript:chg_ptcode(this.value)"></select>
+	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>
+	</div><!-- .form-inline-->
+</div><!-- col-md-4 -->
+<div class="col-md-4">
+	<div class="form-inline">
+	<label for="fr_code">가맹점 코드</label>
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);chg_frcode(this.value)"
+	 onclick="javascript:changed_frcode(this.value);chg_frcode(this.value)"
+	></select>
+	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
+	</div><!-- .form-inline-->
+</div><!-- col-md-4 -->
+<div class="col-md-4"><label>가맹점 수정</label>
+<span id="span_fr_code">..</span>
+<input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name">
+<input type="button" value="수정" class="btn btn-primary"  onclick="javascript:set_frcode('modify')">
+<input type="button" value="삭제" class="btn btn-danger"  onclick="javascript:set_frcode('delete')">
+</div><!-- col-md-4 -->
+</div><!-- row-->
+<?php 
+}?>
+
+<?php 
+/* 대리점인 경우 */
+if($mb_gcode=="G4")
 {?>
 <div class="row">
 <div class="col-md-4">

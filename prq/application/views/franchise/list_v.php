@@ -118,6 +118,7 @@
 			echo form_open('board/write/ci_board', $attributes);
 		?>
 	<div class='col-sm-12'>
+	...
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
@@ -166,6 +167,7 @@ foreach ($list as $lt)
 				</tr>
 			</tfoot>
 		</table>
+			...
 </div>
 </div>
 </div>

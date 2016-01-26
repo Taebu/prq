@@ -44,11 +44,21 @@ class Partner_m extends CI_Model
 		
 
 		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
-		if( strlen($mb_pcode)>2){
-			$sword.= ' and mb_pcode= "DS0007" ';
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+		//echo "mb_pcode=>".$mb_pcode."<br/>";
+		//echo "prq_fcode=>".$prq_fcode."<br/>";
+		//echo "mb_gcode=>".$mb_gcode."<br/>";
+		/* 총판인 경우 */
+		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'PT%" ';
 		}
-					$sword.= ' and mb_pcode= "DS0007" ';
-    	$limit_query = '';
+		/* 가맹점인 경우 */
+		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+		}
+		
+		$limit_query = '';
 
     	if ( $limit != '' OR $offset != '' )
      	{
@@ -60,6 +70,7 @@ class Partner_m extends CI_Model
 		//$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 		$sql = "SELECT * FROM ".$table." WHERE 1=1 ".$sword."  ORDER BY mb_no DESC".$limit_query;
+		//echo $sql;
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )
@@ -128,9 +139,12 @@ class Partner_m extends CI_Model
 		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_code='".$mb_code."',";
-		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";
-		$sql_array[]="mb_gname_eng='".$prq_code->mb_gname_eng."',";
-		$sql_array[]="mb_gname_kor='".$prq_code->mb_gname_kor."',";
+		$sql_array[]="mb_name='".$arrays['mb_name']."',";
+		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
+		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
+		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
+		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
+		$sql_array[]="mb_gname_kor='".$arrays['mb_gname_kor']."',";
 		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
 		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
@@ -147,6 +161,9 @@ class Partner_m extends CI_Model
 		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
 		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
 		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
+		$sql_array[]="mb_distributors_paper_size ='".$arrays['mb_distributors_paper_size']."',";
+		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
 		$sql_array[]="mb_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);

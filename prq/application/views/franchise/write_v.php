@@ -1,3 +1,11 @@
+<style type="text/css">
+option:disabled {
+    background: rgb(51, 122, 183);
+    color:white;
+	font-weight: 900 !important;
+	padding:5px;
+}
+</style>
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
 <h2><span class="mb_gname">가맹점</span> 등록</h2>
@@ -26,6 +34,7 @@ $attributes = array(
 echo form_open('/franchise/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
+$prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
@@ -35,6 +44,10 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size">
+<input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size">
+<input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size">
+<input type="hidden" name="pt_code" id="pt_code" value="<?php echo $prq_fcode;?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -79,9 +92,10 @@ if($mb_code=="PT"){?>
 <?php }?>
 
 <div class="form-group">
-	<label for="fr_code" class="col-sm-2 control-label">PRQ 코드</label>
-	<div class="col-sm-10"><select name="prq_fcode"  class="form-control" id="prq_fcode" size='10'></select>
-	<span class="help-block m-b-none">PRQ 코드를 선택 합니다.</span></div><!-- .col-sm-10 -->
+	<label for="fr_code" class="col-sm-2 control-label">가맹점 코드</label>
+<!-- 	<div class="col-sm-10"><select name="prq_fcode"  class="form-control" id="prq_fcode" size='10'></select> -->
+	<div class="col-sm-10"><select name="prq_fcode"  class="form-control" id="prq_fcode"></select>
+	<span class="help-block m-b-none">가맹점 코드를 선택 합니다.</span></div><!-- .col-sm-10 -->
 </div><!-- .form-inline-->
 
 
@@ -233,34 +247,34 @@ if($mb_code=="PT"){?>
 <div class="col-md-12">
 <div class="ibox-title"><h5>CID, KT 정보</h5>&nbsp;&nbsp;<small>CID 정보를 기입 합니다.</small></div><!-- .ibox-title -->
 <div class="ibox-content">
-<!-- <h3>Switcher</h3>
-<p>Is iOS 7 style switches for your checkboxes.</p> -->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-2 control-label">전화번호 1</label>
+<div class="col-md-12">
+<div id="store_cid_list">상점 CID 등록은 가맹점 등록 후 상점에서 가맹점을 선택하여 연동 해주시길 바랍니다.</div><!-- #store_cid_list -->
+
+<!-- <div class="form-group"><label class="col-sm-2 control-label">전화번호 1</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div>.col-sm-10
+</div>.form-group
+<div class="hr-line-dashed"></div>.hr-line-dashed
 
 <div class="form-group"><label class="col-sm-2 control-label">매장코드 1</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div>.col-sm-10
+</div>.form-group
+<div class="hr-line-dashed"></div>.hr-line-dashed
 
-</div><!-- .col-md-6 Left Menu-->
+</div>.col-md-6 Left Menu
 
 <div class="col-md-6">
 
 <div class="form-group"><label class="col-sm-2 control-label">전화번호 2</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div>.col-sm-10
+</div>.form-group
+<div class="hr-line-dashed"></div>.hr-line-dashed
 
 <div class="form-group"><label class="col-sm-2 control-label">매장코드 2</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
+</div>.col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .col-md-6 Right Menu-->
@@ -339,7 +353,8 @@ if($mb_code=="PT"){?>
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->
 </div><!-- .col-lg-12 -->
-</div>
+<!-- </div> -->
+
 <div class="ibox float-e-margins">
 
 </div><!-- .row -->
@@ -449,9 +464,9 @@ console.log(data);
 var fr_code="";
 function get_frcode()
 {
-	
+	var pt_code=$("#pt_code").val();
 	$.ajax({
-	url:"/prq/ajax/get_frcode/",
+	url:"/prq/ajax/get_frcode/"+pt_code,
 	type: "POST",
 	data:"",
 	dataType:"json",
@@ -466,13 +481,32 @@ function get_frcode()
 }
 
 
+/*사용 중인 총판 코드를 불러 옵니다.*/
+var used_fr_code=[];
+function get_used_frcode()
+{
+	
+	$.ajax({
+	url:"/prq/ajax/get_used_frcode/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				used_fr_code.push(val.prq_fcode);
+			});
+			search_frcode("DS0003");
+		}
+	});
+}
+
 /*pt_code로 fr 코드를 탐색 합니다.
 */
 function search_frcode(spt_code)
 {
 	var object = [];
 	var chk_max_frcode=[];
-	var arr =["DS0001PT0001FR0002","DS0001PT0001FR0003"];
+	var arr =used_fr_code;
 	$.each(fr_code,function(key,val){
 //	if(val.fr_code.indexOf(spt_code)>-1)
 //	{

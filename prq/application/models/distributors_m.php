@@ -119,8 +119,6 @@ class Distributors_m extends CI_Model
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_name='".$arrays['mb_name']."',";
 		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
-//		$sql_array[]="mb_fcode='".$arrays['mb_fcode']."',";
-//		$sql_array[]="mb_code='".$mb_code."',";
 		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
 		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
 		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
@@ -141,6 +139,9 @@ class Distributors_m extends CI_Model
 		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
 		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
 		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
+		$sql_array[]="mb_distributors_paper_size ='".$arrays['mb_distributors_paper_size']."',";
+		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
 		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
 		$sql_array[]="mb_datetime=now();";
 		$sql=join("",$sql_array);

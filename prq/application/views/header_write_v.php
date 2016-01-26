@@ -353,7 +353,6 @@ if($mb_gcode=='G4'){
 								<?php }else{?>
 								<li><a href="/prq/auth/">LogIn</a></li>
 						<?php }?>
-
                             </ul>
                         </div>
                         <div class="logo-element">
@@ -362,35 +361,26 @@ if($mb_gcode=='G4'){
                     </li>
 					<?php 
 					$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
-					if($this->uri->segment(1)=="codes"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?>
+					echo $this->uri->segment(1)=="codes"?'<li class="active">':'<li>';
+					?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
 					<?php 
-					if($this->uri->segment(3)=="prq_ptcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+					echo $this->uri->segment(3)=="prq_ptcode"?'<li class="active">':'<li>';
+					?><!-- <a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li> -->
                            <?php 
-						   if($this->uri->segment(3)=="prq_frcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+					echo $this->uri->segment(3)=="prq_frcode"?'<li class="active">':'<li>';
+					 ?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드<span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php 
-					 echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';
+					 //echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';
 					 ?>
-                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
+                     <!--    <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
-                    </li>
+                                            </li> -->
 					<?php 
 					 echo $this->uri->segment(1)=="partner"?'<li class="active">':'<li>';?>
                         <a href="#">
@@ -477,39 +467,7 @@ if($mb_gcode=='G5'){
                         </div>
                     </li>
 					<?php 
-					$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
-					if($this->uri->segment(1)=="codes"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?>
-                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-					<?php 
-					if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){
-					if($this->uri->segment(3)=="prq_dscode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록<span class="label label-primary pull-right">NEW</span></a></li>
-                    <?php 
-					 }/* 관리자 총판 구룹만 관리 하는 메뉴G1,G2 */
-					
-					if($this->uri->segment(3)=="prq_ptcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
-                           <?php if($this->uri->segment(3)=="prq_frcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드<span class="label label-primary pull-right">NEW</span></a></li>
-                        </ul>
-                    </li>
-					<?php 
-					 echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';
-					 ?>
+					 echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
@@ -525,16 +483,14 @@ if($mb_gcode=='G5'){
                     </li>
                     </li>
 					<?php 
-					 echo $this->uri->segment(1)=="franchise"?'<li class="active">':'<li>';
-					 ?>
+					 echo $this->uri->segment(1)=="franchise"?'<li class="active">':'<li>';?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php 
-					echo $this->uri->segment(1)=="store"?'<li class="active">':'<li>';
-					 ?>
+					echo $this->uri->segment(1)=="store"?'<li class="active">':'<li>';?>
                         <a href="#">
 						<i class="fa fa-pie-chart"></i><span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
@@ -549,7 +505,6 @@ if($mb_gcode=='G5'){
 }/*if($mb_gcode=='G5'){...}*/
 /* END 가맹점 인 경우 */
 ?>
-
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">

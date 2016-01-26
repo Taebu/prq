@@ -371,11 +371,10 @@ if($mb_gcode=='G4'){
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
 					<?php 
-					if($this->uri->segment(3)=="prq_ptcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+					
+					echo $this->uri->segment(3)=="prq_ptcode"?'<li class="active">':'<li>';
+					?>
+					<!-- <a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li> -->
                            <?php 
 						   if($this->uri->segment(3)=="prq_frcode"){
 					echo '<li class="active">';
@@ -385,13 +384,13 @@ if($mb_gcode=='G4'){
                         </ul>
                     </li>
 					<?php 
-					 echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';
+					 //echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';
 					 ?>
-                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
+<!--                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
-                    </li>
+                                            </li> -->
 					<?php 
 					 echo $this->uri->segment(1)=="partner"?'<li class="active">':'<li>';?>
                         <a href="#">

@@ -180,7 +180,22 @@ class Auth extends CI_Controller {
 				set_cookie($cookie);
 
 //  			alert('로그인 되었습니다.', '/prq/');
+				$mb_gcode=$result->mb_gcode;
+				
+				/*관리자 인 경우*/
+				if($mb_gcode=="G1"||$mb_gcode=="G2")
+				{
 				alert('로그인 되었습니다.', '/prq/distributors/lists/prq_member/page/1');
+				/*총판 인 경우*/
+				}else if($mb_gcode=="G3"){
+				alert('로그인 되었습니다.', '/prq/partner/lists/prq_member/page/1');
+				/* 대리점인 경우*/
+				}else if($mb_gcode=="G4"){
+				alert('로그인 되었습니다.', '/prq/franchise/lists/prq_member/page/1');
+				/* 가맹점인 경우*/
+				}else if($mb_gcode=="G5"){
+				alert('로그인 되었습니다.', '/prq/store/lists/prq_store/page/1');
+				}
   				exit;
    			}
    			else

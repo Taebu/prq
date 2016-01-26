@@ -351,11 +351,11 @@ class Ajax_m extends CI_Model
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
-		
+	
+		$json['posts']=array();
 		/* 조회 결과가 성공 이라면 */
 		if($json['success'])
 		{
-			$json['posts']=array();
 			foreach($query->result_array() as $list){
 				array_push($json['posts'],$list);
 			}
@@ -388,10 +388,10 @@ class Ajax_m extends CI_Model
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
 		
+		$json['posts']=array();
 		/* 조회 결과가 성공 이라면 */
 		if($json['success'])
 		{
-			$json['posts']=array();
 			foreach($query->result_array() as $list){
 				array_push($json['posts'],$list);
 			}
@@ -404,7 +404,7 @@ class Ajax_m extends CI_Model
 	get_frcode()
 	모든 가맹점 코드를 반환한다.
 	*/
-	function get_frcode()
+	function get_frcode($pt_code)
 	{
 		$json=array();
 		$json['success']=false;
@@ -413,7 +413,10 @@ class Ajax_m extends CI_Model
 		$sql[]=" * ";
 		$sql[]="FROM ";
 		$sql[]="`prq_frcode` ";
-//		$sql[]=" where ds_code like 'rs%' ";
+		if(isset($pt_code)&&strlen($pt_code)>11)
+		{
+			$sql[]=" where fr_code like '".$pt_code."FR____' ";
+		}
 		$sql[]=" order by fr_code ";
 
 
@@ -434,6 +437,40 @@ class Ajax_m extends CI_Model
 		echo json_encode($json);
 	}
 
+	/*2016-01-26 (화)
+	get_used_frcode()
+
+	사용 중인 모든 가맹점 코드를 반환한다.
+	*/
+	function get_used_frcode()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" prq_fcode,mb_id,mb_gcode ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]=" where mb_gcode='G5' ";
+		$sql[]=" order by prq_fcode ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		$json['posts']=array();
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
 	/*
 	insert_ptcode($array)
 	대리점 코드를 등록합니다.
