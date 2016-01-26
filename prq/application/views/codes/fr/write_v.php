@@ -137,7 +137,7 @@ if($mb_gcode=="G4")
 <div class="col-md-4">
 	<div class="form-inline">
 	<label for="pt_code">대리점 코드</label>
-	<input type="hidden" name="ds_code"  class="form-control" id="ds_code" value="<?php echo $prq_fcode;?>">
+	<input type="text"  class="form-control"  name="pt_code" id="pt_code" value="<?php echo $prq_fcode;?>">
 	<select name="pt_code"  class="form-control" id="pt_code" size='10'   style='width:100%' onchange="javascript:chg_ptcode(this.value);search_frcode(this.value);"
 	 onclick="javascript:chg_ptcode(this.value)"></select>
 	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>

@@ -69,6 +69,8 @@ function set_menu_write(id){
     <div id="wrapper">
 <?php
 $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
+$prq_fcode=@$this->input->cookie('prq_fcode',TRUE);
+//echo $prq_fcode;
 /* START 관리자 인 경우 */
 if($mb_gcode=='G1'||$mb_gcode=='G2'){
 ?>

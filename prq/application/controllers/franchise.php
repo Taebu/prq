@@ -148,6 +148,7 @@ class Franchise extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->franchise_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['controllers'] = $this;
 		$this->load->view('franchise/list_v', $data);
 	}
 
@@ -491,6 +492,32 @@ class Franchise extends CI_Controller {
 		}
 		$seg_exp = explode("/", $seg);
 		return $seg_exp;
+	}
+
+	/* 가맹점 상태 보기 */
+	function get_status($code)
+	{
+		switch ($code) {
+		case "wa":
+			$result='<button type="button" class="btn btn-default btn-xs">대기</button>';
+			break;
+		case "pr":
+			$result='<button type="button" class="btn btn-primary btn-xs">처리중</button>';
+			break;
+		case "ac":
+			$result='<button type="button" class="btn btn-success btn-xs">승인</button>';
+			break;
+		case "ad":
+			$result='<button type="button" class="btn btn-danger btn-xs">승인거부</button>';
+			break;
+		case "ec":
+			$result='<button type="button" class="btn btn-info btn-xs">연계완료</button>';
+			break;
+		case "ca":
+			$result='<button type="button" class="btn btn-warning btn-xs">해지</button>';
+			break;
+		}
+		return $result;
 	}
 }
 

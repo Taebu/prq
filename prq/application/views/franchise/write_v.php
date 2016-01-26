@@ -249,7 +249,6 @@ if($mb_code=="PT"){?>
 <div class="ibox-content">
 <div class="col-md-12">
 <div id="store_cid_list">상점 CID 등록은 가맹점 등록 후 상점에서 가맹점을 선택하여 연동 해주시길 바랍니다.</div><!-- #store_cid_list -->
-
 <!-- <div class="form-group"><label class="col-sm-2 control-label">전화번호 1</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
 </div>.col-sm-10

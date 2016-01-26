@@ -269,10 +269,12 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){?>
 				<tr>
 					<th scope="col"><input type="checkbox" name="chk_"></th>
 					<th scope="col">No</th>
-					<th scope="col">등록일자</th>
+
 					<th scope="col"><span class="mb_gname">대리점</span>ID</th>
 					<th scope="col"><span class="mb_gname">대리점</span>코드</th>
-					<!-- <th scope="col">대리점</th> -->
+					<th scope="col">가맹점</th>
+					<th scope="col">상점</th>
+					<th scope="col">등록일자</th>
 					<th scope="col">상태</th>
 				</tr>
 			</thead>
@@ -283,21 +285,24 @@ echo "<tr><td colspan='12' style='text-align:center'>등록된 대리점이 없�
 }
 
 foreach ($list as $lt){?>
-				<tr>
-					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
-					<td scope="row"><?php echo $lt->mb_no;?></td>
-					<td>	<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
-					<td><?php echo $lt->mb_id;?></td>
-					<!-- <td><?php echo $lt->mb_gname_kor;?></td> -->
-					<td><?php echo $lt->prq_fcode;?><!-- <?php echo $lt->mb_gname_eng;?> --></td>
- 					<!-- <td> --><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
-					<?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
-					<!-- <?php echo $lt->mb_business_paper;?>	</td> -->
-					<td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
-					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
-					<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span>
-					</td>
-				</tr>
+<tr>
+	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
+	<td scope="row"><?php echo $lt->mb_no;?></td>
+	<td>	<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
+	<td><?php echo $lt->mb_id;?></td>
+	<!-- <td><?php echo $lt->mb_gname_kor;?></td> -->
+	<!-- <td> --><!-- <?php echo $lt->mb_gname_eng;?> --><!-- </td> -->
+	<!-- <td> --><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
+	<?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
+	<!-- <?php echo $lt->mb_business_paper;?>	</td> -->
+	<td><a rel="external" href="/prq/franchise/lists/prq_member/page/1">5개</a></td>
+	<td><a rel="external" href="/prq/store/lists/prq_store/page/1">5개</a></td>
+	<td><?php echo date("Y-m-d", strtotime($lt->mb_datetime));?></td>
+	<td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
+	 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
+	<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span>
+	</td>
+</tr>
 <?php }?>
 			</tbody>
 			<tfoot>
@@ -321,5 +326,8 @@ foreach ($list as $lt){?>
 </div>
 </div>
 </div>
-<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
+<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> 
+<?php if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){?>
+<a href="javascript:set_write();" class="btn btn-success">쓰기</a><?php }?>
+</div></div>
 	</article>

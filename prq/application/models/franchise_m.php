@@ -43,6 +43,21 @@ class Franchise_m extends CI_Model
      	}
 
     	$limit_query = '';
+		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+		//echo "mb_pcode=>".$mb_pcode."<br/>";
+		//echo "prq_fcode=>".$prq_fcode."<br/>";
+		//echo "mb_gcode=>".$mb_gcode."<br/>";
+		/* 총판인 경우 */
+		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'PT%" ';
+		}
+		//echo "mb_gcode => ".$mb_gcode."<br>";
+		//echo "prq_fcode => ".$prq_fcode."<br>";
+		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" and mb_gcode="G5" ';
+		}
 
     	if ( $limit != '' OR $offset != '' )
      	{

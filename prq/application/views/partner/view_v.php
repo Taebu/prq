@@ -163,7 +163,7 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>대리점 수정 Basic Form</h2>
+                    <h2>대리점 수정</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">Home</a>
@@ -172,7 +172,7 @@
                             <a>대리점관리</a>
                         </li>
                         <li class="active">
-                            <strong>대리점 수정 Basic Form</strong>
+                            <strong>대리점 수정</strong>
                         </li>
                     </ol>
                 </div>
@@ -192,9 +192,14 @@
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
 		<input type="hidden" name="is_join" id="is_join" value="">
-		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
-		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
-		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
+<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
+<input type="hidden" name="mb_bank_paper" id="mb_bank_paper" value="<?php echo $views->mb_bank_paper;?>">
+
+<input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size" value="<?php echo $views->mb_business_paper_size;?>">
+<input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size" value="<?php echo $views->mb_distributors_paper_size;?>">
+<input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size" value="<?php echo $views->mb_bank_paper_size;?>">
+<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo $views->mb_imgprefix;?>">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">

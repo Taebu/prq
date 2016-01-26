@@ -50,13 +50,15 @@ class Partner_m extends CI_Model
 		//echo "prq_fcode=>".$prq_fcode."<br/>";
 		//echo "mb_gcode=>".$mb_gcode."<br/>";
 		/* 총판인 경우 */
-		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
-			$sword.= ' and prq_fcode like "'.$prq_fcode.'PT%" ';
+		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'" and mb_gcode="G4" ';
 		}
 		/* 가맹점인 경우 */
-		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
-			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
-		}
+		//echo "mb_gcode => ".$mb_gcode."<br>";
+		//echo "prq_fcode => ".$prq_fcode."<br>";
+		//if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+		//	$sword.= ' and prq_fcode like "'.$prq_fcode.'FR____"  and mb_gcode="G4" ';
+		//}
 		
 		$limit_query = '';
 

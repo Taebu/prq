@@ -43,13 +43,13 @@ window.onload = function() {
 
 	<div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2>대리점 수정Basic Form</h2>
+<h2>대리점 수정</h2>
 <ol class="breadcrumb">
 <li><a href="/">Home</a></li><li>
 <a href="/prq/board/lists/prq_member/">대리점관리</a>
 </li>
 <li class="active">
-<strong>대리점 수정 Basic Form</strong>
+<strong>대리점 수정</strong>
 </li>
 </ol>
 </div>
@@ -83,6 +83,8 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size" value="<?php echo $views->mb_business_paper_size;?>">
 <input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size" value="<?php echo $views->mb_distributors_paper_size;?>">
 <input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size" value="<?php echo $views->mb_bank_paper_size;?>">
+
+<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo $views->mb_imgprefix;?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">

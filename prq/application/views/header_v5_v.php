@@ -70,6 +70,7 @@ function chg_gname(){
     <div id="wrapper">
 <?php
 $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
+$prq_fcode=@$this->input->cookie('prq_fcode',TRUE);
 /* START 관리자 인 경우 */
 if($mb_gcode=='G1'||$mb_gcode=='G2'){
 ?>
