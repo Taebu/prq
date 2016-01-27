@@ -183,8 +183,8 @@ class Store extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('mb_id', '아이디', 'required');
-			$this->form_validation->set_rules('mb_password', '비밀번호', 'required');
+			$this->form_validation->set_rules('st_name', '상점이름', 'required');
+			$this->form_validation->set_rules('st_tel', '상점번호', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -192,74 +192,46 @@ class Store extends CI_Controller {
 				//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 				$uri_array = $this->segment_explode($this->uri->uri_string());
 
-				if( in_array('page', $uri_array) )
-				{
-					$pages = urldecode($this->url_explode($uri_array, 'page'));
-				}
-				else
-				{
-					$pages = 1;
-				}
-
-//				$get_code_data= array(
-//					'mb_pcode' => $this->input->post('mb_pcode',TRUE)
-//				);
-//				$mb_code = $this->store_m->get_code($get_code_data);
-
-/*
-				$write_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'subject' => $this->input->post('subject', TRUE),
-					'contents' => $this->input->post('contents', TRUE),
-					'user_id' => $this->session->userdata('username'),
-					'user_name' => $this->session->userdata('name'),
-				);
-*/				
+				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
 
 				$write_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'mb_pcode' => $this->input->post('mb_pcode', TRUE),
-//					'mb_code' => $this->input->post('mb_code', TRUE),
-					'mb_email' => $this->input->post('mb_email', TRUE),
-					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
-					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
-					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
-					'mb_password' => $this->input->post('mb_password', TRUE),
-					'mb_hp' => $this->input->post('mb_hp', TRUE),
-					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
-					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
-					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
-					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
-					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
-					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
-					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
-					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
-					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
-					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
-					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
-					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE),
+					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
+					'st_category' => $this->input->post('st_category', TRUE),
+					'st_name' => $this->input->post('st_name', TRUE),
+					'st_tel' => $this->input->post('st_tel', TRUE),
+					'st_open' => $this->input->post('st_open', TRUE),
+					'st_closed' => $this->input->post('st_closed', TRUE),
+					'st_alltime' => $this->input->post('st_alltime', TRUE),
+					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
+					'st_destination' => $this->input->post('st_destination', TRUE),
+					'st_intro' => $this->input->post('st_intro', TRUE),
+					'st_password' => $this->input->post('st_password', TRUE),
+					'st_nick' => $this->input->post('st_nick', TRUE),
+					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
+					'st_email' => $this->input->post('st_email', TRUE),
+					'st_homepage' => $this->input->post('st_homepage', TRUE),
+					'st_business_name' => $this->input->post('st_business_name', TRUE),
+					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
+					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
+					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
+					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
+					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
+					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
+					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
+					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
+					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
+					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
+					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
+					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
+					'st_business_num' => $this->input->post('st_business_num', TRUE),
+					'st_datetime' => $this->input->post('st_datetime', TRUE),
+					'st_status' => $this->input->post('st_status', TRUE)
 				);
-				//$result = $this->distributors_m->insert_distributors($write_data);
-
-				$result = $this->store_m->insert_distributors($write_data);
+				$result = $this->store_m->insert_store($write_data);
 
 				if ( $result )
 				{
-					/*성공시 insert 코드 
-						$sql_array[]="mb_id='".$arrays['mb_id']."',";
-						$sql_array[]="mb_code='".$arrays['mb_code']."',";
-						$sql_array[]="mb_pcode='".$arrays['mb_pcode']."',";
-					*/
-					
-					$write_data = array(
-						'mb_no' => $GLOBALS['mb_no'],
-						'mb_id' => $this->input->post('mb_id', TRUE),
-						'mb_pcode' => $this->input->post('mb_pcode', TRUE),
-						'mb_code' => $GLOBALS['mb_code']
-					);					
-					$result = $this->store_m->insert_code($write_data);
 					//글 작성 성공시 게시판 목록으로
 					alert('입력되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
@@ -346,31 +318,42 @@ class Store extends CI_Controller {
 */
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
-					'mb_no' => $this->uri->segment(5), //게시판 번호
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'mb_email' => $this->input->post('mb_email', TRUE),
-					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
-					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
-					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
-					'mb_password' => $this->input->post('mb_password', TRUE),
-					'mb_hp' => $this->input->post('mb_hp', TRUE),
-					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
-					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
-					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
-					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
-					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
-					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
-					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
-					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
-					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
-					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
-					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE),
-					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
+					'st_no' => $this->uri->segment(5), //게시판 번호
+					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
+					'st_category' => $this->input->post('st_category', TRUE),
+					'st_name' => $this->input->post('st_name', TRUE),
+					'st_tel' => $this->input->post('st_tel', TRUE),
+					'st_open' => $this->input->post('st_open', TRUE),
+					'st_closed' => $this->input->post('st_closed', TRUE),
+					'st_alltime' => $this->input->post('st_alltime', TRUE),
+					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
+					'st_destination' => $this->input->post('st_destination', TRUE),
+					'st_intro' => $this->input->post('st_intro', TRUE),
+					'st_password' => $this->input->post('st_password', TRUE),
+					'st_nick' => $this->input->post('st_nick', TRUE),
+					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
+					'st_email' => $this->input->post('st_email', TRUE),
+					'st_homepage' => $this->input->post('st_homepage', TRUE),
+					'st_business_name' => $this->input->post('st_business_name', TRUE),
+					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
+					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
+					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
+					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
+					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
+					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
+					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
+					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
+					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
+					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
+					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
+					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
+					'st_business_num' => $this->input->post('st_business_num', TRUE),
+					'st_datetime' => $this->input->post('st_datetime', TRUE),
+					'st_status' => $this->input->post('st_status', TRUE)
 				);
 //				$result = $this->distributors_m->insert_distributors($write_data);
 
-				$result = $this->store_m->modify_distributors($modify_data);
+				$result = $this->store_m->modify_store($modify_data);
 
 				if ( $result )
 				{

@@ -69,183 +69,6 @@
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
     <script>
         $(document).ready(function(){
-/*
-            var $image = $(".image-crop > img")
-            $($image).cropper({
-                aspectRatio: 1.618,
-                preview: ".img-preview",
-                done: function(data) {
-                    // Output the result data for cropping image.
-                }
-            });
-
-            var $inputImage = $("#inputImage");
-            if (window.FileReader) {
-                $inputImage.change(function() {
-                    var fileReader = new FileReader(),
-                            files = this.files,
-                            file;
-
-                    if (!files.length) {
-                        return;
-                    }
-
-                    file = files[0];
-
-                    if (/^image\/\w+$/.test(file.type)) {
-                        fileReader.readAsDataURL(file);
-                        fileReader.onload = function () {
-                            $inputImage.val("");
-                            $image.cropper("reset", true).cropper("replace", this.result);
-                        };
-                    } else {
-                        showMessage("Please choose an image file.");
-                    }
-                });
-            } else {
-                $inputImage.addClass("hide");
-            }
-
-            $("#download").click(function() {
-                window.open($image.cropper("getDataURL"));
-            });
-
-            $("#zoomIn").click(function() {
-                $image.cropper("zoom", 0.1);
-            });
-
-            $("#zoomOut").click(function() {
-                $image.cropper("zoom", -0.1);
-            });
-
-            $("#rotateLeft").click(function() {
-                $image.cropper("rotate", 45);
-            });
-
-            $("#rotateRight").click(function() {
-                $image.cropper("rotate", -45);
-            });
-
-            $("#setDrag").click(function() {
-                $image.cropper("setDragMode", "crop");
-            });
-
-            $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
-
-            $('#data_2 .input-group.date').datepicker({
-                startView: 1,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true,
-                format: "dd/mm/yyyy"
-            });
-
-            $('#data_3 .input-group.date').datepicker({
-                startView: 2,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true
-            });
-
-            $('#data_4 .input-group.date').datepicker({
-                minViewMode: 1,
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true,
-                todayHighlight: true
-            });
-
-            $('#data_5 .input-daterange').datepicker({
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true
-            });
-
-            var elem = document.querySelector('.js-switch');
-            var switchery = new Switchery(elem, { color: '#1AB394' });
-
-            var elem_2 = document.querySelector('.js-switch_2');
-            var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
-
-            var elem_3 = document.querySelector('.js-switch_3');
-            var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
-
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green'
-            });
-
-            $('.demo1').colorpicker();
-
-            var divStyle = $('.back-change')[0].style;
-            $('#demo_apidemo').colorpicker({
-                color: divStyle.backgroundColor
-            }).on('changeColor', function(ev) {
-                        divStyle.backgroundColor = ev.color.toHex();
-                    });
-
-            $('.clockpicker').clockpicker();
-
-            $('input[name="daterange"]').daterangepicker();
-
-            $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-
-            $('#reportrange').daterangepicker({
-                format: 'MM/DD/YYYY',
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment(),
-                minDate: '01/01/2012',
-                maxDate: '12/31/2015',
-                dateLimit: { days: 60 },
-                showDropdowns: true,
-                showWeekNumbers: true,
-                timePicker: false,
-                timePickerIncrement: 1,
-                timePicker12Hour: true,
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },
-                opens: 'right',
-                drops: 'down',
-                buttonClasses: ['btn', 'btn-sm'],
-                applyClass: 'btn-primary',
-                cancelClass: 'btn-default',
-                separator: ' to ',
-                locale: {
-                    applyLabel: 'Submit',
-                    cancelLabel: 'Cancel',
-                    fromLabel: 'From',
-                    toLabel: 'To',
-                    customRangeLabel: 'Custom',
-                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    firstDay: 1
-                }
-            }, function(start, end, label) {
-                console.log(start.toISOString(), end.toISOString(), label);
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            });
-
-            $(".select2_demo_1").select2();
-            $(".select2_demo_2").select2();
-            $(".select2_demo_3").select2({
-                placeholder: "Select a state",
-                allowClear: true
-            });
-				*/
 
 
 		Dropzone.autoDiscover = false;
@@ -269,7 +92,7 @@
 				param=file_key[id]+"/";
 			}
 			var prefix_path="";
-			prefix_path=$("#mb_imgprefix").val();
+			prefix_path=$("#st_imgprefix").val();
 			if(prefix_path!="")
 			{
 				param+=prefix_path+"/";
@@ -315,7 +138,7 @@
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#mb_imgprefix").val()+"/"+value.name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+file_key[id]+"/"+value.name);
 						}
 					});
 				}
@@ -344,7 +167,7 @@
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#mb_imgprefix").val()+"/"+value.name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+file_key[id]+"/"+value.name);
 					});
 
 				}
@@ -359,12 +182,12 @@
 				var name = file.name;
 				var param="filename="+name;
 				
-				param+="&mb_imgprefix="+$("#mb_imgprefix").val();
-				param+="&mb_no="+$("#mb_no").val();
-				param+="&mb_removetype="+id;
+				param+="&st_imgprefix="+$("#st_imgprefix").val();
+				param+="&st_no="+$("#st_no").val();
+				param+="&st_removetype="+id;
 				$.ajax({
 					type: "POST",
-					url: "/prq/dropzone/delete",
+					url: "/prq/dropzone/delete_st",
 					data:param,
 					success: function(data)
 					{
@@ -391,124 +214,24 @@
 			}
 		};
 		}
-/*
-		<input type="hidden" name="mb_business_paper" id="st_store_paper">
-		<input type="hidden" name="mb_distributors_paper" id="st_thumbnail_paper">
-		<input type="hidden" name="mb_bank_paper" id="st_menuimg_paper">
-		<input type="hidden" name="mb_bank_paper" id="st_mainimg_paper">
-*/
 
 		/* 계약서 */
 		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("st_store_paper"));
 
 		/* 썸네일 이미지*/
-		$("#my-awesome-dropzone2").dropzone(set_dropzone_config("st_thumbnail_paper"));
+		$("#my-awesome-dropzone2").dropzone(set_dropzone_config("st_thumb_paper"));
 
 		/* 메뉴 이미지 */
-		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("st_menuimg_paper"));
+		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("st_menu_paper"));
 
 		/* 대표 이미지 */
-		$("#my-awesome-dropzone4").dropzone(set_dropzone_config("st_mainimg_paper"));
+		$("#my-awesome-dropzone4").dropzone(set_dropzone_config("st_main_paper"));
 
 		/*End Dropzone*/		
         });
 		
 		/*End $(function(){});*/
-/*
-        var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-                '.chosen-select-width'     : {width:"95%"}
-                }
-            for (var selector in config) {
-                $(selector).chosen(config[selector]);
-            }
 
-        $("#ionrange_1").ionRangeSlider({
-            min: 0,
-            max: 5000,
-            type: 'double',
-            prefix: "$",
-            maxPostfix: "+",
-            prettify: false,
-            hasGrid: true
-        });
-
-        $("#ionrange_2").ionRangeSlider({
-            min: 0,
-            max: 10,
-            type: 'single',
-            step: 0.1,
-            postfix: " carats",
-            prettify: false,
-            hasGrid: true
-        });
-
-        $("#ionrange_3").ionRangeSlider({
-            min: -50,
-            max: 50,
-            from: 0,
-            postfix: "°",
-            prettify: false,
-            hasGrid: true
-        });
-
-        $("#ionrange_4").ionRangeSlider({
-            values: [
-                "January", "February", "March",
-                "April", "May", "June",
-                "July", "August", "Se1ptember",
-                "October", "November", "December"
-            ],
-            type: 'single',
-            hasGrid: true
-        });
-
-        $("#ionrange_5").ionRangeSlider({
-            min: 10000,
-            max: 100000,
-            step: 100,
-            postfix: " km",
-            from: 55000,
-            hideMinMax: true,
-            hideFromTo: false
-        });
-
-        $(".dial").knob();
-
-        $("#basic_slider").noUiSlider({
-            start: 40,
-            behaviour: 'tap',
-            connect: 'upper',
-            range: {
-                'min':  20,
-                'max':  80
-            }
-        });
-
-        $("#range_slider").noUiSlider({
-            start: [ 40, 60 ],
-            behaviour: 'drag',
-            connect: true,
-            range: {
-                'min':  20,
-                'max':  80
-            }
-        });
-
-        $("#drag-fixed").noUiSlider({
-            start: [ 40, 60 ],
-            behaviour: 'drag-fixed',
-            connect: true,
-            range: {
-                'min':  20,
-                'max':  80
-            }
-        });
-
-*/
 </script>
 
 </body>

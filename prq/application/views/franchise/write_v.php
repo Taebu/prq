@@ -41,6 +41,7 @@ $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 <input type="hidden" name="is_member" id="is_member">
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+<input type="hidden" name="mb_gcode" id="mb_gcode" value="G5">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
@@ -48,6 +49,7 @@ $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 <input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size">
 <input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size">
 <input type="hidden" name="pt_code" id="pt_code" value="<?php echo $prq_fcode;?>">
+<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo date("Ym");?>">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -475,6 +477,8 @@ function get_frcode()
 //		$("#is_member").val(data.success);	
 //		chk_vali_id();
 		search_frcode("DS0001PT0001");
+		/*사용중인  코드 가져 오기*/
+		get_used_frcode();
 		}
 	});
 }
@@ -506,6 +510,16 @@ function search_frcode(spt_code)
 	var object = [];
 	var chk_max_frcode=[];
 	var arr =used_fr_code;
+
+	console.log("사용 중인 코드 갯수 : "+used_fr_code.length);
+	console.log("등록한 코드 갯수 : "+fr_code.length);
+
+	if(fr_code.length==used_fr_code.length)
+	{
+		alert("가맹점 코드를 모두 소진하여 \n 더 이상 가맹점 등록이 불가능 합니다.\n 리스트로 돌아갑니다.");
+		$(location).attr('href','/prq/franchise/lists/prq_member/page/1');
+	}
+
 	$.each(fr_code,function(key,val){
 //	if(val.fr_code.indexOf(spt_code)>-1)
 //	{
@@ -521,7 +535,7 @@ function search_frcode(spt_code)
 		chk_max_frcode.push(val.fr_code);
 		if($.inArray(val.fr_code,arr)>-1){
 		object.push('['+val.fr_code+']');
-		object.push(val.fr_name+" 이미 사용 중입니다.");
+		object.push(val.fr_name+" [사용중]");
 		
 		}else{
 		object.push('['+val.fr_code+']');
@@ -566,5 +580,7 @@ chk_vali_id();
 
 	/*가맹점 코드 가져 오기*/
 	get_frcode();
+
+
 };/*window.onload = function() {..}*/
 </script>

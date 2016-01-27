@@ -261,6 +261,12 @@
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+                                <div class="form-group"><label class="col-sm-2 control-label">상호</label>
+                                    <div class="col-sm-10"><?php echo $views->mb_name;?><span class="help-block m-b-none">상호입니다.</span>
+                                    </div><!-- .col-sm-10 -->
+                                </div><!-- .form-group -->
+								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
                                 <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
                                     <div class="col-sm-10"><?php echo $views->mb_email;?><span class="help-block m-b-none">이메일을 기입해주세요.</span>
                                     </div><!-- .col-sm-10 -->
@@ -323,7 +329,7 @@
 							<div class="col-md-6">
 								<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
                                     <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<img src="/prq/uploads/<?php echo $views->mb_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
@@ -332,7 +338,7 @@
 								<div class="form-group"><label class="col-sm-2 control-label">대리점 계약서</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<img src="/prq/uploads/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 												<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 												<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
@@ -346,7 +352,7 @@
 
 									<div class="dz-default dz-message"></div>
 									</div><!-- #my-awesome-dropzone3 -->
-									<img src="/prq/uploads/<?php echo $views->mb_bank_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_bank_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 									<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
   
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 

@@ -129,7 +129,8 @@ class Dropzone extends CI_Controller {
 		$mb_imgprefix = $_POST["mb_imgprefix"];
 		$mb_no = $_POST["mb_no"];
 		$mb_removetype = $_POST["mb_removetype"];
-		
+		$name = $_POST["filename"];
+
 //		$name = "106745763.jpg";
 		
 		if(file_exists(getcwd().'/uploads/'.$mb_imgprefix."/".$name))
@@ -158,6 +159,40 @@ class Dropzone extends CI_Controller {
 			echo json_encode(array("res" => true,"sql"=>$sql));
 		}
 
+    }
+
+
+	public function delete_st() {
+		$name = $_POST["filename"];
+		$st_imgprefix = $_POST["st_imgprefix"];
+		$st_no = $_POST["st_no"];
+		$st_removetype = $_POST["st_removetype"];
+		
+		if(file_exists(getcwd().'/uploads/'.$st_imgprefix."/".$name))
+		{
+			$sql=array();
+			unlink(getcwd().'/uploads/'.$st_imgprefix."/".$name);
+			$sql[]="update prq_store set ";
+			$sql[]=$st_removetype."='',";
+			$sql[]=$st_removetype."_size=0";
+			$sql[]=" where ";
+			$sql[]="st_no='".$st_no."';";
+			
+			$result= $this->db->query(join("",$sql));
+//			$link = mysql_connect("localhost", "root", "");
+//			mysql_select_db("dropzone", $link);
+//			mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);
+//			mysql_close($link);
+			echo json_encode(array("res" => true,"sql"=>$sql));
+		}
+		else
+		{
+			//$result=array("res" => false);
+			//echo json_encode($result);
+			$sql="update prq_store set ".$mb_removetype."='',".$mb_removetype."_size=0 where mb_no='".$mb_no."';";
+			$result= $this->db->query($sql);
+			echo json_encode(array("res" => true,"sql"=>$sql));
+		}
     }
 }
  

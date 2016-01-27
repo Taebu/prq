@@ -124,25 +124,20 @@ class Franchise_m extends CI_Model
 			'mb_pcode' => $arrays['mb_pcode']
 		);
 
-		$mb_code=$this->get_code($arrays);
-		$prq_code=$this->get_member_code($arrays['mb_pcode']);
-		/*
-		$prq_code['mb_gcode']: G8
-		mb_code: TS0000
-		mb_gname_eng:
-		mb_gname_kor:
-		*/
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
-		$sql_array[]="mb_code='".$mb_code."',";
-		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";
-		$sql_array[]="mb_gname_eng='".$prq_code->mb_gname_eng."',";
-		$sql_array[]="mb_gname_kor='".$prq_code->mb_gname_kor."',";
+		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
+		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
+		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
+		$sql_array[]="mb_name ='".$arrays['mb_name']."',";
+		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
+		$sql_array[]="mb_gname_kor='".$arrays['mb_gname_kor']."',";
 		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
 		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
 		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
+		$sql_array[]="mb_birth ='".$arrays['mb_birth']."',";
 		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
 		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
 		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
@@ -155,6 +150,10 @@ class Franchise_m extends CI_Model
 		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
 		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
 		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
+		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
+		$sql_array[]="mb_distributors_paper_size ='".$arrays['mb_distributors_paper_size']."',";
+		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
+		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
 		$sql_array[]="mb_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
@@ -275,7 +274,7 @@ mysql> select * from prq_member_code;
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function modify_board($arrays)
+	function modify_franchise($arrays)
  	{
 /*
 		$modify_array = array(
@@ -292,14 +291,15 @@ mysql> select * from prq_member_code;
 
 		$sql_array=array();
 		$sql_array[]="UPDATE ".$arrays['table']." SET ";
-//		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
+		$sql_array[]="mb_name ='".$arrays['mb_name']."',";
 		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
 		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
 		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
 		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
 		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
+		$sql_array[]="mb_birth ='".$arrays['mb_birth']."',";
 		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
 		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
 		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
@@ -312,6 +312,7 @@ mysql> select * from prq_member_code;
 		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
 		$sql_array[]="mb_distributors_paper_size ='".$arrays['mb_distributors_paper_size']."',";
 		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
+//		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
 		$sql_array[]="mb_datetime=now() ";
 		$sql_array[]="where mb_no='".$arrays['mb_no']."' ";
 		$sql=join("",$sql_array);

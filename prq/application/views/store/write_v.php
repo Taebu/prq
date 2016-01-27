@@ -23,24 +23,30 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-echo form_open('/store/write/prq_member', $attributes);
+echo form_open('/store/write/prq_store/board_id/', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
+$prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
 <input type="hidden" name="is_member" id="is_member">
+<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $prq_fcode;?>">
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+
 <input type="hidden" name="st_store_paper" id="st_store_paper">
-<input type="hidden" name="st_thumbnail_paper" id="st_thumbnail_paper">
-<input type="hidden" name="st_menuimg_paper" id="st_menuimg_paper">
-<input type="hidden" name="st_mainimg_paper" id="st_mainimg_paper">
+<input type="hidden" name="st_thumb_paper" id="st_thumb_paper">
+<input type="hidden" name="st_menu_paper" id="st_menu_paper">
+<input type="hidden" name="st_main_paper" id="st_main_paper">
+
 <input type="hidden" name="st_store_paper_size" id="st_store_paper_size">
-<input type="hidden" name="st_thumbnail_paper_size" id="st_thumbnail_paper_size">
-<input type="hidden" name="st_menuimg_paper_size" id="st_menuimg_paper_size">
-<input type="hidden" name="st_mainimg_paper_size" id="st_mainimg_paper_size">
+<input type="hidden" name="st_thumb_paper_size" id="st_thumb_paper_size">
+<input type="hidden" name="st_menu_paper_size" id="st_menu_paper_size">
+<input type="hidden" name="st_main_paper_size" id="st_main_paper_size">
+
 <input type="hidden" name="st_imgprefix" id="st_imgprefix" value="<?php echo date("Ym");?>">
+
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -69,9 +75,8 @@ $mb_code=$this->input->post('mb_code',TRUE);
 
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
-<div class="form-group"><label class="col-sm-2 control-label">가맹점선택
-</label>
-<div class="col-sm-10"><select name="prq_fcode" id="prq_fcode" class="form-control" >
+<div class="form-group"><label class="col-sm-2 control-label">가맹점선택 </label>
+<div class="col-sm-10"><select name="fr_code" id="fr_code" class="form-control" >
 	<option value="FR0001">네네치킨(FR0001)</option>
 	<option value="FR0002">네네치킨(FR0002)</option>
 	<option value="FR0003">네네치킨(FR0003)</option>
@@ -87,11 +92,11 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-sm-10">
 <!-- <select name="type" style="width: 228px; height: 38px; "> -->
 <select name="st_category" id="st_category" class="form-control" >
-<option value="W01">치킨</option>
+<option value="W01" selected>치킨</option>
 <option value="W02">피자</option>
-<option value="W03">중국집</optio>
+<option value="W03">중국집</option>
 <option value="W04">한식/분식</option>
-<option value="W05" selected="">닭발/오리/기타</option>
+<option value="W05">닭발/오리/기타</option>
 <option value="W06">야식/찜/탕 </option>
 <option value="W07">족발/보쌈</option>
 <option value="W08">일식/회/기타</option>
@@ -128,7 +133,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_email" name="mb_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_email" name="st_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -178,11 +183,6 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">이메일</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_email" name="st_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .col-md-6 RightMenu-->
 
 
@@ -190,7 +190,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <h3>매장 서류</h3>
 
 <div class="form-group"><label class="col-sm-2 control-label">계약서</label>
-<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message">계약서</div></div><!-- #my-awesome-dropzone1 -->
+<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 <!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -228,31 +228,6 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-<div class="col-sm-10"><input typ  e="text" class="form-control" name="mb_bankname"> <span class="help-block m-b-none">"거래은행"을 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">계좌번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_banknum"> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">예금주</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">예금주를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">비고</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-
 </div>
 </div>
 
@@ -281,7 +256,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">모두홈피 URL 주소 (수정)</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo" value="http://sjhero18.moodu.at"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_modoo_url" value="http://sjhero18.moodu.at"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -293,8 +268,11 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성</button> -->
-<button class="btn btn-primary" type="button" onclick="set_ds()">저장...</button>
+<button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button>
 <button class="btn btn-white" type="reset">취소</button>
+
+<button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button>
+
 </div><!-- .col-md-12 -->
 <!-- .row -->
 
@@ -437,6 +415,61 @@ function chk_btn_status()
 }
 
 
+/*가맴점 코드를 불러 옵니다.*/
+var pt_code="";
+function get_frcode(code)
+{
+	$.ajax({
+	url:"/prq/ajax/get_frcode/"+code,
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		pt_code=data.posts;
+		search_frcode("DS0003PT0001");
+		}
+	});
+}
+
+
+function search_frcode(ds_code)
+{
+	var object = [];
+	var chk_max_ptcode=[];
+	/*
+	var is_pt=$("#pt_code").val()===null;
+	if(is_pt){
+		$("#edit_fr_name").prop('disabled', true); 
+		$("#fr_code").prop('disabled', true); 
+		$("#fr_name").prop('disabled', true); 
+		
+	}else{
+		$("#edit_fr_name").prop('disabled', false); 
+		$("#fr_code").prop('disabled', false); 	
+		$("#fr_name").prop('disabled', false); 	
+	}	
+	*/
+	$.each(pt_code,function(key,val){
+	//if(val.pt_code.indexOf(ds_code)>-1)
+	//{
+		if("DS0001"==val.pt_code){
+			object.push('<option value='+val.fr_code+' selected>');
+		}else{
+			object.push('<option value='+val.fr_code+'>');
+		}
+		chk_max_ptcode.push(val.fr_code);
+		object.push('['+val.fr_code+']');
+		object.push(val.fr_name);
+		object.push('</option>');
+	//}
+	});
+
+	var result=object.join("");
+	$("#fr_code").html(result);
+	//chg_ptcode(ds_code+""+pt_code_new);
+}
+
+
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -455,6 +488,8 @@ chk_btn_status();
 
 /*멀티 셀렉트 구현 chosen-select */
 $(".chosen-select").chosen();
+var code=$("#prq_fcode").val();
+get_frcode(code);
 };/*window.onload = function() {..}*/
 
 

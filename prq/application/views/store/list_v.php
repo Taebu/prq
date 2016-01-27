@@ -17,7 +17,7 @@
 		}
 
 		function set_write(){
-		$('#bd_search').attr('action', "/prq/store/write/prq_member/page/1");
+		$('#bd_search').attr('action', "/prq/store/write/prq_store/page/1");
           $("#bd_search").submit();		
 		
 		}
@@ -124,8 +124,8 @@
 					<th scope="col"><input type="checkbox" name="chk_"></th>
 					<th scope="col">No</th>
 					<th scope="col">등록일자</th>
-					<th scope="col"><span class="mb_gname">총판</span>ID</th>
-					<th scope="col"><span class="mb_gname">총판</span>코드</th>
+					<th scope="col">가맹점 이름</th>
+					<th scope="col">가맹점코드</span>코드</th>
 					<th scope="col">구분</th>
 					<th scope="col">대리점</th>
 					<th scope="col"><span class="mb_gname">총판</span>상태</th>
@@ -139,19 +139,15 @@ foreach ($list as $lt)
 ?>
 				<tr>
 					<td scope="col"><input type="checkbox" name="chk_"></td>
-					<td scope="row"><?php echo $lt->mb_no;?></td>
+					<td scope="row"><?php echo $lt->st_no;?></td>
 					<td>
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
-					<td><?php echo $lt->mb_id;?></td>
-					<td><?php echo $lt->mb_code;?></td>
-					<td><?php echo $lt->mb_gname_kor;?></td>
-					<td><?php echo $lt->mb_gname_eng;?></td>
- 					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
-					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
-					<?php echo $lt->mb_business_paper;?>	</td>
- 					<td><span class="mb_gname">총판</span></td> 
+					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
+					<td><?php echo $lt->st_name;?></td>
+					<td><?php echo $lt->prq_fcode;?></td>
+ 					 <td></td>
+ 					<td>상점</td> 
  					<td>46</td> 
- 					<td>정상</td> 
+ 					<td><?php echo $lt->st_status;?></td> 
  					<td>-</td> 
 				</tr>
 <?php

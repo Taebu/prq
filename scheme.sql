@@ -759,3 +759,14 @@ CREATE TABLE `prq_store` (
   PRIMARY KEY (`st_no`),
   KEY `st_datetime` (`st_datetime`)
 ) DEFAULT CHARSET=utf8;
+
+
+-- 2016-01-27 (수)
+-- token_id 추가 
+CREATE TABLE `prq_token_id` (
+  `pt_idx` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `phone` varchar(20) NOT NULL,
+  `token_id` varchar(255) NOT NULL,
+  `regdate` datetime NOT NULL,
+  PRIMARY KEY (`pt_idx`,`phone`,`token_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

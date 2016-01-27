@@ -30,11 +30,11 @@ class Store_m extends CI_Model
 	 * @param string $search_word 검색어
 	 * @return array
 	 */
-    function get_list($table='prq_member', $type='', $offset='', $limit='', $search_word='')
+    function get_list($table='prq_store', $type='', $offset='', $limit='', $search_word='')
     {
 		$sword= ' WHERE 1=1 ';
 		if($table==""){
-		$table='prq_member';
+		$table='prq_store';
 		}
 		if ( $search_word != '' )
      	{
@@ -86,7 +86,7 @@ class Store_m extends CI_Model
 //    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
 //   		$this->db->query($sql0);
 
-    	$sql = "SELECT * FROM ".$table." WHERE mb_no='".$id."'";
+    	$sql = "SELECT * FROM ".$table." WHERE st_no='".$id."'";
    		$query = $this->db->query($sql);
 
      	//게시물 내용 반환
@@ -103,44 +103,40 @@ class Store_m extends CI_Model
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function insert_board($arrays)
+	function insert_store($arrays)
  	{
-		$sql_array = array(
-			'mb_pcode' => $arrays['mb_pcode']
-		);
-
-		$mb_code=$this->get_code($arrays);
-		$prq_code=$this->get_member_code($arrays['mb_pcode']);
-		/*
-		$prq_code['mb_gcode']: G8
-		mb_code: TS0000
-		mb_gname_eng:
-		mb_gname_kor:
-		*/
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
-		$sql_array[]="mb_id='".$arrays['mb_id']."',";
-		$sql_array[]="mb_code='".$mb_code."',";
-		$sql_array[]="mb_gcode='".$prq_code->mb_gcode."',";
-		$sql_array[]="mb_gname_eng='".$prq_code->mb_gname_eng."',";
-		$sql_array[]="mb_gname_kor='".$prq_code->mb_gname_kor."',";
-		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
-		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
-		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
-		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
-		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
-		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
-		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
-		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
-		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
-		$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
-		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
-		$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
-		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
-		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
-		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
-		$sql_array[]="mb_datetime=now();";
+		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
+		$sql_array[]="st_category='".$arrays['st_category']."',";
+		$sql_array[]="st_name='".$arrays['st_name']."',";
+		$sql_array[]="st_tel='".$arrays['st_tel']."',";
+		$sql_array[]="st_open='".$arrays['st_open']."',";
+		$sql_array[]="st_closed='".$arrays['st_closed']."',";
+		$sql_array[]="st_alltime='".$arrays['st_alltime']."',";
+		$sql_array[]="st_closingdate='".$arrays['st_closingdate']."',";
+		$sql_array[]="st_destination='".$arrays['st_destination']."',";
+		$sql_array[]="st_intro='".$arrays['st_intro']."',";
+		$sql_array[]="st_password='".$arrays['st_password']."',";
+		$sql_array[]="st_nick='".$arrays['st_nick']."',";
+		$sql_array[]="st_nick_date='".$arrays['st_nick_date']."',";
+		$sql_array[]="st_email='".$arrays['st_email']."',";
+		$sql_array[]="st_homepage='".$arrays['st_homepage']."',";
+		$sql_array[]="st_business_name='".$arrays['st_business_name']."',";
+		$sql_array[]="st_business_paper='".$arrays['st_business_paper']."',";
+		$sql_array[]="st_business_paper_size='".$arrays['st_business_paper_size']."',";
+		$sql_array[]="st_thumb_paper='".$arrays['st_thumb_paper']."',";
+		$sql_array[]="st_thumb_paper_size='".$arrays['st_thumb_paper_size']."',";
+		$sql_array[]="st_menu_paper='".$arrays['st_menu_paper']."',";
+		$sql_array[]="st_menu_paper_size='".$arrays['st_menu_paper_size']."',";
+		$sql_array[]="st_main_paper='".$arrays['st_main_paper']."',";
+		$sql_array[]="st_main_paper_size='".$arrays['st_main_paper_size']."',";
+		$sql_array[]="st_modoo_url='".$arrays['st_modoo_url']."',";
+		$sql_array[]="st_top_msg='".$arrays['st_top_msg']."',";
+		$sql_array[]="st_middle_msg='".$arrays['st_middle_msg']."',";
+		$sql_array[]="st_bottom_msg='".$arrays['st_bottom_msg']."',";
+		$sql_array[]="st_business_num='".$arrays['st_business_num']."',";
+		$sql_array[]="st_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환
@@ -260,7 +256,7 @@ mysql> select * from prq_member_code;
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function modify_board($arrays)
+	function modify_store($arrays)
  	{
 /*
 		$modify_array = array(
@@ -277,28 +273,36 @@ mysql> select * from prq_member_code;
 
 		$sql_array=array();
 		$sql_array[]="UPDATE ".$arrays['table']." SET ";
-//		$sql_array[]="mb_id='".$arrays['mb_id']."',";
-		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
-		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
-		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
-		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
-		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
-		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
-		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
-		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
-		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
-		$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
-		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
-		$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
-		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
-		$sql_array[]="mb_distributors_paper ='".$arrays['mb_distributors_paper']."',";
-		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
-		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
-		$sql_array[]="mb_distributors_paper_size ='".$arrays['mb_distributors_paper_size']."',";
-		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
-		$sql_array[]="mb_datetime=now() ";
-		$sql_array[]="where mb_no='".$arrays['mb_no']."' ";
+		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
+		$sql_array[]="st_category='".$arrays['st_category']."',";
+		$sql_array[]="st_name='".$arrays['st_name']."',";
+		$sql_array[]="st_tel='".$arrays['st_tel']."',";
+		$sql_array[]="st_open='".$arrays['st_open']."',";
+		$sql_array[]="st_closed='".$arrays['st_closed']."',";
+		$sql_array[]="st_alltime='".$arrays['st_alltime']."',";
+		$sql_array[]="st_closingdate='".$arrays['st_closingdate']."',";
+		$sql_array[]="st_destination='".$arrays['st_destination']."',";
+		$sql_array[]="st_intro='".$arrays['st_intro']."',";
+		$sql_array[]="st_password='".$arrays['st_password']."',";
+		$sql_array[]="st_nick='".$arrays['st_nick']."',";
+		$sql_array[]="st_nick_date='".$arrays['st_nick_date']."',";
+		$sql_array[]="st_email='".$arrays['st_email']."',";
+		$sql_array[]="st_homepage='".$arrays['st_homepage']."',";
+		$sql_array[]="st_business_name='".$arrays['st_business_name']."',";
+		$sql_array[]="st_business_paper='".$arrays['st_business_paper']."',";
+		$sql_array[]="st_business_paper_size='".$arrays['st_business_paper_size']."',";
+		$sql_array[]="st_thumb_paper='".$arrays['st_thumb_paper']."',";
+		$sql_array[]="st_thumb_paper_size='".$arrays['st_thumb_paper_size']."',";
+		$sql_array[]="st_menu_paper='".$arrays['st_menu_paper']."',";
+		$sql_array[]="st_menu_paper_size='".$arrays['st_menu_paper_size']."',";
+		$sql_array[]="st_main_paper='".$arrays['st_main_paper']."',";
+		$sql_array[]="st_main_paper_size='".$arrays['st_main_paper_size']."',";
+		$sql_array[]="st_modoo_url='".$arrays['st_modoo_url']."',";
+		$sql_array[]="st_top_msg='".$arrays['st_top_msg']."',";
+		$sql_array[]="st_middle_msg='".$arrays['st_middle_msg']."',";
+		$sql_array[]="st_bottom_msg='".$arrays['st_bottom_msg']."',";
+		$sql_array[]="st_business_num='".$arrays['st_business_num']."',";
+		$sql_array[]="where st_no='".$arrays['st_no']."' ";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환
@@ -335,7 +339,7 @@ mysql> select * from prq_member_code;
 	 */
 	function writer_check($table, $board_id)
 	{
-		$sql = "SELECT mb_id FROM ".$table." WHERE mb_no = '".$board_id."'";
+		$sql = "SELECT st_no FROM ".$table." WHERE st_no = '".$board_id."'";
 
 		$query = $this->db->query($sql);
 
@@ -378,7 +382,7 @@ mysql> select * from prq_member_code;
 	 */
     function get_comment($table, $id)
     {
-    	$sql = "SELECT * FROM ".$table." WHERE mb_no='".$id."' ORDER BY mb_no DESC";
+    	$sql = "SELECT * FROM ".$table." WHERE st_no='".$id."' ORDER BY st_no DESC";
    		$query = $this->db->query($sql);
 
      	//댓글 리스트 반환

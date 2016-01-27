@@ -104,6 +104,7 @@ if($mb_gcode=="G3")
 <div class="col-md-4">
 	<div class="form-inline">
 	<label for="pt_code">대리점 코드</label>
+
 	<input type="hidden" name="ds_code"  class="form-control" id="ds_code" value="<?php echo $prq_fcode;?>">
 	<select name="pt_code"  class="form-control" id="pt_code" size='10'   style='width:100%' onchange="javascript:chg_ptcode(this.value);search_frcode(this.value);"
 	 onclick="javascript:chg_ptcode(this.value)"></select>
@@ -134,30 +135,28 @@ if($mb_gcode=="G3")
 if($mb_gcode=="G4")
 {?>
 <div class="row">
-<div class="col-md-4">
+<div class="col-md-6">
 	<div class="form-inline">
-	<label for="pt_code">대리점 코드</label>
-	<input type="text"  class="form-control"  name="pt_code" id="pt_code" value="<?php echo $prq_fcode;?>">
-	<select name="pt_code"  class="form-control" id="pt_code" size='10'   style='width:100%' onchange="javascript:chg_ptcode(this.value);search_frcode(this.value);"
-	 onclick="javascript:chg_ptcode(this.value)"></select>
-	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>
-	</div><!-- .form-inline-->
-</div><!-- col-md-4 -->
-<div class="col-md-4">
-	<div class="form-inline">
-	<label for="fr_code">가맹점 코드</label>
-	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);chg_frcode(this.value)"
-	 onclick="javascript:changed_frcode(this.value);chg_frcode(this.value)"
-	></select>
+	<label for="fr_code">가맹점 코드</label> <?php echo $prq_fcode;?>
+	<input type="text"  class="form-control" name="ds_code" id="ds_code" value="<?php echo substr($prq_fcode,0,6);?>">
+	<input type="text"  class="form-control" name="pt_code" id="pt_code" value="<?php echo $prq_fcode;?>">
+	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);chg_frcode()"
+	 onclick="javascript:changed_frcode(this.value);chg_frcode()"
+	>
+	<option value="...">...</option>
+	<option value="...">...</option>
+	<option value="...">...</option>
+	<option value="...">...</option>
+	</select>
 	<span class="help-block m-b-none" id="mb_id_assist">가맹점코드를 선택 합니다.</span>
 	</div><!-- .form-inline-->
-</div><!-- col-md-4 -->
-<div class="col-md-4"><label>가맹점 수정</label>
+</div><!-- col-md-6 -->
+<div class="col-md-6"><label>가맹점 수정</label>
 <span id="span_fr_code">..</span>
 <input type="text"  class="form-control" name="edit_fr_name" id="edit_fr_name">
 <input type="button" value="수정" class="btn btn-primary"  onclick="javascript:set_frcode('modify')">
 <input type="button" value="삭제" class="btn btn-danger"  onclick="javascript:set_frcode('delete')">
-</div><!-- col-md-4 -->
+</div><!-- col-md-6 -->
 </div><!-- row-->
 <?php 
 }?>
@@ -374,11 +373,14 @@ function get_ptcode(code)
 
 /*가맹점 코드를 불러 옵니다.*/
 var fr_code="";
-function get_frcode()
+function get_frcode(code)
 {
-	
+	if(typeof(code)=="undefined")
+	{
+		code="";
+	}
 	$.ajax({
-	url:"/prq/ajax/get_frcode/",
+	url:"/prq/ajax/get_frcode/"+code,
 	type: "POST",
 	data:"",
 	dataType:"json",
@@ -446,7 +448,9 @@ function search_frcode(spt_code)
 	var object = [];
 	var chk_max_frcode=[];
 	var is_pt=$("#pt_code").val()===null;
-	if(is_pt){
+
+	if(is_pt)
+	{
 		$("#edit_fr_name").prop('disabled', true); 
 		$("#fr_code").prop('disabled', true); 
 		$("#fr_name").prop('disabled', true); 
@@ -455,6 +459,7 @@ function search_frcode(spt_code)
 		$("#fr_code").prop('disabled', false); 	
 		$("#fr_name").prop('disabled', false); 	
 	}
+
 	$.each(fr_code,function(key,val){
 	if(val.fr_code.indexOf(spt_code)>-1)
 	{
@@ -675,7 +680,21 @@ window.onload = function() {
 	/*가맹점 코드 가져 오기*/
 	get_frcode();
 	}
+	
 	/*초기 대리점 코드 설정*/
+	if(mb_gcode=="G4")
+	{
+	/*대리점 코드 가져 오기*/
+	//var ds_code=$("#prq_fcode").val();
+	var prq_fcode=$("#prq_fcode").val();
+	get_frcode(prq_fcode);
+	
+	search_frcode(prq_fcode);
+	
+	/*가맹점 코드 가져 오기*/
+	//get_frcode();
+	}
+
 	
 };/*window.onload = function() {..}*/
 </script> 

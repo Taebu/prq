@@ -65,8 +65,10 @@ $attributes = array(
 );
 //echo form_open('/board/modify/prq_member', $attributes);
 
-echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
+//echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
+///prq/franchise/modify/prq_member/board_id/19/page/1
 
+echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
 //echo form_open_multipart('/dropzone/upload', $attributes);
 
 ?>
@@ -111,8 +113,14 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
+<div class="form-group"><label class="col-sm-2 control-label">아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">가맹점을 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">상호</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_name" value="<?php echo $views->mb_name;?>"> <span class="help-block m-b-none">가맹점 상호를 기입해주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -162,7 +170,7 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
+<div class="form-group"><label class="col-sm-2 control-label">정산비율</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"  value="<?php echo $views->mb_exactcaculation_ratio;?>"> <span class="help-block m-b-none">정산 비율</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -178,12 +186,12 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
+<div class="form-group"><label class="col-sm-2 control-label">계약서</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 <!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 <!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"총판 계약서"를 드래그 하거나 선택해 주세요.</span>
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -255,7 +263,7 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <textarea id="form_data">#form_data</textarea>#form_data
 </div></div> -->
 </div><!-- .col-md-6 Right Menu-->
-<button class="btn btn-primary" type="button" onclick="modify_ds()">수정</button>
+<!-- <button class="btn btn-primary" type="button" onclick="modify_ds()">수정</button> -->
 </div><!-- .row -->
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->
