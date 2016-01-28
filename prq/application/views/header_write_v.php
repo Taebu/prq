@@ -186,6 +186,24 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <li><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
                         </ul>
                     </li>
+					<?php 
+					echo $this->uri->segment(1)=="board"?'<li class="active">':'<li>';
+					 ?>
+                        <a href="#">
+						<i class="fa fa-desktop"></i><span class="nav-label">GCM</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/prq/board/write">GCM Send</a></li>
+                        </ul>
+                    </li>
+					<?php 
+					echo $this->uri->segment(1)=="call"?'<li class="active">':'<li>';
+					 ?>
+                        <a href="#">
+						<i class="fa fa-flask"></i><span class="nav-label">CALL</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/prq/call/lists/">CALL</a></li>
+                        </ul>
+                    </li>
 				</ul>
             </div>
         </nav>

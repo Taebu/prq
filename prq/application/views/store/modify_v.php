@@ -27,12 +27,9 @@ window.onload = function() {
 <div class="col-lg-10">
 <h2>상점 수정</h2>
 <ol class="breadcrumb">
-<li><a href="/">Home</a></li><li>
-<a href="/prq/stoer/lists/prq_member/">상점관리</a>
-</li>
-<li class="active">
-<strong>상점 수정</strong>
-</li>
+<li><a href="/">Home</a></li>
+<li><a href="/prq/stoer/lists/prq_member/">상점관리</a></li>
+<li class="active"><strong>상점 수정</strong></li>
 </ol>
 </div>
 <div class="col-lg-2">
@@ -69,136 +66,231 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <i class="fa fa-wrench"></i>
 </a>
 <ul class="dropdown-menu dropdown-user">
-<li><a href="#">Config option 1</a>
-</li>
-<li><a href="#">Config option 2</a>
-</li>
+<li><a href="#">Config option 1</a></li>
+<li><a href="#">Config option 2</a></li>
 </ul>
-<a class="close-link">
-<i class="fa fa-times"></i>
-</a>
+<a class="close-link"><i class="fa fa-times"></i></a>
 </div>
 </div><!-- .ibox-title -->
 <div class="ibox-content">
 <div class="row">
 <div class="col-md-6">
-<!-- <form method="get" class="form-horizontal"> -->
+<!--
+stdClass Object
+(
+    [st_no] => 2
+    [prq_fcode] => DS0003PT0001FR0003
+    [st_category] => W01
+    [st_name] => 성준치킨
+    [st_tel] => 031-909-5242
+    [st_open] => 
+    [st_closed] => 
+    [st_alltime] => on
+    [st_closingdate] => 
+    [st_destination] => 
+    [st_intro] => 소개
+    [st_password] => 
+    [st_nick] => 
+    [st_nick_date] => 0000-00-00
+    [st_email] => 
+    [st_homepage] => 
+    [st_business_name] => 
+    [st_business_paper] => 
+    [st_business_paper_size] => 0
+    [st_thumb_paper] => store_1453960198.jpg
+    [st_thumb_paper_size] => 5326
+    [st_menu_paper] => 
+    [st_menu_paper_size] => 0
+    [st_main_paper] => 
+    [st_main_paper_size] => 0
+    [st_business_num] => 
+    [st_datetime] => 2016-01-28 14:53:14
+    [st_status] => wa
+)
+-->
+<div class="form-group"><label class="col-sm-2 control-label">가맹점선택 </label>
+<div class="col-sm-10"><select name="fr_code" id="fr_code" class="form-control" >
+	<option value="FR0001">네네치킨(FR0001)</option>
+	<option value="FR0002">네네치킨(FR0002)</option>
+	<option value="FR0003">네네치킨(FR0003)</option>
+	<option value="FR0004">네네치킨(FR0004)</option>
+	<option value="FR0005">네네치킨(FR0005)</option>
+</select> <span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value=""> <span class="help-block m-b-none" id="mb_id_assist">총판아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
+<div class="form-group"><label class="col-sm-2 control-label">카테고리 선택
+</label>
+<div class="col-sm-10">
+<!-- <select name="type" style="width: 228px; height: 38px; "> -->
+<select name="st_category" id="st_category" class="form-control" >
+<option value="W01" selected>치킨</option>
+<option value="W02">피자</option>
+<option value="W03">중국집</option>
+<option value="W04">한식/분식</option>
+<option value="W05">닭발/오리/기타</option>
+<option value="W06">야식/찜/탕 </option>
+<option value="W07">족발/보쌈</option>
+<option value="W08">일식/회/기타</option>
+<option value="W09">오락/레저</option>
+<option value="W10">건강/뷰티</option>
+<option value="W11">꽃배달</option>
+<option value="W12">병원/약국</option>
+<option value="W13">집수리</option>
+<option value="W14">학원</option>
+<option value="W15">이사/용달/퀵</option>
+<option value="W16">부동산</option>
+<option value="W17">청소/파출부</option>
+<option value="W18">자동차</option>
+<option value="W19">컴퓨터/인터넷</option>
+<option value="W20">기타</option>
+<option value="W21">소셜</option>
+<option value="W00">할인</option>
+</select><span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">매장 명</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name" value="<?php echo $views->st_name;?>" > <span class="help-block m-b-none">매장명을 등록 합니다. </span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
+<div class="form-group"><label class="col-sm-2 control-label">전화번호</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_tel" id="st_tel" value="<?php echo $views->st_tel;?>"> <span class="help-block m-b-none">연락처를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_email" name="mb_email" value=""> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_email" name="st_email" value="<?php echo $views->st_email;?>"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">주소1</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_addr1" name="mb_addr1" value=""> <span class="help-block m-b-none">시군구를 등록해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">주소2</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_addr2" name="mb_addr2" value=""> <span class="help-block m-b-none">동읍면리.</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">주소3</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_addr3" name="mb_addr3" value=""> <span class="help-block m-b-none">상세주소</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">대표자 명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_ceoname" value=""> <span class="help-block m-b-none">대표자명을 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">휴대폰 번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_hp" value=""> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group">
-<label class="col-sm-2 col-sm-2 control-label">사업자등록번호</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" data-mask="999-99-99999" placeholder="" name="mb_business_num" id="mb_business_num" value="">
-<span class="help-block">999-99-99999</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio"  value=""> <span class="help-block m-b-none">정산 비율</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
 
 </div><!-- .col-md-6 Left Menu-->
 
 <div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">영업시간
+</label>
+<div class="col-sm-5"><span class="help-block m-b-none">시작 09:00</span><input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled value="<?php echo $views->st_open;?>">
+<div class="checkbox checkbox-primary">
+<input id="st_alltime"  name="st_alltime" type="checkbox" checked="" onclick="javascript:chk_btn_status();">
+<label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
 
-<div class="form-group"><label class="col-sm-2 control-label">사업자등록증</label>
-<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"사업자등록증"을 드래그 하거나 선택해 주세요.</span>
+</div><!-- .col-sm-5 -->
+<div class="col-sm-5"><span class="help-block m-b-none">종료 19:00</span><input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled  value="<?php echo $views->st_closed;?>"> 
+</div><!-- .col-sm-5 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">휴무일</label>
+<div class="col-sm-5">
+ <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4"  id="st_closingdate" name="st_closingdate[]">
+                <option value="">Select</option>
+                <option value="일요일">일요일</option>
+                <option value="월요일">월요일</option>
+                <option value="화요일">화요일</option>
+                <option value="수요일">수요일</option>
+                <option value="목요일">목요일</option>
+                <option value="금요일">금요일</option>
+                <option value="토요일">토요일</option>
+				</select>
+<span class="help-block m-b-none">휴무일을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
+<div class="form-group"><label class="col-sm-2 control-label">배달지역</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_destination" name="st_destination" value="<?php echo $views->st_destination;?>"> <span class="help-block m-b-none">배달 가능 구역을 작성 합니다.. </span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
+<div class="form-group"><label class="col-sm-2 control-label">매장소개</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_intro" id="st_intro" value="<?php echo $views->st_intro;?>"> <span class="help-block m-b-none">매장 소개를 간단하게 적어주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+
+
+<div class="col-md-12">
+<h3>매장 서류</h3>
+
+<div class="form-group"><label class="col-sm-2 control-label">계약서</label>
+<div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
+<span class="help-block m-b-none">"계약서"를 드래그 하거나 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">썸네일 이미지</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-<!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
-<!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"총판 계약서"를 드래그 하거나 선택해 주세요.</span>
+<span class="help-block m-b-none">"썸네일 이미지"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">통장 사본</label>
+<div class="form-group"><label class="col-sm-2 control-label">메뉴 이미지</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone3" class="dropzone">
-
 <div class="dz-default dz-message"></div>
 </div><!-- #my-awesome-dropzone3 -->
-
-<!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
-
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"통장 사본"을 드래그 하거나 선택해 주세요.</span>
+<span class="help-block m-b-none">"메뉴 이미지"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankname" value=""> <span class="help-block m-b-none">"거래은행"을 기입해 주세요..</span>
+<div class="form-group"><label class="col-sm-2 control-label">대표 이미지</label>
+<div class="col-sm-10">
+<div id="my-awesome-dropzone4" class="dropzone">
+
+<div class="dz-default dz-message"></div>
+</div><!-- #my-awesome-dropzone4 -->
+
+<span class="help-block m-b-none">"대표 이미지"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">계좌번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_banknum" value=""> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">상단문구(고정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_top_msg" value="<?php echo $views->st_top_msg;?>">
+<span class="help-block m-b-none">상단 문구 변하지 않습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">예금주</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder" value=""> <span class="help-block m-b-none">예금주를 기입해 주세요..</span>
+<div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
+<div class="col-sm-10">
+<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50"><?php echo $views->st_middle_msg;?></textarea><!-- #form_data -->
+<span class="help-block m-b-none">중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">비고</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo" value=""> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+<div class="form-group"><label class="col-sm-2 control-label">하단문구(고정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_bottom_msg" value="<?php echo $views->st_bottom_msg;?>"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">모두홈피 URL 주소 (수정)</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_modoo_url" value="<?php echo $views->st_modoo_url;?>"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -209,8 +301,8 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
 <button class="btn btn-white" type="reset">취소</button>
 
-</div>
-</div>
+</div><!-- .col-md-6 Left Menu-->
+</div><!-- .row-->
 <!-- 						      <div class="form-actions">
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
 <button class="btn" onclick="document.location.reload()">취소</button>
@@ -231,3 +323,21 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 
 <!-- </div> --><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 </article>
+<script type="text/javascript">
+function chk_btn_status()
+{
+	var param=$("#write_action").serialize();
+//			$(".btn_area [lass*='btn-']").toggleClass("disabled",param.indexOf("chk_seq")<0).prop('disabled', param.indexOf("chk_seq")<0);
+	
+	if(param.indexOf("st_alltime")>0)
+	{
+		$("#st_open").addClass("disabled").prop('disabled', true); 
+		$("#st_closed").addClass("disabled").prop('disabled', true); 
+	}else{
+		$("#st_open").removeClass("disabled").prop('disabled', false); 
+		$("#st_closed").removeClass("disabled").prop('disabled', false); 
+	}
+	
+}
+
+</script>

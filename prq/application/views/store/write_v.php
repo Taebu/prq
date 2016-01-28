@@ -171,7 +171,7 @@ $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">배달지역</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name"> <span class="help-block m-b-none">매장명을 등록 합니다. </span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_destination" name="st_destination"> <span class="help-block m-b-none">배달 가능 구역을 작성 합니다.. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

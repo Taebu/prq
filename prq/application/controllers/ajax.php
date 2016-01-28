@@ -261,12 +261,47 @@ class Ajax extends CI_Controller {
 			$mb_email=$this->input->get("mb_email", TRUE);
 			$mac_addr=$this->input->get("mb_addr", TRUE);
 
+
 			$write_data = array(
 				'mb_email'=>$mb_email,
 				'mac_addr'=>$mac_addr
 			);
 			$result = $this->ajax_m->get_email($write_data);
 			echo $result;
+	}
+	/* get_id */
+	public function get_mb_id()
+	{
+		$json['success']=false;
+
+			
+			$mb_id=$this->uri->segment(3);
+			$mb_password=$this->uri->segment(4);
+			$mb_hp=$this->uri->segment(5);
+
+			$write_data = array(
+				'mb_id'=>$mb_id,
+				'mb_hp'=>$mb_hp,
+				'mb_password'=>$mb_password
+			);
+			$result = $this->ajax_m->get_mb_id($write_data);
+			echo $result;
+	}
+
+	/* get_member() */
+	function get_member()
+	{
+		//$ptcode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_member();
+		echo $result;
+	}
+
+	/* get_store() */
+	function get_store()
+	{
+		//$ptcode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_store();
+		echo $result;
 	}
 }
 

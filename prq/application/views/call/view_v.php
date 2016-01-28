@@ -123,7 +123,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="4"><a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
+					<th colspan="4"><a href="/prq/distributors/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/distributors/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/distributors/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/distributors/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -163,16 +163,16 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>가맹점 수정</h2>
+                    <h2>총판 수정 Basic Form</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">Home</a>
                         </li>
                         <li>
-                            <a>가맹점 관리</a>
+                            <a>총판관리</a>
                         </li>
                         <li class="active">
-                            <strong>가맹점 수정</strong>
+                            <strong>총판 수정 Basic Form</strong>
                         </li>
                     </ol>
                 </div>
@@ -191,15 +191,21 @@
 
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
+		<input type="hidden" id="mode" value="view">
 		<input type="hidden" name="is_join" id="is_join" value="">
-		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
-		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
-		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+<input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
+<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
+<input type="hidden" name="mb_bank_paper" id="mb_bank_paper" value="<?php echo $views->mb_bank_paper;?>">
+
+<input type="hidden" name="mb_business_paper_size" id="mb_business_paper_size" value="<?php echo $views->mb_business_paper_size;?>">
+<input type="hidden" name="mb_distributors_paper_size" id="mb_distributors_paper_size" value="<?php echo $views->mb_distributors_paper_size;?>">
+<input type="hidden" name="mb_bank_paper_size" id="mb_bank_paper_size" value="<?php echo $views->mb_bank_paper_size;?>">
+		<input type="hidden" name="mb_imgprefix" id="mb_imgprefix" value="<?php echo $views->mb_imgprefix;?>">
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>가맹점 등록 정보 입니다. <small>가맹점 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5>총판 등록 정보 입니다. <small>총판의 정보 및 계약서를 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -222,27 +228,49 @@
 						<div class="row">
 							<div class="col-md-6">
 							<!-- <form method="get" class="form-horizontal"> -->
-                                
-								<div class="form-group"><label class="col-sm-2 control-label">아이디</label>
+                                <div class="form-group"><label class="col-sm-2 control-label">PRQ 코드</label>
+                                    <div class="col-sm-10"><?php echo $views->prq_fcode;?><span class="help-block m-b-none">PRQ 코드 입니다..</span>
+                                    </div><!-- .col-sm-10 -->
+                                </div><!-- .form-group -->
+								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+								
+								<div class="form-group"><label class="col-sm-2 control-label">총판 아이디</label>
                                     <div class="col-sm-10">
+									<?php //print_r($views);?>
+									
 									<?php echo $views->mb_id;?>
+									<?php
+									/*
+    [mb_no] => 1
+    [mb_gcode] => G8
+    [mb_code] => TS0000
+    [mb_gname_eng] => 
+    [mb_gname_kor] => 
+    [mb_id] => erm01
+    [mb_password] => 0
+    [mb_name] => 
+    [mb_nick] => 
+    [mb_nick_date] => 0000-00-00
+    [mb_email] => 15564654
+    [mb_homepage] => 
+    [mb_password_q] => 
+    [mb_password_a] => 
+    [mb_business_name] => 
+
+
+
+)*/?>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">코드</label>
-                                    <div class="col-sm-10"><?php echo $views->prq_fcode;?><span class="help-block m-b-none">상호입니다.</span>
+                                <div class="form-group"><label class="col-sm-2 control-label">총판 상호</label>
+                                    <div class="col-sm-10"><?php echo $views->mb_name;?><span class="help-block m-b-none">총판 상호 입니다..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">상호</label>
-                                    <div class="col-sm-10"><?php echo $views->mb_name;?><span class="help-block m-b-none">상호입니다.</span>
-                                    </div><!-- .col-sm-10 -->
-                                </div><!-- .form-group -->
-								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-                                <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
+								<div class="form-group"><label class="col-sm-2 control-label">이메일</label>
                                     <div class="col-sm-10"><?php echo $views->mb_email;?><span class="help-block m-b-none">이메일을 기입해주세요.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
@@ -286,8 +314,8 @@
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">정산비율</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio" value="<?php echo $views->mb_exactcaculation_ratio;?>"> <span class="help-block m-b-none">정산 비율</span>
+								<div class="form-group"><label class="col-sm-2 control-label">총판 정산비율</label>
+                                    <div class="col-sm-10"><?php echo $views->mb_exactcaculation_ratio;?> <span class="help-block m-b-none">정산 비율</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 
@@ -306,11 +334,12 @@
                                     <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
 									<!-- <input type="file" class="form-control" name="mb_hp"> --> 
+									<div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">계약서</label>
+								<div class="form-group"><label class="col-sm-2 control-label">총판 계약서</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
 									<img src="/prq/uploads/<?php echo $views->mb_imgprefix;?>/<?php echo $views->mb_distributors_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
@@ -352,12 +381,6 @@
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">생년월일</label>
-                                    <div class="col-sm-10"><?php echo $views->mb_birth;?><span class="help-block m-b-none">생년월일을 기입해 주세요..</span>
-                                    </div><!-- .col-sm-10 -->
-                                </div><!-- .form-group -->
-                                <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
 								<div class="form-group"><label class="col-sm-2 control-label">비고</label>
                                     <div class="col-sm-10"><?php echo $views->mb_bigo;?><span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
@@ -371,10 +394,7 @@
 
 								<div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-<a href="/prq/<?php echo $this->uri->segment(1);?>/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> 
-<a href="/prq/<?php echo $this->uri->segment(1);?>/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> 
-<a href="/prq/<?php echo $this->uri->segment(1);?>/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> 
-<a href="/prq/<?php echo $this->uri->segment(1);?>/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
+<a href="/prq/<?php echo $this->uri->segment(1);?>/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/<?php echo $this->uri->segment(1);?>/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/<?php echo $this->uri->segment(1);?>/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/<?php echo $this->uri->segment(1);?>/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
                                     </div>
                                 </div>
 				<!-- 						      <div class="form-actions">
@@ -495,7 +515,7 @@ function set_member(){
 	var param=$("#write_action").serialize();
 
     $.ajax({
-		url:"/prq/board/write/prq_member",
+		url:"/prq/distributors/write/prq_member",
 		type: "POST",
         data:param,
         cache: false,

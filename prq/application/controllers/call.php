@@ -4,7 +4,7 @@
  * 생성 : 2015-12-23 (수)
  * @author Taebu,Moon<mtaebu@gmail.com>
  */
-class Distributors extends CI_Controller {
+class Call extends CI_Controller {
 
  	function __construct()
 	{
@@ -12,7 +12,7 @@ class Distributors extends CI_Controller {
 		$this->load->database();
 //		$this->load->model('board_m');
 //		$this->load->model('member_m');
-		$this->load->model('distributors_m');
+		$this->load->model('call_m');
 		$this->load->helper('form');
 		$this->load->helper(array('url','date'));
 	}
@@ -105,9 +105,9 @@ class Distributors extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/distributors/lists/prq_member'.$page_url.'/page/',
-		'total_rows' => $this->distributors_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
-		'per_page' => 5,
+		'base_url'=> '/prq/call/lists/prq_member'.$page_url.'/page/',
+		'total_rows' => $this->call_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'per_page' => 20,
 		'uri_segment' => $uri_segment,
 
 		//페이지네이션 커스텀 설정 
@@ -148,9 +148,9 @@ class Distributors extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->distributors_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['list'] = $this->call_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
 		$data['controllers'] = $this;
-		$this->load->view('distributors/list_v', $data);
+		$this->load->view('call/list_v', $data);
 	}
 
 	/**
@@ -162,13 +162,13 @@ class Distributors extends CI_Controller {
 		$board_id = $this->uri->segment(5);
 
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
- 		$data['views'] = $this->distributors_m->get_view($table, $board_id);
+ 		$data['views'] = $this->call_m->get_view($table, $board_id);
 
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
- 		$data['comment_list'] = $this->distributors_m->get_comment($table, $board_id);
+ 		$data['comment_list'] = $this->call_m->get_comment($table, $board_id);
 
  		//view 호출
- 		$this->load->view('distributors/view_v', $data);
+ 		$this->load->view('call/view_v', $data);
  	}
 
  	/**
@@ -191,7 +191,7 @@ class Distributors extends CI_Controller {
 
 			if ( $this->form_validation->run() == TRUE )
 			{
-				$this->load->model('distributors_m');
+				$this->load->model('call_m');
 				//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 				$uri_array = $this->segment_explode($this->uri->uri_string());
 
@@ -227,18 +227,18 @@ class Distributors extends CI_Controller {
 					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE)
 					);
 
-				$result = $this->distributors_m->insert_distributors($write_data);
+				$result = $this->call_m->insert_call($write_data);
 
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/call/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/call/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -246,7 +246,7 @@ class Distributors extends CI_Controller {
 			else
 			{
 				//쓰기폼 view 호출
-				$this->load->view('distributors/write_v');
+				$this->load->view('call/write_v');
 			}
 		}
 		else
@@ -280,11 +280,11 @@ class Distributors extends CI_Controller {
 		if( @$this->session->userdata('logged_in') == TRUE )
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
-			$writer_id = $this->distributors_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+			$writer_id = $this->call_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/distributors_id/'.$this->uri->segment(5).'/page/'.$pages);
+				alert('본인이 작성한 글이 아닙니다.', '/prq/call/view/'.$this->uri->segment(3).'/call_id/'.$this->uri->segment(5).'/page/'.$pages);
 				exit;
 			}
 */
@@ -300,7 +300,7 @@ class Distributors extends CI_Controller {
 				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
-					alert('비정상적인 접근입니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('비정상적인 접근입니다.', '/prq/call/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -308,12 +308,12 @@ class Distributors extends CI_Controller {
 				/*
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
-					'distributors_id' => $this->uri->segment(5), //게시물번호
+					'call_id' => $this->uri->segment(5), //게시물번호
 					'subject' => $this->input->post('subject', TRUE),
 					'contents' => $this->input->post('contents', TRUE)
 				);
 
-				$result = $this->distributors_m->modify_distributors($modify_data);
+				$result = $this->call_m->modify_call($modify_data);
 */
 				$modify_data = array(
 					'table' => $this->uri->segment(3), //게시판 테이블명
@@ -342,18 +342,18 @@ class Distributors extends CI_Controller {
 				);
 //				$result = $this->distributors_m->insert_distributors($write_data);
 
-				$result = $this->distributors_m->modify_distributors($modify_data);
+				$result = $this->call_m->modify_call($modify_data);
 
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/call/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/call/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 
@@ -361,10 +361,10 @@ class Distributors extends CI_Controller {
 			else
 			{
 				//게시물 내용 가져오기
-				$data['views'] = $this->distributors_m->get_view($this->uri->segment(3), $this->uri->segment(5));
+				$data['views'] = $this->call_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 
 				//쓰기폼 view 호출
-				$this->load->view('distributors/modify_v', $data);
+				$this->load->view('call/modify_v', $data);
 			}
 		}
 		else
@@ -389,27 +389,27 @@ class Distributors extends CI_Controller {
 			$table = $this->uri->segment(3);
 			$board_id = $this->uri->segment(5);
 
-			$writer_id = $this->distributors_m->writer_check($table, $board_id);
+			$writer_id = $this->call_m->writer_check($table, $board_id);
 
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('본인이 작성한 글이 아닙니다.', '/prq/call/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 				exit;
 			}
 
 			//게시물 번호에 해당하는 게시물 삭제
-			$return = $this->distributors_m->delete_content($this->uri->segment(3), $this->uri->segment(5));
+			$return = $this->call_m->delete_content($this->uri->segment(3), $this->uri->segment(5));
 
 			//게시물 목록으로 돌아가기
 			if ( $return )
 			{
 				//삭제가 성공한 경우
-				alert('삭제되었습니다.', '/prq/distributors/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
+				alert('삭제되었습니다.', '/prq/call/lists/'.$this->uri->segment(3).'/page/'.$this->uri->segment(7));
 			}
 			else
 			{
 				//삭제가 실패한 경
-				alert('삭제 실패하였습니다.', '/prq/distributors/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
+				alert('삭제 실패하였습니다.', '/prq/call/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$this->uri->segment(7));
 			}
 		}
 		else
@@ -489,5 +489,5 @@ class Distributors extends CI_Controller {
 	}
 }
 
-/* End of file distributors.php */
-/* Location: ./application/controllers/distributors.php */
+/* End of file call.php */
+/* Location: ./application/controllers/call.php */

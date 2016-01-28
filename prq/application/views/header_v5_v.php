@@ -186,6 +186,25 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <li><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
                         </ul>
                     </li>
+					<?php 
+					echo $this->uri->segment(1)=="board"?'<li class="active">':'<li>';
+					 ?>
+                        <a href="#">
+						<i class="fa fa-desktop"></i><span class="nav-label">GCM</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/prq/board/write/">GCM Send</a></li>
+                        </ul>
+                    </li>
+					<?php 
+					echo $this->uri->segment(1)=="call"?'<li class="active">':'<li>';
+					 ?>
+                        <a href="#">
+						<i class="fa fa-flask"></i><span class="nav-label">CALL</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/prq/call/lists/">CALL</a></li>
+                        </ul>
+                    </li>
+
 				</ul>
             </div>
         </nav>
@@ -429,6 +448,7 @@ if($mb_gcode=='G4'){
 <?php
 /* START 가맹점 인 경우 */
 if($mb_gcode=='G5'){
+echo $prq_fcode;
 ?>
 		<nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
@@ -476,54 +496,6 @@ if($mb_gcode=='G5'){
                         <div class="logo-element">
                             PRQ
                         </div>
-                    </li>
-					<?php 
-					$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
-					if($this->uri->segment(1)=="codes"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?>
-                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-					<?php 
-					if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){
-					if($this->uri->segment(3)=="prq_dscode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록<span class="label label-primary pull-right">NEW</span></a></li>
-                    <?php 
-					 }/* 관리자 총판 구룹만 관리 하는 메뉴G1,G2 */
-					
-					if($this->uri->segment(3)=="prq_ptcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
-                           <?php if($this->uri->segment(3)=="prq_frcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드<span class="label label-primary pull-right">NEW</span></a></li>
-                        </ul>
-                    </li>
-					<?php 
-					 echo $this->uri->segment(1)=="distributors"?'<li class="active">':'<li>';
-					 ?>
-                        <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
-                        </ul>
-                    </li>
-					<?php 
-					 echo $this->uri->segment(1)=="partner"?'<li class="active">':'<li>';?>
-                        <a href="#">
-						<i class="fa fa-th-large"></i> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
-                        </ul>
-                    </li>
                     </li>
 					<?php 
 					 echo $this->uri->segment(1)=="franchise"?'<li class="active">':'<li>';

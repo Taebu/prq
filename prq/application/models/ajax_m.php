@@ -698,6 +698,111 @@ class Ajax_m extends CI_Model
 		echo ",01030372004";
 		//echo $this->input->ip_address();
 	}
+
+	
+	/*
+	2016-01-28 (목) 오전 11:50
+	get_mb_id()
+
+	가입중인 아이디를 반환한다.
+	*/
+	function get_mb_id($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]=" where mb_id='".$array['mb_id']."' ";
+		$sql[]="and mb_password=password('".$array['mb_password']."')";
+		$sql[]="and mb_hp='".$array['mb_hp']."';";
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success']){
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		
+		echo json_encode($json);
+		//echo $this->input->ip_address();
+	}
+
+	/*2016-01-28 (목)
+	get_member()
+
+	사용 중인 모든 멤버 코드를 반환한다.
+	*/
+	function get_member()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member`; ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
+
+	/*2016-01-28 (목)
+	get_store()
+
+	사용 중인 모든 상점 코드를 반환한다.
+	*/
+	function get_store()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_store`; ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
 }
 
 /* End of file auth_m.php */

@@ -67,6 +67,10 @@
 
     <!-- DROPZONE -->
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
+
+    <!-- Toastr script -->
+    <script src="/prq/include/js/plugins/toastr/toastr.min.js"></script>
+
     <script>
         $(document).ready(function(){
 /*
