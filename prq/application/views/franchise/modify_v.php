@@ -112,6 +112,11 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
+<div class="form-group"><label class="col-sm-2 control-label">코드</label>
+<div class="col-sm-10"><?php echo $views->prq_fcode;?><span class="help-block m-b-none">PRQ코드.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">가맹점을 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>
@@ -247,7 +252,7 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
-<button type="submit" class="btn btn-primary" id="write_btn">작성</button>
+<button type="submit" class="btn btn-primary" id="write_btn">수정</button>
 <button class="btn btn-white" type="reset">취소</button>
 
 </div>

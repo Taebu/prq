@@ -2,20 +2,10 @@
 <div class="col-lg-10">
 <h2>GCM TEST</h2>
 <ol class="breadcrumb">
-<li>
-<a href="index.html">Home</a>
-</li>
-<li>
-<a>GCM</a>
-</li>
-<li class="active">
-<strong>GCM TEST</strong>
-</li>
-</ol>
-</div>
-<div class="col-lg-2">
-
-</div>
+<li><a href="/prq/">Home</a></li>
+<li><a>GCM</a></li>
+<li class="active"><strong>GCM TEST</strong></li></ol></div>
+<div class="col-lg-2"></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
@@ -31,24 +21,15 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-<h5>GCM 정보 입니다. <small>....</small></h5>
-<div class="ibox-tools">
-<a class="collapse-link">
-<i class="fa fa-chevron-up"></i>
-</a>
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-<i class="fa fa-wrench"></i>
-</a>
-<ul class="dropdown-menu dropdown-user">
-<li><a href="#">Config option 1</a>
-</li>
-<li><a href="#">Config option 2</a>
-</li>
-</ul>
-<a class="close-link">
-<i class="fa fa-times"></i>
-</a>
-</div>
+	<h5>GCM TEST <small>GCM을 MMS 형태로 전송처리 합니다.</small></h5>
+	<div class="ibox-tools">
+	<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
+	<ul class="dropdown-menu dropdown-user">
+	<li><a href="#">Config option 1</a></li>
+	<li><a href="#">Config option 2</a></li></ul>
+	<a class="close-link"><i class="fa fa-times"></i></a>
+	</div>
 </div><!-- .ibox-title -->
 <div class="ibox-content">
 <div class="row">

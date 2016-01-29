@@ -82,25 +82,7 @@ class Franchise extends CI_Controller {
 		}
 
 		//페이지네이션 라이브러리 로딩 추가
-		/*
-			<ul class="pagination pagination-lg">
-			<li><a href="/prq/board/lists/ci_board/page/1"><i class="fa fa-chevron-left"></i> <i class="fa fa-chevron-left"></i></a></li>
-			<li><a href="/prq/board/lists/ci_board/page/1"><i class="fa fa-chevron-left"></i></a></li>
-			<li><a href="/prq/board/lists/ci_board/page/1">1</a></li>
-			<li><a href="/prq/board/lists/ci_board/page/5">2</a></li>
-			<li><a href="/prq/board/lists/ci_board/page/10">3</a></li>
-			<li class="disabled"><a href="#">4</a></li>
-			<li><a href="/prq/board/lists/ci_board/page/20">5</a></li>
-			<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>&nbsp;</ul>
-		*/
 		$this->load->library('pagination');
-
-		/*
-		$config['base_url'] = '/prq/board/lists/ci_board'.$page_url.'/page/'; //페이징 주소
-		$config['total_rows'] = $this->board_m->get_list($this->uri->segment(3), 'count', '', '', $search_word); //게시물의 전체 갯수
-		$config['per_page'] = 10; //한 페이지에 표시할 게시물 수
-		$config['uri_segment'] = $uri_segment; //페이지 번호가 위치한 세그먼트
-		*/
 
 		$config = array(
 		//페이지네이션 기본 설정
@@ -122,7 +104,6 @@ class Franchise extends CI_Controller {
 		'prev_link'	=> '<i class="fa fa-chevron-left"></i>',
 		'prev_tag_open'	=> '<li>',
 		'prev_tag_close'	=> '</li>',
-//		'cur_tag_open'	=> '<li class="disabled"><a href="#">',
 		'cur_tag_open'	=> '<li class="active"><a href="#">',
 		'cur_tag_close'	=> '</a></li>',
 		'num_tag_open'	=> '<li>',

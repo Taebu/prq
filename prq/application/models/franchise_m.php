@@ -49,6 +49,12 @@ class Franchise_m extends CI_Model
 		//echo "mb_pcode=>".$mb_pcode."<br/>";
 		//echo "prq_fcode=>".$prq_fcode."<br/>";
 		//echo "mb_gcode=>".$mb_gcode."<br/>";
+		/* 관리자인 경우 */
+		if( $mb_gcode=="G1"|| $mb_gcode=="G2"){
+			$sword.= ' and mb_gcode="G5" ';
+		}
+
+
 		/* 총판인 경우 */
 		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
 			$sword.= ' and prq_fcode like "'.$prq_fcode.'PT%" ';
@@ -131,6 +137,7 @@ class Franchise_m extends CI_Model
 		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
 		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
 		$sql_array[]="mb_name ='".$arrays['mb_name']."',";
+		$sql_array[]="mb_password =password('".$arrays['mb_password']."'),";
 		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
 		$sql_array[]="mb_gname_kor='".$arrays['mb_gname_kor']."',";
 		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
@@ -139,7 +146,6 @@ class Franchise_m extends CI_Model
 		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
 		$sql_array[]="mb_birth ='".$arrays['mb_birth']."',";
 		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
 		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
 		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
 		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";

@@ -770,3 +770,14 @@ CREATE TABLE `prq_token_id` (
   `regdate` datetime NOT NULL,
   PRIMARY KEY (`pt_idx`,`phone`,`token_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- 2016-01-29 (금)
+
+CREATE TABLE `prq_cdr` (
+  `cd_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cd_id` varchar(30) NOT NULL,
+  `cd_port` varchar(10) NOT NULL DEFAULT '',
+  `cd_callerid` varchar(30) NOT NULL DEFAULT '',
+  `cd_calledid` varchar(30) DEFAULT '',
+  `cd_state` tinyint(1) DEFAULT '0'
+);

@@ -269,10 +269,10 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 				<tr>
 					<th scope="col"><input type="checkbox" name="chk_"></th>
 					<th scope="col">No</th>
-					<th scope="col">사업자번호</th>
-					<th scope="col">가맹점명</th>
-					<th scope="col">가맹점 ID</th>
 					<th scope="col">가맹점 코드</th>
+					<th scope="col">가맹점명</th>
+					<th scope="col">사업자번호</th>
+					<th scope="col">가맹점 ID</th>
 					<th scope="col">구분</th>
 					<th scope="col">상점수</th>
 					<th scope="col">가맹점 상태</th>
@@ -290,9 +290,9 @@ foreach ($list as $lt)
 					<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
 					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
 					<td scope="row"><?php echo $lt->mb_no;?></td>
-					<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_business_num;?></a></td>
+					<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
 					<td scope="row"><?php echo $lt->mb_name;?></td>
-					<td scope="row"><?php echo $lt->prq_fcode;?></td>
+					<td scope="row"><?php echo $lt->mb_business_num;?></td>
 					<td><?php echo $lt->mb_ceoname;?></td>
 					<td><?php echo $lt->mb_hp;?></td>
 					<td><a rel="external" href="/prq/store/lists/prq_store/page/1"><?php echo "5개";?></a></td>

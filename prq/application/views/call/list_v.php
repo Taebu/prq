@@ -300,8 +300,9 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 					<th scope="col">date</th>
 					<th scope="col">UserID</th>
 					<th scope="col">port</th>
-					<th scope="col">callerid</th>
-					<th scope="col">calledid</th>
+					<th scope="col">걸려온 전화</th>
+					<th scope="col">상호</th>
+					<th scope="col">연결된 핸드폰</th>
 					<th scope="col">state</th>
 				</tr>
 			</thead>
@@ -326,11 +327,19 @@ foreach ($list as $lt)
 ?>
 				<tr>
 					<td scope="row"><?php echo $lt->date;?></td>
-					<td scope="row"><?php echo $lt->UserID;?></td>
+					<!-- <td scope="row"><?php echo $lt->UserID;?></td> -->
+					<td scope="row"><?php echo $lt->cUserID;?></td>
 					<td scope="row"><?php echo $lt->port;?></td>
 					<td scope="row"><?php echo $lt->callerid;?></td>
-					<td scope="row"></td>
-					<td scope="row"><?php echo $lt->state;?></td>
+					<td scope="row"><?php echo $lt->CompanyName;?>(<?php echo $lt->UserName;?>)</td>
+<?php 
+if($lt->port>0){?>
+					<td scope="row"><?php echo $lt->port<5?$lt->{"Mobile_".$lt->port}:"";?></td>
+					<td scope="row"><?php echo $lt->port<5?$lt->{"Tel_".$lt->port}:"";?></td>
+<?php }else{?>
+					<td scope="row"><?php echo $lt->Mobile_1;?></td>
+					<td scope="row"><?php echo $lt->Tel_1;?></td>
+<?php }?>
 				</tr>
 <?php
 }
@@ -365,3 +374,25 @@ foreach ($list as $lt)
 <?php if($mb_gcode=="G1"){?>
 <a href="javascript:set_write();" class="btn btn-success">쓰기</a><?php }?></div></div>
 </article>
+<script type="text/javascript">
+/*
+2016-01-28 (목)
+fn get_cid();
+*/
+function get_cid()
+{
+$.ajax({
+url:"/prq/set_gcm.php",
+type: "POST",
+data:param,
+dataType:"json",
+success: function(data) {
+	console.log(data.posts);
+	}
+});
+}
+
+$(document).ready(function(){
+
+});
+</script>

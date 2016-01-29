@@ -287,7 +287,7 @@
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 								<div class="form-group"><label class="col-sm-2 control-label">정산비율</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control" name="mb_exactcaculation_ratio" value="<?php echo $views->mb_exactcaculation_ratio;?>"> <span class="help-block m-b-none">정산 비율</span>
+                                    <div class="col-sm-10"><?php echo $views->mb_exactcaculation_ratio;?> <span class="help-block m-b-none">정산 비율</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 

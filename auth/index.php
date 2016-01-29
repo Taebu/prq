@@ -46,6 +46,5 @@ $message = array(
 
 $gcm->send_notification($registation_ids, $message);
 
-
 echo json_encode($json);
 ?>
