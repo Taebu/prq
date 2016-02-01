@@ -148,6 +148,7 @@ mysql>
 		$order="ORDER BY  date desc";
 		$sql = "SELECT *,'erm02@naver.com' AS 'UserID' FROM ".$table.$sword."  ".$order."".$limit_query;
 		$sql=array();
+
 		$sql[] ="select *,";
 		$sql[] ="callerid.cdr.UserID AS 'cUserID' ";
 		$sql[] ="from ";
@@ -157,6 +158,18 @@ mysql>
 //		$sql[] ="OR cdr.UserID = users.UserID ";
 		$sql[] ="order by callerid.cdr.date desc ";
 		$sql[] =$limit_query.";";
+
+		/*
+		$sql[] ="select *,";
+		$sql[] ="callerid.cdr.UserID AS 'cUserID' ";
+		$sql[] ="from ";
+		$sql[] ="callerid.cdr ";
+		$sql[] ="left join prq.prq_member  ";
+		$sql[] ="on cdr.UserID = prq_member.mb_email ";
+//		$sql[] ="OR cdr.UserID = users.UserID ";
+		$sql[] ="order by callerid.cdr.date desc ";
+		$sql[] =$limit_query.";";
+		*/
 //echo join("",$sql);
    		$query = $this->db->query(join("",$sql));
 
@@ -175,6 +188,82 @@ mysql>
 
     	return $result;
     }
+
+
+
+    function get_list2($table='prq_member', $type='', $offset='', $limit='', $search_word='')
+    {
+		$order="";
+		$sword= ' WHERE 1=1 ';
+		if($table==""){
+		$table='callerid.cdr';
+		}
+		$table='callerid.cdr';
+		if ( $search_word != '' )
+     	{
+     		//검색어가 있을 경우의 처리
+     		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+     	}
+		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		if( strlen($prq_fcode)>2){
+			$sword .= ' and prq_fcode= "'.$prq_fcode.'" ';
+		}
+		}
+    	$limit_query = '';
+
+    	if ( $limit != '' OR $offset != '' )
+     	{
+     		//페이징이 있을 경우의 처리
+     		$limit_query = ' LIMIT '.$offset.', '.$limit;
+     	}else{
+		
+		}
+
+		$order="ORDER BY  date desc";
+		$sql = "SELECT *,'erm02@naver.com' AS 'UserID' FROM ".$table.$sword."  ".$order."".$limit_query;
+		$sql=array();
+
+		$sql[] ="select *,";
+		$sql[] ="callerid.cdr.UserID AS 'cUserID' ";
+		$sql[] ="from ";
+		$sql[] ="callerid.cdr ";
+		$sql[] ="left join prq.prq_member  ";
+//		$sql[] ="on cdr.UserID = prq_member.mb_email and cdr.UserID='erm02@naver.com' ";
+		$sql[] =" on callerid.cdr.UserID='erm02@naver.com' ";
+		$sql[] ="order by callerid.cdr.date desc ";
+		$sql[] =$limit_query.";";
+
+		/*
+		$sql[] ="select *,";
+		$sql[] ="callerid.cdr.UserID AS 'cUserID' ";
+		$sql[] ="from ";
+		$sql[] ="callerid.cdr ";
+		$sql[] ="left join prq.prq_member  ";
+		$sql[] ="on cdr.UserID = prq_member.mb_email ";
+		//$sql[] ="OR cdr.UserID = users.UserID ";
+		$sql[] ="order by callerid.cdr.date desc ";
+		$sql[] =$limit_query.";";
+		*/
+		//echo join("",$sql);
+   		$query = $this->db->query(join("",$sql));
+
+		if ( $type == 'count' )
+     	{
+     		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
+	    	$result = $query->num_rows();
+
+	    	//$this->db->count_all($table);
+     	}
+     	else
+     	{
+     		//게시물 리스트 반환
+	    	$result = $query->result();
+     	}
+
+    	return $result;
+    }
+
 
     /**
 	 * 게시물 상세보기 가져오기

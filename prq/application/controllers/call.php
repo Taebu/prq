@@ -134,6 +134,83 @@ class Call extends CI_Controller {
 		$this->load->view('call/list_v', $data);
 	}
 
+
+	/**
+	 * 목록 불러오기2
+	 */
+	public function lists2()
+	{
+//		$this->output->enable_profiler(TRUE);
+//		$this->output->enable_profiler(FALSE);
+		//검색어 초기화
+		$search_word = $page_url = '';
+		$uri_segment = 5;
+
+		//주소중에서 q(검색어) 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+		$uri_array = $this->segment_explode($this->uri->uri_string());
+
+		if( in_array('q', $uri_array) ) 
+		{
+			//주소에 검색어가 있을 경우의 처리. 즉 검색시
+			$search_word = urldecode($this->url_explode($uri_array, 'q'));
+
+			//페이지네이션용 주소
+			$page_url = '/q/'.$search_word;
+			$uri_segment = 7;
+		}
+
+		//페이지네이션 라이브러리 로딩 추가
+		$this->load->library('pagination');
+
+		$config = array(
+		//페이지네이션 기본 설정
+		'base_url'=> '/prq/call/lists/prq_member'.$page_url.'/page/',
+		'total_rows' => $this->call_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'per_page' => 20,
+		'uri_segment' => $uri_segment,
+
+		//페이지네이션 커스텀 설정 
+		'first_tag_open'	=> '<li>',
+		'first_tag_close'	=> '</li>',
+		'first_link'	=> '<i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>',
+		'last_link'	=> '<i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>',
+		'last_tag_open'	=> '<li>',
+		'last_tag_close'	=> '</li>',		
+		'next_link'	=> '<i class="fa fa-chevron-right"></i>',
+		'next_tag_open'	=> '<li>',
+		'next_tag_close'	=> '</li>',
+		'prev_link'	=> '<i class="fa fa-chevron-left"></i>',
+		'prev_tag_open'	=> '<li>',
+		'prev_tag_close'	=> '</li>',
+		'cur_tag_open'	=> '<li class="active"><a href="#">',
+		'cur_tag_close'	=> '</a></li>',
+		'num_tag_open'	=> '<li>',
+		'num_tag_close'	=> '</li>');
+
+		//페이지네이션 초기화
+		$this->pagination->initialize($config);
+		//페이징 링크를 생성하여 view에서 사용할 변수에 할당
+		$data['pagination'] = $this->pagination->create_links();
+
+		//게시판 목록을 불러오기 위한 offset, limit 값 가져오기
+		$data['page'] = $page = $this->uri->segment($uri_segment, 1);
+
+		if ( $page > 1 )
+		{
+			$start = (($page/$config['per_page'])) * $config['per_page'];
+		}
+		else
+		{
+			$start = ($page-1) * $config['per_page'];
+		}
+
+		$limit = $config['per_page'];
+
+		$data['list'] = $this->call_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['controllers'] = $this;
+		$this->load->view('call/list2_v', $data);
+	}
+
 	/**
 	 * 게시물 보기
 	 */

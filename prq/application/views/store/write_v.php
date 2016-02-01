@@ -186,6 +186,8 @@ $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 </div><!-- .col-md-6 RightMenu-->
 
 
+
+
 <div class="col-md-12">
 <h3>매장 서류</h3>
 
@@ -229,9 +231,89 @@ $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 </div>
-</div>
+</div><!-- .row -->
 
+<div class="row">
+<div class="form-group"><label class="col-sm-2 control-label">CID Type</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_cidtype" id="st_cidtype_1" value='ktcid' checked><label for="st_cidtype_1">ktcid</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_cidtype" id="st_cidtype_2"  value='callcid'><label for="st_cidtype_2">callcid</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .row -->
 
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 1</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_1" name="st_tel_1"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 1</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_1" name="st_hp_1"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 2</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_2" name="st_tel_2"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 2</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_2" name="st_hp_2"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 3</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_3" name="st_tel_3"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 3</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_3" name="st_hp_3"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 4</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_4" name="st_tel_4"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 4</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_4" name="st_hp_4"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
 <div class="row">
 <div class="col-md-12">
 <div class="form-group"><label class="col-sm-2 control-label">상단문구(고정)</label>
@@ -239,6 +321,7 @@ $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 <span class="help-block m-b-none">상단 문구 변하지 않습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
+
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>

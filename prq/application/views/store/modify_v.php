@@ -20,6 +20,8 @@ function showDropzone (){
 window.onload = function() {
 //	/prq/board/write/prq_member
 //showDropzone();
+/*멀티 셀렉트 구현 chosen-select */
+$(".chosen-select").chosen();
 };
 </script>
 	<article id="board_area">
@@ -44,7 +46,7 @@ $attributes = array(
 );
 //echo form_open('/board/modify/prq_member', $attributes);
 
-echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
+echo form_open('/store/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
 
 //echo form_open_multipart('/dropzone/upload', $attributes);
 
@@ -53,6 +55,22 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
+<input type="hidden" id="st_no" name="st_no" value="<?php echo $this->uri->segment(5);?>">
+<input type="hidden" id="st_business_paper" name="st_business_paper" value="<?php echo $views->st_business_paper;?>">
+<input type="hidden" id="st_business_paper_size" name="st_business_paper_size" value="<?php echo $views->st_business_paper_size;?>">
+
+<input type="hidden" id="st_thumb_paper" name="st_thumb_paper" value="<?php echo $views->st_thumb_paper;?>">
+<input type="hidden" id="st_thumb_paper_size" name="st_thumb_paper_size" value="<?php echo $views->st_thumb_paper_size;?>">
+
+<input type="hidden" id="st_menu_paper" name="st_menu_paper" value="<?php echo $views->st_menu_paper;?>">
+<input type="hidden" id="st_menu_paper_size" name="st_menu_paper_size" value="<?php echo $views->st_menu_paper_size;?>">
+
+<input type="hidden" id="st_main_paper" name="st_main_paper" value="<?php echo $views->st_main_paper;?>">
+<input type="hidden" id="st_main_paper_size" name="st_main_paper_size" value="<?php echo $views->st_main_paper_size;?>">
+
+
+<input type="hidden" id="prq_fcode" name="prq_fcode" value="<?php echo $views->prq_fcode;?>">
+
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -189,16 +207,17 @@ stdClass Object
 
 <div class="form-group"><label class="col-sm-2 control-label">휴무일</label>
 <div class="col-sm-5">
+<?php $arr_closingdate= explode(",",$views->st_closingdate);
+//print_r($arr_closingdate);
+$arr_week=array("일요일","월요일","화요일","수요일","목요일","금요일","토요일");
+?>
  <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4"  id="st_closingdate" name="st_closingdate[]">
-                <option value="">Select</option>
-                <option value="일요일">일요일</option>
-                <option value="월요일">월요일</option>
-                <option value="화요일">화요일</option>
-                <option value="수요일">수요일</option>
-                <option value="목요일">목요일</option>
-                <option value="금요일">금요일</option>
-                <option value="토요일">토요일</option>
-				</select>
+<?php
+foreach($arr_week as $aw){
+$sel_aw=in_array($aw, $arr_closingdate)?" selected":"";
+echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
+}?>
+</select>
 <span class="help-block m-b-none">휴무일을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -262,6 +281,88 @@ stdClass Object
 </div>
 </div>
 
+<div class="row">
+<div class="form-group"><label class="col-sm-2 control-label">CID Type</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_cidtype" id="st_cidtype_1" value='ktcid' <?php echo $views->st_cidtype=="ktcid"?"checked":"";?>><label for="st_cidtype_1">ktcid</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_cidtype" id="st_cidtype_2"  value='callcid' <?php echo $views->st_cidtype=="callcid"?"checked":"";?>><label for="st_cidtype_2">callcid</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 1</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_1" name="st_tel_1" value="<?php echo $views->st_tel_1;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 1</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_1" name="st_hp_1" value="<?php echo $views->st_hp_1;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 2</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_2" name="st_tel_2" value="<?php echo $views->st_tel_2;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 2</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_2" name="st_hp_2" value="<?php echo $views->st_hp_2;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 3</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_3" name="st_tel_3" value="<?php echo $views->st_tel_3;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 3</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_3" name="st_hp_3" value="<?php echo $views->st_hp_3;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 4</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_4" name="st_tel_4" value="<?php echo $views->st_tel_4;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 4</label>
+<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_4" name="st_hp_4" value="<?php echo $views->st_hp_4;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
 
 <div class="row">
 <div class="col-md-12">
@@ -298,7 +399,7 @@ stdClass Object
 
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
-<button type="submit" class="btn btn-primary" id="write_btn">작성</button>
+<button type="submit" class="btn btn-primary" id="write_btn">수정</button>
 <button class="btn btn-white" type="reset">취소</button>
 
 </div><!-- .col-md-6 Left Menu-->
@@ -314,7 +415,7 @@ stdClass Object
 <textarea id="form_data">#form_data</textarea>#form_data
 </div></div> -->
 </div><!-- .col-md-6 Right Menu-->
-<button class="btn btn-primary" type="button" onclick="modify_ds()">수정</button>
+<!-- <button class="btn btn-primary" type="button" onclick="modify_ds()">수정</button> -->
 </div><!-- .row -->
 </div><!-- .ibox-content -->
 </div><!-- .ibox float-e-margins -->

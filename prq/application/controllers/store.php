@@ -226,6 +226,15 @@ class Store extends CI_Controller {
 					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
 					'st_business_num' => $this->input->post('st_business_num', TRUE),
 					'st_datetime' => $this->input->post('st_datetime', TRUE),
+					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
+					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
+					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
+					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
+					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
+					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
+					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
+					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
+					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
 					'st_status' => $this->input->post('st_status', TRUE)
 				);
 				$result = $this->store_m->insert_store($write_data);
@@ -293,12 +302,13 @@ class Store extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('mb_addr1', '주소1', 'required');
-			$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
+			$this->form_validation->set_rules('st_name', 'st_name', 'required');
+			//$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
-				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
+//				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
+				if ( !$this->input->post('st_name', TRUE))
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
 					alert('비정상적인 접근입니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
@@ -326,7 +336,7 @@ class Store extends CI_Controller {
 					'st_open' => $this->input->post('st_open', TRUE),
 					'st_closed' => $this->input->post('st_closed', TRUE),
 					'st_alltime' => $this->input->post('st_alltime', TRUE),
-					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
+					'st_closingdate' => join(",",$this->input->post('st_closingdate', TRUE)),
 					'st_destination' => $this->input->post('st_destination', TRUE),
 					'st_intro' => $this->input->post('st_intro', TRUE),
 					'st_password' => $this->input->post('st_password', TRUE),
@@ -349,6 +359,15 @@ class Store extends CI_Controller {
 					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
 					'st_business_num' => $this->input->post('st_business_num', TRUE),
 					'st_datetime' => $this->input->post('st_datetime', TRUE),
+					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
+					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
+					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
+					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
+					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
+					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
+					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
+					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
+					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
 					'st_status' => $this->input->post('st_status', TRUE)
 				);
 //				$result = $this->distributors_m->insert_distributors($write_data);

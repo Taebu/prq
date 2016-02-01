@@ -78,13 +78,13 @@
 		{
 			var file_key=[];
 			/* 계약서 이미지 */
-			file_key["st_store_paper"]="ST";
+			file_key["st_business_paper"]="ST";
 			/* 썸네일 이미지 */
-			file_key["st_thumbnail_paper"]="TH";
+			file_key["st_thumb_paper"]="TH";
 			/* 메뉴이미지 */
-			file_key["st_menuimg_paper"]="ME";
+			file_key["st_menu_paper"]="ME";
 			/* 대표이미지 */
-			file_key["st_mainimg_paper"]="MA";
+			file_key["st_main_paper"]="MA";
 			
 			var param="";
 			if(id!="")
@@ -164,6 +164,7 @@
 
 					$.each(data,function(key,value){
 						var mockfile={name:value.name,size:value.size};
+						console.log(id+" / "+file_key[id]+" : "+value.name+" : "+value.size);
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
@@ -182,7 +183,7 @@
 				var name = file.name;
 				var param="filename="+name;
 				
-				param+="&st_imgprefix="+$("#st_imgprefix").val();
+				param+="&st_imgprefix="+file_key[id];
 				param+="&st_no="+$("#st_no").val();
 				param+="&st_removetype="+id;
 				$.ajax({
@@ -216,7 +217,8 @@
 		}
 
 		/* 계약서 */
-		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("st_store_paper"));
+		//$("#my-awesome-dropzone1").dropzone(set_dropzone_config("st_store_paper"));
+		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("st_business_paper"));
 
 		/* 썸네일 이미지*/
 		$("#my-awesome-dropzone2").dropzone(set_dropzone_config("st_thumb_paper"));

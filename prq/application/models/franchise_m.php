@@ -303,7 +303,7 @@ mysql> select * from prq_member_code;
 		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
 		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
 		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
+//		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
 		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
 		$sql_array[]="mb_birth ='".$arrays['mb_birth']."',";
 		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";

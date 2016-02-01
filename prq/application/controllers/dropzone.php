@@ -189,7 +189,7 @@ class Dropzone extends CI_Controller {
 		{
 			//$result=array("res" => false);
 			//echo json_encode($result);
-			$sql="update prq_store set ".$mb_removetype."='',".$mb_removetype."_size=0 where mb_no='".$mb_no."';";
+			$sql="update prq_store set ".$st_removetype."='',".$st_removetype."_size=0 where st_no='".$st_no."';";
 			$result= $this->db->query($sql);
 			echo json_encode(array("res" => true,"sql"=>$sql));
 		}

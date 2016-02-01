@@ -363,8 +363,12 @@
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div>
+<div class="row"><div class="col-md-12">
+CID 정보
 
-
+</div></div>
+<div>
 			  <div class="controls">
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
 		      </div>

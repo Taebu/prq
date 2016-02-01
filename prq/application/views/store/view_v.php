@@ -72,45 +72,34 @@
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">상점명</label>
-                                    <div class="col-sm-10"><?php echo $views->st_name;?><span class="help-block m-b-none">상점명 주세요..</span>
+                                    <div class="col-sm-10"><?php echo $views->st_name;?><span class="help-block m-b-none">상점명 입니다.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">상단메세지</label>
-                                    <div class="col-sm-10"><?php echo $views->st_top_msg;?><span class="help-block m-b-none">상점명 주세요..</span>
+                                    <div class="col-sm-10"><?php echo $views->st_top_msg;?><span class="help-block m-b-none">MMS 상단에 들어갈 메세지입니다.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">중단메세지</label>
-                                    <div class="col-sm-10"><?php echo $views->st_middle_msg;?><span class="help-block m-b-none">상점명 주세요..</span>
+                                    <div class="col-sm-10"><?php echo nl2br($views->st_middle_msg);?><span class="help-block m-b-none">MMS 중간에 들어갈 메세지 입니다.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">하단메세지</label>
-                                    <div class="col-sm-10"><?php echo $views->st_bottom_msg;?><span class="help-block m-b-none">상점명 주세요..</span>
+                                    <div class="col-sm-10"><?php echo $views->st_bottom_msg;?><span class="help-block m-b-none">MMS 하단에 들어갈 메세지 입니다.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 							</div><!-- .col-md-6 Left Menu-->
 
 							<div class="col-md-6">
-							<!--
-							
-								/* 계약서 이미지 */
-								file_key["st_store_paper"]="ST";
-								/* 썸네일 이미지 */
-								file_key["st_thumbnail_paper"]="TH";
-								/* 메뉴이미지 */
-								file_key["st_menuimg_paper"]="ME";
-								/* 대표이미지 */
-								file_key["st_mainimg_paper"]="MA";
-							-->
 								<div class="form-group"><label class="col-sm-2 control-label">계약서</label>
                                     <div class="col-sm-10"><div id="my-awesome-dropzone1" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<img src="/prq/uploads/ST/<?php echo $views->st_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/ST/<?php echo $views->st_business_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">계약서 이미지 입니다.</span>
 									<!-- <input type="file" class="form-control" name="st_hp"> --> 
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
@@ -119,7 +108,7 @@
 								<div class="form-group"><label class="col-sm-2 control-label">썸네일</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
-									<img src="/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100">
+									<img src="/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">썸네일 이미지 입니다. MMS 전송시 이 이미지가 전송 됩니다.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -127,10 +116,9 @@
 								<div class="form-group"><label class="col-sm-2 control-label">메뉴</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone3" class="dropzone">
-
 									<div class="dz-default dz-message"></div>
 									</div><!-- #my-awesome-dropzone3 -->
-									<img src="/prq/uploads/ME/<?php echo $views->st_menu_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"></div><!-- .col-sm-10 -->
+									<img src="/prq/uploads/ME/<?php echo $views->st_menu_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">메뉴 이미지 입니다.</span></div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
@@ -138,14 +126,88 @@
 								<div class="form-group"><label class="col-sm-2 control-label">대표</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone4" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone4 -->
-									<img src="/prq/uploads/MA/<?php echo $views->st_main_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"></div><!-- .col-sm-10 -->
+									<img src="/prq/uploads/MA/<?php echo $views->st_main_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">대표 이미지 입니다.</span></div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div>
+
+<div class="row">
+<div class="form-group"><label class="col-sm-2 control-label">CID Type</label>
+<div class="col-sm-10"><?php echo $views->st_cidtype;?> <span class="help-block m-b-none">CID Type</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .row -->
 
 
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 1</label>
+<div class="col-sm-8"><?php echo $views->st_tel_1;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 1</label>
+<div class="col-sm-8"><?php echo $views->st_hp_1;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
 
 
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 2</label>
+<div class="col-sm-8"><?php echo $views->st_tel_2;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 2</label>
+<div class="col-sm-8"><?php echo $views->st_hp_2;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
 
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 3</label>
+<div class="col-sm-8"><?php echo $views->st_tel_3;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 3</label>
+<div class="col-sm-8"><?php echo $views->st_hp_3;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div class="row">
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">매장 번호 4</label>
+<div class="col-sm-8"><?php echo $views->st_tel_4;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 4</label>
+<div class="col-sm-8"><?php echo $views->st_hp_4;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Right Menu-->
+</div><!-- .row -->
+
+<div>
 			  <div class="controls">
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
 		      </div>
@@ -180,29 +242,11 @@
 
 	*/
 	function set_ds(){
-			var param=$("#write_action").serialize();
-	
-/*
-is_join=TRUE&
-st_id=4645689986489564&
-st_email=45564&
-st_addr1=5656&
-st_addr2=564&
-st_addr3=56456&
-password=4564&
-password_2=564&
-st_hp=4564564&
-st_business_num=564-56-45645&
-st_exactcaculation_ratio=564564564564564&
-st_hp=564654564564&
-st_hp=564654564654&
-st_hp=564564564564&
-st_hp=6545645646
-*/
+		var param=$("#write_action").serialize();
 		if($("#is_join").val()=="TRUE"){
 			$("#form_data").html(param);
-		//	$("#write_action").submit();
-		set_member();
+			//	$("#write_action").submit();
+			set_member();
 		}
 
 		if($("#is_join").val()=="FALSE"){
