@@ -364,6 +364,48 @@ class Ajax_m extends CI_Model
 	}
 
 
+
+	/*
+	get_cidinfo()
+	cid 정보를 반환 프렌차이즈에
+	*/
+	function get_cidinfo($prq_fcode)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		//mysql> select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
+		$sql[]="SELECT ";
+		$sql[]="  st_port,st_no,st_name,st_cidtype,st_tel_1,st_hp_1 ";	
+		$sql[]="FROM ";
+		$sql[]="`prq_store` ";
+		if(isset($prq_fcode)&&strlen($prq_fcode)>3)
+		{
+			$sql[]=" where prq_fcode='".$prq_fcode."' ";
+		}
+
+		//$sql[]=" where ds_code like 'rs%' ";
+		//$sql[]=" order by pt_code ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+	
+		$json['posts']=array();
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
+
 	/*2016-01-25 (월)
 	get_used_ptcode()
 
@@ -683,7 +725,7 @@ class Ajax_m extends CI_Model
 		$sql[]=" * ";
 		$sql[]="FROM ";
 		$sql[]="`prq_member` ";
-		$sql[]=" where mb_email like '%".$array['mb_email']."%' ";
+		$sql[]=" where mb_email='".$array['mb_email']."' ";
 	
 
 		$join_sql=join("",$sql);
@@ -696,6 +738,7 @@ class Ajax_m extends CI_Model
 		
 		echo $json['success']?"TRUE":"FALSE";
 		echo ",01030372004";
+//		echo ",".$join_sql;
 		//echo $this->input->ip_address();
 	}
 
@@ -803,6 +846,38 @@ class Ajax_m extends CI_Model
 		}
 		echo json_encode($json);
 	}
+
+	/*
+	insert_ptcode($array)
+	대리점 코드를 등록합니다.
+	@param $array data
+	@return json
+	*/
+	function set_cidinfo($array)
+	{
+		$json=array();
+		$json['success']=false;
+	
+		$sql=array();
+		$sql[]="update `prq_store` set ";
+		$sql[]=" st_port='".$array['st_port']."' ";
+		$sql[]=" where st_no='".$array['st_no']."';";
+
+		$join_sql=join("",$sql);
+		//$json['query']=$ojin_sql;
+		$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="수정 성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="수정 실패.";
+		}
+
+		echo json_encode($json);
+	}
+
 }
 
 /* End of file auth_m.php */

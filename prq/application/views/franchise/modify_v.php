@@ -24,19 +24,111 @@ $.ajax({
 url:"/prq/board/modify/prq_member/board_id/5",
 type: "POST",
 data:param,
-cache: false,
-async: false,
-success: function(data) {
+        dataType:"json",
+	success: function(data) {
 console.log(data);
+
 }
 });		
 }
 function showDropzone (){
 //	$("#my-awesome-dropzone1").html("...");
 }
+
+
+function set_cidport(i,v){
+//alert("id : "+i+" , v : "+v);
+var st_no=i;
+var st_port=v;
+    $.ajax({
+		url:"/prq/ajax/set_cidinfo/",
+		type: "POST",
+        data:"st_no="+st_no+"&st_port="+st_port,
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+			console.log(data);
+			alert(data.result);
+        }
+    });		
+
+}
+function get_cidinfo(){
+//	var param=$("#write_action").serialize();
+
+    $.ajax({
+		url:"/prq/ajax/get_cidinfo/"+$("#prq_fcode").val(),
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+			var object=[];
+			var chk_port="";
+			var str="";
+			if(data.posts.length<1){
+			object.push('등록된 상점 CID 정보가 없습니다.');
+			$("#cid_info").html(object.join(""));
+			return ;
+			}
+			object.push('<table class="table">');
+			object.push('<thead>');
+			object.push('<tr>');
+			object.push('<th>#</th>');
+			object.push('<th>st_name</th>');
+			object.push('<th>st_cidtype</th>');
+			object.push('<th>st_tel_1</th>');
+			object.push('<th>st_hp_1</th>');
+			object.push('</tr>');
+			object.push('</thead>');
+			object.push('<tbody>');			
+			$.each(data.posts,function(key,val){
+				object.push('<tr>');
+				object.push('<td>');
+				object.push('<select  class="form-control" onchange="set_cidport(this.id,this.value)" id="'+val.st_no+'">');
+				console.log(val.st_port);
+				chk_port=val.st_port;
+				str=val.st_port==1?"selected":"";
+				object.push('<option value="1" '+str+'>1</option>');
+				str=val.st_port==2?"selected":"";
+				object.push('<option value="2" '+str+'>2</option>');
+				str=val.st_port==3?"selected":"";
+				object.push('<option value="3" '+str+'>3</option>');
+				str=val.st_port==4?"selected":"";
+				object.push('<option value="4" '+str+'>4</option>');
+				object.push('</select>');
+				object.push('</td>');
+				object.push('<td>'+val.st_name+'</td>');
+				object.push('<td>'+val.st_cidtype+'</td>');
+				object.push('<td>'+val.st_tel_1+'</td>');
+				object.push('<td>'+val.st_hp_1+'</td>');
+				object.push('</tr>');
+			});
+			object.push('</tbody>');
+			object.push('</table>');
+			object.push('<span class="help-block m-b-none"></span>');
+			$("#cid_info").html(object.join(""));
+        }
+    });		
+
+}
+//mysql> select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
+
+
+
+
+
 window.onload = function() {
 //	/prq/board/write/prq_member
 //showDropzone();
+/*
+2016-02-02 (화)
+프랜차이즈에 해당하는 포트 CID type 및 전화 번호 불러 오기
+*/
+get_cidinfo();
 };
 </script>
 	<article id="board_area">
@@ -77,6 +169,7 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
 
+<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
 <input type="hidden" name="mb_bank_paper" id="mb_bank_paper" value="<?php echo $views->mb_bank_paper;?>">
@@ -246,7 +339,17 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+</div>
+<div class="row"><div class="col-md-12">
+			<div class="form-group"><label class="col-sm-1 control-label">CID 정보</label>
+<div class="col-sm-11" id="cid_info">...</div><!-- .col-sm-10 #cid_info -->
+			</div><!-- .form-group -->
+			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+
+
+</div></div>
+<div>
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
 </div>

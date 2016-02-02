@@ -187,14 +187,14 @@
 				'id' => 'write_action'
 			);
 			echo form_open('board/write/prq_member', $attributes);
-//echo form_open_multipart('/dropzone/upload', $attributes);
-
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
 		<input type="hidden" name="is_join" id="is_join" value="">
 		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
 		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+		<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
+		
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
@@ -365,7 +365,43 @@
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div>
 <div class="row"><div class="col-md-12">
-CID 정보
+			<div class="form-group"><label class="col-sm-1 control-label">CID 정보</label>
+<div class="col-sm-11" >
+mysql> select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
+<table class="table">
+<thead>
+<tr>
+<th>#</th>
+<th>st_name</th>
+<th>st_cidtype</th>
+<th>st_tel_1</th>
+<th>st_hp_1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>성준치킨</td>
+<td>callcid</td>
+<td>031-909-1577</td>
+<td>010774430009</td>
+</tr>
+<tr> 
+<td>2</td>
+<td>태부치킨1</td>
+<td>ktcid</td>
+<td>0317061031</td>
+<td>01012345678</td>
+</tr>
+</tbody>
+</table>
+
+				<span class="help-block m-b-none"></span>
+				</div><!-- .col-sm-10 -->
+			</div><!-- .form-group -->
+			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
 
 </div></div>
 <div>

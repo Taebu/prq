@@ -228,9 +228,9 @@ mysql>
 		$sql[] ="callerid.cdr.UserID AS 'cUserID' ";
 		$sql[] ="from ";
 		$sql[] ="callerid.cdr ";
-		$sql[] ="left join prq.prq_member  ";
-//		$sql[] ="on cdr.UserID = prq_member.mb_email and cdr.UserID='erm02@naver.com' ";
-		$sql[] =" on callerid.cdr.UserID='erm02@naver.com' ";
+		$sql[] ="left join ";
+		$sql[] =" prq.prq_store  ";
+		$sql[] ="on cdr.UserID = prq_store.mb_id ";
 		$sql[] ="order by callerid.cdr.date desc ";
 		$sql[] =$limit_query.";";
 

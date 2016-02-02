@@ -172,6 +172,38 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 
+	/* get_cidinfo() */
+	function get_cidinfo()
+	{
+		$prq_fcode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_cidinfo($prq_fcode);
+		echo $result;
+	}
+
+	/* set_cidinfo */
+	public function set_cidinfo()
+	{
+		$json['success']=false;
+		if( @$this->session->userdata('logged_in') == TRUE )
+		{
+			
+			//$table=$this->uri->segment(3);
+
+			$st_no = $this->input->post("st_no", TRUE);
+			$st_port = $this->input->post("st_port", TRUE);
+
+			$write_data = array(
+				'st_port'=>$st_port,
+				'st_no'=>$st_no
+			);
+			$result = $this->ajax_m->set_cidinfo($write_data);
+			echo $result;
+		}
+		else
+		{
+			echo json_encode($json); //로그인 필요 에러
+		}
+	}
 
 	/* set_ptcode */
 	public function set_ptcode()
@@ -237,7 +269,6 @@ class Ajax extends CI_Controller {
 	{
 		$json['success']=false;
 
-			
 			$user_id=$this->uri->segment(3);
 			$mac_addr=$this->uri->segment(4);
 
@@ -253,22 +284,23 @@ class Ajax extends CI_Controller {
 	public function get_email()
 	{
 		$json['success']=false;
+		
+//		$mb_email=$this->uri->segment(3);
+//		$mac_addr=$this->uri->segment(4);
 
-			
-//			$mb_email=$this->uri->segment(3);
-//			$mac_addr=$this->uri->segment(4);
+		$mb_email=$this->input->get("mb_email", TRUE);
+		$mb_password=$this->input->get("mb_password", TRUE);
+		$mac_addr=$this->input->get("mb_addr", TRUE);
 
-			$mb_email=$this->input->get("mb_email", TRUE);
-			$mac_addr=$this->input->get("mb_addr", TRUE);
-
-
-			$write_data = array(
-				'mb_email'=>$mb_email,
-				'mac_addr'=>$mac_addr
-			);
-			$result = $this->ajax_m->get_email($write_data);
-			echo $result;
+		$write_data = array(
+			'mb_email'=>$mb_email,
+			'mb_password'=>$mb_password,
+			'mac_addr'=>$mac_addr
+		);
+		$result = $this->ajax_m->get_email($write_data);
+		echo $result;
 	}
+
 	/* get_id */
 	public function get_mb_id()
 	{

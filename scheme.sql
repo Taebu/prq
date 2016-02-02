@@ -773,6 +773,7 @@ CREATE TABLE `prq_token_id` (
 
 -- 2016-01-29 (금)
 
+user prq;
 CREATE TABLE `prq_cdr` (
   `cd_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `cd_id` varchar(30) NOT NULL,
@@ -781,3 +782,54 @@ CREATE TABLE `prq_cdr` (
   `cd_calledid` varchar(30) DEFAULT '',
   `cd_state` tinyint(1) DEFAULT '0'
 );
+
+
+use callerid;
+
+show triggers;
+
+DELIMITER $$
+
+drop TRIGGER IF EXISTS cdr_inserted $$
+
+CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
+BEGIN
+insert into prq.prq_cdr set 
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid;
+END
+$$
+
+DELIMITER ;
+
+
+
+ALTER TABLE `prq_store` add st_cidtype enum('ktcid','callcid')  NOT NULL default 'ktcid';
+ALTER TABLE `prq_store` add st_tel_1 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_tel_2 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_tel_3 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_tel_4 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_hp_1 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_hp_2 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_hp_3 varchar(30) NOT NULL default '';
+ALTER TABLE `prq_store` add st_hp_4 varchar(30) NOT NULL default '';
+
+ALTER TABLE `prq_member` add `prq_fcode` char(18) NOT NULL default '' after `mb_no`;
+
+ALTER TABLE `prq_log` DROP PRIMARY KEY;
+
+ALTER TABLE `prq_store` DROP st_tel_2;
+ALTER TABLE `prq_store` DROP st_tel_3;
+ALTER TABLE `prq_store` DROP st_tel_4;
+
+ALTER TABLE `prq_store` DROP st_hp_2;
+ALTER TABLE `prq_store` DROP st_hp_3;
+ALTER TABLE `prq_store` DROP st_hp_4;
+
+-- 2016-02-02 (화)
+ALTER TABLE `prq_store` add st_port tinyint NOT NULL default 1;
+
+ALTER TABLE `prq_store` add `mb_id` varchar(20) NOT NULL DEFAULT '' after `prq_fcode`;
+

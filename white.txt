@@ -1,0 +1,4 @@
+# push 0508 GCM
+* * * * * sh /etc/get_stgcm.sh
+vi /etc/get_stgcm.sh
+curl -v http://cashq.co.kr/adm/crontab/get_stgcm.php

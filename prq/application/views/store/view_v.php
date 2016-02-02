@@ -156,56 +156,6 @@
 </div><!-- .row -->
 
 
-<div class="row">
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">매장 번호 2</label>
-<div class="col-sm-8"><?php echo $views->st_tel_2;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 2</label>
-<div class="col-sm-8"><?php echo $views->st_hp_2;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Right Menu-->
-</div><!-- .row -->
-
-<div class="row">
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">매장 번호 3</label>
-<div class="col-sm-8"><?php echo $views->st_tel_3;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 3</label>
-<div class="col-sm-8"><?php echo $views->st_hp_3;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Right Menu-->
-</div><!-- .row -->
-
-<div class="row">
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">매장 번호 4</label>
-<div class="col-sm-8"><?php echo $views->st_tel_4;?> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 4</label>
-<div class="col-sm-8"><?php echo $views->st_hp_4;?> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Right Menu-->
-</div><!-- .row -->
 
 <div>
 			  <div class="controls">

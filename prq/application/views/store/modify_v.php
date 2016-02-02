@@ -17,12 +17,6 @@ console.log(data);
 function showDropzone (){
 //	$("#my-awesome-dropzone1").html("...");
 }
-window.onload = function() {
-//	/prq/board/write/prq_member
-//showDropzone();
-/*멀티 셀렉트 구현 chosen-select */
-$(".chosen-select").chosen();
-};
 </script>
 	<article id="board_area">
 	<div class="row wrapper border-bottom white-bg page-heading">
@@ -50,9 +44,17 @@ echo form_open('/store/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 
 //echo form_open_multipart('/dropzone/upload', $attributes);
 
+$mb_code=$this->input->post('mb_code',TRUE);
+$prq_fcode=$this->input->cookie('prq_fcode',TRUE);
+$mb_gcode=$this->input->cookie('mb_gcode',TRUE);
+
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
-
+<input type="hidden" name="is_member" id="is_member">
+<?php if($mb_gcode=="G5"){?>
+<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
+<?php }?>
+<input type="hidden" name="mb_gcode" id="mb_gcode" value="<?php echo $mb_gcode;?>">
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
 <input type="hidden" id="st_no" name="st_no" value="<?php echo $this->uri->segment(5);?>">
@@ -69,7 +71,6 @@ echo form_open('/store/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <input type="hidden" id="st_main_paper_size" name="st_main_paper_size" value="<?php echo $views->st_main_paper_size;?>">
 
 
-<input type="hidden" id="prq_fcode" name="prq_fcode" value="<?php echo $views->prq_fcode;?>">
 
 <div class="row">
 <div class="col-lg-12">
@@ -127,13 +128,21 @@ stdClass Object
 )
 -->
 <div class="form-group"><label class="col-sm-2 control-label">가맹점선택 </label>
-<div class="col-sm-10"><select name="fr_code" id="fr_code" class="form-control" >
+<div class="col-sm-10">
+
+<?php if($mb_gcode=="G5"){?>
+<select name="fr_code" id="fr_code" class="form-control" >
 	<option value="FR0001">네네치킨(FR0001)</option>
 	<option value="FR0002">네네치킨(FR0002)</option>
 	<option value="FR0003">네네치킨(FR0003)</option>
 	<option value="FR0004">네네치킨(FR0004)</option>
 	<option value="FR0005">네네치킨(FR0005)</option>
-</select> <span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
+</select>
+<?php }else if($mb_gcode!="G5"){?>
+<select name="prq_fcode" id="prq_fcode" class="form-control" ></select> 
+<?php }?>
+
+<span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -295,6 +304,18 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .row -->
 
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">포트번호</label>
+<div class="col-sm-10"><?php echo $views->st_port;?> <span class="help-block m-b-none">해당 포트는 가맹점이 수정 가능합니다. 기본값 1 * 다중 업소인 경우 최대 4개의 포트를 가집니다.</span>
+</div><!-- .col-sm-8 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
+</div><!-- .row -->
+
+
 <div class="row">
 <div class="col-md-6">
 <div class="form-group"><label class="col-sm-4 control-label">매장 번호 1</label>
@@ -312,56 +333,6 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .col-md-6 Right Menu-->
 </div><!-- .row -->
 
-<div class="row">
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">매장 번호 2</label>
-<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_2" name="st_tel_2" value="<?php echo $views->st_tel_2;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 2</label>
-<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_2" name="st_hp_2" value="<?php echo $views->st_hp_2;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Right Menu-->
-</div><!-- .row -->
-
-<div class="row">
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">매장 번호 3</label>
-<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_3" name="st_tel_3" value="<?php echo $views->st_tel_3;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 3</label>
-<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_3" name="st_hp_3" value="<?php echo $views->st_hp_3;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Right Menu-->
-</div><!-- .row -->
-
-<div class="row">
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">매장 번호 4</label>
-<div class="col-sm-8"><input type="text" class="form-control" id="st_tel_4" name="st_tel_4" value="<?php echo $views->st_tel_4;?>"> <span class="help-block m-b-none">상점 번호를 등록 합니다. 예) 031-706-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
-<div class="col-md-6">
-<div class="form-group"><label class="col-sm-4 control-label">핸드폰 번호 4</label>
-<div class="col-sm-8"><input type="text" class="form-control" id="st_hp_4" name="st_hp_4" value="<?php echo $views->st_hp_4;?>"> <span class="help-block m-b-none">연동할 핸드폰 번호를 등록 합니다. 예) 010-####-####</span>
-</div><!-- .col-sm-8 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Right Menu-->
-</div><!-- .row -->
 
 
 <div class="row">
@@ -440,5 +411,60 @@ function chk_btn_status()
 	}
 	
 }
+
+/*가맴점 코드를 불러 옵니다.*/
+var pt_code="";
+function get_frcode(code)
+{
+	$.ajax({
+	url:"/prq/ajax/get_frcode/"+code,
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+		pt_code=data.posts;
+		search_frcode("DS0003PT0001");
+		}
+	});
+}
+
+
+function search_frcode(ds_code)
+{
+	var object = [];
+	var chk_max_ptcode=[];
+	$.each(pt_code,function(key,val){
+		if("DS0001"==val.pt_code){
+			object.push('<option value='+val.fr_code+' selected>');
+		}else{
+			object.push('<option value='+val.fr_code+'>');
+		}
+		chk_max_ptcode.push(val.fr_code);
+		object.push('['+val.fr_code+']');
+		object.push(val.fr_name);
+		object.push('</option>');
+	});
+
+	var result=object.join("");
+	var chk_gcode=$("#mb_gcode").val();
+	if(chk_gcode=="G5"){
+	$("#fr_code").html(result);
+	}else{
+	$("#prq_fcode").html(result);
+	}
+}
+
+
+
+window.onload = function() {
+/*24시간인지 체크*/
+chk_btn_status();
+
+/*멀티 셀렉트 구현 chosen-select */
+$(".chosen-select").chosen();
+var code="DS0003PT0001";
+get_frcode(code);
+};/*window.onload = function() {..}*/
+
 
 </script>

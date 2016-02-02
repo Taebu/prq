@@ -308,63 +308,74 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 			</thead>
 			<tbody>
 <?php
-/*
-
-mysql> select * from callerid.cdr limit 1\G;
-*************************** 1. row ***************************
-    date: 2015-12-16 02:47:43
-  UserID: test111
-    port: po
-callerid: 01022918123
-calledid:
-   state: 0
-1 row in set (0.00 sec)
-*/
 $i=0;
 foreach ($list as $lt)
-{
-
-
-?>
-				<tr>
-					<td scope="row"><?php 
-
-print_r($lt);
-;?></td>
-					<td scope="row"><?php echo $lt->date;?></td>
-					<!-- <td scope="row"><?php echo $lt->UserID;?></td> -->
-					<td scope="row"><?php echo $lt->cUserID;?></td>
-					<td scope="row"><?php echo $lt->port;?></td>
-					<td scope="row"><?php echo $lt->callerid;?></td>
-					<td scope="row"><?php echo $lt->CompanyName;?>(<?php echo $lt->UserName;?>)</td>
-<?php 
-if($lt->port>0){?>
-					<td scope="row"><?php echo $lt->port<5?$lt->{"Mobile_".$lt->port}:"";?></td>
-					<td scope="row"><?php echo $lt->port<5?$lt->{"Tel_".$lt->port}:"";?></td>
+{?>
+<tr>
+<!--     [calledid] =&gt; 
+    [state] =&gt; 0
+    [st_no] =&gt; 
+    [prq_fcode] =&gt; 
+    [mb_id] =&gt; 
+    [st_category] =&gt; 
+    [st_name] =&gt; 
+    [st_tel] =&gt; 
+    [st_open] =&gt; 
+    [st_closed] =&gt; 
+    [st_alltime] =&gt; 
+    [st_closingdate] =&gt; 
+    [st_destination] =&gt; 
+    [st_intro] =&gt; 
+    [st_password] =&gt; 
+    [st_nick] =&gt; 
+    [st_nick_date] =&gt; 
+    [st_email] =&gt; 
+    [st_homepage] =&gt; 
+    [st_business_name] =&gt; 
+    [st_business_paper] =&gt; 
+    [st_business_paper_size] =&gt; 
+    [st_thumb_paper] =&gt; 
+    [st_thumb_paper_size] =&gt; 
+    [st_menu_paper] =&gt; 
+    [st_menu_paper_size] =&gt; 
+    [st_main_paper] =&gt; 
+    [st_main_paper_size] =&gt; 
+    [st_modoo_url] =&gt; 
+    [st_top_msg] =&gt; 
+    [st_middle_msg] =&gt; 
+    [st_bottom_msg] =&gt; 
+    [st_business_num] =&gt; 
+    [st_datetime] =&gt; 
+    [st_status] =&gt; 
+    [st_cidtype] =&gt; 
+    [st_tel_1] =&gt; 
+    [st_hp_1] =&gt; 
+    [st_port] =&gt; 
+     -->
+<!-- 	<td scope="row"><?php print_r($lt);?></td> -->
+	<td scope="row"><?php echo $lt->date;?></td>
+	<td scope="row"><?php echo $lt->UserID;?></td>
+	<td scope="row"><?php echo $lt->port;?></td>
+	<td scope="row"><?php echo $lt->callerid;?></td>
+	<td scope="row"><?php echo $lt->st_name;?></td>
+<?php if($lt->port>0){?>
+	<td scope="row"><?php echo $lt->port<5?$lt->{"st_tel_1"}:"";?></td>
+	<td scope="row"><?php echo $lt->port<5?$lt->{"st_hp_1"}:"";?></td>
 <?php }else{?>
-					<td scope="row"><?php echo $lt->Mobile_1;?></td>
-					<td scope="row"><?php echo $lt->Tel_1;?></td>
+	<td scope="row"><?php echo $lt->st_tel_1;?></td>
+	<td scope="row"><?php echo $lt->st_hp_1;?></td>
 <?php }?>
 				</tr>
 <?php
 $i++;
 }
 ?>
-
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="12" style="text-align:left">
-					<?php if($mb_gcode=="G1"){?>
-					<div class="btn_area">
-					<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-					<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-					<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-					<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-					<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-					<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button></div><!-- .btn_area --><?php }?></th>
-				</tr>
-				<tr>
+	</tbody>
+	<tfoot>
+		<tr>
+		<th colspan="12" style="text-align:left"></th>
+		</tr>
+		<tr>
 					<th colspan="12" style="text-align:center;border-top:0">
 					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
 				</tr>
