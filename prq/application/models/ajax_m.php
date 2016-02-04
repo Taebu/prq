@@ -759,10 +759,11 @@ class Ajax_m extends CI_Model
 		$sql[]="FROM ";
 		$sql[]="`prq_member` ";
 		$sql[]=" where mb_id='".$array['mb_id']."' ";
-		$sql[]="and mb_password=password('".$array['mb_password']."')";
+		$sql[]="and mb_password=password('".$array['mb_password']."') ";
 		$sql[]="and mb_hp='".$array['mb_hp']."';";
 
 		$join_sql=join("",$sql);
+		//echo $join_sql;
 		$query = $this->db->query($join_sql);
 		
 		/*조회된 갯수 여부*/
@@ -816,6 +817,7 @@ class Ajax_m extends CI_Model
 
 	/*2016-01-28 (목)
 	get_store()
+
 
 	사용 중인 모든 상점 코드를 반환한다.
 	*/
@@ -878,6 +880,117 @@ class Ajax_m extends CI_Model
 		echo json_encode($json);
 	}
 
+
+	/*
+	insert_ptcode($array)
+	대리점 코드를 등록합니다.
+	@param $array data
+	@return json
+	*/
+	function set_black($array)
+	{
+		if($array['phoneno']==""){
+			echo "0";
+			return;
+		}
+		$json=array();
+		$json['success']=false;
+
+			
+						
+		$sql=array();
+		$sql[]="select * from `callerid`.`black_hp` ";
+		$sql[]=" where bl_hp=?; ";
+
+		$join_sql=join("",$sql);
+		//echo $join_sql;
+		//echo $join_sql;
+		//$json['query']=$ojin_sql;
+		/*
+		ALTER TABLE `callerid`.`black_hp` add bl_gubun char(1) NOT NULL default '1';
+		ALTER TABLE `callerid`.`black_hp` add bl_dnis varchar(30) NOT NULL default '';
+		ALTER TABLE `callerid`.`black_hp` add bl_duration int NOT NULL default 0;
+		*/
+		$write_array=array($array['phoneno']);
+		$query = $this->db->query($join_sql,$write_array) or die(false);
+		if($query->num_rows() > 0){
+			echo "0";
+			return;
+		}
+		$sql=array();
+		$sql[]="insert into `callerid`.`black_hp` set ";
+//		$sql[]=" bl_hp='".$hp."', ";
+		$sql[]=" bl_hp=?, ";
+		$sql[]=" bl_gubun=?, ";
+		$sql[]=" bl_dnis=?, ";
+		$sql[]=" bl_duration=?, ";
+		$sql[]=" bl_datetime=now(); ";
+
+		$join_sql=join("",$sql);
+		//echo $join_sql;
+		//echo $join_sql;
+		//$json['query']=$ojin_sql;
+		/*
+		ALTER TABLE `callerid`.`black_hp` add bl_gubun char(1) NOT NULL default '1';
+		ALTER TABLE `callerid`.`black_hp` add bl_dnis varchar(30) NOT NULL default '';
+		ALTER TABLE `callerid`.`black_hp` add bl_duration int NOT NULL default 0;
+		*/
+		$array['gubun']=$array['gubun']?$array['gubun']:"1";
+		$array['dnis']=$array['dnis']?$array['dnis']:"1";
+		$array['duration']=$array['duration']?$array['duration']:"15";
+		$write_array=array(
+			$array['phoneno'],
+			$array['gubun'],
+			$array['dnis'],
+			$array['duration']);
+		$query = $this->db->query($join_sql,$write_array) or die(false);
+		if($query)
+		{
+			echo "1";
+		}else{
+			echo "0";
+		}
+
+		//echo json_encode($json);
+		
+	}
+
+	/*
+	get_fremail
+	가맹점의 이메일 주소를 아이디로 갱신합니다.
+
+	*/
+	function get_frmail()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="select ";
+		$sql[]="prq_fcode,";
+		$sql[]="mb_email ";
+		$sql[]="from ";
+		$sql[]="prq_member ";
+		$sql[]="where ";
+		$sql[]="mb_gcode='G5';";
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
+	
 }
 
 /* End of file auth_m.php */

@@ -54,6 +54,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <?php if($mb_gcode=="G5"){?>
 <input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
 <?php }?>
+<input type="hidden" name="sel_prq_fcode" id="sel_prq_fcode" value="<?php echo $views->prq_fcode;?>">
 <input type="hidden" name="mb_gcode" id="mb_gcode" value="<?php echo $mb_gcode;?>">
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
@@ -139,10 +140,16 @@ stdClass Object
 	<option value="FR0005">네네치킨(FR0005)</option>
 </select>
 <?php }else if($mb_gcode!="G5"){?>
-<select name="prq_fcode" id="prq_fcode" class="form-control" ></select> 
+<select name="prq_fcode" id="prq_fcode" class="form-control" onchange="get_mb_id(this.value)" onclick="get_mb_id(this.value)"></select> 
 <?php }?>
 
 <span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">가맹점 아이디 </label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>" > <span class="help-block m-b-none">가맹점 아이디 입니다.. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -423,19 +430,44 @@ function get_frcode(code)
 	dataType:"json",
 	success: function(data) {
 		pt_code=data.posts;
-		search_frcode("DS0003PT0001");
+		var ds_code=$("#sel_prq_fcode").val().substring(0, 12);
+		search_frcode(ds_code);
 		}
 	});
 }
 
+var fr_mail=[];
+function get_frmail()
+{
+	$.ajax({
+	url:"/prq/ajax/get_frmail/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				if(val.prq_fcode==$("#sel_prq_fcode").val())
+				{
+//					fr_mail[val.prq_fcode]=val.mb_email;
+					$("#mb_id").val(val.mb_email);
+				}
+				fr_mail[val.prq_fcode]=val.mb_email;
+			});
+		}
+	});
+}
 
 function search_frcode(ds_code)
 {
 	var object = [];
 	var chk_max_ptcode=[];
+	var prq_fcode=$("#sel_prq_fcode").val().substring(0, 12);
 	$.each(pt_code,function(key,val){
-		if("DS0001"==val.pt_code){
+		
+		//console.log(val);
+		if(prq_fcode==val.pt_code){
 			object.push('<option value='+val.fr_code+' selected>');
+			$("#mb_id").val(fr_mail[val.fr_code]);
 		}else{
 			object.push('<option value='+val.fr_code+'>');
 		}
@@ -455,15 +487,21 @@ function search_frcode(ds_code)
 }
 
 
-
+function get_mb_id(v){
+$("#mb_id").val(fr_mail[v]);
+}
 window.onload = function() {
 /*24시간인지 체크*/
 chk_btn_status();
 
 /*멀티 셀렉트 구현 chosen-select */
 $(".chosen-select").chosen();
-var code="DS0003PT0001";
+var code=$("#sel_prq_fcode").val().substring(0, 12);
 get_frcode(code);
+
+get_frmail();
+
+
 };/*window.onload = function() {..}*/
 
 

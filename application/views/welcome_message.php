@@ -42,8 +42,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		<p>코드 이그나이터를 설치후 볼 수 있는 화면 입니다. </p>
 		<p><?php echo getcwd();?></p>
+		<form action="http://prq.co.kr/prq/ajax/black/" method="POST">
+		<input type="text" name="gubun" id="" value="1">
+		<input type="text" name="phoneno" id="" value="01012345678">
+		<input type="text" name="dnis" id="" value="08012345678">
+		<input type="text" name="duration" id="" value="15">
+		<input type="submit" value="전송">
+		</form>
 		</div><!-- #body -->
-
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. 
 {memory_usage}
 	<?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>

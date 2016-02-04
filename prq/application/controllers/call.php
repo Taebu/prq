@@ -477,6 +477,14 @@ class Call extends CI_Controller {
  	}
 
 	/**
+	 * 블랙 리스트 추가
+	 */
+	function black()
+ 	{
+		echo $this->uri->segment(3);
+ 	}
+
+	/**
 	 * url중 키값을 구분하여 값을 가져오도록.
 	 *
 	 * @param Array $url : segment_explode 한 url값

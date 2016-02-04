@@ -110,6 +110,7 @@ class Store_m extends CI_Model
 		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
 		$sql_array[]="st_category='".$arrays['st_category']."',";
 		$sql_array[]="st_name='".$arrays['st_name']."',";
+		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="st_tel='".$arrays['st_tel']."',";
 		$sql_array[]="st_open='".$arrays['st_open']."',";
 		$sql_array[]="st_closed='".$arrays['st_closed']."',";
@@ -277,6 +278,7 @@ mysql> select * from prq_member_code;
 		$sql_array[]="st_category='".$arrays['st_category']."',";
 		$sql_array[]="st_name='".$arrays['st_name']."',";
 		$sql_array[]="st_tel='".$arrays['st_tel']."',";
+		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="st_tel_1='".$arrays['st_tel_1']."',";
 		$sql_array[]="st_hp_1='".$arrays['st_hp_1']."',";
 		$sql_array[]="st_cidtype='".$arrays['st_cidtype']."',";

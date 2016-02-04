@@ -90,9 +90,15 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 	<option value="FR0005">네네치킨(FR0005)</option>
 </select>
 <?php }else if($mb_gcode!="G5"){?>
-<select name="prq_fcode" id="prq_fcode" class="form-control" ></select> 
+<select name="prq_fcode" id="prq_fcode" class="form-control" onchange="get_mb_id(this.value)" onclick="get_mb_id(this.value)" ></select> 
 <?php }?>
 <span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">가맹점 아이디 </label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" > <span class="help-block m-b-none">가맹점 아이디 입니다.. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -500,6 +506,28 @@ function search_frcode(ds_code)
 	}
 }
 
+var fr_mail=[];
+function get_frmail()
+{
+	$.ajax({
+	url:"/prq/ajax/get_frmail/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				
+				fr_mail[val.prq_fcode]=val.mb_email;
+			});
+		}
+	});
+}
+
+
+function get_mb_id(v){
+$("#mb_id").val(fr_mail[v]);
+}
+
 
 window.onload = function() {
 
@@ -521,6 +549,8 @@ chk_btn_status();
 $(".chosen-select").chosen();
 var code=$("#prq_fcode").val();
 get_frcode(code);
+
+get_frmail();
 };/*window.onload = function() {..}*/
 
 

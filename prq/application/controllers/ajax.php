@@ -163,6 +163,12 @@ class Ajax extends CI_Controller {
 		$result = $this->ajax_m->get_frcode($ptcode);
 		echo $result;
 	}
+	/* get_frcode() */
+	function get_frmail()
+	{
+		$result = $this->ajax_m->get_frmail();
+		echo $result;
+	}
 
 	/* get_used_frcode() */
 	function get_used_frcode()
@@ -335,6 +341,53 @@ class Ajax extends CI_Controller {
 		$result = $this->ajax_m->get_store();
 		echo $result;
 	}
+
+	/**
+	 * 블랙 리스트 추가
+	 */
+	function black()
+ 	{
+		//http://prq.co.kr/prq/ajax/black/01012345678 
+		/*
+		이용자가 SMS수신거부 신청시 데이터를 실시간으로 전달받기 원할 경우
+		HTTP 프로토콜 POST방식으로 SMS수신거부신청 폰번호를 파라미터로 전달해줍니다.
+		파라미터명은 다음과 같읍니다.
+		gubun: 수신거부/회원탈퇴 구분(1:수신거부 2.회원탈퇴)
+		phoneno : 수신거부폰번호
+		dnis : 접속080번호 
+		duration : 통화시간(초단위)
+		그리고 리턴페이지에서 해당처리후 페이지호출성공여부 체크용으로 html테그없이 0 또는 1값을 뿌려주시면 되겠읍니다.
+
+		궁금한 사항은 dhkim97@hanmail.net 으로 문의하시기 바랍니다.
+		*/
+		$gubun = $this->input->get("gubun", TRUE);
+		$phoneno = $this->input->get("phoneno", TRUE);
+		$dnis = $this->input->get("dnis", TRUE);
+		$duration = $this->input->get("duration", TRUE);
+/*
+		$gubun = $this->input->post("gubun", TRUE);
+		$phoneno = $this->input->post("phoneno", TRUE);
+		$dnis = $this->input->post("dnis", TRUE);
+		$duration = $this->input->post("duration", TRUE);
+*/
+		$write_data = array(
+			'gubun'=>$gubun,
+			'phoneno'=>$phoneno,
+			'dnis'=>$dnis,
+			'duration'=>$duration
+		);
+
+		$result = $this->ajax_m->set_black($write_data);
+ 	}
+
+
+	function get_app()
+ 	{
+
+		$this->load->view('ajax/comapp_v');
+ 	}
+
+	
 }
 
 /* End of file ajax_board.php */
