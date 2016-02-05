@@ -45,6 +45,7 @@ class Crontab_m extends CI_Model
     {
 		$sql=array();
 		$sql[]="select ";
+		$sql[]=" st_mno,";
 		$sql[]=" st_thumb_paper,";
 		$sql[]=" st_top_msg, ";
 		$sql[]=" st_middle_msg,";
@@ -61,12 +62,30 @@ class Crontab_m extends CI_Model
 		$str_sql=join("",$sql);
    		$query = $this->db->query($str_sql);
 
-     	//댓글 리스트 반환
+     	//상점 정보 리스트 반환
 	    $result = $query->result();
 
     	return $result;
     }
 
+
+	function get_black()
+    {
+		$sql=array();
+		$sql[]="select ";
+		$sql[]="bl_hp ";
+		$sql[]="from ";
+		$sql[]="`callerid`.black_hp ";
+		$sql[]="where ";
+		$sql[]="bl_dnis='0801308119';";
+		$str_sql=join("",$sql);
+   		$query = $this->db->query($str_sql);
+
+     	//블랙 리스트 반환
+	    $result = $query->result();
+
+    	return $result;
+    }
 
 
 }

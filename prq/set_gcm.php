@@ -21,8 +21,7 @@ $gcm = new GCM();
 
 $message = array( 
 	"title" =>$title,
-//	"message" =>$message,
-	"message" =>str_replace(array("\r\n", "\r", "\n"), '<br>', $message),
+	"message" =>$message,
 	"is_mms" =>$is_mms,
 	"receiver_num" =>$receiver_num,
 	"img_url" =>$img_url

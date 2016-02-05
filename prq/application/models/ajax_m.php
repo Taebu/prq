@@ -985,7 +985,7 @@ class Ajax_m extends CI_Model
 			$json['posts']=array();
 			foreach($query->result_array() as $list){
 				array_push($json['posts'],$list);
-			}
+			}		
 		}
 		echo json_encode($json);
 	}

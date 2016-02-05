@@ -263,6 +263,21 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .row -->
 
+<div class="form-group"><label class="col-sm-2 control-label">통신사(MNO)</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_mno" id="st_mno_1" value='SK' checked><label for="st_mno_1">SK</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_mno" id="st_mno_2"  value='LG'><label for="st_mno_2">LG</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_mno" id="st_mno_3"  value='KT'><label for="st_mno_3">KT</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="row">
 <div class="col-md-6">
 <div class="form-group"><label class="col-sm-4 control-label">매장 번호 1</label>
@@ -279,6 +294,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .col-md-6 Right Menu-->
 </div><!-- .row -->
+
+
 
 <div class="row">
 <div class="col-md-12">

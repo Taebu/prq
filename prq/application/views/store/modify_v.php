@@ -340,6 +340,20 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .col-md-6 Right Menu-->
 </div><!-- .row -->
 
+<div class="form-group"><label class="col-sm-2 control-label">통신사(MNO)</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_mno" id="st_mno_1" value='SK' <?php echo $views->st_mno=="SK"?"checked":"";?>><label for="st_mno_1">SK</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_mno" id="st_mno_2"  value='LG' <?php echo $views->st_mno=="LG"?"checked":"";?>><label for="st_mno_2">LG</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_mno" id="st_mno_3"  value='KT' <?php echo $views->st_mno=="KT"?"checked":"";?>><label for="st_mno_3">KT</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
 <div class="row">
@@ -461,11 +475,11 @@ function search_frcode(ds_code)
 {
 	var object = [];
 	var chk_max_ptcode=[];
-	var prq_fcode=$("#sel_prq_fcode").val().substring(0, 12);
+	var prq_fcode=$("#sel_prq_fcode").val();
 	$.each(pt_code,function(key,val){
 		
 		//console.log(val);
-		if(prq_fcode==val.pt_code){
+		if(prq_fcode==val.fr_code){
 			object.push('<option value='+val.fr_code+' selected>');
 			$("#mb_id").val(fr_mail[val.fr_code]);
 		}else{

@@ -76,6 +76,13 @@
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+								<div class="form-group"><label class="col-sm-2 control-label">통신사</label>
+                                    <div class="col-sm-10"><?php echo $views->st_mno;?><span class="help-block m-b-none">통신사 입니다.</span>
+                                    </div><!-- .col-sm-10 -->
+                                </div><!-- .form-group -->
+                                <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+								
 								
 								<div class="form-group"><label class="col-sm-2 control-label">상단메세지</label>
                                     <div class="col-sm-10"><?php echo $views->st_top_msg;?><span class="help-block m-b-none">MMS 상단에 들어갈 메세지입니다.</span>
