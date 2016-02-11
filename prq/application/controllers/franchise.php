@@ -327,6 +327,11 @@ class Franchise extends CI_Controller {
 					'mb_bank_paper_size' => $this->input->post('mb_bank_paper_size', TRUE)
 				);
 //				$result = $this->distributors_m->insert_distributors($write_data);
+				$modify_mno_data = array(
+					'mn_id' => $this->input->post('mb_id', TRUE),
+					'mn_dup_limit' => $this->input->post('mn_dup_limit', TRUE)
+				);
+				$result2 = $this->franchise_m->modify_mno($modify_mno_data);
 
 				$result = $this->franchise_m->modify_franchise($modify_data);
 
@@ -472,6 +477,12 @@ class Franchise extends CI_Controller {
 			break;
 		}
 		return $result;
+	}
+
+	/*prq_fcode 별 상점 갯수 반환 하기*/
+	function get_store_cnt($code){
+		$count = $this->franchise_m->get_store_cnt($code);
+		return $count;
 	}
 }
 

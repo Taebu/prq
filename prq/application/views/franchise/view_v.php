@@ -161,7 +161,11 @@
 		</div>
 	</article> -->
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
-            <div class="row wrapper border-bottom white-bg page-heading">
+<script type="text/javascript">
+
+
+</script>
+			<div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>가맹점 수정</h2>
                     <ol class="breadcrumb">
@@ -194,6 +198,7 @@
 		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
 		<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
+		<input type="hidden" name="mb_id" id="mb_id" value="<?php echo $lt->mb_id;?>">
 		
 			<div class="row">
                 <div class="col-lg-12">
@@ -366,44 +371,17 @@
 </div>
 <div class="row"><div class="col-md-12">
 			<div class="form-group"><label class="col-sm-1 control-label">CID 정보</label>
-<div class="col-sm-11" >
-mysql> select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
-<table class="table">
-<thead>
-<tr>
-<th>#</th>
-<th>st_name</th>
-<th>st_cidtype</th>
-<th>st_tel_1</th>
-<th>st_hp_1</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>성준치킨</td>
-<td>callcid</td>
-<td>031-909-1577</td>
-<td>010774430009</td>
-</tr>
-<tr> 
-<td>2</td>
-<td>태부치킨1</td>
-<td>ktcid</td>
-<td>0317061031</td>
-<td>01012345678</td>
-</tr>
-</tbody>
-</table>
-
-				<span class="help-block m-b-none"></span>
-				</div><!-- .col-sm-10 -->
+			<div class="col-sm-11" id="cid_info">...</div><!-- .col-sm-10 #cid_info -->
 			</div><!-- .form-group -->
 			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div></div><!-- .row -->
 
-select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
-
-</div></div>
+<div class="row"><div class="col-md-12">
+			<div class="form-group"><label class="col-sm-1 control-label">MNO 정보</label>
+			<div class="col-sm-11" id="mno_info">mno info</div><!-- .col-sm-10 #mno_info -->
+			</div><!-- .form-group -->
+			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div></div><!-- .row -->
 <div>
 			  <div class="controls">
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -473,9 +451,12 @@ mb_hp=6545645646
 	}
 
 window.onload = function() {
+	/* cid 정보를 불러 옵니다.*/
+	get_cidinfo();
 
-
-
+	/* mno 정보를 불러 옵니다.*/
+	get_mnoinfo();
+};
 /*End Dropzone*/	
 
 var focus=0,blur=0;
@@ -529,7 +510,7 @@ var focus=0,blur=0;
 			$( "#mb_id_assist" ).html(object.join(""));		
 		}
   });
-};
+
 
 function set_member(){
 	var param=$("#write_action").serialize();
@@ -546,4 +527,98 @@ function set_member(){
     });		
 
 }
+
+
+function get_cidinfo(){
+//	var param=$("#write_action").serialize();
+
+    $.ajax({
+		url:"/prq/ajax/get_cidinfo/"+$("#prq_fcode").val(),
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+			var object=[];
+			var chk_port="";
+			var str="";
+			if(data.posts.length<1){
+			object.push('등록된 상점 CID 정보가 없습니다.');
+			$("#cid_info").html(object.join(""));
+			return ;
+			}
+			object.push('<table class="table">');
+			object.push('<thead>');
+			object.push('<tr>');
+			object.push('<th>#</th>');
+			object.push('<th>st_name</th>');
+			object.push('<th>st_cidtype</th>');
+			object.push('<th>st_tel_1</th>');
+			object.push('<th>st_hp_1</th>');
+			object.push('</tr>');
+			object.push('</thead>');
+			object.push('<tbody>');			
+			$.each(data.posts,function(key,val){
+				object.push('<tr>');
+				object.push('<td>');
+				object.push(val.st_port);
+				object.push('</td>');
+				object.push('<td>'+val.st_name+'</td>');
+				object.push('<td>'+val.st_cidtype+'</td>');
+				object.push('<td>'+val.st_tel_1+'</td>');
+				object.push('<td>'+val.st_hp_1+'</td>');
+				object.push('</tr>');
+			});
+			object.push('</tbody>');
+			object.push('</table>');
+			object.push('<span class="help-block m-b-none"></span>');
+			$("#cid_info").html(object.join(""));
+        }
+    });		
+
+}
+
+function get_mnoinfo(){
+//	var param=$("#write_action").serialize();
+
+    $.ajax({
+		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+			var object=[];
+			var chk_port="";
+			var str="";
+			if(data.posts.length<1){
+			object.push('등록된 상점 MNO 정보가 없습니다.');
+			$("#mno_info").html(object.join(""));
+			return ;
+			}
+			object.push('<table class="table">');
+			object.push('<thead>');
+			object.push('<tr>');
+			object.push('<tbody>');			
+			$.each(data.posts,function(key,val){
+				object.push('<tr><td>통신사</td><td colspan="5">'+val.mn_operator+'</td></tr>');
+				object.push('<tr><td>발송번호</td><td>'+val.mn_hp+'</td>');
+				object.push('<td>문자 구분<td><td>'+val.mn_type+'</td></tr>');
+				object.push('<tr><td>안드로이드 버전</td><td>'+val.mn_version+'</td>');
+				object.push('<td>단말기<td><td>'+val.mn_model+'</td></tr>');
+				object.push('<tr><td>문자발송</td><td>'+val.mn_mms_limit+'</td>');
+				object.push('<td>중복발송제한<td><td>'+val.mn_dup_limit+'</td></tr>');
+			});
+			object.push('</tbody>');
+			object.push('</table>');
+			object.push('<span class="help-block m-b-none"></span>');
+			$("#mno_info").html(object.join(""));
+        }
+    });		
+}
+
 </script>

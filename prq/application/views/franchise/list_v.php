@@ -284,36 +284,22 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <?php
 foreach ($list as $lt)
 {
-
+$store_cnt= $controllers->get_store_cnt($lt->prq_fcode);
 ?>
 				<tr>
 					<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
 					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
 					<td scope="row"><?php echo $lt->mb_no;?></td>
 					<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
+					<td scope="row"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</td>
 					<td scope="row"><?php echo $lt->mb_name;?></td>
 					<td scope="row"><?php echo $lt->mb_business_num;?></td>
 					<td><?php echo $lt->mb_ceoname;?></td>
 					<td><?php echo $lt->mb_hp;?></td>
-					<td><a rel="external" href="/prq/store/lists/prq_store/page/1"><?php echo "5개";?></a></td>
+					<td><?php echo $store_cnt->cnt;?>개</td>
 					<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
 					<td><?php echo date("Y-m-d",strtotime($lt->mb_datetime));?></td>
 					<td>-</td>
-					<!-- <td>
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
-					<td><?php echo $lt->mb_gcode;?></td>
-					
-					<td><?php echo $lt->mb_id;?></td>
-					<td><?php echo $lt->mb_code;?></td>
-					<td><?php echo $lt->mb_gname_kor;?></td>
-					<td><?php echo $lt->mb_gname_eng;?></td>
-					 					 <td><time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">
-					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?></time>
-					<?php echo $lt->mb_business_paper;?>	</td>
-					 					<td><span class="mb_gname">총판</span></td> 
-					 					<td>46</td> 
-					 					<td>정상</td> 
-					 					<td>-</td>  -->
 				</tr>
 <?php
 }

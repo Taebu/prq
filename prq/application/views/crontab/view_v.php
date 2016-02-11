@@ -9,14 +9,25 @@
   <title>Document</title>
  </head>
  <body>
- <?php 
-	$black_list=$controller->crontab_m->get_black();
-	$black_arr=array();
-    foreach($black_list as $bl){
-		$black_arr[]=$bl->bl_hp;
-	}
+ select date(DATE_SUB(NOW(), INTERVAL 7 DAY);
+ 가맹점.<br>
+ 일주일 전 혹은 세팅한 prq.prq_mno 테이블에 mn_dup_limit 날짜를 초과하지 않는 핸드폰 번호를 조회하여 mms 를 발송한다.<br>
+<br>
 
-//print_r($black_arr);
+ <?php 
+/* 블랙 리스트 조회 하기 */
+$black_list=$controller->crontab_m->get_black();
+$black_arr=array();
+foreach($black_list as $bl){
+	$black_arr[]=$bl->bl_hp;
+}
+
+/* 콜 리스트 조회 일부는 조회한 후 필터링 
+조건
+1. mn_dup_limit 날짜를 기준으로 상점의 번호와 아이디 번호를 조회해 결과 리스트가 없으면 발송
+2. 해당 리스트 발송에 대하여 GCM MMS 로그를 발생 수발신 성공 여부 기록
+
+*/
 foreach($list as $li){
 	$config = array(
 	//페이지네이션 기본 설정

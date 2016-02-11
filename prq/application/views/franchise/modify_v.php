@@ -115,6 +115,48 @@ function get_cidinfo(){
     });		
 
 }
+
+function get_mnoinfo(){
+//	var param=$("#write_action").serialize();
+
+    $.ajax({
+		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+			var object=[];
+			var chk_port="";
+			var str="";
+			if(data.posts.length<1){
+			object.push('등록된 상점 MNO 정보가 없습니다.');
+			$("#mno_info").html(object.join(""));
+			return ;
+			}
+			object.push('<table class="table">');
+			object.push('<thead>');
+			object.push('<tr>');
+			object.push('<tbody>');			
+			$.each(data.posts,function(key,val){
+				object.push('<tr><td>통신사</td><td colspan="5">'+val.mn_operator+'</td></tr>');
+				object.push('<tr><td>발송번호</td><td>'+val.mn_hp+'</td>');
+				object.push('<td>문자 구분<td><td>'+val.mn_type+'</td></tr>');
+				object.push('<tr><td>안드로이드 버전</td><td>'+val.mn_version+'</td>');
+				object.push('<td>단말기<td><td>'+val.mn_model+'</td></tr>');
+				object.push('<tr><td>문자발송</td><td>'+val.mn_mms_limit+'</td>');
+				object.push('<td>중복발송제한<td><td>');
+				object.push('<input type="text" class="form-control" name="mn_dup_limit" value="'+val.mn_dup_limit+' "></td></tr>');
+			});
+			object.push('</tbody>');
+			object.push('</table>');
+			object.push('<span class="help-block m-b-none"></span>');
+			$("#mno_info").html(object.join(""));
+        }
+    });		
+}
 //mysql> select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
 
 
@@ -129,6 +171,9 @@ window.onload = function() {
 프랜차이즈에 해당하는 포트 CID type 및 전화 번호 불러 오기
 */
 get_cidinfo();
+
+/*mno 정보 불러 오기*/
+get_mnoinfo();
 };
 </script>
 	<article id="board_area">
@@ -342,13 +387,18 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 </div>
 <div class="row"><div class="col-md-12">
 			<div class="form-group"><label class="col-sm-1 control-label">CID 정보</label>
-<div class="col-sm-11" id="cid_info">...</div><!-- .col-sm-10 #cid_info -->
+			<div class="col-sm-11" id="cid_info">...</div><!-- .col-sm-10 #cid_info -->
 			</div><!-- .form-group -->
 			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div></div><!-- .row -->
 
+<div class="row"><div class="col-md-12">
+			<div class="form-group"><label class="col-sm-1 control-label">MNO 정보</label>
+			<div class="col-sm-11" id="mno_info">mno info</div><!-- .col-sm-10 #cid_info -->
+			</div><!-- .form-group -->
+			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div></div><!-- .row -->
 
-
-</div></div>
 <div>
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>

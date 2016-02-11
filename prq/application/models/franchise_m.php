@@ -96,7 +96,7 @@ class Franchise_m extends CI_Model
     /**
 	 * 게시물 상세보기 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -120,7 +120,7 @@ class Franchise_m extends CI_Model
 
 	/**
 	 * 게시물 입력
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -169,7 +169,7 @@ class Franchise_m extends CI_Model
 
 	/**
 	 * 회원 코드 입력
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -211,7 +211,7 @@ mysql> select * from prq_member_code;
 	 * 2. 실제 적용될 코드값 조회
 
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 멤버아이디 , 멤버가입코드
 	 * @return row 입력 성공한 코드 반환.
 	 */
@@ -253,7 +253,7 @@ mysql> select * from prq_member_code;
 	 * 2. 실제 적용될 코드값 조회
 
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 멤버아이디 , 멤버가입코드
 	 * @return row 입력 성공한 코드 반환.
 	 */
@@ -276,7 +276,7 @@ mysql> select * from prq_member_code;
 	/**
 	 * 게시물 수정
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -330,7 +330,7 @@ mysql> select * from prq_member_code;
 	/**
 	 * 게시물 삭제
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 테이블명
 	 * @param string $no 게시물번호
 	 * @return boolean 삭제 성공여부
@@ -350,7 +350,7 @@ mysql> select * from prq_member_code;
 	/**
 	 * 게시물 작성자 아이디 반환
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $board_id 게시물번호
 	 * @return string 작성자 아이디
@@ -367,7 +367,7 @@ mysql> select * from prq_member_code;
 	/**
 	 * 댓글 입력
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -393,7 +393,7 @@ mysql> select * from prq_member_code;
 	/**
 	 * 댓글 리스트 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -408,7 +408,47 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
+
+	/**
+	 * 상점 갯수 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $prq_fcode prq 코드
+	 * @return array
+	 */
+    function get_store_cnt($prq_fcode)
+    {
+    	$sql = "select count(*) cnt from prq_store where prq_fcode='".$prq_fcode."';";
+//		$sql = "select prq_fcode,count(*) cnt from prq_store group by prq_fcode;";
+   		$query = $this->db->query($sql);
+
+     	//상점 갯수 반환
+	    $result = $query->row();
+
+    	return $result;
+    }
+	/**
+	 * 게시물 수정
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
+	 * @return boolean 입력 성공여부
+	 */
+	function modify_mno($arrays)
+ 	{
+		$sql_array=array();
+		$sql_array[]="UPDATE prq_mno SET ";
+		$sql_array[]="mn_dup_limit ='".$arrays['mn_dup_limit']."' ";
+		$sql_array[]="where mn_id='".$arrays['mn_id']."' ";
+		$sql=join("",$sql_array);
+		$result = $this->db->query($sql);
+		//결과 반환
+		return $result;
+ 	}
+
+
+	
 }
 
-/* End of file member_m.php */
-/* Location: ./prq/application/models/member_m.php */
+/* End of file franchise_m.php */
+/* Location: ./prq/application/models/franchise_m.php */

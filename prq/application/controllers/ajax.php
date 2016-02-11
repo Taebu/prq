@@ -387,7 +387,42 @@ class Ajax extends CI_Controller {
 		$this->load->view('ajax/comapp_v');
  	}
 
+	/* set_mno */
+	public function set_mno()
+	{
+		$json['success']=false;
+
+		$mn_id= $this->input->post("mn_id", TRUE);
+		$mn_email= $this->input->post("mn_email", TRUE);
+		$mn_hp= $this->input->post("mn_hp", TRUE);
+		$mn_operator= $this->input->post("mn_operator", TRUE);
+		$mn_model= $this->input->post("mn_model", TRUE);
+		$mn_version= $this->input->post("mn_version", TRUE);
+		$mn_mms_limit= $this->input->post("mn_mms_limit", TRUE);
+		$mn_dup_limit= $this->input->post("mn_dup_limit", TRUE);
+
+		$write_data = array(
+			'mn_id'=>$mn_id,
+			'mn_email'=>$mn_email,
+			'mn_hp'=>$mn_hp,
+			'mn_operator'=>$mn_operator,
+			'mn_model'=>$mn_model,
+			'mn_version'=>$mn_version,
+			'mn_mms_limit'=>$mn_mms_limit,
+			'mn_dup_limit'=>$mn_dup_limit
+		);
+		$result = $this->ajax_m->set_mno($write_data);
+		echo $result;
+	}
 	
+	/* get_mnonfo() */
+	function get_mnoinfo()
+	{
+		$mn_id=$this->uri->segment(3);
+		$result = $this->ajax_m->get_mnoinfo($mn_id);
+
+		echo $result;
+	}
 }
 
 /* End of file ajax_board.php */

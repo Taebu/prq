@@ -326,20 +326,14 @@ foreach ($list as $lt)
 
 ?>
 				<tr>
-					<td scope="row"><?php echo $lt->date;?></td>
+					<td scope="row"><?php echo $lt->cd_date;?></td>
 					<!-- <td scope="row"><?php echo $lt->UserID;?></td> -->
-					<td scope="row"><?php echo $lt->cUserID;?></td>
-					<td scope="row"><?php echo $lt->port;?></td>
-					<td scope="row"><?php echo $lt->callerid;?></td>
-					<td scope="row"><?php echo $lt->CompanyName;?>(<?php echo $lt->UserName;?>)</td>
-<?php 
-if($lt->port>0){?>
-					<td scope="row"><?php echo $lt->port<5?$lt->{"Mobile_".$lt->port}:"";?></td>
-					<td scope="row"><?php echo $lt->port<5?$lt->{"Tel_".$lt->port}:"";?></td>
-<?php }else{?>
-					<td scope="row"><?php echo $lt->Mobile_1;?></td>
-					<td scope="row"><?php echo $lt->Tel_1;?></td>
-<?php }?>
+					<td scope="row"><?php echo $lt->cd_id;?></td>
+					<td scope="row"><?php echo $lt->cd_port;?></td>
+					<td scope="row"><?php echo $lt->cd_callerid;?></td>
+					<td scope="row"><?php echo $lt->cd_name;?></td>
+					<td scope="row"><?php echo $lt->cd_tel;?></td>
+					<td scope="row"><?php echo $lt->cd_hp;?></td>
 				</tr>
 <?php
 }

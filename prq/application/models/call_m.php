@@ -148,7 +148,7 @@ mysql>
 		$order="ORDER BY  date desc";
 		$sql = "SELECT *,'erm02@naver.com' AS 'UserID' FROM ".$table.$sword."  ".$order."".$limit_query;
 		$sql=array();
-
+/*
 		$sql[] ="select *,";
 		$sql[] ="callerid.cdr.UserID AS 'cUserID' ";
 		$sql[] ="from ";
@@ -157,6 +157,10 @@ mysql>
 		$sql[] ="on cdr.UserID = users.UserID ";
 //		$sql[] ="OR cdr.UserID = users.UserID ";
 		$sql[] ="order by callerid.cdr.date desc ";
+		*/
+		$sql[]="SELECT * ";
+		$sql[]=" FROM prq_cdr ";
+		$sql[]=" order by cd_date desc ";
 		$sql[] =$limit_query.";";
 
 		/*

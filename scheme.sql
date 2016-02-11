@@ -833,3 +833,60 @@ ALTER TABLE `prq_store` add st_port tinyint NOT NULL default 1;
 
 ALTER TABLE `prq_store` add `mb_id` varchar(20) NOT NULL DEFAULT '' after `prq_fcode`;
 
+-- 2016-02-03 (수)
+
+
+
+CREATE TABLE `callerid`.`black_hp` (
+  `bl_hp` varchar(30) NOT NULL DEFAULT '',
+  `bl_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`bl_hp`)
+) DEFAULT CHARSET=utf8;
+
+
+insert into `callerid`.`black_hp` set bl_hp='01012345678' bl_datetime=now();
+select * from `callerid`.`black_hp`;
+
+
+cd_name=@st_name,
+cd_tel_1=@st_tel_1,
+cd_hp_1=@st_hp_1;
+
+
+
+ALTER TABLE `prq_cdr` add cd_name varchar(255) NOT NULL default '';
+ALTER TABLE `prq_cdr` add cd_tel varchar(30) NOT NULL default '';
+ALTER TABLE `prq_cdr` add cd_hp varchar(30) NOT NULL default '';
+
+ALTER TABLE `callerid`.`black_hp` add bl_gubun char(1) NOT NULL default '1';
+ALTER TABLE `callerid`.`black_hp` add bl_dnis varchar(30) NOT NULL default '';
+ALTER TABLE `callerid`.`black_hp` add bl_duration int NOT NULL default 0;
+
+-- 2016-02-05 (금)
+ALTER TABLE `prq_store` add st_mno enum('SK','LG','KT') NULL default 'SK';
+
+INSERT INTO `cdr` VALUES ('2016-02-04 20:23:55','01099358800','01099358800','05085125336','from-trunk','SIP/mug_2-000b3664','SIP/mug_1-000b3666','Dial','SIP/mug_1/0316130092,60,m(c002gl_1)A(c002gl_2)L(7200000)',38,31,'ANSWERED',3,'0316130092','1454585035.734974','audio:OUT-20160204-202355-1454585035.734974.wav');
+
+INSERT INTO `cdr` VALUES ('2016-02-04 21:54:00','01031887230','01031887230','05085125880','from-trunk','SIP/mug_2-000b3b75','SIP/mug_1-000b3b76','Dial','SIP/mug_1/0314076665,60,m(gl_1)A(gl_2)L(7200000)','76','67','ANSWERED','3','0314076665','1454590440.736271','audio:OUT-20160204-215400-1454590440.736271.wav');
+INSERT INTO `cdr` VALUES ('2016-02-04 20:02:14','01024591106','01024591106','05085154350','from-trunk','SIP/mug_2-000b352f','SIP/mug_1-000b3530','Dial','SIP/mug_1/0553835235,60,m(a041ca_1)A(a041ca_2)L(7200000)','96','90','ANSWERED','3','0553835235','1454583734.734665','audio:OUT-20160204-200214-1454583734.734665.wav');
+
+-- 2016-02-11 (목)
+
+drop  TABLE `prq_mno`;
+CREATE TABLE `prq_mno` (
+  `mn_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `mn_id` varchar(255) NOT NULL,
+  `mn_email` varchar(255) NOT NULL,
+  `mn_hp` char(18) NOT NULL,
+  `mn_type` enum('MMS','SMS','LMS') NOT NULL DEFAULT 'MMS',
+  `mn_operator` enum('MMS','SMS','LMS') NOT NULL DEFAULT 'MMS',
+  `mn_model` varchar(255) NOT NULL,
+  `mn_version` varchar(255) NOT NULL,
+  `mn_mms_limit` tinyint(4) NOT NULL,
+  `mn_dup_limit` tinyint(4) NOT NULL,
+  `mn_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`mn_no`),
+  UNIQUE KEY `mn_id` (`mn_id`)
+) DEFAULT CHARSET=utf8;
+
+ALTER TABLE `prq_mno` add mn_operator enum('SK','LG','KT') NULL default 'SK';
