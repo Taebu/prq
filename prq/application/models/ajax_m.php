@@ -1097,6 +1097,50 @@ class Ajax_m extends CI_Model
 		echo json_encode($json);
 	}
 
+	/*
+	set_mms($array)
+
+	 mms 전송 정보 실패 성공 값 로그를 
+	@param $array data
+	@return json
+	*/
+	function set_mms($array)
+	{
+		$json=array();
+		$json['success']=false;
+		if(is_null($array['mm_sender'])||strlen($array['mm_sender'])<2){
+		echo json_encode($json);
+		return ;
+		}
+
+		$sql=array();
+		$sql[]="INSERT INTO  `prq_mms_log` SET ";
+		$sql[]=" mm_subject='".$array['mm_subject']."', ";
+		$sql[]=" mm_content='".$array['mm_content']."', ";
+		$sql[]=" mm_type='".$array['mm_type']."', ";
+		$sql[]=" mm_receiver='".$array['mm_receiver']."', ";
+		$sql[]=" mm_sender='".$array['mm_sender']."', ";
+		$sql[]=" mm_imgurl='".$array['mm_imgurl']."', ";
+		$sql[]=" mm_result='".$array['mm_result']."', ";
+		$sql[]=" mm_ipaddr='".$array['mm_ipaddr']."', ";
+		$sql[]=" mm_datetime=now();";
+
+		$join_sql=join("",$sql);
+		//$json['query']=$ojin_sql;
+		$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
+
+
 }
 
 /* End of file auth_m.php */

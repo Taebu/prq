@@ -195,13 +195,23 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <li><a href="/prq/board/write/">GCM Send</a></li>
                         </ul>
                     </li>
-					<?php 
+<!-- 					<?php 
 					echo $this->uri->segment(1)=="call"?'<li class="active">':'<li>';
 					 ?>
-                        <a href="#">
+					                        <a href="#">
 						<i class="fa fa-flask"></i><span class="nav-label">CALL</span><span class="fa arrow"></span></a>
+					                        <ul class="nav nav-second-level collapse">
+					                            <li><a href="/prq/call/lists/">CALL</a></li>
+					                        </ul>
+					                    </li> -->
+					<?php echo $this->uri->segment(1)=="logs"?'<li class="active">':'<li>';?>
+                        <a href="#">
+						<i class="fa fa-files-o"></i><span class="nav-label">LOGS</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/call/lists/">CALL</a></li>
+                            <?php echo $this->uri->segment(3)=="cid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/cid">CID</a></li>
+                            <?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
+                            <?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
+                            <?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
                         </ul>
                     </li>
 

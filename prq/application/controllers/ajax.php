@@ -423,6 +423,34 @@ class Ajax extends CI_Controller {
 
 		echo $result;
 	}
+	
+	/* set_mms */
+	public function set_mms()
+	{
+		$json['success']=false;
+
+		$mm_subject= $this->input->post("mm_subject", TRUE);
+		$mm_content= $this->input->post("mm_content", TRUE);
+		$mm_type= $this->input->post("mm_type", TRUE);
+		$mm_receiver= $this->input->post("mm_receiver", TRUE);
+		$mm_sender= $this->input->post("mm_sender", TRUE);
+		$mm_imgurl= $this->input->post("mm_imgurl", TRUE);
+		$mm_result= $this->input->post("mm_result", TRUE);
+		$mm_ipaddr= $this->input->post("mm_ipaddr", TRUE);	
+
+		$write_data = array(
+			'mm_subject'=>$mm_subject,
+			'mm_content'=>$mm_content,
+			'mm_type'=>$mm_type,
+			'mm_receiver'=>$mm_receiver,
+			'mm_sender'=>$mm_sender,
+			'mm_imgurl'=>$mm_imgurl,
+			'mm_result'=>$mm_result,
+			'mm_ipaddr'=>$mm_ipaddr
+		);
+		$result = $this->ajax_m->set_mms($write_data);
+		echo $result;
+	}
 }
 
 /* End of file ajax_board.php */

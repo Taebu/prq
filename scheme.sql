@@ -890,3 +890,35 @@ CREATE TABLE `prq_mno` (
 ) DEFAULT CHARSET=utf8;
 
 ALTER TABLE `prq_mno` add mn_operator enum('SK','LG','KT') NULL default 'SK';
+
+-- 2016-02-12 (금)
+
+CREATE TABLE `prq_gcm_log` (
+  `gc_no` int(11) NOT NULL AUTO_INCREMENT,
+  `gc_subject`  varchar(255) DEFAULT NULL COMMENT '발송 제목',
+  `gc_content`  text COMMENT '발송 내용',
+  `gc_ismms` enum('false','true') NOT NULL DEFAULT 'false'  COMMENT 'GCM만 혹은 MMS 같이 전송여부',
+  `gc_receiver`  varchar(16) DEFAULT NULL DEFAULT '0' COMMENT '수신번호',
+  `gc_sender`  varchar(16) DEFAULT NULL DEFAULT '0' COMMENT '발신번호',
+  `gc_imgurl`  varchar(255) DEFAULT NULL DEFAULT '' COMMENT '이미지 전송 URL',
+  `gc_result` varchar(255) NOT NULL COMMENT '전송결과',
+  `gc_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `gc_status` char(1) NOT NULL  DEFAULT 'I',
+  `gc_ipaddr` varchar (15) NOT NULL DEFAULT '',
+  PRIMARY KEY (`gc_no`)
+) DEFAULT CHARSET=utf8  COMMENT='GCM LOG';
+
+CREATE TABLE `prq_mms_log` (
+  `mm_no` int(11) NOT NULL AUTO_INCREMENT,
+  `mm_subject`  varchar(255) DEFAULT NULL COMMENT '발송 제목',
+  `mm_content`  text COMMENT '발송 내용',
+  `mm_type` enum('mms','sms','lms') NOT NULL DEFAULT 'mms' COMMENT '발송 타입 기본값 mms',
+  `mm_receiver`  varchar(16) DEFAULT NULL DEFAULT '0' COMMENT '수신번호',
+  `mm_sender`  varchar(16) DEFAULT NULL DEFAULT '0' COMMENT '발신번호',
+  `mm_imgurl`  varchar(255) DEFAULT NULL DEFAULT '' COMMENT '이미지 전송 URL',
+  `mm_result` varchar(255) NOT NULL COMMENT '전송결과',
+  `mm_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `mm_status` char(1) DEFAULT 'I',
+  `mm_ipaddr` varchar (15) NOT NULL DEFAULT '',
+  PRIMARY KEY (`mm_no`)
+) DEFAULT CHARSET=utf8  COMMENT='MMS LOG';
