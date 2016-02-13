@@ -41,6 +41,26 @@ class Crontab_m extends CI_Model
     	return $result;
     }
     
+	/**
+	 * GCM 리스트 가져오기
+	 *
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_gcm()
+    {
+    	$sql = "SELECT * FROM prq_gcm_log";
+   		$query = $this->db->query($sql);
+
+     	//gcm log 리스트 반환
+	    $result = $query->result();
+
+    	return $result;
+    }
+
+
 	function get_store($array)
     {
 		$sql=array();

@@ -10,8 +10,6 @@ class Crontab extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->database();
-//		$this->load->model('board_m');
-//		$this->load->model('member_m');
 		$this->load->model('crontab_m');
 		$this->load->helper('form');
 		$this->load->helper(array('url','date'));
@@ -24,7 +22,7 @@ class Crontab extends CI_Controller {
 	 */
 	public function index()
 	{
-//view();
+		//view();
 	}
 
 	/**
@@ -47,6 +45,20 @@ class Crontab extends CI_Controller {
 
  		//view 호출
  		$this->load->view('crontab/view_v', $data);
+ 	}
+
+	/**
+	 * 게시물 보기
+	 */
+	function weekview()
+ 	{
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+		//$data['list'] = $this->crontab_m->get_cdr();
+		$data['list'] = $this->crontab_m->get_gcm();
+		$data['controller']=$this; 
+
+ 		//view 호출
+ 		$this->load->view('crontab/weekview_v', $data);
  	}
 
 }

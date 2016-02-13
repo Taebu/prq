@@ -30,10 +30,8 @@
 		<div class="container-fluid">
 
     <div class='row'>
-	<?php
-			echo form_open('prq/store/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
-?>
-			<!--form id="bd_search" method="post" class="well form-search" -->
+<?php echo form_open('prq/store/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));?>
+<!--form id="bd_search" method="post" class="well form-search" -->
 
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
 <input type="hidden" name="mb_code" id="mb_code" value="ST">
@@ -118,6 +116,7 @@
 			echo form_open('board/write/ci_board', $attributes);
 		?>
 	<div class='col-sm-12'>
+<div class="table-responsive">
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
@@ -166,8 +165,9 @@ echo "<tr><td colspan=9 style='text-align:center'>상점 리스트가 존재 하
 				</tr>
 			</tfoot>
 		</table>
+</div><!-- .table-responsive -->
 </div>
 </div>
 </div>
-<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
+<div class="row"><div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
 </article>

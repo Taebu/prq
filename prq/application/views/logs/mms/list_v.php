@@ -294,6 +294,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
 </div><!-- .btn_area -->
 <?php }?>
+<div class="table-responsive">
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
@@ -358,7 +359,7 @@ foreach ($list as $lt)
 				</tr>
 			</tfoot>
 		</table>
-
+</div><!-- .table-responsive -->
 
 
 </div>

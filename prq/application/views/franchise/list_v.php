@@ -264,57 +264,57 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
 </div><!-- .btn_area -->
 <?php }?>
-		<table cellspacing="0" cellpadding="0" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col"><input type="checkbox" name="chk_"></th>
-					<th scope="col">No</th>
-					<th scope="col">가맹점 코드</th>
-					<th scope="col">가맹점명</th>
-					<th scope="col">사업자번호</th>
-					<th scope="col">가맹점 ID</th>
-					<th scope="col">구분</th>
-					<th scope="col">상점수</th>
-					<th scope="col">가맹점 상태</th>
-					<th scope="col">등록일자</th>
-					<th scope="col">비고</th>
-				</tr>
-			</thead>
-			<tbody>
+<div class="table-responsive">
+<table cellspacing="0" cellpadding="0" class="table table-striped">
+<thead>
+<tr>
+	<th scope="col"><input type="checkbox" name="chk_"></th>
+	<th scope="col">No</th>
+	<th scope="col">가맹점 코드</th>
+	<th scope="col">가맹점명</th>
+	<th scope="col">사업자번호</th>
+	<th scope="col">가맹점 ID</th>
+	<th scope="col">구분</th>
+	<th scope="col">상점수</th>
+	<th scope="col">가맹점 상태</th>
+	<th scope="col">등록일자</th>
+	<th scope="col">비고</th>
+</tr>
+</thead>
+<tbody>
 <?php
 foreach ($list as $lt)
 {
 $store_cnt= $controllers->get_store_cnt($lt->prq_fcode);
 ?>
-				<tr>
-					<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
-					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
-					<td scope="row"><?php echo $lt->mb_no;?></td>
-					<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
-					<td scope="row"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</td>
-					<td scope="row"><?php echo $lt->mb_name;?></td>
-					<td scope="row"><?php echo $lt->mb_business_num;?></td>
-					<td><?php echo $lt->mb_ceoname;?></td>
-					<td><?php echo $lt->mb_hp;?></td>
-					<td><?php echo $store_cnt->cnt;?>개</td>
-					<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
-					<td><?php echo date("Y-m-d",strtotime($lt->mb_datetime));?></td>
-					<td>-</td>
-				</tr>
+<tr>
+	<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
+	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
+	<td scope="row"><?php echo $lt->mb_no;?></td>
+	<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
+	<td scope="row"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</td>
+	<td scope="row"><?php echo $lt->mb_name;?></td>
+	<td scope="row"><?php echo $lt->mb_business_num;?></td>
+	<td><?php echo $lt->mb_ceoname;?></td>
+	<td><?php echo $lt->mb_hp;?></td>
+	<td><?php echo $store_cnt->cnt;?>개</td>
+	<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
+	<td><?php echo date("Y-m-d",strtotime($lt->mb_datetime));?></td>
+	<td>-</td>
+</tr>
 <?php
 }
 ?>
-
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="5" style="text-align:center">
-					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
-				</tr>
-			</tfoot>
-		</table>
-	<?php 
-
+</tbody>
+<tfoot>
+	<tr>
+		<th colspan="5" style="text-align:center">
+		<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
+	</tr>
+</tfoot>
+</table>
+</div><!-- .table-responsive -->
+<?php 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
@@ -328,5 +328,5 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 </div>
 </div>
 </div>
-<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
-	</article>
+<div class="row"><div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
+</article>

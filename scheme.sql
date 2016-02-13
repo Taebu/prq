@@ -865,6 +865,7 @@ ALTER TABLE `callerid`.`black_hp` add bl_duration int NOT NULL default 0;
 -- 2016-02-05 (금)
 ALTER TABLE `prq_store` add st_mno enum('SK','LG','KT') NULL default 'SK';
 
+
 INSERT INTO `cdr` VALUES ('2016-02-04 20:23:55','01099358800','01099358800','05085125336','from-trunk','SIP/mug_2-000b3664','SIP/mug_1-000b3666','Dial','SIP/mug_1/0316130092,60,m(c002gl_1)A(c002gl_2)L(7200000)',38,31,'ANSWERED',3,'0316130092','1454585035.734974','audio:OUT-20160204-202355-1454585035.734974.wav');
 
 INSERT INTO `cdr` VALUES ('2016-02-04 21:54:00','01031887230','01031887230','05085125880','from-trunk','SIP/mug_2-000b3b75','SIP/mug_1-000b3b76','Dial','SIP/mug_1/0314076665,60,m(gl_1)A(gl_2)L(7200000)','76','67','ANSWERED','3','0314076665','1454590440.736271','audio:OUT-20160204-215400-1454590440.736271.wav');
@@ -922,3 +923,5 @@ CREATE TABLE `prq_mms_log` (
   `mm_ipaddr` varchar (15) NOT NULL DEFAULT '',
   PRIMARY KEY (`mm_no`)
 ) DEFAULT CHARSET=utf8  COMMENT='MMS LOG';
+
+ALTER TABLE `prq_mno` change mn_operator  mn_operator enum('SK','LG','KT','UNKNOWN') NULL default 'SK';

@@ -9,9 +9,9 @@
   <title>Document</title>
  </head>
  <body>
- select date(DATE_SUB(NOW(), INTERVAL 7 DAY);
- 가맹점.<br>
- 일주일 전 혹은 세팅한 prq.prq_mno 테이블에 mn_dup_limit 날짜를 초과하지 않는 핸드폰 번호를 조회하여 mms 를 발송한다.<br>
+select date(DATE_SUB(NOW(), INTERVAL 7 DAY);<br>
+가맹점.<br>
+일주일 전 혹은 세팅한 prq.prq_mno 테이블에 mn_dup_limit 날짜를 초과하지 않는 핸드폰 번호를 조회하여 mms 를 발송한다.<br>
 <br>
 
  <?php 
@@ -25,10 +25,19 @@ foreach($black_list as $bl){
 /* 콜 리스트 조회 일부는 조회한 후 필터링 
 조건
 1. mn_dup_limit 날짜를 기준으로 상점의 번호와 아이디 번호를 조회해 결과 리스트가 없으면 발송
-2. 해당 리스트 발송에 대하여 GCM MMS 로그를 발생 수발신 성공 여부 기록
-
-*/
+2. 해당 리스트 발송에 대하여 GCM MMS 로그를 발생 수발신 성공 여부 기록 */
 foreach($list as $li){
+echo "<p>".$li->gc_no."</p>";
+echo "<p>".$li->gc_subject."</p>";
+echo "<p>".$li->gc_content."</p>";
+echo "<p>".$li->gc_ismms."</p>";
+echo "<p>".$li->gc_receiver."</p>";
+echo "<p>".$li->gc_sender."</p>";
+echo "<p>".$li->gc_imgurl."</p>";
+echo "<p>".$li->gc_result."</p>";
+echo "<p>".$li->gc_datetime."</p>";
+echo "<p>".$li->gc_status."</p>";
+echo "<p>".$li->gc_ipaddr."</p>";
 	$config = array(
 	//페이지네이션 기본 설정
 	'cd_id'=> $li->cd_id,
@@ -77,7 +86,7 @@ foreach($list as $li){
 			'phone'=>$li->cd_hp,
 			'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper
 		);
-		$curl=$controller->curl->simple_post('http://prq.co.kr/prq/set_gcm.php', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+		//$curl=$controller->curl->simple_post('http://prq.co.kr/prq/set_gcm.php', $config, array(CURLOPT_BUFFERSIZE => 10)); 
 		echo $curl;
 	}/* foreach($store as $st){...}*/
 }/*foreach($list as $li){...}*/
