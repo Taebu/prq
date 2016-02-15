@@ -20,7 +20,7 @@ class Crontab_m extends CI_Model
 	/**
 	 * 콜 리스트 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -44,14 +44,14 @@ class Crontab_m extends CI_Model
 	/**
 	 * GCM 리스트 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
 	 */
     function get_gcm()
     {
-    	$sql = "SELECT * FROM prq_gcm_log";
+    	$sql = "SELECT * FROM prq_gcm_log order by gc_no desc;";
    		$query = $this->db->query($sql);
 
      	//gcm log 리스트 반환
@@ -63,22 +63,25 @@ class Crontab_m extends CI_Model
 
 	function get_store($array)
     {
+
 		$sql=array();
 		$sql[]="select ";
+		$sql[]=" st_no,";
 		$sql[]=" st_mno,";
+		$sql[]=" st_tel_1,";
+		$sql[]=" st_hp_1,";
 		$sql[]=" st_thumb_paper,";
 		$sql[]=" st_top_msg, ";
 		$sql[]=" st_middle_msg,";
 		$sql[]=" st_bottom_msg, ";
 		$sql[]=" st_modoo_url ";
-
 		$sql[]=" from ";
 		$sql[]="prq_store ";
 		$sql[]="where ";
-		$sql[]="mb_id='";
-		$sql[]=$array['cd_id'];
-		$sql[]="' ";
-		$sql[]="and st_port='".$array['cd_port']."'; ";
+		$sql[]="mb_id='".$array['cd_id']."' ";
+		$sql[]="and st_port='".$array['cd_port']."' ;";
+
+
 		$str_sql=join("",$sql);
    		$query = $this->db->query($str_sql);
 

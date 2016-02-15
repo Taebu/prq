@@ -44,27 +44,7 @@
 	<!-- form_file_upload.html dropzone-->
 	<link href="/prq/include/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/prq/include/css/plugins/dropzone/dropzone.css" rel="stylesheet">
-
-<script type="text/javascript">
-function set_menu_write(id){
-//	var chk_code=$("#mb_code").val();
-	switch (id)
-	{
-	case "DS":
-	$(".mb_gname").html("총판");
-	break;
-	case "PT":
-	$(".mb_gname").html("대리점");
-	break;
-	case "FR":
-	$(".mb_gname").html("가맹점");
-	break;
-	}
-	$("#mb_code").val(id);
-}
-</script>
 </head>
-
 <body>
     <div id="wrapper">
 <?php
@@ -72,8 +52,7 @@ $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
 $prq_fcode=@$this->input->cookie('prq_fcode',TRUE);
 //echo $prq_fcode;
 /* START 관리자 인 경우 */
-if($mb_gcode=='G1'||$mb_gcode=='G2'){
-?>
+if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 		<nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
@@ -88,7 +67,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <img alt="image" class="img-circle" src="/prq/include/img/profile_small.jpg" /> 
 							 </span>
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-							<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php //echo $this->session->userdata['name'];?>
+							<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">
 							<?php echo $this->input->cookie('mb_ceoname', TRUE);?> (<?php echo $this->input->cookie('name', TRUE);?>)
 							</strong>
                              </span> <span class="text-muted text-xs block">
@@ -109,13 +88,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                                 <li class="divider"></li>
 					<?php
 						if( @$this->session->userdata['logged_in'] == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
-					{?>
-                                <li><a href="/prq/auth/logout">Logout</a></li>
-								<?php }else{?>
-								<li><a href="/prq/auth/">LogIn</a></li>
-						<?php }?>
-
-                            </ul>
+					{?><li><a href="/prq/auth/logout">Logout</a></li><?php }else{?><li><a href="/prq/auth/">LogIn</a></li><?php }?></ul>
                         </div>
                         <div class="logo-element">
                             PRQ
@@ -123,28 +96,19 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                     </li>
 					<?php 
 					$mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
-					if($this->uri->segment(1)=="codes"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?>
+					echo $this->uri->segment(1)=="codes"?'<li class="active">':'<li>';
+					 ?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">코드 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
 					<?php 
 					if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){
-					if($this->uri->segment(3)=="prq_dscode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록<span class="label label-primary pull-right">NEW</span></a></li>
+					echo $this->uri->segment(3)=="prq_dscode"?'<li class="active">':'<li>';
+					?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록<span class="label label-primary pull-right">NEW</span></a></li>
                     <?php 
 					 }/* 관리자 총판 구룹만 관리 하는 메뉴G1,G2 */
 					
-					if($this->uri->segment(3)=="prq_ptcode"){
-					echo '<li class="active">';
-					 }else{
-					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+					echo $this->uri->segment(3)=="prq_ptcode"?'<li class="active">':'<li>';
+					?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
                            <?php if($this->uri->segment(3)=="prq_frcode"){
 					echo '<li class="active">';
 					 }else{
@@ -165,7 +129,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         <a href="#">
 						<i class="fa fa-th-large"></i> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
+                            <li class="active"><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
                         </ul>
                     </li>
                     </li>
@@ -183,7 +147,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         <a href="#">
 						<i class="fa fa-pie-chart"></i><span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
+                            <li class="active"><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
                         </ul>
                     </li>
 					<?php 
@@ -192,7 +156,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         <a href="#">
 						<i class="fa fa-desktop"></i><span class="nav-label">GCM</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/board/write">GCM Send</a></li>
+                            <li class="active"><a href="/prq/board/write">GCM Send</a></li>
                         </ul>
                     </li>
 <!-- 					<?php 

@@ -925,3 +925,7 @@ CREATE TABLE `prq_mms_log` (
 ) DEFAULT CHARSET=utf8  COMMENT='MMS LOG';
 
 ALTER TABLE `prq_mno` change mn_operator  mn_operator enum('SK','LG','KT','UNKNOWN') NULL default 'SK';
+
+-- 2016-02-15 (월)
+ALTER TABLE `prq_gcm_log` add gc_stno int NOT NULL default 0;
+ALTER TABLE `prq_mms_log` add mm_stno int NOT NULL default 0;

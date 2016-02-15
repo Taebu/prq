@@ -306,6 +306,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 					<th scope="col">발신인(GCM은수신)</th>
 					<th scope="col">상태</th>
 					<th scope="col">전송일</th>
+					<th scope="col">gc_stno</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -330,6 +331,7 @@ foreach ($list as $lt)
 					<td scope="row"><?php echo $lt->gc_sender;?></td>
 					<td scope="row"><?php echo $lt->gc_result;?></td>
 					<td scope="row"><?php echo $lt->gc_datetime;?></td>
+					<td scope="row"><?php echo $lt->gc_stno;?></td>
 <!-- 					<td scope="row"><?php echo $lt->gc_status;?></td>
 					<td scope="row"><?php echo $lt->gc_ipaddr;?></td> -->
 				</tr>

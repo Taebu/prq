@@ -209,8 +209,7 @@ class Logs extends CI_Controller {
 					'mb_distributors_paper' => $this->input->post('mb_distributors_paper', TRUE),
 					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
 					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE)
-					);
+					'mb_distributors_paper_size' => $this->input->post('mb_distributors_paper_size', TRUE));
 
 				$result = $this->call_m->insert_call($write_data);
 

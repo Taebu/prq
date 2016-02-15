@@ -17,6 +17,7 @@ echo form_open('/board/write/prq_member', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 ?>
+<input type="hidden" name="mode" value="manual">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -72,6 +73,25 @@ if($mb_code=="PT"){?>
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+
+<div class="form-group"><label class="col-sm-2 control-label">MNO TYPE</label>
+<div class="col-sm-10 ">
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="mno_type" id="is_mno_1" value='SK' checked><label for="is_mno_1">SK</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="mno_type" id="is_mno_2" value='LG'><label for="is_mno_2">LG</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="mno_type" id="is_mno_3"  value='KT'><label for="is_mno_3">KT</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">MMS</label>
 <div class="col-sm-10 ">

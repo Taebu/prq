@@ -72,10 +72,12 @@ foreach($list as $li){
 		$config=array(
 			'is_mms'=>'true',
 			'message'=>$msg,
+			'st_no'=>$st->st_no,
 			'title'=>'web',
 			'receiver_num'=>$li->cd_callerid,
 			'phone'=>$li->cd_hp,
-			'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper
+			'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper,
+			'mode'=>'crontab'
 		);
 		$curl=$controller->curl->simple_post('http://prq.co.kr/prq/set_gcm.php', $config, array(CURLOPT_BUFFERSIZE => 10)); 
 		echo $curl;
