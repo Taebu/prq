@@ -134,7 +134,7 @@ class Logs extends CI_Controller {
 
 		$data['list'] = $this->logs_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
 		$data['controllers'] = $this;
-
+//		$this->uri->segment(3)=$this->uri->segment(3)=="gcm2"?"gcm":$this->uri->segment(3);
 		$this->load->view('logs/'.$this->uri->segment(3).'/list_v', $data);
 	}
 

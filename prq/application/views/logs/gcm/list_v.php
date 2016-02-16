@@ -23,6 +23,15 @@
           $("#bd_search").submit();		
 		
 		}
+		
+		/* chg_store(seq)
+		@seq
+		*/
+		function chg_store(seq){
+		$('#write_action').attr('action', "/prq/store/view/prq_store/board_id/"+seq+"/page/1");
+          $("#write_action").submit();		
+		
+		}
 
 		function chg_list(code){
 			var param=$("#write_action").serialize();
@@ -331,7 +340,7 @@ foreach ($list as $lt)
 					<td scope="row"><?php echo $lt->gc_sender;?></td>
 					<td scope="row"><?php echo $lt->gc_result;?></td>
 					<td scope="row"><?php echo $lt->gc_datetime;?></td>
-					<td scope="row"><?php echo $lt->gc_stno;?></td>
+					<td scope="row"><a href="javascript:chg_store(<?php echo $lt->gc_stno;?>);"><?php echo $lt->gc_stno;?></a></td>
 <!-- 					<td scope="row"><?php echo $lt->gc_status;?></td>
 					<td scope="row"><?php echo $lt->gc_ipaddr;?></td> -->
 				</tr>
