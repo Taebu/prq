@@ -238,6 +238,7 @@ class Store extends CI_Controller {
 					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
 					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
 					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
+					'st_theme' => $this->input->post('st_theme', TRUE),
 					'st_status' => $this->input->post('st_status', TRUE)
 				);
 				$result = $this->store_m->insert_store($write_data);
@@ -373,6 +374,7 @@ class Store extends CI_Controller {
 					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
 					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
 					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
+					'st_theme' => $this->input->post('st_theme', TRUE),
 					'st_status' => $this->input->post('st_status', TRUE)
 				);
 //				$result = $this->distributors_m->insert_distributors($write_data);

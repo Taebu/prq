@@ -263,6 +263,25 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .row -->
 
+<div class="row">
+<div class="form-group"><label class="col-sm-2 control-label">Theme Type</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_1" value='red' checked><label for="st_theme_1">Red</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_2" value='blue'><label for="st_theme_2">Blue</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_3" value='orange'><label for="st_theme_3">orange</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .row -->
+
 <div class="form-group"><label class="col-sm-2 control-label">통신사(MNO)</label>
 <div class="col-sm-10 ">
 <div class="radio radio-info radio-inline">

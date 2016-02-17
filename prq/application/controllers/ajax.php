@@ -451,6 +451,15 @@ class Ajax extends CI_Controller {
 		$result = $this->ajax_m->set_mms($write_data);
 		echo $result;
 	}
+
+	/* get_franchise() */
+	function get_franchise()
+	{
+		$prq_fcode=$this->uri->segment(3);
+		$result = $this->ajax_m->get_franchise($prq_fcode);
+
+		echo $result;
+	}
 }
 
 /* End of file ajax_board.php */

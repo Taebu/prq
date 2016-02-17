@@ -134,6 +134,7 @@ class Store_m extends CI_Model
 		$sql_array[]="st_main_paper='".$arrays['st_main_paper']."',";
 		$sql_array[]="st_main_paper_size='".$arrays['st_main_paper_size']."',";
 		$sql_array[]="st_modoo_url='".$arrays['st_modoo_url']."',";
+		$sql_array[]="st_theme='".$arrays['st_theme']."',";
 		$sql_array[]="st_top_msg='".$arrays['st_top_msg']."',";
 		$sql_array[]="st_middle_msg='".$arrays['st_middle_msg']."',";
 		$sql_array[]="st_bottom_msg='".$arrays['st_bottom_msg']."',";
@@ -305,6 +306,7 @@ mysql> select * from prq_member_code;
 		$sql_array[]="st_main_paper='".$arrays['st_main_paper']."',";
 		$sql_array[]="st_main_paper_size='".$arrays['st_main_paper_size']."',";
 		$sql_array[]="st_modoo_url='".$arrays['st_modoo_url']."',";
+		$sql_array[]="st_theme='".$arrays['st_theme']."',";
 		$sql_array[]="st_top_msg='".$arrays['st_top_msg']."',";
 		$sql_array[]="st_middle_msg='".$arrays['st_middle_msg']."',";
 		$sql_array[]="st_bottom_msg='".$arrays['st_bottom_msg']."',";

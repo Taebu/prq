@@ -212,7 +212,7 @@ stdClass Object
 </label>
 <div class="col-sm-5"><span class="help-block m-b-none">시작 09:00</span><input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled value="<?php echo $views->st_open;?>">
 <div class="checkbox checkbox-primary">
-<input id="st_alltime"  name="st_alltime" type="checkbox" checked="" onclick="javascript:chk_btn_status();">
+<input id="st_alltime"  name="st_alltime" type="checkbox" <?php echo $views->st_alltime=="on"?"checked":"";?> onclick="javascript:chk_btn_status();">
 <label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
 
 </div><!-- .col-sm-5 -->
@@ -311,6 +311,29 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .row -->
 
+<div class="row">
+<div class="form-group"><label class="col-sm-2 control-label">Theme Type</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_1" value='red' <?php echo $views->st_theme=="red"?"checked":"";?>><label for="st_theme_1">Red</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_2" value='blue' <?php echo $views->st_theme=="blue"?"checked":"";?>><label for="st_theme_2">Blue</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_3" value='orange' <?php echo $views->st_theme=="orange"?"checked":"";?>><label for="st_theme_3">orange</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_theme" id="st_theme_4" value='green' <?php echo $views->st_theme=="green"?"checked":"";?>><label for="st_theme_4">Green</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .row -->
 
 <div class="row">
 <div class="col-md-12">
