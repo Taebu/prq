@@ -1,17 +1,42 @@
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
-				if($("#q").val() == ''){
+				if($("#gc_receiver").val() == ''){
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/board/distributors/ci_board/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/logs/lists/gcm/q/'+$("#gc_receiver").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
 			/*버튼 비활성화.*/
 			chk_btn_status();
+
+			/*페이지에 검색어가 있을 경우 예외 처리 후 검색어 submit 처리*/
+			$("ul.pagination a").click(function() {
+				var search_key=$(this).attr('href').split("/");
+
+				if(search_key.length == 7){
+				search_form(search_key[6],'page');
+				}else{
+				search_form(search_key[8],'search');
+				}
+				
+				return false;
+			  });  
 		});
+		
+		/*cid를 검색합니다.*/
+		function search_form(p,type){
+			$("#page").val(p);
+			if(type=="search"){
+			var act = '/prq/logs/lists/gcm/q/'+$("#gc_receiver").val()+'/page/'+p;
+			}else{
+			var act = '/prq/logs/lists/gcm/page/'+p;
+			}
+			$("#bd_search").attr('action', act).submit();
+		}
+
 
 		function board_search_enter(form) {
 			var keycode = window.event.keyCode;
@@ -234,17 +259,18 @@
                             </div>
                         </div><!-- .ibox-title -->
                         <div class="ibox-content">
+						
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="user_title">등록일자</label>
-                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
+                <label for="gc_receiver">수신인</label>
+                <input class="form-control" id="gc_receiver" name="gc_receiver" size="30" type="text" value="<?php echo $search['gc_receiver'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="user_firstname">상태</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+                <label for="gc_sender">발신인</label>
+                <input class="form-control" id="gc_sender" name="gc_sender" required="true" size="30" type="text" value="<?php echo $search['gc_sender'];?>" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->

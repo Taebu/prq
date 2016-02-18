@@ -5,13 +5,44 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/board/distributors/ci_board/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/logs/lists/act/q/'+$("#q").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
 			/*버튼 비활성화.*/
 			chk_btn_status();
+
+			/*페이지에 검색어가 있을 경우 예외 처리 후 검색어 submit 처리*/
+			$("ul.pagination a").click(function() {
+				var search_key=$(this).attr('href').split("/");
+
+				if(search_key.length == 7){
+				search_form(search_key[6],'page');
+				}else{
+				search_form(search_key[8],'search');
+				}
+				
+				return false;
+			  });  
 		});
+		
+		/*cid를 검색합니다.*/
+		function search_form(p,type){
+			$("#page").val(p);
+			if(type=="search"){
+			var act = '/prq/logs/lists/act/q/'+$("#gc_receiver").val()+'/page/'+p;
+			}else{
+			var act = '/prq/logs/lists/act/page/'+p;
+			}
+			$("#bd_search").attr('action', act).submit();
+		}
+
+
+		function board_search_enter(form) {
+			var keycode = window.event.keyCode;
+			if(keycode == 13) $("#search_btn").click();
+		}
+
 
 		function board_search_enter(form) {
 			var keycode = window.event.keyCode;

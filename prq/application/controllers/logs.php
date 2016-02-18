@@ -87,11 +87,29 @@ class Logs extends CI_Controller {
 
 		//페이지네이션 라이브러리 로딩 추가
 		$this->load->library('pagination');
+		$search_array = array(
+			'gc_receiver'=>$this->input->post('gc_receiver', TRUE),
+			'gc_sender'=>$this->input->post('gc_sender', TRUE),
+			'cd_id'=>$this->input->post('cd_id', TRUE),
+			'cd_name'=>$this->input->post('cd_name', TRUE),
+			'cd_callerid'=>$this->input->post('cd_callerid', TRUE),
+			'mm_subject'=>$this->input->post('mm_subject', TRUE),
+			'mm_content'=>$this->input->post('mm_content', TRUE),
+		);
 
+		if($this->uri->segment(3)=="cid"){
+//		$base_url='javascript:search_form(';
+		$base_url='/prq/logs/lists/'.$this->uri->segment(3).$page_url.'/page/';
+		}else{
+		$base_url='/prq/logs/lists/'.$this->uri->segment(3).$page_url.'/page/';
+		}
+		
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/logs/lists/'.$this->uri->segment(3).$page_url.'/page/',
-		'total_rows' => $this->logs_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		
+		'base_url'=> $base_url,
+//		'total_rows' => $this->logs_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'total_rows' => $this->logs_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 20,
 		'uri_segment' => $uri_segment,
 
@@ -120,7 +138,9 @@ class Logs extends CI_Controller {
 
 		//게시판 목록을 불러오기 위한 offset, limit 값 가져오기
 		$data['page'] = $page = $this->uri->segment($uri_segment, 1);
-
+		
+		/* 검색한 값들 상세 검색 배열*/
+		$data['search']=$search_array;
 		if ( $page > 1 )
 		{
 			$start = (($page/$config['per_page'])) * $config['per_page'];
@@ -132,7 +152,8 @@ class Logs extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->logs_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+//		$data['list'] = $this->logs_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['list'] = $this->logs_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_array);
 		$data['controllers'] = $this;
 //		$this->uri->segment(3)=$this->uri->segment(3)=="gcm2"?"gcm":$this->uri->segment(3);
 		$this->load->view('logs/'.$this->uri->segment(3).'/list_v', $data);

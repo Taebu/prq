@@ -179,7 +179,7 @@ class Partner extends CI_Controller {
 		$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//폼 검증 라이브러리 로드
 			$this->load->library('form_validation');
@@ -304,7 +304,7 @@ class Partner extends CI_Controller {
 			$pages = 1;
 		}
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
 			$writer_id = $this->partner_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
@@ -409,7 +409,7 @@ class Partner extends CI_Controller {
 	 	$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//삭제하려는 글의 작성자가 본인인지 검증
 			$table = $this->uri->segment(3);

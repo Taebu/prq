@@ -35,6 +35,7 @@ class Logs_m extends CI_Model
     {
 		$order="";
 		$sword= ' WHERE 1=1 ';
+		$sword= ' ';
 		if($table=="gcm"){
 		$table='prq_gcm_log';
 		}else if($table=="mms"){
@@ -47,7 +48,7 @@ class Logs_m extends CI_Model
 		if ( $search_word != '' )
      	{
      		//검색어가 있을 경우의 처리
-     		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+     		$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
      	}
 		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
 		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
@@ -70,6 +71,10 @@ class Logs_m extends CI_Model
 		$sql[]=" FROM ".$table." ";
 		if($table=="prq_gcm_log"){
 			$sql[]=" where gc_status='I' ";
+			if ( $search_word != '' )
+     		{
+			$sql[]=$sword;
+			}
 			$sql[]=" order by gc_no desc ";
 		}else if($table=="prq_mms_log"){
 			$sql[]=" order by mm_no desc ";
@@ -82,6 +87,164 @@ class Logs_m extends CI_Model
 		
 		$sql[] =$limit_query.";";
 
+   		$query = $this->db->query(join("",$sql));
+
+		if ( $type == 'count' )
+     	{
+     		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
+	    	$result = $query->num_rows();
+
+	    	//$this->db->count_all($table);
+     	}
+     	else
+     	{
+     		//게시물 리스트 반환
+	    	$result = $query->result();
+     	}
+
+    	return $result;
+    }
+
+	/**
+	 * 게시물 목록 가져오기
+	 *
+	 * @author Taebu <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $type 총 게시물 수 또는 게시물 배열을 반환할 지를 결정하는 구분자
+	 * @param string $offset 게시물 가져올 순서
+	 * @param string $limit 한 화면에 표시할 게시물 갯수
+	 * @param string $search_array 검색어
+	 * @return array
+	 */
+    function get_list2($table='prq_member', $type='', $offset='', $limit='', $search_array=array())
+    {
+		$order="";
+		$sword= ' WHERE 1=1 ';
+		$sword= ' ';
+		if($table=="gcm"){
+		$table='prq_gcm_log';
+		}else if($table=="mms"){
+		$table='prq_mms_log';
+		}else 	if($table=="act"){
+		$table='prq_log';
+		}else 	if($table=="cid"){
+		$table='prq_cdr';
+		}
+
+		if($table=='prq_gcm_log')
+		{
+			if ( $search_array['gc_sender'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and gc_sender like "%'.$search_array['gc_sender'].'%" ';
+			}
+			
+			if ( $search_array['gc_receiver'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and gc_receiver like "%'.$search_array['gc_receiver'].'%" ';
+			}
+		}
+		/*
+			mysql> select * from prq_cdr order by cd_date desc limit 1\G;
+			*************************** 1. row ***************************
+			cd_date: 2016-02-18 15:39:11
+			cd_id: prq001@naver.com
+			cd_port: 1
+			cd_callerid: 01022932389
+			cd_calledid:
+			cd_state: 1
+			cd_name: 배터지는생돈까스
+			cd_tel: 0553639245
+			cd_hp: 01028365246
+			1 row in set (0.00 sec)
+		*/
+		if($table=='prq_cdr')
+		{
+			if ( $search_array['cd_id'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and cd_id like "%'.$search_array['cd_id'].'%" ';
+			}
+			
+			if ( $search_array['cd_name'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and cd_name like "%'.$search_array['cd_name'].'%" ';
+			}
+
+			if ( $search_array['cd_callerid'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and cd_callerid like "%'.$search_array['cd_callerid'].'%" ';
+			}
+		}
+
+		if($table=='prq_mms_log')
+		{
+			if ( $search_array['mm_subject'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and mm_subject like "%'.$search_array['mm_subject'].'%" ';
+			}
+			
+			if ( $search_array['mm_content'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and mm_content like "%'.$search_array['mm_content'].'%" ';
+			}
+			
+
+		}
+		
+		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		if( strlen($prq_fcode)>2){
+			$sword .= ' and prq_fcode= "'.$prq_fcode.'" ';
+		}
+		}
+    	$limit_query = '';
+
+    	if ( $limit != '' OR $offset != '' )
+     	{
+     		//페이징이 있을 경우의 처리
+     		$limit_query = ' LIMIT '.$offset.', '.$limit;
+     	}else{
+		
+		}
+
+		$sql=array();
+		$sql[]="SELECT * ";
+		$sql[]=" FROM ".$table." ";
+		if($table=="prq_gcm_log"){
+			$sql[]=" where gc_status='I' ";
+			if ( $search_array != '' )
+     		{
+			$sql[]=$sword;
+			}
+			$sql[]=" order by gc_no desc ";
+		}else if($table=="prq_mms_log"){
+			$sql[]=" where 1=1 ";
+			if ( $search_array != '' )
+     		{
+			$sql[]=$sword;
+			}
+			$sql[]=" order by mm_no desc ";
+		}else if($table=="prq_cdr"){
+			$sql[]=" where 1=1 ";
+			if ( $search_array != '' )
+     		{
+			$sql[]=$sword;
+			}
+			$sql[]=" order by cd_date desc ";
+		}else if($table=="prq_log"){
+			$sql[]=" order by lo_datetime desc ";
+		}
+
+		
+		$sql[] =$limit_query.";";
+
+		//echo join("",$sql);
    		$query = $this->db->query(join("",$sql));
 
 		if ( $type == 'count' )

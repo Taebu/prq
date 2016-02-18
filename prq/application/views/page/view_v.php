@@ -122,10 +122,11 @@ return true;
 <div class="nav_wrap">
 <ul class="nav_u" id="nav_u">
 <!-- 메뉴 -->
-<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0>&nbsp;홈&nbsp;</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1>정보/후기</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2>메뉴</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3>오시는길</a></li>
+<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="icon_menu imenu01">홈</span>&nbsp;홈&nbsp;</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="icon_menu imenu02">업체정보</span>
+						업체정보</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="icon_menu imenu03">전단지</span>전단지</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3><span class="icon_menu imenu04">오시는길</span>오시는길</a></li>
 						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="ONLINEORDER" data-idx=3>온라인주문</a></li> -->
 						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="COUPON" data-idx=4>쿠폰</a></li> -->
 						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="EVENT" data-idx=5>이벤트</a></li> -->
