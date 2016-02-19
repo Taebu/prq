@@ -1,3 +1,27 @@
+<?php
+ /***********************************
+  * string_format
+ ***********************************/
+ function string_format($format, $string, $placeHolder = "#")
+ {
+ 	$numMatches = preg_match_all("/($placeHolder+)/", $format, $matches);
+ 	foreach ($matches[0] as $match)
+ 	{
+ 		$matchLen = strlen($match);
+ 		$format = preg_replace("/$placeHolder+/", substr($string, 0, $matchLen), $format, 1);
+ 		$string = substr($string, $matchLen);
+ 	}
+ 	return $format;
+ }
+ 
+ 
+ //phone regex http://blog.acronym.co.kr/243
+ function phone_format($num){
+ 	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
+
+ }
+ ?>
+
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
@@ -350,12 +374,12 @@ foreach ($list as $lt)
 					<td scope="row"><?php echo $lt->cd_date;?></td>
 					<td scope="row"><?php echo $lt->cd_id;?></td>
 					<td scope="row"><?php echo $lt->cd_port;?></td>
-					<td scope="row"><?php echo $lt->cd_callerid;?></td>
+					<td scope="row"><?php echo phone_format($lt->cd_callerid);?></td>
 <!-- 					<td scope="row"><?php echo $lt->cd_calledid;?></td> -->
 					<td scope="row"><?php echo $lt->cd_state;?></td>
 					<td scope="row"><?php echo $lt->cd_name;?></td>
-					<td scope="row"><?php echo $lt->cd_tel;?></td>
-					<td scope="row"><?php echo $lt->cd_hp;?></td>
+					<td scope="row"><?php echo phone_format($lt->cd_tel);?></td>
+					<td scope="row"><?php echo phone_format($lt->cd_hp);?></td>
 				</tr>
 <?php
 }

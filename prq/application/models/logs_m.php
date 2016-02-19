@@ -205,7 +205,7 @@ class Logs_m extends CI_Model
 		}
     	$limit_query = '';
 
-    	if ( $limit != '' OR $offset != '' )
+    	if ( $limit != '' OR $offset != '' )   
      	{
      		//페이징이 있을 경우의 처리
      		$limit_query = ' LIMIT '.$offset.', '.$limit;

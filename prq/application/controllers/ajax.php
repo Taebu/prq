@@ -28,7 +28,7 @@ class Ajax extends CI_Controller {
 
 	public function chg_status()
 	{
-		if( @$this->session->userdata('logged_in') == TRUE )
+			if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 
 			
@@ -76,7 +76,7 @@ class Ajax extends CI_Controller {
 
 	public function ajax_comment_delete()
 	{
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			$this->load->model('board_m');
 
@@ -190,7 +190,7 @@ class Ajax extends CI_Controller {
 	public function set_cidinfo()
 	{
 		$json['success']=false;
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			
 			//$table=$this->uri->segment(3);
@@ -215,7 +215,7 @@ class Ajax extends CI_Controller {
 	public function set_ptcode()
 	{
 		$json['success']=false;
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			
 			$table=$this->uri->segment(3);
@@ -244,7 +244,7 @@ class Ajax extends CI_Controller {
 	public function set_frcode()
 	{
 		$json['success']=false;
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			
 			$table=$this->uri->segment(3);

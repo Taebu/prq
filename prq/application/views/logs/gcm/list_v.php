@@ -1,3 +1,27 @@
+<?php
+ /***********************************
+  * string_format
+ ***********************************/
+ function string_format($format, $string, $placeHolder = "#")
+ {
+ 	$numMatches = preg_match_all("/($placeHolder+)/", $format, $matches);
+ 	foreach ($matches[0] as $match)
+ 	{
+ 		$matchLen = strlen($match);
+ 		$format = preg_replace("/$placeHolder+/", substr($string, 0, $matchLen), $format, 1);
+ 		$string = substr($string, $matchLen);
+ 	}
+ 	return $format;
+ }
+ 
+ 
+ //phone regex http://blog.acronym.co.kr/243
+ function phone_format($num){
+ 	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
+
+ }
+ ?>
+
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
@@ -362,8 +386,8 @@ foreach ($list as $lt)
 					<td scope="row"><?php echo $lt->gc_subject;?><br><?php echo nl2br($lt->gc_content);?></td>
 					<td scope="row"><img src="<?php echo $lt->gc_imgurl;?>" width="200" height="*"></td>
 					<td scope="row"><?php echo $lt->gc_ismms;?></td>
-					<td scope="row"><?php echo $lt->gc_receiver;?></td>
-					<td scope="row"><?php echo $lt->gc_sender;?></td>
+					<td scope="row"><?php echo phone_format($lt->gc_receiver);?></td>
+					<td scope="row"><?php echo phone_format($lt->gc_sender);?></td>
 					<td scope="row"><?php echo $lt->gc_result;?></td>
 					<td scope="row"><?php echo $lt->gc_datetime;?></td>
 					<td scope="row"><a href="javascript:chg_store(<?php echo $lt->gc_stno;?>);"><?php echo $lt->gc_stno;?></a></td>
