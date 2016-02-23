@@ -58,6 +58,21 @@ echo form_open('/auth/login', $attributes);
         </div>
     </div>
 
+
+<div style="position:absolute; top:30px; right:0; z-index: 1;"><img src="/prq/include/img/down_link.png" title="설치가이드버튼" usemap="#Map">
+      <map name="Map">
+ 		  <area shape="rect" coords="54,58,250,97" href="http://lomc.co.kr/download/naverdaum/file/naver_20150506.pdf" target="_blank">
+ 		            <area shape="rect" coords="54,113,250,150" href="http://lomc.co.kr/download/naverdaum/file/naver.html" target="_blank">
+		            <area shape="rect" coords="54,176,250,214" href="http://lomc.co.kr/download/naverdaum/file/daum_20150506.pdf" target="_blank">
+		            <area shape="rect" coords="54,290,250,330" href="http://lomc.co.kr/download/naverdaum/file/daum.html" target="_blank">
+<!--		            <area shape="rect" coords="106,327,251,356" href="http://lomc.co.kr/guide/delishop_m_guide.mp4" target="_blank">
+		            <area shape="rect" coords="106,293,250,323" href="http://lomc.co.kr/download/delishop/delishop_manual_20150706.pdf" target="_blank">
+		            <area shape="rect" coords="107,205,249,235" href="http://lomc.co.kr/guide/delim_m_guide.mp4" target="_blank">
+		            <area shape="rect" coords="107,172,251,204" href="http://lomc.co.kr/download/delimessage/file/delimessage_manual_20150623.pdf" target="_blank">
+		            <area shape="rect" coords="106,84,251,112" href="http://lomc.co.kr/download/delimessage/file/nelonlinepatch.exe_131107.zip">
+		            <area shape="rect" coords="107,50,251,78" href="#delimessage_setup_content" class="delimessage_setup_pop"> -->
+      </map>
+    </div>
     <!-- Mainly scripts -->
     <script src="/prq/include/js/jquery-2.1.1.js"></script>
     <script src="/prq/include/js/bootstrap.min.js"></script>

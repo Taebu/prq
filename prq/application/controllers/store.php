@@ -183,8 +183,8 @@ class Store extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_name', '상점이름', 'required');
-			$this->form_validation->set_rules('st_tel', '상점번호', 'required');
+			$this->form_validation->set_rules('st_name', '상점 이름', 'required');
+			$this->form_validation->set_rules('st_tel', '상점 전화번호', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -200,6 +200,8 @@ class Store extends CI_Controller {
 					'st_category' => $this->input->post('st_category', TRUE),
 					'st_name' => $this->input->post('st_name', TRUE),
 					'st_tel' => $this->input->post('st_tel', TRUE),
+					'st_teltype' => $this->input->post('st_teltype', TRUE),
+					'st_vtel' => $this->input->post('st_vtel', TRUE),
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'st_open' => $this->input->post('st_open', TRUE),
 					'st_closed' => $this->input->post('st_closed', TRUE),
@@ -339,6 +341,8 @@ class Store extends CI_Controller {
 					'st_name' => $this->input->post('st_name', TRUE),
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'st_tel' => $this->input->post('st_tel', TRUE),
+					'st_teltype' => $this->input->post('st_teltype', TRUE),
+					'st_vtel' => $this->input->post('st_vtel', TRUE),
 					'st_open' => $this->input->post('st_open', TRUE),
 					'st_closed' => $this->input->post('st_closed', TRUE),
 					'st_alltime' => $this->input->post('st_alltime', TRUE),

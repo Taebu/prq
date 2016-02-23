@@ -112,6 +112,8 @@ class Store_m extends CI_Model
 		$sql_array[]="st_name='".$arrays['st_name']."',";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="st_tel='".$arrays['st_tel']."',";
+		$sql_array[]="st_vtel='".$arrays['st_vtel']."',";
+		$sql_array[]="st_teltype='".$arrays['st_teltype']."',";
 		$sql_array[]="st_open='".$arrays['st_open']."',";
 		$sql_array[]="st_closed='".$arrays['st_closed']."',";
 		$sql_array[]="st_alltime='".$arrays['st_alltime']."',";
@@ -280,6 +282,8 @@ mysql> select * from prq_member_code;
 		$sql_array[]="st_category='".$arrays['st_category']."',";
 		$sql_array[]="st_name='".$arrays['st_name']."',";
 		$sql_array[]="st_tel='".$arrays['st_tel']."',";
+		$sql_array[]="st_vtel='".$arrays['st_vtel']."',";
+		$sql_array[]="st_teltype='".$arrays['st_teltype']."',";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
 		$sql_array[]="st_tel_1='".$arrays['st_tel_1']."',";
 		$sql_array[]="st_hp_1='".$arrays['st_hp_1']."',";

@@ -10,7 +10,13 @@ extract($_POST);
 		<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
 			<dl class="store_info">
 				<dt><span class="user_photo_b">전화번호</span></dt>
-				<dd><?php echo $st_tel==""?" - ":$st_tel;?></dd>
+				<dd><?php 
+				if($st_teltype=="cashq"){
+					echo $st_vtel==""?" - ":$st_vtel;
+				}else{
+					echo $st_tel==""?" - ":$st_tel;
+				}
+				?></dd>
 				<dt>주문방법</dt>
 				<dd>배달/포장 가능</dd>
 		        <dt class="spac">휴 무 일</dt>

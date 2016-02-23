@@ -93,6 +93,7 @@ if($mb_code=="PT"){?>
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 <?php }?>
 
+
 <div class="form-group">
 	<label for="fr_code" class="col-sm-2 control-label">가맹점 코드</label>
 <!-- 	<div class="col-sm-10"><select name="prq_fcode"  class="form-control" id="prq_fcode" size='10'></select> -->

@@ -65,22 +65,33 @@ return true;
 <div style="width:100%;">
 <nav class="celeb_lst">
 <div class="left_navtitle">
-<a href="/member/login.php">
+<!-- <a href="/member/login.php"> -->
+<a href="#">
 <span class="left_nav_photo">메뉴포토</span>
-<p>로그인하세요</p>
+<p><?php echo $views->st_name;?></p>
 </a>
 <a href="javascript:;" id="leftNavClose" class="left_nav_close">닫기</a> 
 </div>
-
-<ul><li><a href="/member/join.php"><span class="icon_menu imenu01">회원가입아이콘</span>회원가입</a></li></ul>
+<!-- <ul><li><a href="/member/join.php"><span class="icon_menu imenu01">회원가입아이콘</span>회원가입</a></li></ul>
 <ul>
 	<li><a href="/member/myCoupon.php"><span class="icon_menu imenu03">쿠폰함아이콘</span>쿠폰함</a></li>
 	<li><a href="/order/basket/"><span class="icon_menu imenu04">장바구니아이콘</span>장바구니</a></li>
-	<li><a href="/order/history/"><span class="icon_menu imenu05">주문내역아이콘</span>주문내역</a><!-- <span class="msg_num">99</span> --></li></ul>
+	<li><a href="/order/history/"><span class="icon_menu imenu05">주문내역아이콘</span>주문내역</a><span class="msg_num">99</span></li></ul>
 <ul>
-	<li><a href="/notice/"><span class="icon_menu imenu06">공지사항아이콘</span>공지사항</a><!--span class="msg_num">3</span>--></li>
-	<li><a href="/help/"><span class="icon_menu imenu07">도움말아이콘</span>도움말</a><!--<span class="msg_num">1</span>--></li>
-	<li><a href="/board/inquiry/write.php"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li></ul>
+	<li><a href="/notice/"><span class="icon_menu imenu06">공지사항아이콘</span>공지사항</a>span class="msg_num">3</span></li>
+	<li><a href="/help/"><span class="icon_menu imenu07">도움말아이콘</span>도움말</a><span class="msg_num">1</span></li>
+	<li><a href="/board/inquiry/write.php"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li></ul> -->
+
+<ul><li><a href="#"><span class="icon_menu imenu01">회원가입아이콘</span>홈</a></li></ul>
+<ul>
+	<li><a href="#"><span class="icon_menu imenu03">쿠폰함아이콘</span>업체정보</a></li>
+	<li><a href="#"><span class="icon_menu imenu04">장바구니아이콘</span>전단지</a></li>
+	<li><a href="#"><span class="icon_menu imenu05">주문내역아이콘</span>오시는길</a><!-- <span class="msg_num">99</span> --></li></ul>
+<ul>
+	<li><a href="#"><span class="icon_menu imenu06">공지사항아이콘</span>PRQ 가입문의</a><!--span class="msg_num">3</span>--></li>
+	<li><a href="#"><span class="icon_menu imenu07">도움말아이콘</span>이벤트</a><!--<span class="msg_num">1</span>--></li>
+	<!-- <li><a href="#"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li> --></ul>
+
 <!-- <ul> -->
 	<!-- <li><a href="./introduction/"><span class="icon_menu imenu09">배달홈피 소개 아이콘</span>배달홈피 소개</a></li> -->
 	<!-- <li><a href="./company/"><span class="icon_menu imenu10">배달홈피 제공사 아이콘</span>배달홈피 제공사</a></li></ul> -->
@@ -163,7 +174,16 @@ return true;
 
 <div class="bottombtn_wrp">
 <!-- bottom_btn -->
-<a href="tel:<?php echo $views->st_tel_1;?>" class="btn_bottom_call">
+<?php 
+$st_tel='';
+				if($views->st_teltype=="cashq"){
+					$st_tel=$views->st_vtel==""?" - ":$views->st_vtel;
+				}else{
+					$st_tel=$views->st_tel==""?" - ":$views->st_tel;
+				}
+?>
+
+<a href="tel:<?php echo $st_tel;?>" class="btn_bottom_call">
 <span class="btn_bottom call">전화걸기</span>
 </a>
 <!-- //bottom_btn -->
@@ -263,6 +283,8 @@ parameters['st_closed'] = "<?php echo $views->st_closed;?>";
 parameters['st_destination'] = "<?php echo $views->st_destination;?>";
 parameters['st_tel'] = beautifulPhoneNumber("<?php echo $views->st_tel_1;?>");
 parameters['st_closingdate'] = "<?php echo $views->st_closingdate;?>";
+parameters['st_teltype'] = "<?php echo $views->st_teltype;?>";
+parameters['st_vtel'] = "<?php echo $views->st_vtel;?>";
 
 $.ajax({
 url : '/prq/include/view/info.php',

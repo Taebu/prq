@@ -66,7 +66,7 @@ function chg_gname(){
 </script>
 </head>
 
-<body>
+<body class="skin-3">
     <div id="wrapper">
 <?php
 $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);

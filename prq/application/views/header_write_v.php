@@ -45,7 +45,7 @@
 	<link href="/prq/include/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/prq/include/css/plugins/dropzone/dropzone.css" rel="stylesheet">
 </head>
-<body>
+<body class="skin-3">
     <div id="wrapper">
 <?php
 $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
