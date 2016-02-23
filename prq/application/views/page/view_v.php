@@ -19,6 +19,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="/img/bdp.ico">	
 <link rel="apple-touch-icon" href="http://img.delipartner.kr/store/thumbnail/B0o9_thumbnail_20151104170141.png"/>
 <link rel="apple-touch-icon" href=""/>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
 <link rel="stylesheet" type="text/css" href="/prq/include/js/jquery.toast/jquery.toast.css">
 
@@ -30,6 +31,31 @@ window.onerror = function(){
 return true;
 }
 }
+
+/*구글 지도 */
+var geocoder = new google.maps.Geocoder();
+var markersArray = []; 
+//지도 셋팅
+
+function setMarkerByGeocoding1(address) {
+if (geocoder) {
+var lat;
+var lng;
+geocoder.geocode( { 'address': address}, function(results, status) {
+if (status == google.maps.GeocoderStatus.OK) {
+lat = parseFloat(results[0].geometry.location.lat());
+lng = parseFloat(results[0].geometry.location.lng());
+document.getElementById("latitude").value=lat;
+document.getElementById("longitude").value=lng;
+/*location 정보 불러 오기*/
+map_location();
+} else {
+alert(address + " 주소를 찾을 수 없습니다.");
+}
+});
+}
+}
+/*End 구글 지도 */
 </script>
 
 <script type="text/javascript" src="/prq/include/js/php.js.php?param=parararraarararfa" charset="utf-8"></script>
@@ -49,6 +75,7 @@ return true;
 <script type="text/javascript" src="/prq/include/js/jquery.toast/jquery.toast.min.js"></script>
 <script type="text/javascript" src="/prq/include/js/review.js"></script>
 <!-- <script type="text/javascript" src="/prq/include/js/main.min.js?1447751507"></script> -->
+
 <!--// 기본 스크립트 끝 -->
 </head>
 
@@ -175,12 +202,13 @@ return true;
 <div class="bottombtn_wrp">
 <!-- bottom_btn -->
 <?php 
+
 $st_tel='';
-				if($views->st_teltype=="cashq"){
-					$st_tel=$views->st_vtel==""?" - ":$views->st_vtel;
-				}else{
-					$st_tel=$views->st_tel==""?" - ":$views->st_tel;
-				}
+if($views->st_teltype=="cashq"){
+	$st_tel=$views->st_vtel==""?" - ":$views->st_vtel;
+}else{
+	$st_tel=$views->st_tel==""?" - ":$views->st_tel;
+}
 ?>
 
 <a href="tel:<?php echo $st_tel;?>" class="btn_bottom_call">
@@ -352,12 +380,19 @@ complete : function() {
 });
 */
 /* 오시는 길 (장소)*/
+function map_location(){
 var parameters = {};
 parameters['store_no'] = storeNo;
+parameters['store_name'] = $("#header_title").val();
 parameters['member_no'] = memberNo;
+parameters['latitude'] = $("#latitude").val();
+parameters['longitude'] = $("#longitude").val();
+parameters['width'] = $(window).width()-5;
+parameters['height'] = parseInt(parameters['width']/5*3);
 
 $.ajax({
 url : '/prq/include/view/location.php',
+//url : '/prq/map.php',
 type : 'POST',
 async : false,
 data : parameters,
@@ -373,6 +408,7 @@ complete : function() {
 
 }
 });
+}
 /* 쿠폰 정보
 var parameters = {};
 parameters['store_no'] = storeNo;
@@ -440,6 +476,9 @@ object.push(data.mb_addr2);
 object.push(data.mb_addr3);
 
 $("#address_area").html(object.join(" "));
+
+/*지도 위도 경도 구글 API 로 불러오기*/
+setMarkerByGeocoding1(object.join(" "));
 $("#mb_business_num").html(data.mb_business_num);
 
 },
@@ -465,6 +504,9 @@ thumbnail   = 'http://img.delipartner.kr/store/thumbnail/B0o9_thumbnail_20151104
 shortcutURL = 'http://dlpg.kr';
 linkSource  = 'none';
 </script>
+<input type="hidden" name="latitude" id="latitude">
+<input type="hidden" name="longitude" id="longitude">
+
 
 </body>
 

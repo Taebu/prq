@@ -12,6 +12,7 @@ class Page extends CI_Controller {
 		$this->load->database();
 		$this->load->model('page_m');
 		$this->load->helper('form');
+		$this->load->library('curl'); 
 		$this->load->helper(array('url','date'));
 	}
 
@@ -148,7 +149,10 @@ class Page extends CI_Controller {
  		//$data['comment_list'] = $this->page_m->get_comment($table, $board_id);
 
  		//view 호출
- 		$this->load->view('page/view_v', $data);
+ 		$config=array('clientId'=>'aWWbsFdRSNQZL6Df5ATr');
+		$data['curl']=$this->curl->simple_get('http://openapi.map.naver.com/openapi/v2/maps.js', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+
+		$this->load->view('page/view_v', $data);
  	}
 
  	/**

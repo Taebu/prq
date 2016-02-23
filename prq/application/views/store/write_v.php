@@ -79,22 +79,6 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
-
-
-<div class="form-group">
-	<label for="fr_code" class="col-sm-2 control-label">총판 코드</label>
-	<div class="col-sm-10"><select name="ds_code" id="ds_code" class="form-control"  onchange="javascript:search_ptcode(this.value)"></select>
-	<span class="help-block m-b-none">총판 코드를 선택 합니다.</span></div><!-- .col-sm-10 -->
-</div><!-- .form-inline-->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group">
-	<label for="fr_code" class="col-sm-2 control-label">대리점 코드</label>
-	<div class="col-sm-10"><select name="pt_code" id="pt_code" class="form-control" onchange="javascript:chg_ptcode(this.value);search_frcode(this.value);"></select>
-	<span class="help-block m-b-none">대리점 코드를 선택 합니다.</span></div><!-- .col-sm-10 -->
-</div><!-- .form-inline-->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
 <div class="form-group"><label class="col-sm-2 control-label">가맹점선택 </label>
 <div class="col-sm-10">
 <?php if($mb_gcode=="G5"){?>
@@ -157,27 +141,9 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">전화 번호 Type</label>
-<div class="col-sm-10 ">
-<div class="radio radio-info radio-inline">
-<input type="radio" name="st_teltype" id="st_teltype_1" value='prq' checked><label for="st_teltype_1">prq</label>
-</div><!-- .radio .radio-info .radio-inline -->
-<div class="radio radio-info radio-inline">
-<input type="radio" name="st_teltype" id="st_teltype_2"  value='cashq'><label for="st_teltype_2">cashq</label>
-</div><!-- .radio .radio-info .radio-inline -->
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
 
 <div class="form-group"><label class="col-sm-2 control-label">전화번호</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="st_tel" id="st_tel"> <span class="help-block m-b-none">연락처를 기입해 주세요..</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">050 번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_vtel" id="st_vtel"> <span class="help-block m-b-none">가상번호를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -418,27 +384,20 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <script type="text/javascript">
 /*
 server에 <span class="mb_gname">총판</span>을 등록 합니다.
-
 */
 function set_ds(){
 var param=$("#write_action").serialize();
 param=param.replace(/&/gi, "\n&");
 $("#form_data").html(param);
-
 if($("#is_join").val()=="TRUE"){
 $("#form_data").html(param);
 //	$("#write_action").submit();
 //set_member();
 }
-
 if($("#is_join").val()=="FALSE"){
 $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 }
 }
-
-
-
-
 function chk_duplicate_id(mb_id)
 {
 var result=false;
@@ -451,20 +410,14 @@ success: function(data) {
 	$("#is_member").val(data.success);	
 	}
 });
-
-
 }
-
 /*End Dropzone*/	
-
 var focus=0,blur=0;
-
 function chk_vali_id(){
 focus++; 
 var object=[];
 var mb_id=$("#mb_id").val();
 chk_duplicate_id(mb_id);
-
 if (mb_id.length<4)
 {
 object.push("<span  class=\"text-danger\">");
@@ -483,7 +436,6 @@ $("#is_join").val("FALSE");
 object.push("</span>");
 $( "#mb_id_assist" ).html(object.join(""));
 }
-
 /*mb_code로 등록 정보 변경*/
 function chg_gname(){
 	var chk_code=$("#mb_code").val();
@@ -500,10 +452,8 @@ function chg_gname(){
 	break;
 	}
 }
-
 function set_member(){
 var param=$("#write_action").serialize();
-
 $.ajax({
 url:"/prq/board/write/prq_member",
 type: "POST",
@@ -514,9 +464,7 @@ success: function(data) {
 console.log(data);
 }
 });		
-
 }
-
 function chk_btn_status()
 {
 	var param=$("#write_action").serialize();
@@ -532,9 +480,7 @@ function chk_btn_status()
 	}
 	
 }
-
-
-/*가맹점 코드를 불러 옵니다.*/
+/*가맴점 코드를 불러 옵니다.*/
 var pt_code="";
 function get_frcode(code)
 {
@@ -545,13 +491,10 @@ function get_frcode(code)
 	dataType:"json",
 	success: function(data) {
 		pt_code=data.posts;
-//		code
-		search_frcode(code);
+		search_frcode("DS0003PT0001");
 		}
 	});
 }
-
-
 function search_frcode(ds_code)
 {
 	var object = [];
@@ -567,18 +510,14 @@ function search_frcode(ds_code)
 		object.push(val.fr_name);
 		object.push('</option>');
 	});
-
 	var result=object.join("");
-	console.log(result);
 	var chk_gcode=$("#mb_gcode").val();
-	console.log("chk_gcode : "+chk_gcode);
 	if(chk_gcode=="G5"){
 	$("#fr_code").html(result);
 	}else{
 	$("#prq_fcode").html(result);
 	}
 }
-
 var fr_mail=[];
 function get_frmail()
 {
@@ -595,241 +534,10 @@ function get_frmail()
 		}
 	});
 }
-
-
 function get_mb_id(v){
 $("#mb_id").val(fr_mail[v]);
 }
-
-
-
-/* 총판 코드를 불러 옵니다. */
-function get_dscode()
-{
-	
-	$.ajax({
-	url:"/prq/ajax/get_dscode/",
-	type: "POST",
-	data:"",
-	dataType:"json",
-	success: function(data) {
-		console.log(data.success);
-		console.log(data.posts);
-		var object = [];
-		$.each(data.posts,function(key,val){
-		if("DS0001"==val.ds_code){
-			object.push('<option value='+val.ds_code+' selected>');
-		}else{
-			object.push('<option value='+val.ds_code+'>');
-		}
-		object.push('['+val.ds_code+']');
-		object.push(val.ds_name);
-		object.push('</option>');
-		});
-//		$("#is_member").val(data.success);	
-//		chk_vali_id();
-		var result=object.join("");
-		$("#ds_code").html(result);
-		}
-	});
-}
-
-/*대리점 코드를 불러 옵니다.*/
-var pt_code="";
-function get_ptcode(code)
-{
-	var ds_code=code==""?"DS0001":code;
-	
-	$.ajax({
-	url:"/prq/ajax/get_ptcode/",
-	type: "POST",
-	data:"",
-	dataType:"json",
-	success: function(data) {
-		pt_code=data.posts;
-//		$("#is_member").val(data.success);	
-//		chk_vali_id();
-		search_ptcode(ds_code);
-		}
-	});
-}
-
-/*가맹점 코드를 불러 옵니다.*/
-var fr_code="";
-function get_frcode(code)
-{
-	if(typeof(code)=="undefined")
-	{
-		code="";
-	}
-	$.ajax({
-	url:"/prq/ajax/get_frcode/"+code,
-	type: "POST",
-	data:"",
-	dataType:"json",
-	success: function(data) {
-		fr_code=data.posts;
-		console.log(fr_code);
-//		$("#is_member").val(data.success);	
-//		chk_vali_id();
-//		search_ptcode("DS0001");
-		}
-	});
-}
-
-function search_ptcode(ds_code)
-{
-	var object = [];
-	var chk_max_ptcode=[];
-	var is_pt=$("#pt_code").val()===null;
-	if(is_pt){
-		$("#edit_fr_name").prop('disabled', true); 
-		$("#fr_code").prop('disabled', true); 
-		$("#fr_name").prop('disabled', true); 
-		
-	}else{
-		$("#edit_fr_name").prop('disabled', false); 
-		$("#fr_code").prop('disabled', false); 	
-		$("#fr_name").prop('disabled', false); 	
-	}	
-	$.each(pt_code,function(key,val){
-	if(val.pt_code.indexOf(ds_code)>-1)
-	{
-		if("DS0001"==val.pt_code){
-			object.push('<option value='+val.pt_code+' selected>');
-		}else{
-			object.push('<option value='+val.pt_code+'>');
-		}
-		chk_max_ptcode.push(val.pt_code);
-		object.push('['+val.pt_code+']');
-		object.push(val.pt_name);
-		object.push('</option>');
-	}
-	});
-	if(chk_max_ptcode.length>0)
-	{
-	var max_pt_code=chk_max_ptcode[chk_max_ptcode.length-1];
-
-	var next_code_index=Number(max_pt_code.substr(8,12));
-	console.log("is array next code index -> "+next_code_index);
-	}else{
-	var next_code_index=0;
-	console.log("is not array next code index -> "+next_code_index);
-	}
-	next_code_index=10001+next_code_index;
-	var next_code_string=next_code_index.toString();
-	var pt_code_new="PT"+next_code_string.substr(1,5);
-	var result=object.join("");
-	$("#pt_code").html(result);
-	chg_ptcode(ds_code+""+pt_code_new);
-}
-
-/*pt_code로 fr 코드를 탐색 합니다.
-*/
-function search_frcode(spt_code)
-{
-	var object = [];
-	var chk_max_frcode=[];
-	var is_pt=$("#pt_code").val()===null;
-
-	if(is_pt)
-	{
-		$("#edit_fr_name").prop('disabled', true); 
-		$("#fr_code").prop('disabled', true); 
-		$("#fr_name").prop('disabled', true); 
-	}else{
-		$("#edit_fr_name").prop('disabled', false); 
-		$("#fr_code").prop('disabled', false); 	
-		$("#fr_name").prop('disabled', false); 	
-	}
-
-	$.each(fr_code,function(key,val){
-	if(val.fr_code.indexOf(spt_code)>-1)
-	{
-		if(spt_code+"FR0001"==val.fr_code){
-			object.push('<option value='+val.fr_code+' selected>');
-		}else{
-			object.push('<option value='+val.fr_code+'>');
-		}
-		chk_max_frcode.push(val.fr_code);
-		object.push('['+val.fr_code+']');
-		object.push(val.fr_name);
-		object.push('</option>');
-	}
-	});
-	if(chk_max_frcode.length>0)
-	{
-	var max_fr_code=chk_max_frcode[chk_max_frcode.length-1];
-	console.log(max_fr_code);
-	console.log(max_fr_code.substr(14,18));
-	var next_code_index=Number(max_fr_code.substr(14,18));
-	console.log("is array next code index -> "+next_code_index);
-	}else{
-	var next_code_index=0;
-	console.log("is not array next code index -> "+next_code_index);
-	}
-	next_code_index=10001+next_code_index;
-	var next_code_string=next_code_index.toString();
-	var fr_code_new="FR"+next_code_string.substr(1,5);
-	var result=object.join("");
-	$("#fr_code").html(result);
-	chg_frcode(spt_code+""+fr_code_new);
-}
-/*
-
-*/
-function chg_ptcode(v)
-{
-	var ds_code=$("#ds_code").val();
-	$("#pt_code_new").val(v);
-	$("#display_ptcode").html(ds_code);
-	$("#display_frcode").html(v);
-	$("#span_fr_code").html(ds_code+""+v);
-	var search_code=v;
-	console.log(search_code);
-	var i=0;
-	$.each(fr_code,function(key,val){
-		if(val.fr_code.indexOf(search_code)>-1)
-		{
-			if(val.fr_code==$("#fr_code").val())
-			{
-				$("#edit_fr_name").val(val.fr_name);
-			}
-		}
-		i++;
-//	$("#edit_pt_name").val(ds_code+"_"+v);
-	});
-	if(i==0){
-		$("#edit_fr_name").val("");
-	}
-}
-/*
-
-*/
-function chg_frcode(v)
-{
-	var fr_code=$("#fr_code").val();
-	$("#fr_code_new").val(v);
-	//$("#display_dscode").html(ds_code);
-	$("#display_ptcode").html(v);
-	$("#span_pt_code").html(ds_code+""+v);
-	var search_code=v;
-		var i=0;
-	console.log(search_code);
-	$.each(pt_code,function(key,val){
-		if(val.pt_code.indexOf(search_code)>-1)
-		$("#edit_fr_name").val(val.pt_name);
-//	$("#edit_pt_name").val(ds_code+"_"+v);
-		i++;
-	});
-	if(i==0){
-		$("#edit_fr_name").val("");
-	}
-}
-
-
 window.onload = function() {
-
 $( "#mb_id" ).focusout(function() {
 chk_vali_id();
 })
@@ -837,32 +545,14 @@ chk_vali_id();
 blur++;
 chk_vali_id();
 });
-
 /*mb_code로 등록 정보 변경*/
 //chg_gname();
-
 /*24시간인지 체크*/
 chk_btn_status();
-
 /*멀티 셀렉트 구현 chosen-select */
 $(".chosen-select").chosen();
 var code=$("#prq_fcode").val();
 get_frcode(code);
-
 get_frmail();
-
-
-	/*총판 코드 가져 오기*/
-	get_dscode();
-
-	/*대리점 코드 가져 오기*/
-	var ds_code="";
-	get_ptcode(ds_code);
-	
-	/*가맹점 코드 가져 오기*/
-	get_frcode();
-
 };/*window.onload = function() {..}*/
-
-
 </script>

@@ -257,23 +257,18 @@ if($mb_code=="PT"){?>
 </div>.col-sm-10
 </div>.form-group
 <div class="hr-line-dashed"></div>.hr-line-dashed
-
 <div class="form-group"><label class="col-sm-2 control-label">매장코드 1</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
 </div>.col-sm-10
 </div>.form-group
 <div class="hr-line-dashed"></div>.hr-line-dashed
-
 </div>.col-md-6 Left Menu
-
 <div class="col-md-6">
-
 <div class="form-group"><label class="col-sm-2 control-label">전화번호 2</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">전화번호를 기입해 주세요..</span>
 </div>.col-sm-10
 </div>.form-group
 <div class="hr-line-dashed"></div>.hr-line-dashed
-
 <div class="form-group"><label class="col-sm-2 control-label">매장코드 2</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_bankholder"> <span class="help-block m-b-none">매장코드를 기입해 주세요..</span>
 </div>.col-sm-10 -->
@@ -365,7 +360,6 @@ if($mb_code=="PT"){?>
 <script type="text/javascript">
 /*
 server에 <span class="mb_gname">가맹점</span>을 등록 합니다.
-
 */
 function set_ds(){
 var param=$("#write_action").serialize();
@@ -374,15 +368,10 @@ $("#form_data").html(param);
 //	$("#write_action").submit();
 set_member();
 }
-
 if($("#is_join").val()=="FALSE"){
 $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 }
 }
-
-
-
-
 function chk_duplicate_id(mb_id)
 {
 var result=false;
@@ -395,20 +384,14 @@ success: function(data) {
 	$("#is_member").val(data.success);	
 	}
 });
-
-
 }
-
 /*End Dropzone*/	
-
 var focus=0,blur=0;
-
 function chk_vali_id(){
 focus++; 
 var object=[];
 var mb_id=$("#mb_id").val();
 chk_duplicate_id(mb_id);
-
 if (mb_id.length<4)
 {
 object.push("<span  class=\"text-danger\">");
@@ -427,7 +410,6 @@ $("#is_join").val("FALSE");
 object.push("</span>");
 $( "#mb_id_assist" ).html(object.join(""));
 }
-
 /*mb_code로 등록 정보 변경*/
 function chg_gname(){
 	var chk_code=$("#mb_code").val();
@@ -444,10 +426,8 @@ function chg_gname(){
 	break;
 	}
 }
-
 function set_member(){
 var param=$("#write_action").serialize();
-
 $.ajax({
 url:"/prq/board/write/prq_member",
 type: "POST",
@@ -458,10 +438,7 @@ success: function(data) {
 console.log(data);
 }
 });		
-
 }
-
-
 /*가맹점 코드를 불러 옵니다.*/
 var fr_code="";
 function get_frcode()
@@ -483,8 +460,6 @@ function get_frcode()
 		}
 	});
 }
-
-
 /*사용 중인 총판 코드를 불러 옵니다.*/
 var used_fr_code=[];
 function get_used_frcode()
@@ -503,7 +478,6 @@ function get_used_frcode()
 		}
 	});
 }
-
 /*pt_code로 fr 코드를 탐색 합니다.
 */
 function search_frcode(spt_code)
@@ -511,16 +485,13 @@ function search_frcode(spt_code)
 	var object = [];
 	var chk_max_frcode=[];
 	var arr =used_fr_code;
-
 	console.log("사용 중인 코드 갯수 : "+used_fr_code.length);
 	console.log("등록한 코드 갯수 : "+fr_code.length);
-
 	if(fr_code.length==used_fr_code.length)
 	{
 		alert("가맹점 코드를 모두 소진하여 \n 더 이상 가맹점 등록이 불가능 합니다.\n 리스트로 돌아갑니다.");
 		$(location).attr('href','/prq/franchise/lists/prq_member/page/1');
 	}
-
 	$.each(fr_code,function(key,val){
 //	if(val.fr_code.indexOf(spt_code)>-1)
 //	{
@@ -563,10 +534,7 @@ function search_frcode(spt_code)
 	$("#prq_fcode").html(result);
 //	chg_frcode(spt_code+""+fr_code_new);
 }
-
-
 window.onload = function() {
-
 $( "#mb_id" ).focusout(function() {
 chk_vali_id();
 })
@@ -574,14 +542,11 @@ chk_vali_id();
 blur++;
 chk_vali_id();
 });
-
-
 	/*mb_code로 등록 정보 변경*/
 	//chg_gname();
-
 	/*가맹점 코드 가져 오기*/
 	get_frcode();
-
-
 };/*window.onload = function() {..}*/
 </script>
+Status API Training Shop Blog About Pricing
+© 2016 GitHub, Inc. Terms Privacy Security Contact 
