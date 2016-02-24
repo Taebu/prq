@@ -929,3 +929,21 @@ ALTER TABLE `prq_mno` change mn_operator  mn_operator enum('SK','LG','KT','UNKNO
 -- 2016-02-15 (월)
 ALTER TABLE `prq_gcm_log` add gc_stno int NOT NULL default 0;
 ALTER TABLE `prq_mms_log` add mm_stno int NOT NULL default 0;
+
+-- 2016-02-22 (월)
+ALTER TABLE `prq_store` add st_vtel varchar(30) NOT NULL default '';
+
+ALTER TABLE `prq_store` add st_teltype  enum('prq','cashq') NULL default 'prq';
+
+-- 2016-02-23 (화)
+alter table prq_store change mb_id mb_id varchar(255) NOT NULL default '';
+alter table prq_member change mb_id mb_id varchar(255) NOT NULL default '';
+
+show create table prq_store \G;
+
+alter table prq_cdr change cd_id cd_id varchar(255) NOT NULL default '';
+
+alter table cdr change UserID UserID varchar(255) NOT NULL default '';
+
+-- 2016-02-24 (수)
+alter table prq_member change mb_pcode mb_pcode char(12) NOT NULL default '';

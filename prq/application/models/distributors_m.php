@@ -58,7 +58,7 @@ class Distributors_m extends CI_Model
 		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table.$sword."  ORDER BY mb_no DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table.$sword."  and mb_gcode='g3' ORDER BY mb_no DESC".$limit_query;
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )

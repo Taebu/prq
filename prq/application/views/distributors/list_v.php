@@ -303,11 +303,11 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 					<th scope="col">등록일자</th>
 					<th scope="col"><span class="mb_gname">총판</span>ID</th>
 					<!-- <th scope="col"><span class="mb_gname">총판</span>코드</th> -->
-					<th scope="col">PRQ 코드</th>
+					<th scope="col">코드</th>
 					<!-- <th scope="col">구분</th> -->
 					<!-- <th scope="col">대리점</th> -->
 					<th scope="col"><span class="mb_gname">총판</span>상태</th>
-					<th scope="col">비고</th>
+					<!-- <th scope="col">비고</th> -->
 					<th scope="col">대리점</th>
 				</tr>
 			</thead>
@@ -331,7 +331,7 @@ foreach ($list as $lt)
  					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
 					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
 					<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
- 					<td><span class="mb_gname">총판</span></td> 
+ 					<!-- <td><span class="mb_gname">총판</span></td>  -->
  					<td>0/5</td> 
 				</tr>
 <?php

@@ -61,10 +61,12 @@ echo form_open('/auth/login', $attributes);
 
 <div style="position:absolute; top:30px; right:0; z-index: 1;"><img src="/prq/include/img/down_link.png" title="설치가이드버튼" usemap="#Map">
       <map name="Map">
- 		  <area shape="rect" coords="54,58,250,97" href="http://lomc.co.kr/download/naverdaum/file/naver_20150506.pdf" target="_blank">
- 		            <area shape="rect" coords="54,113,250,150" href="http://lomc.co.kr/download/naverdaum/file/naver.html" target="_blank">
-		            <area shape="rect" coords="54,176,250,214" href="http://lomc.co.kr/download/naverdaum/file/daum_20150506.pdf" target="_blank">
-		            <area shape="rect" coords="54,290,250,330" href="http://lomc.co.kr/download/naverdaum/file/daum.html" target="_blank">
+ 		  <area shape="rect" coords="54,58,250,97" href="http://prq.co.kr/prq/uploads/files/PRQ_CID.zip" target="_blank">
+ 		            <!-- <area shape="rect" coords="54,113,250,150" href="http://lomc.co.kr/download/naverdaum/file/naver.html" target="_blank"> -->
+					<area shape="rect" coords="54,113,250,150" href="javascript:alert('준비중입니다.');" target="_blank">
+		            <!-- <area shape="rect" coords="54,176,250,214" href="http://lomc.co.kr/download/naverdaum/file/daum_20150506.pdf" target="_blank"> -->
+		            <area shape="rect" coords="54,176,250,214" href="javascript:alert('준비중입니다.');" target="_blank">
+		            <area shape="rect" coords="54,290,250,330" href="http://download.teamviewer.com/download/TeamViewerQS_ko.exe" target="_blank">
 <!--		            <area shape="rect" coords="106,327,251,356" href="http://lomc.co.kr/guide/delishop_m_guide.mp4" target="_blank">
 		            <area shape="rect" coords="106,293,250,323" href="http://lomc.co.kr/download/delishop/delishop_manual_20150706.pdf" target="_blank">
 		            <area shape="rect" coords="107,205,249,235" href="http://lomc.co.kr/guide/delim_m_guide.mp4" target="_blank">

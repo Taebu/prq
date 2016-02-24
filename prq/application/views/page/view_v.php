@@ -160,7 +160,7 @@ alert(address + " 주소를 찾을 수 없습니다.");
 <div class="nav_wrap">
 <ul class="nav_u" id="nav_u">
 <!-- 메뉴 -->
-<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="icon_menu imenu01">홈</span>&nbsp;홈&nbsp;</a></li>
+<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="icon_menu imenu01">홈</span><!-- <i class="fa  fa-2x fa-fw fa-home"></i> -->&nbsp;홈&nbsp;</a></li>
 						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="icon_menu imenu02">업체정보</span>
 						업체정보</a></li>
 						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="icon_menu imenu03">전단지</span>전단지</a></li>

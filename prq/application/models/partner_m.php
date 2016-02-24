@@ -52,6 +52,8 @@ class Partner_m extends CI_Model
 		/* 총판인 경우 */
 		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
 			$sword.= ' and prq_fcode like "'.$prq_fcode.'" and mb_gcode="G4" ';
+		}else{
+			$sword.= ' and mb_gcode="G4" ';
 		}
 		/* 가맹점인 경우 */
 		//echo "mb_gcode => ".$mb_gcode."<br>";
