@@ -105,7 +105,10 @@ class Test extends CI_Controller {
 		
 	}
 
-
+	function server()
+	{
+       $this->load->view('test/server_v');
+	}
 }
 
 /* End of file board.php */

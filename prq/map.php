@@ -54,7 +54,13 @@ var map_heigth=parseInt(map_width*3/5);
 console.log(map_heigth);
 var latitude=<?php echo $latitude;?>;
 var longitude=<?php echo $longitude;?>;
+var tr_latitude=latitude+.05;
+var tr_longitude=longitude+.05;
+console.log(latitude+", ->"+tr_latitude);
+console.log(longitude+", ->"+tr_longitude);
 var oSeoulCityPoint = new nhn.api.map.LatLng(latitude,longitude);
+var oSeoulCityPoint2 = new nhn.api.map.LatLng(tr_latitude,tr_longitude);
+
 var defaultLevel = $("#defaultLevel").val();
 var oMap = new nhn.api.map.Map(document.getElementById('map'), { 
 								point : oSeoulCityPoint,
@@ -86,6 +92,21 @@ oSlider.setPosition({
   title :$("#store_name").val()
   });
   oMap.addOverlay(oMarker);
+/*
+var oSeoulCityPoint2 = new nhn.api.map.LatLng(tr_latitude,tr_longitude);
+  var mPoint = oSeoulCityPoint2;
+  var oSize = new nhn.api.map.Size(28, 37);
+  var oOffset = new nhn.api.map.Size(28, 37);
+
+  var oIcon = new nhn.api.map.Icon("http://static.naver.com/maps2/icons/pin_spot2.png", oSize);
+ 
+  var oMarker = new nhn.api.map.Marker(oIcon, {
+  point : mPoint,
+  zIndex : 1,
+  title :$("#store_name").val()+"2"
+  });
+  oMap.addOverlay(oMarker);
+*/
 
 var oMapTypeBtn = new nhn.api.map.MapTypeBtn();
 oMap.addControl(oMapTypeBtn);

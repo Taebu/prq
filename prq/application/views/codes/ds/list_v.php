@@ -203,8 +203,8 @@
 
 if($mb_gcode=="G1"){?>
 <div class="btn_area">
-<button type="button" class="btn btn-sm btn-default" onclick="chg_list('modify');">수정</button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('delete');">삭제</button>
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('modify');"><i class="fa fa-pencil-square-o"></i>수정</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('delete');"><i class="fa fa-trash"></i> 삭제</button>
 </div><!-- .btn_area -->
 <?php }?>
 <table cellspacing="0" cellpadding="0" class="table table-striped">
@@ -252,8 +252,8 @@ if($code != 9999) $next_code = $code + 1;
 					$ds_code="DS0001";
 					}
 					?>
-				<button type="button" class="btn btn-sm btn-default" onclick="chg_list('modify');">수정</button>
-				<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('delete');">삭제</button></div><!-- .btn_area --><?php }?></th>
+					<button type="button" class="btn btn-sm btn-default" onclick="chg_list('modify');"><i class="fa fa-pencil-square-o"></i> 수정</button>
+					<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('delete');"><i class="fa fa-trash"></i> 삭제</button></div><!-- .btn_area --><?php }?></th>
 				</tr>
 				<tr>
 					<th colspan="12" style="text-align:center;border-top:0">

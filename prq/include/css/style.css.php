@@ -57,7 +57,8 @@ $color_type_alpha=${$_GET['theme']."a"};
 .nav_u{display:table;white-space:nowrap}
 .nav_u li:first-child{padding:0 0 0 15px}
 .nav_u li:last-child{padding:0 15px 0 0}
-.nav_l{display:table-cell;width:200px;margin:0;white-space:nowrap}
+.nav_l{display:table-cell;margin:0;white-space:nowrap}
+/*width:200px;*/
 .nav_a{display:inline-block;padding:0 7px;font-family:HelveticaNeue-Condensed,Helvetica,sans-serif;font-weight:700;font-size:15px;line-height:36px;color:#333;text-shadow:0 -1px 1px rgba(255,255,255,.7)}
 .nav_lon .nav_a{height:35px;border-bottom:3px solid <?php echo $color_type;?>;color:<?php echo $color_type;?>}
 #review_area,#review_area .box_review,#review_area .review_top,#storedetail_area,.celeb_wrap ul li{border-bottom:1px solid #e2e2e2}
@@ -107,7 +108,7 @@ $color_type_alpha=${$_GET['theme']."a"};
 .celeb_wrap .imenu10{background-position:-36px -101px}
 .celeb_wrap .imenu11{background-position:-69px -4px}
 
-.nav_wrap ul li a{display:block;position:relative;color:#777;font-family:'Nanum Gothic';height:45px;line-height:39px;padding:0 0 0 53px;font-weight:800}
+.nav_wrap ul li a{display:block;position:relative;color:#777;font-family:'Nanum Gothic';height:45px;line-height:39px;padding:0 0 0 0;font-weight:800}
 .nav_wrap .icon_menu
 {
 	position:absolute;

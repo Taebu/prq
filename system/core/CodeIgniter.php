@@ -351,8 +351,19 @@ if ( ! is_php('5.4'))
  * ------------------------------------------------------
  *
  */
+	$VISIT =& load_class('Visit', 'core');
+
+
+
+/*
+ * ------------------------------------------------------
+ *  Load the app controller and local controller
+ * ------------------------------------------------------
+ *
+ */
 	// Load the base controller class
 	require_once BASEPATH.'core/Controller.php';
+
 
 	/**
 	 * Reference to the CI_Controller method.
