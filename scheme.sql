@@ -972,3 +972,45 @@ insert into `prq_visit` set
   `vi_time`='15:28:00',
   `vi_referer`='url',
   `vi_agent`='kk';
+
+-- 2016-03-02 (수)
+-- 통계 페이지
+CREATE TABLE `prq_stat` (
+  `st_date` date  NOT NULL DEFAULT '0000-00-00',
+  `st_sender`  varchar(20) DEFAULT NULL COMMENT '발신인',
+  `st_cnt`  int NOT NULL default 0
+) DEFAULT CHARSET=utf8  COMMENT='STAT LOG';
+
+INSERT INTO prq_stat select '2016-02-29',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-29')=date(gc_datetime) group by gc_sender;
+
+INSERT INTO prq_stat select '2016-02-12',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-12')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-13',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-13')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-14',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-14')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-15',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-15')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-16',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-16')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-17',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-17')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-18',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-18')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-19',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-19')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-20',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-20')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-21',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-21')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-22',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-22')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-23',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-23')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-24',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-24')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-25',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-25')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-26',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-26')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-27',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-27')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-28',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-28')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-29',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-29')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-03-01',gc_sender,count(*) cnt from prq_gcm_log where date('2016-03-01')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-03-02',gc_sender,count(*) cnt from prq_gcm_log where date('2016-03-02')=date(gc_datetime) group by gc_sender;
+
+
+INSERT INTO prq_stat select '2016-02-03',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-03')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-04',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-04')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-05',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-05')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-06',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-06')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-07',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-07')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-08',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-08')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-09',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-09')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-10',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-10')=date(gc_datetime) group by gc_sender;
+INSERT INTO prq_stat select '2016-02-11',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-11')=date(gc_datetime) group by gc_sender;

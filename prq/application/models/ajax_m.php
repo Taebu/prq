@@ -1141,6 +1141,24 @@ class Ajax_m extends CI_Model
 	}
 
 	/**
+	 * 프랜차이즈 정보 코드로 불러오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
+	 * @return boolean 입력 성공여부
+	 */
+    function get_franchise($prq_fcode)
+    {
+    	$sql = "SELECT * FROM prq_member WHERE prq_fcode='".$prq_fcode."'";
+   		$query = $this->db->query($sql);
+
+     	//게시물 내용 반환
+	    $result = $query->row();
+
+    	return json_encode($result);
+    }
+  
+	/**
 	 * 보낸 갯수 불러 오기
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>
