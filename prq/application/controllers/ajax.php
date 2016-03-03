@@ -460,6 +460,15 @@ class Ajax extends CI_Controller {
 
 		echo $result;
 	}
+
+	/* get_stat() */
+	function get_stat()
+	{
+		$mb_hp=$this->uri->segment(3);
+		$result = $this->ajax_m->get_stat($mb_hp);
+
+		echo $result;
+	}
 }
 
 /* End of file ajax_board.php */

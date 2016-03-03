@@ -505,6 +505,7 @@
             );
 
         });
-    </script>
+
+	</script>
 </body>
 </html>

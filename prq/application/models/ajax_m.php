@@ -1141,21 +1141,30 @@ class Ajax_m extends CI_Model
 	}
 
 	/**
-	 * 프랜차이즈 정보 코드로 불러오기
+	 * 보낸 갯수 불러 오기
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>
-	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
-	 * @return boolean 입력 성공여부
+	 * @param string mb_hp 보낸 번호
+	 * @return json array
 	 */
-    function get_franchise($prq_fcode)
+    function get_stat($mb_hp)
     {
-    	$sql = "SELECT * FROM prq_member WHERE prq_fcode='".$prq_fcode."'";
+    	$sql = "select * from prq_stat where st_sender='".$mb_hp."'";
    		$query = $this->db->query($sql);
-
+		$json['success']=$query->num_rows() > 0;
+	
+		
      	//게시물 내용 반환
-	    $result = $query->row();
-
-    	return json_encode($result);
+//	    $result = $query->row();
+		if($mb_hp==""){
+			$json['success']=false;
+		}else if($json['success']){
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+    	return json_encode($json);
     }
 
 }

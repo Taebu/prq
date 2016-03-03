@@ -947,3 +947,28 @@ alter table cdr change UserID UserID varchar(255) NOT NULL default '';
 
 -- 2016-02-24 (수)
 alter table prq_member change mb_pcode mb_pcode char(12) NOT NULL default '';
+
+-- 2016-02-25 (목)
+CREATE TABLE `prq_visit` (
+  `vi_id` int(11) NOT NULL DEFAULT '0',
+  `vi_ip` varchar(255) NOT NULL DEFAULT '',
+  `vi_date` date NOT NULL DEFAULT '0000-00-00',
+  `vi_time` time NOT NULL DEFAULT '00:00:00',
+  `vi_referer` text NOT NULL,
+  `vi_agent` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`vi_id`),
+  UNIQUE KEY `index1` (`vi_ip`,`vi_date`),
+  KEY `index2` (`vi_date`)
+);
+insert into `prq_visit` set
+  `vi_ip`='123.52',
+  `vi_date`='2016-02-25',
+  `vi_time`='15:28:00',
+  `vi_referer`='url',
+  `vi_agent`='kk';
+insert into `prq_visit` set
+  `vi_ip`='123.52',
+  `vi_date`='2016-02-25',
+  `vi_time`='15:28:00',
+  `vi_referer`='url',
+  `vi_agent`='kk';
