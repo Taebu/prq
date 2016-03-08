@@ -188,11 +188,8 @@
 		<div class="container-fluid">
 
     <div class='row'>
-	<?php
-			echo form_open('prq/board/distributors/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));
-?>
+	<?php echo form_open('prq/board/distributors/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));?>
 			<!--form id="bd_search" method="post" class="well form-search" -->
-
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->cookie('mb_code', TRUE);?>">
 		<!-- id="my-awesome-dropzone" class="" -->
@@ -363,7 +360,8 @@ foreach ($list as $lt)
 </div>
 </div>
 </div>
-<div class="row">        <div class='col-sm-11'></div><div class='col-sm-1'> 
-<?php if($mb_gcode=="G1"){?>
+<div class="row"><div class='col-sm-11'></div>
+
+<div class='col-sm-1'><?php if($mb_gcode=="G1"){?>
 <a href="javascript:set_write();" class="btn btn-success">쓰기</a><?php }?></div></div>
 </article>

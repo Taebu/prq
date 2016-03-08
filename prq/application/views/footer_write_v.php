@@ -507,7 +507,13 @@
 
 */
 
+/* 로그인 여부 체크 */
+if($("#logged_in").val()==""){
+	swal("로그인이 필요한 페이지 입니다.", "2초 뒤 로그인 페이지로 이동 합니다. ", "info");
 
+	setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+
+}
 </script>
 
 </body>

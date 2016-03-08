@@ -469,6 +469,29 @@ class Ajax extends CI_Controller {
 
 		echo $result;
 	}
+
+
+
+	/* set_cdr */
+	public function set_cdr()
+	{
+		$json['success']=false;
+
+		$UserID= $this->input->post("userid", TRUE);
+		$port= $this->input->post("port", TRUE);
+		$callerid= $this->input->post("callerid", TRUE);
+		$calledid = $this->input->post("calledid", TRUE);
+
+		$write_data = array(
+			'UserID'=>$UserID,
+			'port'=>$port,
+			'callerid'=>$callerid,
+			'calledid'=>$calledid
+		);
+		$result = $this->ajax_m->set_cdr($write_data);
+		echo $result;
+	}
+
 }
 
 /* End of file ajax_board.php */

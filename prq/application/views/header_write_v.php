@@ -47,6 +47,7 @@
 </head>
 <body class="skin-3">
     <div id="wrapper">
+<input type="hidden" name="logged_in" id="logged_in" value="<?php echo $this->input->cookie('logged_in', TRUE);?>">
 <?php
 $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
 $prq_fcode=@$this->input->cookie('prq_fcode',TRUE);

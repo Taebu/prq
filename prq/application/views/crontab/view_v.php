@@ -97,6 +97,8 @@ foreach($list as $li)
 	// select cd_date from prq_cdr where cd_tel='0313768936' and cd_hp='01089602214' and cd_callerid='01091675141' order by cd_date desc limit 1;
 
 	//echo "<td>select * from prq_cdr where cd_tel='".$li->cd_tel."' and cd_hp='".$li->cd_hp."' and cd_callerid='".$li->cd_callerid."'</td>";
+
+	/* 콜 로그가 CID 장비 인 경우 */
 	$config = array(
 	//페이지네이션 기본 설정
 	'cd_id'=> $li->cd_id,
@@ -105,7 +107,7 @@ foreach($list as $li)
 	
 	$store=$controller->crontab_m->get_store($config);
 
-
+	/* 콜로그가 KT 장비 인 경우*/
 	foreach($store as $st)
 	{
 		/*mms 발송 여부*/

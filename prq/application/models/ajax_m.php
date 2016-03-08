@@ -1184,6 +1184,47 @@ class Ajax_m extends CI_Model
 		}
     	return json_encode($json);
     }
+	/*
+	set_cdr($array)
+
+	JdbcUtils.updateByPreparedStatement("insert into cdr(date,UserID,port,callerid,calledid) values(now(),?,?,?,?)", list);
+	cdr 전송 정보 실패 성공 값 로그를 
+	@param $array data
+	@return json
+	*/
+	function set_cdr($array)
+	{
+		$json=array();
+		$json['success']=false;
+		if(is_null($array['UserID'])||strlen($array['callerid'])<2||strlen($array['calledid'])<2){
+		echo json_encode($json);
+		return ;
+		}
+
+		$sql=array();
+		$sql[]="INSERT INTO  `callerid`.`cdr` SET ";
+		$sql[]=" date=now(), ";
+		$sql[]=" UserID='".$array['UserID']."', ";
+		$sql[]=" port='".$array['port']."', ";
+		$sql[]=" callerid='".$array['callerid']."', ";
+		$sql[]=" callerdd='".$array['calledid']."'; ";
+
+
+		$join_sql=join("",$sql);
+		//$json['query']=$ojin_sql;
+		$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
+
 
 }
 
