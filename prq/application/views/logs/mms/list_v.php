@@ -354,6 +354,8 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 					<th scope="col">발신인</th>
 					<th scope="col">상태</th>
 					<th scope="col">전송일</th>
+					<th scope="col">일전송</th>
+					<th scope="col">월전송</th>
 					</tr>
 			</thead>
 			<tbody>
@@ -381,6 +383,8 @@ foreach ($list as $lt)
 					<td scope="row"><?php echo phone_format($lt->mm_sender);?></td>
 					<td scope="row"><?php echo $lt->mm_result;?></td>
 					<td scope="row"><?php echo $lt->mm_datetime;?></td>
+					<td scope="row"><?php echo $lt->mm_daily_cnt;?></td>
+					<td scope="row"><?php echo $lt->mm_monthly_cnt;?></td>
 <!-- 					<td scope="row"><?php echo $lt->mm_status;?></td> -->
 <!-- 					<td scope="row"><?php echo $lt->mm_ipaddr;?></td> -->
 				</tr>

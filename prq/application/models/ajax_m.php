@@ -1029,6 +1029,8 @@ class Ajax_m extends CI_Model
 			$sql[]=" mn_operator='".$array['mn_operator']."', ";
 			$sql[]=" mn_model='".$array['mn_model']."', ";
 			$sql[]=" mn_version='".$array['mn_version']."', ";
+			$sql[]=" mn_appvcode='".$array['mn_appvcode']."', ";
+			$sql[]=" mn_appvname='".$array['mn_appvname']."', ";
 			$sql[]=" mn_mms_limit='".$array['mn_dup_limit']."' ";
 			$sql[]=" WHERE mn_id='".$array['mn_id']."';";
 		}else{
@@ -1040,6 +1042,8 @@ class Ajax_m extends CI_Model
 			$sql[]=" mn_operator='".$array['mn_operator']."', ";
 			$sql[]=" mn_model='".$array['mn_model']."', ";
 			$sql[]=" mn_version='".$array['mn_version']."', ";
+			$sql[]=" mn_appvcode='".$array['mn_appvcode']."', ";
+			$sql[]=" mn_appvname='".$array['mn_appvname']."', ";
 			$sql[]=" mn_mms_limit='".$array['mn_dup_limit']."', ";
 			$sql[]=" mn_datetime=now();";
 		}
@@ -1123,8 +1127,10 @@ class Ajax_m extends CI_Model
 		$sql[]=" mm_imgurl='".$array['mm_imgurl']."', ";
 		$sql[]=" mm_result='".$array['mm_result']."', ";
 		$sql[]=" mm_ipaddr='".$array['mm_ipaddr']."', ";
+		$sql[]=" mm_monthly_cnt='".$array['mm_monthly_cnt']."', ";
+		$sql[]=" mm_daily_cnt='".$array['mm_daily_cnt']."', ";
 		$sql[]=" mm_datetime=now();";
-
+		//$array['mm_sender']
 		$join_sql=join("",$sql);
 		//$json['query']=$ojin_sql;
 		$query = $this->db->query($join_sql);
@@ -1165,7 +1171,7 @@ class Ajax_m extends CI_Model
 	 * @param string mb_hp 보낸 번호
 	 * @return json array
 	 */
-    function get_stat($mb_hp)
+    function get_stat($mb_hp,$type="json")
     {
     	$sql = "select * from prq_stat where st_sender='".$mb_hp."'";
    		$query = $this->db->query($sql);
@@ -1182,7 +1188,12 @@ class Ajax_m extends CI_Model
 				array_push($json['posts'],$list);
 			}
 		}
-    	return json_encode($json);
+		if($type=="json"){
+			$result=json_encode($json);
+		}else{
+			$result=print_r($json);
+		}
+    	return $result;
     }
 	/*
 	set_cdr($array)
@@ -1196,7 +1207,9 @@ class Ajax_m extends CI_Model
 	{
 		$json=array();
 		$json['success']=false;
-		if(is_null($array['UserID'])||strlen($array['callerid'])<2||strlen($array['calledid'])<2){
+		if(is_null($array['UserID'])||strlen($array['callerid'])<2){
+		$json['msg_user']=$array['UserID']." is empty";
+		$json['msg_callerid']=$array['callerid']." is smaller";
 		echo json_encode($json);
 		return ;
 		}
@@ -1207,7 +1220,7 @@ class Ajax_m extends CI_Model
 		$sql[]=" UserID='".$array['UserID']."', ";
 		$sql[]=" port='".$array['port']."', ";
 		$sql[]=" callerid='".$array['callerid']."', ";
-		$sql[]=" callerdd='".$array['calledid']."'; ";
+		$sql[]=" calledid='".$array['calledid']."'; ";
 
 
 		$join_sql=join("",$sql);

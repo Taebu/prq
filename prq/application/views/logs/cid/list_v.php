@@ -322,13 +322,23 @@
 
 <div class='row'>
 		<?php 
+			function get_state($v)
+			{
+				$str=array("미발신","발신","일반번호","알수 없음");
+				return $str[$v];
+			}
+			
 			$attributes = array(
 				'class' => 'form-horizontal', 
 				'id' => 'write_action'
 			);
 			echo form_open('board/write/ci_board', $attributes);
+
+
 		?>
 	<div class='col-sm-12'>
+	<p>*상태 : (0이면 미발신, 1이면 상대방의 핸드폰 번호로 MMS 발송 요청, 2이면 일반번호 이므로 발송요청에서 캔슬)</p>
+	<p>*발송량 : 오늘 보낸 갯수 / 모바일에서 보낸 문자 갯수 / 일 발송 제한량</p>
 <?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
 if($mb_gcode=="G1"||$mb_gcode=="G2")
@@ -344,66 +354,73 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
-		<table cellspacing="0" cellpadding="0" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">작성일</th>
-					<th scope="col">아이디</th>
-					<th scope="col">포트</th>
-					<th scope="col">수신인</th>
-					<th scope="col">상태(0이면 미발신)</th>
-					<th scope="col">가맹점명</th>
-					<th scope="col">전화</th>
-					<th scope="col">핸드폰</th>
-				</tr>
-			</thead>
-			<tbody>
+<table cellspacing="0" cellpadding="0" class="table table-striped">
+<thead>
+<tr>
+<th scope="col">작성일</th>
+<th scope="col">아이디</th>
+<th scope="col">포트</th>
+<th scope="col">수신인</th>
+<th scope="col">*상태</th>
+<th scope="col">가맹점명</th>
+<th scope="col">전화</th>
+<th scope="col">핸드폰</th>
+<th scope="col">*발송량</th>
+</tr>
+</thead>
+<tbody>
 <?php
 /*리스트가 없으면 없는 값 출력*/
 if(count($list)==0){
 ?>
-				<tr>
-					<td scope="row" colspan='11' class='text-center'> 조회한 CID Log가 없습니다.</td>
-				</tr>
+<tr><td scope="row" colspan='11' class='text-center'> 조회한 CID Log가 없습니다.</td></tr>
 <?php
 }
 foreach ($list as $lt)
 {
 ?>
-				<tr>
-					<td scope="row"><?php echo $lt->cd_date;?></td>
-					<td scope="row"><?php echo $lt->cd_id;?></td>
-					<td scope="row"><?php echo $lt->cd_port;?></td>
-					<td scope="row"><?php echo phone_format($lt->cd_callerid);?></td>
-<!-- 					<td scope="row"><?php echo $lt->cd_calledid;?></td> -->
-					<td scope="row"><?php echo $lt->cd_state;?></td>
-					<td scope="row"><?php echo $lt->cd_name;?></td>
-					<td scope="row"><?php echo phone_format($lt->cd_tel);?></td>
-					<td scope="row"><?php echo phone_format($lt->cd_hp);?></td>
-				</tr>
+<tr>
+<td scope="row"><?php echo $lt->cd_date;?></td>
+<td scope="row"><?php echo $lt->cd_id;?></td>
+<td scope="row"><?php echo $lt->cd_port;?></td>
+<td scope="row"><?php echo phone_format($lt->cd_callerid);?></td>
+<!--<td scope="row"><?php echo $lt->cd_calledid;?></td> -->
+<td scope="row"><?php echo get_state($lt->cd_state);?></td>
+<td scope="row"><?php echo $lt->cd_name;?></td>
+<td scope="row"><?php echo phone_format($lt->cd_tel);?></td>
+<td scope="row"><?php echo phone_format($lt->cd_hp);?></td>
+<td scope="row"><?php echo $lt->cd_day_cnt;?>/<?php echo $lt->cd_device_day_cnt;?>/<?php echo $lt->cd_day_limit;?></td>
+</tr>
 <?php
 }
 ?>
 
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="12" style="text-align:left">
-					<?php if($mb_gcode=="G1"){?>
-					<div class="btn_area">
-					<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-					<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-					<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-					<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-					<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-					<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button></div><!-- .btn_area --><?php }?></th>
-				</tr>
-				<tr>
-					<th colspan="12" style="text-align:center;border-top:0">
-					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
-				</tr>
-			</tfoot>
-		</table>
+</tbody>
+<tfoot>
+<tr>
+<th colspan="12" style="text-align:left">
+
+<?php
+if($mb_gcode=="G1")
+{
+?>
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button></div><!-- .btn_area -->
+<?php 
+}
+?></th>
+</tr>
+<tr>
+<th colspan="12" style="text-align:center;border-top:0">
+<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
+</tr>
+</tfoot>
+</table>
 </div><!-- .table-responsive -->
 
 

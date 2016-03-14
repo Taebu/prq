@@ -91,6 +91,8 @@ function get_cidinfo(){
 				object.push('<select  class="form-control" onchange="set_cidport(this.id,this.value)" id="'+val.st_no+'">');
 				console.log(val.st_port);
 				chk_port=val.st_port;
+				str=val.st_port==0?"selected":"";
+				object.push('<option value="0" '+str+'>0</option>');
 				str=val.st_port==1?"selected":"";
 				object.push('<option value="1" '+str+'>1</option>');
 				str=val.st_port==2?"selected":"";
@@ -110,6 +112,7 @@ function get_cidinfo(){
 			object.push('</tbody>');
 			object.push('</table>');
 			object.push('<span class="help-block m-b-none"></span>');
+			object.push('<p>KT의 경우는 0 번 포트를 사용하며 상점 갯수 제한이 없습니다. 단!!! 해당 가맹점과 상점의 번호가 동일하게 세팅되면 엉뚱한 정보를 불러 올수 있으니 유의 바랍니다.</p>');
 			$("#cid_info").html(object.join(""));
         }
     });		

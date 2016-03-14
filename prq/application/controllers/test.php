@@ -26,7 +26,7 @@ class Test extends CI_Controller {
 	public function _remap($method)
  	{
  		//헤더 include
-        $this->load->view('header_v');
+        //$this->load->view('header_v');
 
 		if( method_exists($this, $method) )
 		{
@@ -34,7 +34,7 @@ class Test extends CI_Controller {
 		}
 
 		//푸터 include
-		$this->load->view('footer_v');
+		//$this->load->view('footer_v');
     }
 
 	/**
@@ -109,6 +109,16 @@ class Test extends CI_Controller {
 	{
        $this->load->view('test/server_v');
 	}
+	
+
+	/*
+	2016-03-11 (금)
+	mms지난 정보 갱신*/
+	function mms_cnt()
+	{
+       $this->load->view('test/mms_cnt_v');
+	}
+
 }
 
 /* End of file board.php */

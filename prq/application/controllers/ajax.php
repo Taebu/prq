@@ -400,6 +400,8 @@ class Ajax extends CI_Controller {
 		$mn_version= $this->input->post("mn_version", TRUE);
 		$mn_mms_limit= $this->input->post("mn_mms_limit", TRUE);
 		$mn_dup_limit= $this->input->post("mn_dup_limit", TRUE);
+		$mn_appvcode = $this->input->post("mn_appvcode ", TRUE);
+		$mn_appvname= $this->input->post("mn_appvname", TRUE);
 
 		$write_data = array(
 			'mn_id'=>$mn_id,
@@ -409,7 +411,9 @@ class Ajax extends CI_Controller {
 			'mn_model'=>$mn_model,
 			'mn_version'=>$mn_version,
 			'mn_mms_limit'=>$mn_mms_limit,
-			'mn_dup_limit'=>$mn_dup_limit
+			'mn_dup_limit'=>$mn_dup_limit,
+			'mn_appvcode'=>$mn_appvcode ,
+			'mn_appvname'=>$mn_appvname
 		);
 		$result = $this->ajax_m->set_mno($write_data);
 		echo $result;
@@ -437,6 +441,9 @@ class Ajax extends CI_Controller {
 		$mm_imgurl= $this->input->post("mm_imgurl", TRUE);
 		$mm_result= $this->input->post("mm_result", TRUE);
 		$mm_ipaddr= $this->input->post("mm_ipaddr", TRUE);	
+		/*전송량 추가 2016-03-08 (화) */
+		$mm_monthly_cnt= $this->input->post("mm_monthly_cnt", TRUE);	
+		$mm_daily_cnt= $this->input->post("mm_daily_cnt", TRUE);	
 
 		$write_data = array(
 			'mm_subject'=>$mm_subject,
@@ -446,6 +453,8 @@ class Ajax extends CI_Controller {
 			'mm_sender'=>$mm_sender,
 			'mm_imgurl'=>$mm_imgurl,
 			'mm_result'=>$mm_result,
+			'mm_monthly_cnt'=>$mm_monthly_cnt,
+			'mm_daily_cnt'=>$mm_daily_cnt,
 			'mm_ipaddr'=>$mm_ipaddr
 		);
 		$result = $this->ajax_m->set_mms($write_data);

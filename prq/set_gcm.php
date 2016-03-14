@@ -14,7 +14,10 @@ $registration_ids[] = $list['token_id'];
 
 //print_r($registration_ids);
 //$message = array();
+/*선행 조건 2016-03-08 (화)
+여태까지 보낸 로그를 카운트 모바일에서 보낸 것을 합산 하여서 제한 갯수를 초과한 경우 보내지 않도록 설계
 
+*/
 include_once "./GCM.php";
 $gcm = new GCM();
 

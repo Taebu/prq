@@ -373,9 +373,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 /*리스트가 없으면 없는 값 출력*/
 if(count($list)==0){
 ?>
-				<tr>
-					<td scope="row" colspan='11' class='text-center'> 조회한 GCM Log가 없습니다.</td>
-				</tr>
+<tr><td scope="row" colspan='11' class='text-center'> 조회한 GCM Log가 없습니다.</td></tr>
 <?php
 }
 foreach ($list as $lt)

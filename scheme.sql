@@ -1014,3 +1014,141 @@ INSERT INTO prq_stat select '2016-02-08',gc_sender,count(*) cnt from prq_gcm_log
 INSERT INTO prq_stat select '2016-02-09',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-09')=date(gc_datetime) group by gc_sender;
 INSERT INTO prq_stat select '2016-02-10',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-10')=date(gc_datetime) group by gc_sender;
 INSERT INTO prq_stat select '2016-02-11',gc_sender,count(*) cnt from prq_gcm_log where date('2016-02-11')=date(gc_datetime) group by gc_sender;
+
+-- 2016-03-08 (화)
+-- prq_mno 변경 코드 추가
+
+ALTER TABLE `prq_mno` add mn_appvcode varchar(255) NULL default '';
+ALTER TABLE `prq_mno` add mn_appvname varchar(255) NULL default '';
+
+
+-- prq_mms_log 변경 코드 추가
+ALTER TABLE `prq_mms_log` add `mm_monthly_cnt` varchar(255) NULL default '';
+ALTER TABLE `prq_mms_log` add `mm_daily_cnt`  varchar(255) NULL default '';
+
+
+-- 2016-03-09 (수)
+
+use callerid;
+
+show triggers;
+
+DELIMITER $$
+
+drop TRIGGER IF EXISTS cdr_inserted $$
+
+CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
+BEGIN
+insert into prq.prq_cdr set 
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid;
+END
+$$
+
+DELIMITER ;
+
+drop TABLE `prq_mms_limit`;
+CREATE TABLE `prq_mms_limit` (
+  `ml_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ml_email` varchar(255) NOT NULL ,
+  `ml_monthly_limit` int(11) unsigned NOT NULL DEFAULT 3000,
+  `ml_daily_limit` int(11) unsigned NOT NULL DEFAULT 150,
+  `ml_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ml_no`)
+) DEFAULT CHARSET=utf8;
+
+
+use callerid;
+
+show triggers;
+
+DELIMITER $$
+
+drop TRIGGER IF EXISTS cdr_inserted $$
+
+CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
+BEGIN
+insert into prq.prq_cdr set 
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid;
+END
+$$
+
+DELIMITER ;
+use callerid;
+
+show triggers;
+
+DELIMITER $$
+
+drop TRIGGER IF EXISTS cdr_inserted $$
+
+CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
+BEGIN
+SELECT
+	st_name,st_tel_1,st_hp_1
+INTO
+	@st_name,@st_tel,@st_hp
+FROM 
+	prq.prq_store 
+WHERE 
+	st_port=NEW.port and mb_id=NEW.UserID;
+
+INSERT INTO prq.prq_cdr SET 
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid,
+cd_name=@st_name,
+cd_tel=@st_tel,
+cd_hp=@st_hp;
+
+END
+$$
+
+DELIMITER ;
+
+-- 2016-03-10 (목)
+unique key create
+create unique index "유니크키명" ON "테이블명"("컬럼명", "컬럼명");
+-- | st_date    | st_sender     | st_cnt |
+
+create unique index `lms_key` ON `prq_stat`(`st_date`,`st_sender`);
+unique key drop
+--drop index "유니크명" ON "테이블명";
+
+
+ALTER TABLE  prq_cdr  add cd_day_cnt int(11) NOT NULL DEFAULT 0;
+ALTER TABLE  prq_cdr  add cd_day_limit int(11) NOT NULL DEFAULT 150;
+
+
+
+select cd_day_cnt from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_id='leesukkee@naver.com';
+SET @cnt=0;
+update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(now()) and cd_state=1 and cd_id='leesukkee@naver.com';
+
+
+select cd_day_cnt from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_id='siheung0003@naver.com';
+SET @cnt=0;
+update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(now()) and cd_state=1 and cd_id='siheung0003@naver.com';
+
+
+select cd_day_cnt from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_id='prq001@naver.com';
+SET @cnt=0;
+update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(now()) and cd_state=1 and cd_id='prq001@naver.com';
+
+select cd_day_cnt from prq_cdr where date(cd_date)=date(DATE_SUB(now(), INTERVAL 1 DAY)) and cd_state=1 and cd_id='leesukkee@naver.com';
+SET @cnt=0;
+update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(DATE_SUB(now(), INTERVAL 1 DAY)) and cd_state=1 and cd_id='leesukkee@naver.com';
+
+
+select cd_day_cnt from prq_cdr where date(cd_date)=date(DATE_SUB(now(), INTERVAL 1 DAY)) and cd_state=1 and cd_id='siheung0003@naver.com';
+SET @cnt=0;
+update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(DATE_SUB(now(), INTERVAL 1 DAY)) and cd_state=1 and cd_id='siheung0003@naver.com';
+
+
+select * from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_hp='01028365246';

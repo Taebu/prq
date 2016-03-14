@@ -61,6 +61,35 @@ class Crontab extends CI_Controller {
  		$this->load->view('crontab/weekview_v', $data);
  	}
 
+	/**
+	 * analytics 보기
+	 */
+	function analytics()
+ 	{
+ 		//analytics보기
+		$data['list'] = $this->crontab_m->get_cdr();
+		$data['controller']=$this; 
+
+ 		//view 호출
+ 		$this->load->view('crontab/analytics_v', $data);
+ 	}
+
+	/**
+	 * analytics 보기
+	 */
+	function get_send()
+ 	{
+ 		//analytics보기
+		$data['mb_hp'] = $this->uri->segment(3);
+
+ 		//view 호출
+ 		$data['list'] =$this->crontab_m->get_send_cnt($data);
+
+		//view 호출
+ 		$this->load->view('crontab/send_v', $data);
+ 	}
+
+	
 }
 
 /* End of file call.php */
