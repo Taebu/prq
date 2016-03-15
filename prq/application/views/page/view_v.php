@@ -185,6 +185,54 @@ alert(address + " 주소를 찾을 수 없습니다.");
 </div>
 </div>
 
+<div class="dialog-container" style="position: absolute; overflow: hidden; width: 360px; height: 615px; left: 0px; z-index: 2050; top: 0px; display: block;">
+<div class="dialog-fog" style="position: absolute; padding: 0px; margin: 0px; border: 0px; background-color: gray; zoom: 1; opacity: 0.5; width: 360px; height: 615px; left: 0px; top: 0px;">
+</div>
+<div class="dialog-layer" style="position: relative; background-color: white; width: 292px; height: 198px; top: 208px; left: 60px;">
+<div id="popup_area" class="popup_center" style="width: 306px;">
+<div class="pop_title"><h3 class="title">바로가기 설치</h3></div>
+<div class="shoutcut_area">
+	<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
+	<div class="shoutcut_btn_area">
+		<p>홈화면에 바로가기를 추가하시겠습니까?</p>
+		<a href="javascript:;" class="btn_b_yes" onclick="addFavorite();"> 예 </a>
+		<a href="javascript:;" class="btn_b_no" onclick="javascript:$('.dialog-container').hide();"> 닫기 </a>
+	</div>
+	<p class="shoutcut_info"><i class="fa fa-info"></i><em>네이버 어플이 없으면<br> 플레이스토어로 이동합니다.</em></p>
+	<p class="shoutcut_form"><a id="fa_check_wrapper" class="icon_check" href="javascript:;" onclick="chk7days2();"><i class="fa fa-check"></i></a><a href="javascript:;" onclick="chk7days2();">일주일간 보지 않기</a></p>
+</div><!-- .shoutcut_area -->
+</div>
+</div>
+</div>
+
+<div class="dialog-clone" style="position: absolute; left: -1000px; top: -1000px; display: none;">
+<div id="popup_area" class="popup_center">
+<div class="pop_title">
+<h3 class="title">바로가기 설치</h3>
+</div>
+<div class="shoutcut_area">
+<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
+<div class="shoutcut_btn_area">
+<p>홈화면에 바로가기를 추가하시겠습니까?</p>
+<a href="javascript:;" class="btn_b_yes" onclick="addFavorite();"> 예 </a>
+<a href="javascript:;" class="btn_b_no" onclick="javascript:$('.dialog-clone').hide();"> 닫기 </a>
+</div>
+<p class="shoutcut_info">
+<i class="fa fa-info">
+</i>
+<em>네이버 어플이 없으면<br> 플레이스토어로 이동합니다.</em>
+</p>
+<p class="shoutcut_form">
+<a id="fa_check_wrapper" class="icon_check" href="javascript:;" onclick="chk7days2();">
+<i class="fa fa-check">
+</i>
+</a>
+<a href="javascript:;" onclick="chk7days2();">일주일간 보지 않기</a>
+</p>
+</div>
+</div>
+</div>
+
 <div id="footer" class="footer footer01">
 <p><?php echo $views->st_name;?> <span id="mb_business_num">587-09-00247</span></p>
 <p id="address_area">경기도 부천시 원미구 부천로53번길 52 1층(심곡동) 김은정</p>
@@ -493,15 +541,44 @@ complete : function() {
 
 get_franchise();
 
+//cookie.set("chk7days", "false", 7);
+function chk7days2()
+{
+    cookie.set("chk7days", "true", 7);
+//    alert(cookie.get("chk7days"));
+	$('.dialog-container').hide();
+	$('.dialog-clone').hide();
 
+}
+if(cookie.get("chk7days")=="true"||jindo.$Agent().os().ios||jindo.$Agent().os().win||jindo.$Agent().navigator().getName()=="chrome")
+{
+	console.log("아이퐁");
+	console.log("Window");
 
+	/*******************************
+	* 네이버 앱 브라우저가 크롬이다. 
+	* 그래서 chrome이면 설치 된 것으로 인식 하고,
+	* 즐겨찾기를 띄우지 않는다.
+	*******************************/
+	console.log("chrome");
+	$('.dialog-container').hide();
+	$('.dialog-clone').hide();
+}
 </script>
 <script type="text/javascript" src="/prq/include/js/app.min.js?1447751507"></script>
 <script type="text/javascript">
-storeNm     = '멕시카나치킨부천북부점';
-thumbnail   = 'http://img.delipartner.kr/store/thumbnail/B0o9_thumbnail_20151104170141.png';
-shortcutURL = 'http://dlpg.kr';
+storeNm     = '<?php echo $views->st_name;?>';
+thumbnail   = 'http://prq.co.kr/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>';
+//shortcutURL = 'http://prq.co.kr/prq/page/'+storeNo;
+shortcutURL = location.href;
 linkSource  = 'none';
+$('.dialog-container').width($(window).width());
+$('.dialog-fog').width($(window).width());
+
+$('.dialog-container').height($(window).height());
+$('.dialog-fog').height($(window).height());
+var re_size_width=($(window).width()-292)/2;
+$('.dialog-layer').css('left',re_size_width+'px');
 </script>
 <input type="hidden" name="latitude" id="latitude">
 <input type="hidden" name="longitude" id="longitude">

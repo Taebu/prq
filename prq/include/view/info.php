@@ -6,6 +6,7 @@ extract($_POST);
 <div class="contents" id="cInfo" ng-controller="infoCtrl">
 	<!-- storedetail -->
 	<div id="storedetail_area">
+
     	<div class="store_detail clearfix"> 
 		<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
 			<dl class="store_info">

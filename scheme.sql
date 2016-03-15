@@ -1125,7 +1125,7 @@ unique key drop
 ALTER TABLE  prq_cdr  add cd_day_cnt int(11) NOT NULL DEFAULT 0;
 ALTER TABLE  prq_cdr  add cd_day_limit int(11) NOT NULL DEFAULT 150;
 
-
+-- 2016-03-11 (금)
 
 select cd_day_cnt from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_id='leesukkee@naver.com';
 SET @cnt=0;
@@ -1152,3 +1152,5 @@ update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(DATE_SUB(now
 
 
 select * from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_hp='01028365246';
+
+ALTER TABLE  prq_cdr  add cd_device_day_cnt int(11) NOT NULL DEFAULT 0;
