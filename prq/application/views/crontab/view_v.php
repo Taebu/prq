@@ -33,6 +33,8 @@ header("Content-Type:text/html;charset=utf-8");
 <p><input type="checkbox" name="" id="" checked>구현]  prq application이 이를 감지하여 해당 잔여 mms를 전송합니다.</p>
 <p><input type="checkbox" name="" id="">미구현] 제한 된 문자 인 기본값 하루 150건까지 전송 되며 제한이 되면 전송을 중지하도록 루프를 종료하도록 설계 해야 합니다.0 </p>
 <p><input type="checkbox" name="" id="">미구현] 목적 : callerid.cdr에서 만들어진 로그가 trigger에 의해서 작동된 다음 prq.prq_cdr에 prq.prq_store 정보를 kt cid prq cid 장비에 따라 불러와서 prq.cdr에 등록 된 정보를 조회 하여 gcm을 생성 한다.</p>
+<p><input type="checkbox" name="" id="">미구현] 2016-03-16 (수) KT.dat 파일에서 불러 오는 경우 카운트가 0으로 한꺼번에 처리 된다. 한꺼번에 처리해도 순차 처리 될 수 있도록 프로그래밍 할것.</p>
+
 select date(DATE_SUB(NOW(), INTERVAL 7 DAY);<br>
 가맹점.<br>
 일주일 전 혹은 세팅한 prq.prq_mno 테이블에 mn_dup_limit 날짜를 초과하지 않는 핸드폰 번호를 조회하여 mms 를 발송한다.<br>
