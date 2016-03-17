@@ -57,6 +57,12 @@ foreach($black_list as $bl){
 1. mn_dup_limit 날짜를 기준으로 상점의 번호와 아이디 번호를 조회해 결과 리스트가 없으면 발송
 2. 해당 리스트 발송에 대하여 GCM MMS 로그를 발생 수발신 성공 여부 기록 
 */
+
+/*
+3. select max
+SET @max_count=7;
+SET @max_count=@max_count+1;
+*/
 echo "<table border=1 style='padding:0;margin:0'>";
 echo "<tr>";
 echo "<th>날짜</th>";
