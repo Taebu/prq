@@ -1,5 +1,9 @@
 <?php
  /***********************************
+ *
+ * /prq/application/views/logs/cid/list_v.php
+ * 
+ ***********************************
   * string_format
  ***********************************/
  function string_format($format, $string, $placeHolder = "#")
@@ -274,7 +278,14 @@
                             </div>
                         </div><!-- .ibox-title -->
                         <div class="ibox-content">
-    <div class='row'>
+						<?php 
+						$my_search = array_filter($search);$count_search= count($my_search);
+						/*  */
+						if($count_search>0){?>
+						<div class="row">
+						검색한 값 "<?php echo join("\",\"",$my_search);?>" 결과 입니다.</div>
+						<?php }?>
+	<div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
                 <label for="user_title">이메일</label>
@@ -337,8 +348,9 @@
 
 		?>
 	<div class='col-sm-12'>
-	<p>*상태 : (0이면 미발신, 1이면 상대방의 핸드폰 번호로 MMS 발송 요청, 2이면 일반번호 이므로 발송요청에서 캔슬)</p>
-	<p>*발송량 : 오늘 보낸 갯수 / 모바일에서 보낸 문자 갯수 / 일 발송 제한량</p>
+	<p>* 상태 : (0이면 미발신, 1이면 상대방의 핸드폰 번호로 MMS 발송 요청, 2이면 일반번호 이므로 발송요청에서 캔슬)</p>
+	<p>* 발송량 : 오늘 보낸 갯수 / 모바일에서 보낸 문자 갯수 / 일 발송 제한량</p>
+	<p>* KT CID 장비(Windows 용 프로그램)의 경우, 일발송 제한의 사유로 동일한 번호 전송은 차단 되도록 설계 되어 있습니다.</p>
 <?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
 if($mb_gcode=="G1"||$mb_gcode=="G2")
@@ -364,7 +376,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 <th scope="col">*상태</th>
 <th scope="col">가맹점명</th>
 <th scope="col">전화</th>
-<th scope="col">핸드폰</th>
+<th scope="col">발신인</th>
 <th scope="col">*발송량</th>
 </tr>
 </thead>
@@ -389,7 +401,7 @@ foreach ($list as $lt)
 <td scope="row"><?php echo $lt->cd_name;?></td>
 <td scope="row"><?php echo phone_format($lt->cd_tel);?></td>
 <td scope="row"><?php echo phone_format($lt->cd_hp);?></td>
-<td scope="row"><?php echo $lt->cd_day_cnt;?>/<?php echo $lt->cd_device_day_cnt;?>/<?php echo $lt->cd_day_limit;?></td>
+<td scope="row"><?php echo $lt->cd_day_cnt;?>+<?php echo $lt->cd_device_day_cnt;?>/<?php echo $lt->cd_day_limit;?></td>
 </tr>
 <?php
 }

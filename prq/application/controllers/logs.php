@@ -90,6 +90,8 @@ class Logs extends CI_Controller {
 		$search_array = array(
 			'gc_receiver'=>$this->input->post('gc_receiver', TRUE),
 			'gc_sender'=>$this->input->post('gc_sender', TRUE),
+			'mm_receiver'=>$this->input->post('mm_receiver', TRUE),
+			'mm_sender'=>$this->input->post('mm_sender', TRUE),
 			'cd_id'=>$this->input->post('cd_id', TRUE),
 			'cd_name'=>$this->input->post('cd_name', TRUE),
 			'cd_callerid'=>$this->input->post('cd_callerid', TRUE),

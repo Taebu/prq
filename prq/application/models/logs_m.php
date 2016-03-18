@@ -36,19 +36,52 @@ class Logs_m extends CI_Model
 		$order="";
 		$sword= ' WHERE 1=1 ';
 		$sword= ' ';
+
 		if($table=="gcm"){
-		$table='prq_gcm_log';
+			$table='prq_gcm_log';
 		}else if($table=="mms"){
-		$table='prq_mms_log';
+			$table='prq_mms_log';
 		}else 	if($table=="act"){
-		$table='prq_log';
+			$table='prq_log';
 		}else 	if($table=="cid"){
-		$table='prq_cdr';
+			$table='prq_cdr';
 		}
+
+		//검색어가 있을 경우의 처리
 		if ( $search_word != '' )
      	{
-     		//검색어가 있을 경우의 처리
-     		$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
+
+			if($table=="gcm"){
+				$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
+			}else if($table=="mms"){
+				/*
+				mysql> desc prq_mms_log;
+				+----------------+-------------------------+------+-----+---------------------+----------------+
+				| Field          | Type                    | Null | Key | Default             | Extra          |
+				+----------------+-------------------------+------+-----+---------------------+----------------+
+				| mm_no          | int(11)                 | NO   | PRI | NULL                | auto_increment |
+				| mm_subject     | varchar(255)            | YES  |     | NULL                |                |
+				| mm_content     | text                    | YES  |     | NULL                |                |
+				| mm_type        | enum('mms','sms','lms') | NO   |     | mms                 |                |
+				| mm_receiver    | varchar(16)             | YES  |     | 0                   |                |
+				| mm_sender      | varchar(16)             | YES  |     | 0                   |                |
+				| mm_imgurl      | varchar(255)            | YES  |     |                     |                |
+				| mm_result      | varchar(255)            | NO   |     | NULL                |                |
+				| mm_datetime    | datetime                | NO   |     | 0000-00-00 00:00:00 |                |
+				| mm_status      | char(1)                 | YES  |     | I                   |                |
+				| mm_ipaddr      | varchar(15)             | NO   |     |                     |                |
+				| mm_stno        | int(11)                 | NO   |     | 0                   |                |
+				| mm_monthly_cnt | varchar(255)            | YES  |     |                     |                |
+				| mm_daily_cnt   | varchar(255)            | YES  |     |                     |                |
+				+----------------+-------------------------+------+-----+---------------------+----------------+
+				*/
+				$sword .= ' and mm_sender like "%'.$mm_sender.'%" or mm_receiver like "%'.$mm_receiver.'%" ';
+			}else 	if($table=="act"){
+				$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
+			}else 	if($table=="cid"){
+				$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
+			}
+
      	}
 		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
 		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
@@ -193,7 +226,18 @@ class Logs_m extends CI_Model
 				//검색어가 있을 경우의 처리
 				$sword .= ' and mm_content like "%'.$search_array['mm_content'].'%" ';
 			}
-			
+
+			if ( $search_array['mm_receiver'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and mm_receiver like "%'.$search_array['mm_receiver'].'%" ';
+			}
+
+			if ( $search_array['mm_sender'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and mm_sender like "%'.$search_array['mm_sender'].'%" ';
+			}
 
 		}
 		

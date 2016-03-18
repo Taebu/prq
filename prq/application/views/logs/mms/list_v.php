@@ -100,7 +100,8 @@
 				cancelOnConfirm: false,
 				confirmButtonText: "네, 변경할래요!",
 				cancelButtonText: "아니요, 취소할래요!",
-				animation: "slide-from-top",   showLoaderOnConfirm: true,
+				animation: "slide-from-top",
+				showLoaderOnConfirm: true,
 				allowEscapeKey:true,
 				inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
 				if (inputValue === false) return false;
@@ -273,25 +274,30 @@
                             </div>
                         </div><!-- .ibox-title -->
                         <div class="ibox-content">
+						<?php $my_search = array_filter($search);$count_search= count($my_search);
+						if($count_search>0){?>
+						<div class="row">
+						검색한 값 "<?php echo join("\",\"",$my_search);?>" 결과 입니다.</div>
+						<?php }?>
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="mm_content">내용</label>
-                <input class="form-control" id="mm_content" name="mm_content" size="30" type="text" value="<?php echo $search['mm_content'];?>"/>
+                <label for="mm_receiver">수신자(mm_receiver)</label>
+                <input class="form-control" id="mm_receiver" name="mm_receiver" size="30" type="text" value="<?php echo $search['mm_receiver'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="user_firstname">상태</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+                <label for="mm_sender">발신자(mm_sender)</label>
+                <input class="form-control" id="mm_sender" name="mm_sender" size="30" type="text" value="<?php echo $search['mm_sender'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="user_title"><span class="mb_gname">총판</span>명</label>
-                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
+                <label for="mm_content">내용</label>
+                <input class="form-control" id="mm_content" name="mm_content" size="30" type="text" value="<?php echo $search['mm_content'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>

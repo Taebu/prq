@@ -89,6 +89,17 @@ class Crontab extends CI_Controller {
  		$this->load->view('crontab/send_v', $data);
  	}
 
+	/**
+	 * maxcnt 보기
+	 */
+	function maxcnt()
+ 	{
+		$data['key']="1";
+
+ 		//view 호출
+ 		$this->load->view('crontab/maxcnt_v', $data);
+ 	}
+
 	
 }
 
