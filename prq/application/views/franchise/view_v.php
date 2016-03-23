@@ -610,12 +610,12 @@ function get_mnoinfo(){
 				object.push('<td>문자 구분<td><td>'+val.mn_type+'</td></tr>');
 				object.push('<tr><td>안드로이드 버전</td><td>'+val.mn_version+'</td>');
 				object.push('<td>단말기<td><td>'+val.mn_model+'</td></tr>');
-				object.push('<tr><td>문자발송</td><td>'+val.mn_mms_limit+'</td>');
-				object.push('<td>중복발송제한<td><td>'+val.mn_dup_limit+'</td></tr>');
+				object.push('<tr><td>일일문자발송제한</td><td>'+val.mn_mms_limit+'</td>');
+				object.push('<td>* 중복발송제한<td><td>'+val.mn_dup_limit+'</td></tr>');
 			});
 			object.push('</tbody>');
 			object.push('</table>');
-			object.push('<span class="help-block m-b-none"></span>');
+			object.push('<span class="help-block m-b-none">* 중복발송제한 : 값이 0이면 제한 없이 전화 할 때마다 전송합니다. 0이상이면 해당 일 수 만큼 상대방에게 문자를 전송하지 않습니다. 전송 거절 내역은 gcm log에 남습니다.</span>');
 			$("#mno_info").html(object.join(""));
         }
     });		

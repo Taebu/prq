@@ -274,7 +274,9 @@
                             </div>
                         </div><!-- .ibox-title -->
                         <div class="ibox-content">
-						<?php $my_search = array_filter($search);$count_search= count($my_search);
+						<?php 
+						$my_search = array_filter($search);$count_search= count($my_search);
+						/*  */
 						if($count_search>0){?>
 						<div class="row">
 						검색한 값 "<?php echo join("\",\"",$my_search);?>" 결과 입니다.</div>

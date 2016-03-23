@@ -141,8 +141,7 @@ class Crontab_m extends CI_Model
 	 * mno 정보 가져오기
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>
-	 * @param string $cd_id  콜로그 아이디
-	 * @param string $cd_port 콜로그 포트
+	 * @param string $email 이메일정보로 키를 반영한다.
 	 * @return array
 	 */
  	function get_mno_limit($email)

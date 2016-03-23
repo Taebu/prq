@@ -105,7 +105,7 @@ class Store extends CI_Controller {
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/store/lists/prq_store'.$page_url.'/page/',
 		'total_rows' => $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
-		'per_page' => 5,
+		'per_page' => 15,
 		'uri_segment' => $uri_segment,
 
 		//페이지네이션 커스텀 설정 

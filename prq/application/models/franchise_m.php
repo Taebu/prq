@@ -427,8 +427,9 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
+
 	/**
-	 * 게시물 수정
+	 * 모바일 정보 수정
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
@@ -438,16 +439,25 @@ mysql> select * from prq_member_code;
  	{
 		$sql_array=array();
 		$sql_array[]="UPDATE prq_mno SET ";
-		$sql_array[]="mn_dup_limit ='".$arrays['mn_dup_limit']."' ";
+		$sql_array[]="mn_dup_limit ='".$arrays['mn_dup_limit']."', ";
+		/*
+		mn_dup_limit 
+		0 같은 번호에 대해 무제한 발송
+		1 ~ # 설정한 일수 만큼 발송 제한
+		*/
+		$sql_array[]="mn_mms_limit ='".$arrays['mn_mms_limit']."' ";
+		/*
+		mn_mms_limit
+		일일 발송 갯수 제한
+		150 기본 갯수 
+		5 임의 설정 (prq에서 5건을 전송후 일 전송이 차단 됩니다. 통신사에서 일전송이 200건이 되면 통신사측(mno)에서 봇으로 간주 차단하고 해지 요청 할 때까지 전송할 수 없기 때문입니다.
+		*/
 		$sql_array[]="where mn_id='".$arrays['mn_id']."' ";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환
 		return $result;
  	}
-
-
-	
 }
 
 /* End of file franchise_m.php */

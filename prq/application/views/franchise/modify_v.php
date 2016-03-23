@@ -112,7 +112,7 @@ function get_cidinfo(){
 			object.push('</tbody>');
 			object.push('</table>');
 			object.push('<span class="help-block m-b-none"></span>');
-			object.push('<p>KT의 경우는 0 번 포트를 사용하며 상점 갯수 제한이 없습니다. 단!!! 해당 가맹점과 상점의 번호가 동일하게 세팅되면 엉뚱한 정보를 불러 올수 있으니 유의 바랍니다.</p>');
+			object.push('<p>* KT의 경우는 0 번 포트를 사용하며 상점 갯수 제한이 없습니다. 단!!! 해당 가맹점과 상점의 번호가 동일하게 세팅되면 엉뚱한 정보를 불러 올수 있으니 유의 바랍니다.</p>');
 			$("#cid_info").html(object.join(""));
         }
     });		
@@ -144,18 +144,20 @@ function get_mnoinfo(){
 			object.push('<tr>');
 			object.push('<tbody>');			
 			$.each(data.posts,function(key,val){
-				object.push('<tr><td>통신사</td><td colspan="5">'+val.mn_operator+'</td></tr>');
+				object.push('<tr><td>통신사</td><td>'+val.mn_operator+'</td>');
+				object.push('<td>문자 구분</td><td>'+val.mn_type+'</td></tr>');
 				object.push('<tr><td>발송번호</td><td>'+val.mn_hp+'</td>');
-				object.push('<td>문자 구분<td><td>'+val.mn_type+'</td></tr>');
+				object.push('<td>단말기</td><td>'+val.mn_model+'</td></tr>');
 				object.push('<tr><td>안드로이드 버전</td><td>'+val.mn_version+'</td>');
-				object.push('<td>단말기<td><td>'+val.mn_model+'</td></tr>');
-				object.push('<tr><td>문자발송</td><td>'+val.mn_mms_limit+'</td>');
-				object.push('<td>중복발송제한<td><td>');
+				object.push('<td>제한</td><td>'+val.mn_mms_limit+'</td></tr>');
+				object.push('<tr><td>일일문자발송제한<sup>1)</sup></td><td>');
+				object.push('<input type="text" class="form-control" name="mn_mms_limit" value="'+val.mn_mms_limit+' "></td>');
+				object.push('<td>중복발송제한<sup>2)</sup></td><td>');
 				object.push('<input type="text" class="form-control" name="mn_dup_limit" value="'+val.mn_dup_limit+' "></td></tr>');
 			});
 			object.push('</tbody>');
 			object.push('</table>');
-			object.push('<span class="help-block m-b-none"></span>');
+			object.push('<span class="help-block m-b-none"><p>1) 일일문자발송제한 : 해당 갯수 만큼 전송하면 모바일에서 보낸 숫자와 합산하여 더이상 전송하지 않으며 익일 0시에 가중치는 0값이 됩니다. <p>2) 중복발송제한 : 값이 0이면 제한 없이 전화 할 때마다 전송합니다. 0이상이면 해당 일 수 만큼 상대방에게 문자를 전송하지 않습니다. 전송 거절 내역은 gcm log에 남습니다.<p></span>');
 			$("#mno_info").html(object.join(""));
         }
     });		
@@ -382,7 +384,8 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">비고</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo" value="<?php echo $views->mb_bigo;?>"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bigo" value="<?php echo $views->mb_bigo;?>"> 
+<span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -400,6 +403,7 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 			<div class="col-sm-11" id="mno_info">mno info</div><!-- .col-sm-10 #cid_info -->
 			</div><!-- .form-group -->
 			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+			<span class="help-block m-b-none">.</span>
 </div></div><!-- .row -->
 
 <div>

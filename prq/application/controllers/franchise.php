@@ -329,7 +329,8 @@ class Franchise extends CI_Controller {
 //				$result = $this->distributors_m->insert_distributors($write_data);
 				$modify_mno_data = array(
 					'mn_id' => $this->input->post('mb_id', TRUE),
-					'mn_dup_limit' => $this->input->post('mn_dup_limit', TRUE)
+					'mn_dup_limit' => $this->input->post('mn_dup_limit', TRUE),
+					'mn_mms_limit' => $this->input->post('mn_mms_limit', TRUE)
 				);
 				$result2 = $this->franchise_m->modify_mno($modify_mno_data);
 

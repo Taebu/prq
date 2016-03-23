@@ -1,5 +1,9 @@
 <?php
 include_once "./db_info.php";
+
+
+/*
+1.*/
 $select_sql=array();
 $select_sql[]="select token_id from prq_token_id ";
 $select_sql[]="where phone like '".$phone."' ";
