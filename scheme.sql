@@ -1154,3 +1154,7 @@ update prq_cdr set cd_day_cnt=@cnt:=@cnt+1 where date(cd_date)=date(DATE_SUB(now
 select * from prq_cdr where date(cd_date)=date(now()) and cd_state=1 and cd_hp='01028365246';
 
 ALTER TABLE  prq_cdr  add cd_device_day_cnt int(11) NOT NULL DEFAULT 0;
+
+-- 2016-03-24 (목)
+-- 값이 127 까지만 할당 -126까지 할 당할 수 있는 수로 되어 있는 것으로 보인다.
+mysql> alter table prq_mno change mn_mms_limit mn_mms_limit tinyint unsigned default 150;

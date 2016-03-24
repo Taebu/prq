@@ -151,6 +151,15 @@ class Crontab_m extends CI_Model
 		// SELECT  mn_dup_limit  FROM prq_mno WHERE mn_email='leesukkee@naver.com';
 		$sql=array();
 		$sql[]="SELECT ";
+		/* 2016-03-24 (목)
+		* 가장 중요 별표 천개 짜리
+		* 일 발송량 제한 기본값은 150 이며 임의로 
+		* 발송 갯수를 설정하면 
+		* 설정된 제한 갯수로 
+		* 일 발송 갯수를 제한 할 수 있다. 
+		*/
+		$sql[]=" mn_mms_limit,  ";
+		/* 동일 번호 발송일수 제한 0 이면 제한이 없이 발송 */
 		$sql[]=" mn_dup_limit  ";
 		$sql[]=" FROM ";
 		$sql[]="prq_mno ";
@@ -165,7 +174,7 @@ class Crontab_m extends CI_Model
 			//맞는 데이터가 있다면 해당 내용 반환
 			$result = $query->row();
      	}else{
-			$arrays=(object)array('mn_dup_limit'=>0);
+			$arrays=(object)array('mn_dup_limit'=>0,'mn_mms_limit'=>150);
 			$result = $arrays;
 		}
 

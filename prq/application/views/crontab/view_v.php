@@ -88,7 +88,7 @@ echo "</tr>";
 
 /*****************************************************
 * 
-* 리스트가 없으면 없는 값 출력
+* 2-1. 리스트가 없으면 없는 값 출력
 * 
 *****************************************************/
 if(count($list)==0){
@@ -98,8 +98,8 @@ if(count($list)==0){
 foreach($list as $li)
 {
 	/*****************************************************
+	* 2-2. 리스트 출력 
 	* SELECT TIMESTAMPDIFF(DAY,'2009-05-18','2009-07-29');
-	*
 	***************************************************/
 	echo "<tr>";
 	echo "<td>".$li->cd_date."</td>";
@@ -139,6 +139,7 @@ foreach($list as $li)
 	* - 값이 mn_dup_limit 만약 3이라면, 
 	* - 마지막 콜로그와 대조해 보아서 
 	* - 3일 동안 보내지 않습니다.  
+	* - NEW] mn_limit_
 	********************************************************************************/
 	$array=array('mb_hp'=>$li->cd_hp);
 	$get_mno_limit=$controller->crontab_m->get_mno_limit($li->cd_id);
@@ -163,8 +164,9 @@ foreach($list as $li)
 	$controller->crontab_m->set_cdr($cdr_info);
 	echo "<td>".$li->cd_port."</td>";
 	$cd_date=$last_cdr->cd_date;
-	echo "<td>".$get_day_cnt->cnt."/150</td>";
+	echo "<td>".$get_day_cnt->cnt."/".$get_mno_limit->mn_mms_limit."</td>";
 	echo "<td>".$cd_date."</td>";
+	echo "<td>".$get_mno_limit->mn_mms_limit."</td>";
 	echo "<td>".$get_mno_limit->mn_dup_limit."</td>";
 	$chk_limit_date=$get_mno_limit->mn_dup_limit>$cd_date?"보내면 안됨":"보냄";
 	echo "<td>".$chk_limit_date."</td>";
@@ -174,6 +176,7 @@ foreach($list as $li)
 	* 
 	* 7.array get_store 
 	* - 콜 로그가 CID 장비 인 경우 
+	*
 	********************************************************************************/
 	//페이지네이션 기본 설정
 	$config = array(
@@ -188,29 +191,32 @@ foreach($list as $li)
 		$st_hp=$st->st_hp_1;
 		if($li->cd_port=="0")
 		{
-		/********************************************************************************
-		* 8. void set_cdr_kt
-		* - cdr kt 세팅
-		********************************************************************************/
-		$cdr_info = array(
-		//페이지네이션 기본 설정
-		'cd_date'=>$li->cd_date,
-		'cd_callerid'=>$li->cd_callerid,
-		'cd_calledid'=>$li->cd_calledid,
-		'st_name'=> $st->st_name,
-		'st_tel_1'=> $st->st_tel_1,
-		'st_hp_1' =>$st->st_hp_1
-		);
-		$controller->crontab_m->set_cdr_kt($cdr_info);
-		$li->cd_hp=$st->st_hp_1;
-		}
+			/********************************************************************************
+			* 8. void set_cdr_kt 
+			* - KT_CID 포트 구분이 없다.
+			* - PRQ_CID 역시 포트 구분이 없다.
+			* - 개발 당시 한번의 핸드폰 건만 하루 전송하고 이외에 콜은 인정하지 않는다.
+			* - cdr kt 세팅
+			********************************************************************************/
+			$cdr_info = array(
+			//페이지네이션 기본 설정
+			'cd_date'=>$li->cd_date,
+			'cd_callerid'=>$li->cd_callerid,
+			'cd_calledid'=>$li->cd_calledid,
+			'st_name'=> $st->st_name,
+			'st_tel_1'=> $st->st_tel_1,
+			'st_hp_1' =>$st->st_hp_1
+			);
+			$controller->crontab_m->set_cdr_kt($cdr_info);
+			$li->cd_hp=$st->st_hp_1;
+		}/* if($li->cd_port=="0"){...} */
+
 		/*mms 발송 여부*/
 		$chk_mms=true;
 		$msg=array();
 		$msg[]=$st->st_top_msg;
 		if($st->st_mno=="LG"){
 			$msg[]=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $st->st_middle_msg);
-			//$msg[]="\"이용해주셔서 감사합니다.\"<br>\"이용해주셔서 감사합니다.\"<br>";
 		}else{
 			$msg[]=str_replace(array("\r\n", "\r", "\n"), '<br>', $st->st_middle_msg);		
 		}
@@ -229,6 +235,7 @@ foreach($list as $li)
 		/********************************************************************************
 		* 9. void set_gcm_log
 		* - gcm 로그에 따라 prq DB에 gcm_log 발생
+		*
 		********************************************************************************/
 		$img_url="http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper;
 		//수신거부 여부 체크
@@ -259,7 +266,11 @@ foreach($list as $li)
 			$chk_mms=false;
 		}
 
-		/*보내면 안됨*/
+		/********************************************************************************
+		* 9-1. void set_gcm_log
+		* 중복 제한 보내면 안됨
+		* prq_gcm_log 중복제한 로그 발생
+		********************************************************************************/
 		if($get_mno_limit->mn_dup_limit>$cd_date){
 			/*gcm 로그 발생*/
 			$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
@@ -279,14 +290,49 @@ foreach($list as $li)
 			$sql[]="gc_imgurl='".$img_url."',";
 			$sql[]="gc_result='".$result_msg."',";
 			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
-			$sql[]="gc_stno='".$st->st_no."'
-			,";
+			$sql[]="gc_stno='".$st->st_no."',";
 			$sql[]="gc_datetime=now();";
 			mysql_query(join("",$sql));
 			$chk_mms=false;
 		}
-		
-		/* 수신거부 중복이 아닌 경우만*/
+
+		/********************************************************************************
+		* 9-2. void set_gcm_log
+		* 150건 제한
+		* prq_gcm_log 150건 제한 로그 발생
+		********************************************************************************/
+		//if($get_mno_limit->mn_dup_limit>$cd_date){
+		if($get_mno_limit->mn_mms_limit>$li->cd_day_cnt){
+			/*gcm 로그 발생*/
+			$result_msg= $li->cd_day_cnt."/".$get_mno_limit->mn_mms_limit."건 제한";
+			$gc_ipaddr='123.142.52.91';
+			$sql=array();
+			if($li->cd_port==0)
+			{
+				$li->cd_hp=$st->st_hp_1;
+			}
+
+			$sql[]="INSERT INTO `prq_gcm_log` SET ";
+			$sql[]="gc_subject='web',";
+			$sql[]="gc_content='".$msg."',";
+			$sql[]="gc_ismms='true',";
+			$sql[]="gc_receiver='".$li->cd_callerid."',";
+			$sql[]="gc_sender='".$li->cd_hp."',";
+			$sql[]="gc_imgurl='".$img_url."',";
+			$sql[]="gc_result='".$result_msg."',";
+			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
+			$sql[]="gc_stno='".$st->st_no."',";
+			$sql[]="gc_datetime=now();";
+			mysql_query(join("",$sql));
+			$chk_mms=false;
+		}		
+
+		/********************************************************************************
+		*
+		* 9-3. curl->simple_post('http://prq.co.kr/prq/set_gcm.php')
+		* 수신거부 중복, 150건 제한 혹은 설정한 일수 제한 아닌 경우만
+		*
+		*********************************************************************************/
 		if($chk_mms)
 		{
 			/********************************************************************************
