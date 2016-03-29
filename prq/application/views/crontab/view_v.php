@@ -65,6 +65,7 @@ foreach($black_list as $bl){
 *******************************************************************************/
 
 /******************************************************************************
+* 
 * 3. select max
 * SET @max_count=7;
 * SET @max_count=@max_count+1;
@@ -152,13 +153,21 @@ foreach($list as $li)
 	$get_day_cnt=$controller->crontab_m->get_send_cnt($array);
 	
 	/********************************************************************************
-	* 6. void set_cdr
+	* 6-1. array get_mms_daily
+	* - mms_daily 정보 가져 오기
+	********************************************************************************/
+	$mno_device_daily=$controller->crontab_m->get_mms_daily($li->cd_hp);
+	echo "<td>".$mno_device_daily->mm_daily_cnt."</td>";
+
+	/********************************************************************************
+	* 6-2. void set_cdr
 	* - cdr 정보 세팅
 	********************************************************************************/
 	$cdr_info = array(
 		'cd_date'=> $li->cd_date,
 		'cd_tel'=> $li->cd_tel,
 		'cd_hp' =>$li->cd_hp,
+		'cd_device_day_cnt' =>$mno_device_daily->mm_daily_cnt,
 		'cd_day_limit'=> 150,
 		'get_day_cnt' =>$get_day_cnt->cnt);       
 	$controller->crontab_m->set_cdr($cdr_info);
@@ -170,15 +179,15 @@ foreach($list as $li)
 	echo "<td>".$get_mno_limit->mn_dup_limit."</td>";
 	$chk_limit_date=$get_mno_limit->mn_dup_limit>$cd_date?"보내면 안됨":"보냄";
 	echo "<td>".$chk_limit_date."</td>";
-	
+
 
 	/********************************************************************************
 	* 
 	* 7.array get_store 
-	* - 콜 로그가 CID 장비 인 경우 
+	* - 기기 CID인 경우( * KT_CID 아닌 경우)
+	* - 이메일과 포트 번호로 상점 정보 조회
 	*
 	********************************************************************************/
-	//페이지네이션 기본 설정
 	$config = array(
 	'cd_id'=> $li->cd_id,
 	'cd_port' =>$li->cd_port);
@@ -302,7 +311,7 @@ foreach($list as $li)
 		* prq_gcm_log 150건 제한 로그 발생
 		********************************************************************************/
 		//if($get_mno_limit->mn_dup_limit>$cd_date){
-		if($get_mno_limit->mn_mms_limit>$li->cd_day_cnt){
+        		if($li->cd_day_cnt>$get_mno_limit->mn_mms_limit){
 			/*gcm 로그 발생*/
 			$result_msg= $li->cd_day_cnt."/".$get_mno_limit->mn_mms_limit."건 제한";
 			$gc_ipaddr='123.142.52.91';
@@ -330,8 +339,8 @@ foreach($list as $li)
 		/********************************************************************************
 		*
 		* 9-3. curl->simple_post('http://prq.co.kr/prq/set_gcm.php')
-		* 수신거부 중복, 150건 제한 혹은 설정한 일수 제한 아닌 경우만
-		*
+		* - 수신거부 중복, 150건 제한 혹은 설정한 일수 제한 아닌 경우만
+		* - $chk_mms = true;
 		*********************************************************************************/
 		if($chk_mms)
 		{

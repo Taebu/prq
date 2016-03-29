@@ -349,7 +349,7 @@ class Crontab_m extends CI_Model
 		/* 조회한 콜로그의 일 발송량 갱신 */
 		$sql=array();
 		$sql[] = "UPDATE prq_cdr SET ";
-//		$sql[] = "cd_day_limit=".$array['cd_day_limit'].",";
+		$sql[] = "cd_device_day_cnt=".$array['cd_device_day_cnt'].",";
 		$sql[] = "cd_day_cnt=".$array['get_day_cnt']." ";
 		$sql[] = " WHERE cd_date='".$array['cd_date']."' ";
 		$sql[] = " and cd_tel='".$array['cd_tel']."' ";
@@ -385,7 +385,47 @@ class Crontab_m extends CI_Model
    		$query = $this->db->query($str_sql);
     }
 
-	
+
+	/**
+	 * mms 디바이스 발송 갯수 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $st_hp 상점 핸드폰 번호
+	 * @return array
+	 */
+	function get_mms_daily($st_hp)
+    {
+		/*
+		| ml_no,ml_email,ml_monthly_limit,ml_daily_limit | ml_datetime         |
+		*/
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" mm_daily_cnt ";
+		$sql[]=" FROM ";
+		$sql[]=" prq_mms_log ";
+		$sql[]=" WHERE ";
+		$sql[]=" mm_sender='".$st_hp."' ";
+		$sql[]=" and date(mm_datetime)=date(now()) ";
+		$sql[]=" ORDER BY ";
+		$sql[]=" mm_datetime DESC ";
+		$sql[]=" LIMIT 1;";
+		$str_sql=join("",$sql);
+   		$query = $this->db->query($str_sql);
+
+     	//디바이스 발송 갯수 
+		if ( $query->num_rows() > 0 )
+		{
+			//맞는 데이터가 있다면 해당 내용 반환
+			$result = $query->row();
+     	}else{
+			$arrays=(object)array('mm_daily_cnt'=>0);
+			$result = $arrays;
+		}
+
+		//지난 콜로그 반환
+	    
+    	return $result;
+    }
 }
 
 /* End of file crontab_m.php */
