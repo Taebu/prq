@@ -349,8 +349,8 @@ class Crontab_m extends CI_Model
 		/* 조회한 콜로그의 일 발송량 갱신 */
 		$sql=array();
 		$sql[] = "UPDATE prq_cdr SET ";
-		$sql[] = "cd_device_day_cnt=".$array['cd_device_day_cnt'].",";
-		$sql[] = "cd_day_cnt=".$array['get_day_cnt']." ";
+		$sql[] = "cd_device_day_cnt='".$array['cd_device_day_cnt']."',";
+		$sql[] = "cd_day_cnt='".$array['get_day_cnt']."' ";
 		$sql[] = " WHERE cd_date='".$array['cd_date']."' ";
 		$sql[] = " and cd_tel='".$array['cd_tel']."' ";
 		$sql[] = " and cd_hp='".$array['cd_hp']."' ;";
