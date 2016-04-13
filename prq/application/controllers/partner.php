@@ -148,6 +148,8 @@ class Partner extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->partner_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['count'] = json_decode(json_encode($this->partner_m->get_ptcnt()), True);
+		$data['st_count'] = json_decode(json_encode($this->partner_m->get_stcnt()), True);
 		$data['controllers'] = $this;
 		$this->load->view('partner/list_v', $data);
 	}

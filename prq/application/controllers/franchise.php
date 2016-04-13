@@ -129,6 +129,8 @@ class Franchise extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->franchise_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+//		$data['count'] = json_decode(json_encode($this->franchise_m->get_frcnt()), True);
+		$data['st_count'] = json_decode(json_encode($this->franchise_m->get_stcnt()), True);
 		$data['controllers'] = $this;
 		$this->load->view('franchise/list_v', $data);
 	}

@@ -149,6 +149,7 @@ class Distributors extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->distributors_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['count'] = json_decode(json_encode($this->distributors_m->get_frcnt()), True);
 		$data['controllers'] = $this;
 		$this->load->view('distributors/list_v', $data);
 	}

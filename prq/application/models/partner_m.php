@@ -418,6 +418,59 @@ mysql> select * from prq_member_code;
 		$str='PT';
 		return  $this->get_member_code($str);
 	}
+
+	/**
+	 * 파트너갯수 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_ptcnt()
+    {
+    	$sql = "select mb_pcode,count(*) cnt from prq_member where mb_gcode='G5' group by mb_pcode;";
+   		$query = $this->db->query($sql);
+
+     	//상점 갯수 반환
+	//    $result = $query->row();
+		$result = $query->result();
+    	return $result;
+    }
+
+	/**
+	 * 상점 갯수 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_stcnt()
+    {
+    	$sql = "SELECT  left(prq_fcode,12) mb_pcode, count(*) cnt from prq_store group by left(prq_fcode,12);";
+		/*
+		+--------------+-----+
+		| mb_pcode     | cnt |
+		+--------------+-----+
+		| DS0001PT0001 |   8 |
+		| DS0001PT0008 |   1 |
+		| DS0003PT0001 |   5 |
+		| DS0004PT0001 |   3 |
+		| DS0006PT0001 |   2 |
+		| DS0007PT0001 |  17 |
+		| DS0007PT0003 |   3 |
+		+--------------+-----+
+		7 rows in set (0.00 sec)
+		*/
+
+		$query = $this->db->query($sql);
+
+     	//상점 갯수 반환
+	//    $result = $query->row();
+		$result = $query->result();
+    	return $result;
+    }
+
+
 }
 
 /* End of file partner_m.php */

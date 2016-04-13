@@ -735,11 +735,17 @@ class Ajax_m extends CI_Model
 		$json['success']=$query->num_rows() > 0;
 		
 		/* 조회 결과가 성공 이라면 */
-		
-		echo $json['success']?"TRUE":"FALSE";
-		echo ",01030372004";
-//		echo ",".$join_sql;
-		//echo $this->input->ip_address();
+		if($query->num_rows() > 0){
+			$row = $query->row();
+			$mb_hp=$row->mb_hp;
+			echo $json['success']?"TRUE":"FALSE";
+			echo ",".$mb_hp;
+			//echo ",".$join_sql;
+			//echo $this->input->ip_address();
+		}else{
+			echo "FALSE";
+			echo ",null";		
+		}
 	}
 
 	

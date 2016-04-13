@@ -458,6 +458,61 @@ mysql> select * from prq_member_code;
 		//결과 반환
 		return $result;
  	}
+
+	/*  select prq_fcode,count(*) cnt from prq_store group by prq_fcode;*/
+	/**
+	 * 상점 갯수 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_stcnt()
+    {
+    	$sql = "SELECT prq_fcode,count(*) cnt FROM prq_store GROUP BY prq_fcode;";
+		/*
+		+--------------------+-----+
+		| prq_fcode          | cnt |
+		+--------------------+-----+
+		| DS0001PT0001FR0001 |   2 |
+		| DS0001PT0001FR0003 |   2 |
+		| DS0001PT0001FR0004 |   4 |
+		| DS0001PT0008FR0002 |   1 |
+		| DS0003PT0001       |   1 |
+		| DS0003PT0001FR0001 |   1 |
+		| DS0003PT0001FR0003 |   1 |
+		| DS0003PT0001FR0004 |   2 |
+		| DS0004PT0001FR0001 |   3 |
+		| DS0006PT0001FR0001 |   2 |
+		| DS0007PT0001FR0001 |   1 |
+		| DS0007PT0001FR0002 |   1 |
+		| DS0007PT0001FR0003 |   1 |
+		| DS0007PT0001FR0004 |   1 |
+		| DS0007PT0001FR0005 |   2 |
+		| DS0007PT0001FR0006 |   1 |
+		| DS0007PT0001FR0007 |   4 |
+		| DS0007PT0001FR0008 |   1 |
+		| DS0007PT0001FR0009 |   1 |
+		| DS0007PT0001FR0010 |   1 |
+		| DS0007PT0001FR0011 |   1 |
+		| DS0007PT0001FR0013 |   1 |
+		| DS0007PT0001FR0014 |   1 |
+		| DS0007PT0003FR0001 |   1 |
+		| DS0007PT0003FR0002 |   1 |
+		| DS0007PT0003FR0003 |   1 |
+		+--------------------+-----+
+		26 rows in set (0.00 sec)
+		*/
+
+		$query = $this->db->query($sql);
+
+     	//상점 갯수 반환
+	//    $result = $query->row();
+		$result = $query->result();
+    	return $result;
+    }
+	
+
 }
 
 /* End of file franchise_m.php */

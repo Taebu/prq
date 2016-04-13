@@ -2,15 +2,15 @@
 
 /**
  * 공통 멤버 총판에서 가맹점 모델 (이미지 포함)
- * 작성 :2015-12-16 (수)
- * 수정 : 
+ * 작성 : 2015-12-16 (수)
+ * 수정 : 2016-04-13 (수) 
  * 
  * 총판	Distributors	DS
  * 대리점	Partner	PT
  * 가맹점	Franchise	FR
  * 
- * @author Taebu,Moon <mtaebu@gmail.com>
- * @version 1.0
+ * @author Taebu, Moon <mtaebu@gmail.com>
+ * @version 1.1
  */
 class Store_m extends CI_Model
 {
@@ -111,6 +111,8 @@ class Store_m extends CI_Model
 		$sql_array[]="st_category='".$arrays['st_category']."',";
 		$sql_array[]="st_name='".$arrays['st_name']."',";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
+		$sql_array[]="st_tel_1='".$arrays['st_tel_1']."',";
+		$sql_array[]="st_hp_1='".$arrays['st_hp_1']."',";
 		$sql_array[]="st_tel='".$arrays['st_tel']."',";
 		$sql_array[]="st_vtel='".$arrays['st_vtel']."',";
 		$sql_array[]="st_teltype='".$arrays['st_teltype']."',";

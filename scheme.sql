@@ -1158,3 +1158,49 @@ ALTER TABLE  prq_cdr  add cd_device_day_cnt int(11) NOT NULL DEFAULT 0;
 -- 2016-03-24 (목)
 -- 값이 127 까지만 할당 -126까지 할 당할 수 있는 수로 되어 있는 것으로 보인다.
 mysql> alter table prq_mno change mn_mms_limit mn_mms_limit tinyint unsigned default 150;
+
+-- 2016-04-08 (금)
+-- port=1&callerid=07040480618&userid=sjhero18@naver.com&calledid=01030372004
+use callerid;
+
+show triggers;
+
+DELIMITER $$
+
+drop TRIGGER IF EXISTS cdr_inserted $$
+
+CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
+BEGIN
+SELECT
+	st_name,st_tel_1,st_hp_1
+INTO
+	@st_name,@st_tel,@st_hp
+FROM 
+	prq.prq_store 
+WHERE 
+	st_port=NEW.port and mb_id=NEW.UserID;
+
+IF (@st_name='') THEN
+
+INSERT INTO prq.prq_cdr SET 
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid,
+cd_name='UNKNOWN',
+cd_tel=NEW.,
+cd_hp=NEW.calledid;
+ELSE
+INSERT INTO prq.prq_cdr SET 
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid,
+cd_name=@st_name,
+cd_tel=@st_tel,
+cd_hp=@st_hp;
+END IF; 
+END
+$$
+
+DELIMITER ;

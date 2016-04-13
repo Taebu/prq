@@ -9,7 +9,7 @@
  * 대리점	Partner	PT
  * 가맹점	Franchise	FR
  * 
- * @author Taebu,Moon <mtaebu@gmail.com>
+ * @author Taebu Moon <mtaebu@gmail.com>
  * @version 1.0
  */
 class Distributors_m extends CI_Model
@@ -22,7 +22,7 @@ class Distributors_m extends CI_Model
 	/**
 	 * 게시물 목록 가져오기
 	 *
-	 * @author Taebu <mtaebu@gmail.com>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $type 총 게시물 수 또는 게시물 배열을 반환할 지를 결정하는 구분자
 	 * @param string $offset 게시물 가져올 순서
@@ -104,7 +104,7 @@ class Distributors_m extends CI_Model
 
 	/**
 	 * 게시물 입력
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -241,7 +241,7 @@ class Distributors_m extends CI_Model
 	 * 2. 실제 적용될 코드값 조회
 
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 멤버아이디 , 멤버가입코드
 	 * @return row 입력 성공한 코드 반환.
 	 */
@@ -293,7 +293,7 @@ class Distributors_m extends CI_Model
 	/**
 	 * 게시물 수정
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -346,7 +346,7 @@ class Distributors_m extends CI_Model
 	/**
 	 * 게시물 삭제
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 테이블명
 	 * @param string $no 게시물번호
 	 * @return boolean 삭제 성공여부
@@ -366,7 +366,7 @@ class Distributors_m extends CI_Model
 	/**
 	 * 게시물 작성자 아이디 반환
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $board_id 게시물번호
 	 * @return string 작성자 아이디
@@ -383,7 +383,7 @@ class Distributors_m extends CI_Model
 	/**
 	 * 댓글 입력
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -409,7 +409,7 @@ class Distributors_m extends CI_Model
 	/**
 	 * 댓글 리스트 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -424,6 +424,28 @@ class Distributors_m extends CI_Model
 
     	return $result;
     }
+
+	/**
+	 * 대리점 갯수 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_frcnt()
+    {
+    	$sql = "select mb_pcode,count(*) cnt from prq_member where mb_gcode='G4' group by mb_pcode;";
+   		$query = $this->db->query($sql);
+
+     	//상점 갯수 반환
+	//    $result = $query->row();
+		$result = $query->result();
+    	return $result;
+    }
+
+
+
+
 }
 
 /* End of file member_m.php */
