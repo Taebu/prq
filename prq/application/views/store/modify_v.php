@@ -410,8 +410,8 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
 <div class="col-sm-10">
-<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50"><?php echo $views->st_middle_msg;?></textarea><!-- #form_data -->
-<span class="help-block m-b-none">중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
+<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)'><?php echo $views->st_middle_msg;?></textarea><!-- #form_data -->
+<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -547,6 +547,40 @@ function search_frcode(ds_code)
 function get_mb_id(v){
 $("#mb_id").val(fr_mail[v]);
 }
+
+/* 개선된 FOR문으로 문자열 BYTE 계산 */
+function getstrbyte(string)
+{
+	var stringByteLength=0;
+	stringByteLength = (function(s,b,i,c){
+		for(b=i=0;c=s.charCodeAt(i++);b+=c>>11?2:c>>7?2:1);
+		return b
+	})(string);
+	return stringByteLength;
+}
+
+
+/* 메세지 길이 */
+function chk_byte(){
+var str=document.getElementById("st_middle_msg").value;
+console.log(str);
+var bytesize=getstrbyte(str);
+console.log(bytesize);
+document.getElementById("bytesize").innerHTML=bytesize;
+}
+
+/* Textarea to resize based on content length */
+function textAreaAdjust(o) {
+    o.style.height = "1px";
+    o.style.height = (25+o.scrollHeight)+"px";
+}
+
+/* Textarea to resize based on content length */
+function textAreaAdjustOn() {
+    document.getElementById("st_middle_msg").style.height = "1px";
+    document.getElementById("st_middle_msg").style.height = (25+document.getElementById("st_middle_msg").scrollHeight)+"px";
+}
+
 window.onload = function() {
 /*24시간인지 체크*/
 chk_btn_status();
@@ -558,7 +592,9 @@ get_frcode(code);
 
 get_frmail();
 
+chk_byte();
 
+textAreaAdjustOn();
 };/*window.onload = function() {..}*/
 
 

@@ -88,7 +88,7 @@ class Franchise extends CI_Controller {
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/franchise/lists/prq_member'.$page_url.'/page/',
 		'total_rows' => $this->franchise_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
-		'per_page' => 5,
+		'per_page' => 25,
 		'uri_segment' => $uri_segment,
 
 		//페이지네이션 커스텀 설정 

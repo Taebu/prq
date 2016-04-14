@@ -6,7 +6,9 @@ include_once "./db_info.php";
 1.*/
 $select_sql=array();
 $select_sql[]="select token_id from prq_token_id ";
-$select_sql[]="where phone like '".$phone."' ";
+$select_sql[]=" where phone like '".$phone."' ";
+$select_sql[]=" order by regdate desc ";
+$select_sql[]=" limit 1;";
 $sql=join("",$select_sql);
 
 $query1 = mysql_query($sql);
@@ -25,6 +27,7 @@ $registration_ids[] = $list['token_id'];
 include_once "./GCM.php";
 $gcm = new GCM();
 
+/* 자동 전송 crontab linux scheduler */
 if($mode=="crontab")
 {
 $messages = array( 
@@ -58,6 +61,7 @@ mysql_query(join("",$sql));
 }
 /* if($mode=="crontab"){...} */
 
+/* 수동 전송 */
 if($mode=="manual")
 {
 
@@ -79,8 +83,17 @@ $messages = array(
 /*prq_gcm_log 발생*/
 //echo  $gcm->send_notification($registration_ids, $message);
 $push= json_decode($gcm->send_notification($registration_ids, $messages));
+//print_r($push);
+if(isset($push->results[0]->message_id)){
 $p_temp=$push->results[0]->message_id;
 $result= (strpos($p_temp,"0:")!==false)?true:false;
+}else{
+$result=false;
+}
+$json['success']=$result;
+echo json_encode($json);
+
+
 $result_msg= ($result)?"전달 성공":"전송 실패";
 $gc_ipaddr='123.142.52.91';
 $sql=array();

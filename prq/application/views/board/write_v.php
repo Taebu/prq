@@ -36,21 +36,6 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="row">
 <div class="col-md-12">
 <!-- <form method="get" class="form-horizontal"> -->
-<?php 
-if($mb_code=="PT"){?>
-<div class="form-group"><label class="col-sm-2 control-label">총판 협력사
-</label>
-<div class="col-sm-10"><select name="mb_pcode" id="">
-	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
-	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
-	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-	<option value="A0005">파알큐(문성준_총판)(A0005)</option>
-
-</select> <span class="help-block m-b-none" id="mb_id_assist">총판협력사를 선택해 주세요.</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-<?php }?>
 <div class="form-group"><label class="col-sm-2 control-label">핸드폰</label>
 <div class="col-sm-10">
 <input type="text" class="form-control" id="phone" name="phone"> 
@@ -67,7 +52,8 @@ if($mb_code=="PT"){?>
 
 <div class="form-group"><label class="col-sm-2 control-label">내용</label>
 <div class="col-sm-10">
-<textarea name="message" id="message" cols="30" rows="10" class="form-control" ></textarea>
+<textarea name="message" id="message" cols="30" rows="10" class="form-control"  onkeyup='chk_byte()'></textarea>
+<span id='bytesize'>0</span> byte
 <!-- <input type="text" class="form-control" name="message" id="message"> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -115,6 +101,12 @@ if($mb_code=="PT"){?>
 
 <div class="form-group"><label class="col-sm-2 control-label">img_url</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="img_url" id="img_url" value='http://prq.co.kr/prq/uploads/201601/DS_1453950682.jpg'>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">상점 번호</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_no" id="st_no">
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -245,14 +237,41 @@ type: "POST",
 data:param,
 dataType:"json",
 success: function(data) {
-	
-	var string="성공 : "+data.success+"\n";
-	string+="실패 : "+data.failure+"\n";
-	alert (string);
+	if(data.success){
+
+	var string="전송 성공  \n";
+
+	alert (string);	
+	}else{
+	alert("전송실패");
+	}
+
 	}
 });
 
 }
+
+/* 개선된 FOR문으로 문자열 BYTE 계산 */
+function getstrbyte(string)
+{
+	var stringByteLength=0;
+	stringByteLength = (function(s,b,i,c){
+		for(b=i=0;c=s.charCodeAt(i++);b+=c>>11?2:c>>7?2:1);
+		return b
+	})(string);
+	return stringByteLength;
+}
+
+
+/* 메세지 길이 */
+function chk_byte(){
+var str=document.getElementById("message").value;
+console.log(str);
+var bytesize=getstrbyte(str);
+console.log(bytesize);
+document.getElementById("bytesize").innerHTML=bytesize;
+}
+
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -262,9 +281,8 @@ chk_vali_id();
 blur++;
 chk_vali_id();
 });
-
-/*mb_code로 등록 정보 변경*/
-chg_gname();
+/* 메세지 길이 */
+chk_byte();
 };/*window.onload = function() {..}*/
 
 

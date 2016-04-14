@@ -358,7 +358,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 			<thead>
 				<tr>
 					<th scope="col">번호</th>
-					<th scope="col">내용</th>
+					<th scope="col" width="600px">내용</th>
 					<th scope="col">이미지</th>
 					<th scope="col">isMMS </th>
 					<th scope="col">수신인</th>

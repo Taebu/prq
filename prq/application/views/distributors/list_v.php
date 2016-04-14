@@ -179,6 +179,61 @@
 			object['ca']='해지';
 			return object[code];
 		}
+		
+		/* 총판 삭제 */
+		function del_code()
+		{
+			var str=[];
+			str.push("해당 총판에는 ");
+			str.push("대리점 3개,");
+			str.push("가맹점 1개,");
+			str.push("하위 상점 22개 ");
+			str.push("가 있습니다.");
+			str.push("해당 `DS0001` 멤버를 삭제 하시면 ");
+			str.push("위 모든 멤버및 상점이 삭제 됩니다.");
+			str.push("");
+			str.push("정말 이대로 진행 하시겠습니까?");
+
+		swal({
+				title: "정말 총판을 삭제 하시겠습니까?",
+				text: str.join("<br>"),
+				type: "warning",
+				html:true,
+				showCancelButton: true,
+				showConfirmButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "네, 삭제 하겠습니다!!!",
+				cancelButtonText: "아니요, 취소할래요!",
+				closeOnConfirm: false,   
+				closeOnCancel: false
+
+			}, 	function(isConfirm){  
+					if (isConfirm) {     
+						/* 삭제를 눌렀다면 */
+						swal("Deleted!", "10초 후 삭제를 진행합니다... 계속 진행 하시겠습니까?", "success");
+						/* 총판 삭제 시도*/
+						delete_ds();
+					} else {     
+						/* 취소를 눌렀다면 */
+						swal("Cancelled!", "코드 삭제를 취소하였습니다.", "error");
+					}
+					}
+			);
+		}
+
+		/* 총판 삭제 시도*/
+		function delete_ds()
+		{
+			var str=[];
+			str.push("삭제 중입니다. ");
+			str.push("대리점 3 / 33개,");
+			str.push("가맹점 0 / 200개,");
+			str.push("상점 0 / 3,333개 ");
+			str.push("삭제 중입니다...");
+			swal("Deleted!",str.join("\n"), "success");
+
+			//swal("Deleted!", "모두 삭제 되었습니다.", "success");
+		}
 	</script>
 	<article id="board_area">
 		<header>
@@ -289,6 +344,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 <button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
 <button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="del_code();">총판삭제</button>
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
@@ -479,7 +535,9 @@ foreach ($list as $lt)
 					<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
 					<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
 					<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-					<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button></div><!-- .btn_area --><?php }?></th>
+					<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+					<button type="button" class="btn btn-sm btn-danger" onclick="del_code();">총판삭제</button>
+					</div><!-- .btn_area --><?php }?></th>
 				</tr>
 				<tr>
 					<th colspan="12" style="text-align:center;border-top:0">
