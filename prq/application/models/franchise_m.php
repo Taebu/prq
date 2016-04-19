@@ -59,8 +59,8 @@ class Franchise_m extends CI_Model
 		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
 			$sword.= ' and prq_fcode like "'.$prq_fcode.'PT%" ';
 		}
-		//echo "mb_gcode => ".$mb_gcode."<br>";
-		//echo "prq_fcode => ".$prq_fcode."<br>";
+		
+		/*대리점인 경우*/
 		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
 			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" and mb_gcode="G5" ';
 		}
@@ -470,48 +470,61 @@ mysql> select * from prq_member_code;
     function get_stcnt()
     {
     	$sql = "SELECT prq_fcode,count(*) cnt FROM prq_store GROUP BY prq_fcode;";
-		/*
-		+--------------------+-----+
-		| prq_fcode          | cnt |
-		+--------------------+-----+
-		| DS0001PT0001FR0001 |   2 |
-		| DS0001PT0001FR0003 |   2 |
-		| DS0001PT0001FR0004 |   4 |
-		| DS0001PT0008FR0002 |   1 |
-		| DS0003PT0001       |   1 |
-		| DS0003PT0001FR0001 |   1 |
-		| DS0003PT0001FR0003 |   1 |
-		| DS0003PT0001FR0004 |   2 |
-		| DS0004PT0001FR0001 |   3 |
-		| DS0006PT0001FR0001 |   2 |
-		| DS0007PT0001FR0001 |   1 |
-		| DS0007PT0001FR0002 |   1 |
-		| DS0007PT0001FR0003 |   1 |
-		| DS0007PT0001FR0004 |   1 |
-		| DS0007PT0001FR0005 |   2 |
-		| DS0007PT0001FR0006 |   1 |
-		| DS0007PT0001FR0007 |   4 |
-		| DS0007PT0001FR0008 |   1 |
-		| DS0007PT0001FR0009 |   1 |
-		| DS0007PT0001FR0010 |   1 |
-		| DS0007PT0001FR0011 |   1 |
-		| DS0007PT0001FR0013 |   1 |
-		| DS0007PT0001FR0014 |   1 |
-		| DS0007PT0003FR0001 |   1 |
-		| DS0007PT0003FR0002 |   1 |
-		| DS0007PT0003FR0003 |   1 |
-		+--------------------+-----+
-		26 rows in set (0.00 sec)
-		*/
-
 		$query = $this->db->query($sql);
 
-     	//상점 갯수 반환
-	//    $result = $query->row();
 		$result = $query->result();
     	return $result;
     }
+
 	
+		/**
+	 * 가맹점 코드 이름 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_frcode()
+    {
+    	$sql = "select * from prq_frcode;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+   	return $result;
+    }
+
+	/**
+	 * 대리점 코드 이름 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_ptcode()
+    {
+    	$sql = "select * from prq_ptcode;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+    	return $result;
+    }
+
+
+	/**
+	 * 총판 코드 이름 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_dscode()
+    {
+    	$sql = "select * from prq_dscode;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+    	return $result;
+    }
 
 }
 

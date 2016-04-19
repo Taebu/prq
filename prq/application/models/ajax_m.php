@@ -78,10 +78,18 @@ class Ajax_m extends CI_Model
 	{
 
 		$sql=array();
-		$sql[]="update `".$array['prq_table']."` set ";
-		$sql[]=" mb_status='".$array['mb_status']."' ";
-		$sql[]="WHERE ";
-		$sql[]="mb_no in (".$array['join_chk_seq'].");";
+
+		if($array['prq_table']=="prq_member"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" mb_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="mb_no in (".$array['join_chk_seq'].");";
+		}else if($array['prq_table']=="prq_store"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" st_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="st_no in (".$array['join_chk_seq'].");";		
+		}
 		$join_sql=join("",$sql);
 		$query = $this->db->query($join_sql);
 
@@ -310,13 +318,13 @@ class Ajax_m extends CI_Model
 		$join_sql=join("",$sql);
 		$query = $this->db->query($join_sql);
 		
+		$json['posts']=array();
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
 		
 		/* 조회 결과가 성공 이라면 */
 		if($json['success'])
 		{
-			$json['posts']=array();
 			foreach($query->result_array() as $list){
 				array_push($json['posts'],$list);
 			}
@@ -359,6 +367,8 @@ class Ajax_m extends CI_Model
 			foreach($query->result_array() as $list){
 				array_push($json['posts'],$list);
 			}
+		}else{
+			$json['posts']=array();
 		}
 		echo json_encode($json);
 	}

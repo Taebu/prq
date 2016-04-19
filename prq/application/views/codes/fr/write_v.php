@@ -571,7 +571,7 @@ function set_frcode(mode)
 		}
 		$("#mode").val("add");
 		var param =$("#write_action").serialize();
-		alert(param);
+//		alert(param);
 		
 		$.ajax({
 		url:"/prq/ajax/set_frcode/",

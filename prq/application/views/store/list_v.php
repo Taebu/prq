@@ -9,6 +9,10 @@
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
+
+			/*버튼 비활성화.*/
+			chk_btn_status();
+
 		});
 
 		function board_search_enter(form) {
@@ -21,6 +25,121 @@
           $("#bd_search").submit();		
 		
 		}
+		function chg_list(code){
+			var param=$("#write_action").serialize();
+
+			if(param=="")
+			{
+				alert("하나 이상 선택 하셔야 합니다.");
+				return;
+			}
+			
+			/* sweet alert */
+			swal_status(code);
+
+			//alert(code+" : "+param);
+		}
+		
+
+		function swal_status(code)
+		{
+			swal({
+				title: "정말 변경 하시겠습니까?",
+				text: "해당 리스트를 \""+get_status(code)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+				html:true,
+				type: "input",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				cancelOnConfirm: false,
+				confirmButtonText: "네, 변경할래요!",
+				cancelButtonText: "아니요, 취소할래요!",
+				animation: "slide-from-top",   showLoaderOnConfirm: true,
+				allowEscapeKey:true,
+				inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
+				//if (inputValue === false) return false;
+				if(!inputValue){
+					swal("취소!", "취소 하였습니다.", "error");
+					return false;
+				}
+
+				if (inputValue.length<3) {
+				  swal.showInputError("3자이상 사유를 적어 주세요.");
+				  return false
+				}
+
+				var param=$("#write_action").serialize();
+				param=param+"&mb_status="+code;
+				/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+				param=param+"&mb_reason="+inputValue;
+				console.log(param);
+				$.ajax({
+				url:"/prq/ajax/chg_status/prq_store",
+					data:param,
+					dataType:"json",
+					type:"POST",
+					success:function(data){
+						if(data.success){
+							//alert("변경에 성공하였습니다.");
+							swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
+							$.each(data.posts,function(key,val){
+								$("#status_"+val.mb_no).html(val.mb_status);
+							});
+						}
+						console.log(data);
+						console.log(data=="9000");
+						if(data=="9000"){
+							//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+							swal({   
+								title: "로그인!",
+								text: "로그인 되지 않았습니다. 로그인 하시겠습니까?",
+								type: "warning",
+								showCancelButton: true,
+								closeOnConfirm: false,
+								animation: "slide-from-top"
+							}, 
+							function(inputValue)
+							{
+								/*취소를 눌렀을 때*/
+								if (inputValue === false) return false;
+
+								swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+								
+								setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+								;
+							});	
+						}
+					}
+				});
+
+				});
+		}
+
+		function chk_btn_status(){
+			var param=$("#write_action").serialize();
+			
+			if(param.indexOf("chk_seq")<0)
+			{
+				$(".btn_area [class*='btn-']").addClass("disabled").prop('disabled', true); 
+			}else{
+				$(".btn_area [class*='btn-']").removeClass("disabled").prop('disabled', false); 
+			}
+		}
+
+
+		function get_status(code)
+		{
+			var object=[];
+			object['wa']='대기';
+			object['pr']='처리중';
+			object['ac']='승인';
+			object['ad']='승인거부';
+			object['ec']='연계완료';
+			object['ca']='해지';
+			return object[code];
+		}
+
+		
+
 	</script>
 	<article id="board_area">
 		<header>
@@ -111,43 +230,77 @@
 		<?php 
 			$attributes = array(
 				'class' => 'form-horizontal', 
-				'id' => 'write_action'
+				'id' => 'write_action',
+				'name' => 'write_action'
 			);
 			echo form_open('board/write/ci_board', $attributes);
 		?>
 	<div class='col-sm-12'>
+
+<?php 
+/* cookie에서 멤버 gcode 불러 오기 */
+$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+
+if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+</div><!-- .btn_area -->
+<?php }?>
 <div class="table-responsive">
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col"><input type="checkbox" name="chk_"></th>
+					<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status()"></th>
 					<th scope="col">No</th>
-					<th scope="col">등록일자</th>
-					<th scope="col">가맹점 이름</th>
-					<th scope="col">가맹점코드</span>코드</th>
-					<th scope="col">구분</th>
+					<th scope="col">총판</th>
 					<th scope="col">대리점</th>
-					<th scope="col"><span class="mb_gname">총판</span>상태</th>
-					<th scope="col">비고</th>
+					<th scope="col">상점명</th>
+					<th scope="col">상태</th>
+					<th scope="col">등록일자</th>
 				</tr>
 			</thead>
 			<tbody>
 <?php
+//print_r($fr_names);
+//print_r($pt_names);
+
+/* 총팡 코드명 불러 오기 */
+$ds_code = array_column($ds_names, 'ds_code');
+$ds_name = array_column($ds_names, 'ds_name');
+
+/* 대리점 코드명 불러 오기 */
+$pt_code = array_column($pt_names, 'pt_code');
+$pt_name = array_column($pt_names, 'pt_name');
+
+//print_r($pt_code);
+//print_r($pt_name);
+
 foreach ($list as $lt)
 {
+/*총판 코드 */
+$sub_dscode=substr($lt->prq_fcode,0,6);
+$index=array_search($sub_dscode, $ds_code);
+$sub_ds_name=$index>-1?$ds_name[$index]:"미등록코드";
+
+/*대리점 코드 */
+$sub_ptcode=substr($lt->prq_fcode,0,12);
+$index=array_search($sub_ptcode, $pt_code);
+$sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
 ?>
 				<tr>
-					<td scope="col"><input type="checkbox" name="chk_"></td>
+					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->st_no;?>" onclick="chk_btn_status()"></td>
 					<td scope="row"><?php echo $lt->st_no;?></td>
-					<td>
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
-					<td><?php echo $lt->st_name;?></td>
-					<td><?php echo $lt->prq_fcode;?></td>
- 					 <td></td>
- 					<td>상점</td> 
- 					<td>46</td> 
- 					<td><?php echo $lt->st_status;?></td> 
- 					<td>-</td> 
+					<td><?php echo $sub_ds_name;	?></td>
+					<td><?php echo $sub_pt_name;	?></td>
+ 					<td><?php echo $lt->st_name;?></td>
+<!-- 					<td><?php echo $lt->prq_fcode;?></td> -->
+ 					<td><?php echo get_status($lt->st_status);?></td> 
+					<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
 				</tr>
 <?php
 }
@@ -166,6 +319,18 @@ echo "<tr><td colspan=9 style='text-align:center'>상점 리스트가 존재 하
 			</tfoot>
 		</table>
 </div><!-- .table-responsive -->
+
+<?php 
+if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+</div><!-- .btn_area -->
+<?php }?>
 </div>
 </div>
 </div>

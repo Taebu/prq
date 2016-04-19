@@ -247,6 +247,7 @@
 		<?php 
 			$attributes = array(
 				'class' => 'form-horizontal', 
+				'name' => 'write_action', 
 				'id' => 'write_action'
 			);
 			echo form_open('board/write/ci_board', $attributes);
@@ -268,15 +269,16 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <table cellspacing="0" cellpadding="0" class="table table-striped">
 <thead>
 <tr>
-	<th scope="col"><input type="checkbox" name="chk_"></th>
+	<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status()"></th>
 	<th scope="col">No</th>
 	<th scope="col">가맹점 코드</th>
 	<th scope="col">가맹점명</th>
 	<th scope="col">사업자번호</th>
 	<th scope="col">가맹점 ID</th>
 	<th scope="col">구분</th>
+	<th scope="col">핸드폰</th>
 	<th scope="col">상점수</th>
-	<th scope="col">가맹점 상태</th>
+	<th scope="col">상태</th>
 	<th scope="col">등록일자</th>
 	<th scope="col">비고</th>
 </tr>
@@ -285,148 +287,53 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <?php
 //print_r($st_count);
 
-/**
- * 2016-04-13 (수)
- * This file is part of the array_column library
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- *
- * @copyright Copyright (c) Ben Ramsey (http://benramsey.com)
- * @license http://opensource.org/licenses/MIT MIT
- */
 
-if (!function_exists('array_column')) {
-    /**
-     * Returns the values from a single column of the input array, identified by
-     * the $columnKey.
-     *
-     * Optionally, you may provide an $indexKey to index the values in the returned
-     * array by the values from the $indexKey column in the input array.
-     *
-     * @param array $input A multi-dimensional array (record set) from which to pull
-     *                     a column of values.
-     * @param mixed $columnKey The column of values to return. This value may be the
-     *                         integer key of the column you wish to retrieve, or it
-     *                         may be the string key name for an associative array.
-     * @param mixed $indexKey (Optional.) The column to use as the index/keys for
-     *                        the returned array. This value may be the integer key
-     *                        of the column, or it may be the string key name.
-     * @return array
-     */
-    function array_column($input = null, $columnKey = null, $indexKey = null)
-    {
-        // Using func_get_args() in order to check for proper number of
-        // parameters and trigger errors exactly as the built-in array_column()
-        // does in PHP 5.5.
-        $argc = func_num_args();
-        $params = func_get_args();
+if(count($list)==0){
+echo "<tr><td colspan='12' style='text-align:center'>등록된 `가맹점`이 없습니다. </td>";
+}
 
-        if ($argc < 2) {
-            trigger_error("array_column() expects at least 2 parameters, {$argc} given", E_USER_WARNING);
-            return null;
-        }
-
-        if (!is_array($params[0])) {
-            trigger_error(
-                'array_column() expects parameter 1 to be array, ' . gettype($params[0]) . ' given',
-                E_USER_WARNING
-            );
-            return null;
-        }
-
-        if (!is_int($params[1])
-            && !is_float($params[1])
-            && !is_string($params[1])
-            && $params[1] !== null
-            && !(is_object($params[1]) && method_exists($params[1], '__toString'))
-        ) {
-            trigger_error('array_column(): The column key should be either a string or an integer', E_USER_WARNING);
-            return false;
-        }
-
-        if (isset($params[2])
-            && !is_int($params[2])
-            && !is_float($params[2])
-            && !is_string($params[2])
-            && !(is_object($params[2]) && method_exists($params[2], '__toString'))
-        ) {
-            trigger_error('array_column(): The index key should be either a string or an integer', E_USER_WARNING);
-            return false;
-        }
-
-        $paramsInput = $params[0];
-        $paramsColumnKey = ($params[1] !== null) ? (string) $params[1] : null;
-
-        $paramsIndexKey = null;
-        if (isset($params[2])) {
-            if (is_float($params[2]) || is_int($params[2])) {
-                $paramsIndexKey = (int) $params[2];
-            } else {
-                $paramsIndexKey = (string) $params[2];
-            }
-        }
-
-        $resultArray = array();
-
-        foreach ($paramsInput as $row) {
-            $key = $value = null;
-            $keySet = $valueSet = false;
-
-            if ($paramsIndexKey !== null && array_key_exists($paramsIndexKey, $row)) {
-                $keySet = true;
-                $key = (string) $row[$paramsIndexKey];
-            }
-
-            if ($paramsColumnKey === null) {
-                $valueSet = true;
-                $value = $row;
-            } elseif (is_array($row) && array_key_exists($paramsColumnKey, $row)) {
-                $valueSet = true;
-                $value = $row[$paramsColumnKey];
-            }
-
-            if ($valueSet) {
-                if ($keySet) {
-                    $resultArray[$key] = $value;
-                } else {
-                    $resultArray[] = $value;
-                }
-            }
-
-        }
-
-        return $resultArray;
-    }
-
-}/* end array_column */
 //$count=json_decode(json_encode($count), True);
 $array_fr = array_column($st_count, 'prq_fcode');
 $fr_cnt = array_column($st_count, 'cnt');
 
 
+/* 총판 코드명 불러 오기 */
+$ds_code = array_column($ds_names, 'ds_code');
+$ds_name = array_column($ds_names, 'ds_name');
+
+/* 대리점 코드명 불러 오기 */
+$pt_code = array_column($pt_names, 'pt_code');
+$pt_name = array_column($pt_names, 'pt_name');
+
 
 foreach ($list as $lt)
 {
+/*총판 코드 */
+$sub_dscode=substr($lt->prq_fcode,0,6);
+$index=array_search($sub_dscode, $ds_code);
+$sub_ds_name=$index>-1?$ds_name[$index]:"미등록코드";
+
+/*대리점 코드 */
+$sub_ptcode=substr($lt->prq_fcode,0,12);
+$index=array_search($sub_ptcode, $pt_code);
+$sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
+
+$is_fr=array_search($lt->prq_fcode, $array_fr);
+$fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
 ?>
 <tr>
 	<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
 	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
 	<td scope="row"><?php echo $lt->mb_no;?></td>
-	<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
-	<td scope="row"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</td>
+	<td><?php echo $sub_ds_name;?></td>
+	<td><?php echo $sub_pt_name;	?></td>
+	<!-- <td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td> -->
+	<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</a></td>
 	<td scope="row"><?php echo $lt->mb_name;?></td>
 	<td scope="row"><?php echo $lt->mb_business_num;?></td>
 	<td><?php echo $lt->mb_ceoname;?></td>
 	<td><?php echo $lt->mb_hp;?></td>
-	<td><a rel="external" href="/prq/franchise/lists/prq_member/page/1"><?php $is_fr=array_search($lt->prq_fcode, $array_fr);
-			if($is_fr>-1){
-			echo $fr_cnt[$is_fr];
-			}else{
-			echo "0";
-			}
-			echo "개";
-	?></a></td>
+	<td><a rel="external" href="/prq/franchise/lists/prq_member/page/1"><?php echo $fr_count;?></a></td>
 	<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
 	<td><?php echo date("Y-m-d",strtotime($lt->mb_datetime));?></td>
 	<td>-</td>

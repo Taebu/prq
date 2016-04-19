@@ -58,6 +58,8 @@ class Ajax extends CI_Controller {
 //				$result = $this->board_m->insert_comment($write_data);
 				if($table=="prq_member"){
 					$result = $this->ajax_m->chg_status($write_data);
+				}else if($table=="prq_store"){
+					$result = $this->ajax_m->chg_status($write_data);
 				}else if($table!="prq_member"){
 					$result = $this->ajax_m->chg_status_code($write_data);
 				}

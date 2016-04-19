@@ -80,9 +80,32 @@ $prq_fcode=$this->input->cookie('prq_fcode', TRUE);
 <div class="ibox-content">
 <div class="row">
 <div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">총판</label>
+<div class="col-sm-10">
+<?php 
+$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+if($mb_gcode=="G1"||$mb_gcode=="G2"){
+?>
+<select name="mb_pcode" id="mb_pcode"  class="form-control">
+	<option value="DS0001" selected>[DS0001] 총판</option>
+</select><!-- #mb_pcode -->
+<span class="help-block m-b-none">총판협력사를 선택해 주세요.</span>
+<?php 
+}else if($mb_gcode=="G3"){
+echo $this->input->cookie('name', TRUE);echo "(".$prq_fcode.")";
+//echo '<input type="hidden" name="mb_pcode" value="'.$mb_code.'">';
+}else{
+echo "대리점을 등록할 권한이 없습니다.";
+}
+?>
+
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <!-- <form method="get" class="form-horizontal"> -->
-<div class="form-group">
-	<label for="pt_code" class="col-sm-2 ">대리점 코드</label>
+<div class="form-group"><label for="pt_code" class="col-sm-2 control-label">대리점 코드</label>
 	<div class="col-sm-10">
 	<select name="prq_fcode"  class="form-control" id="prq_fcode" style='width:100%' onchange="javascript:chg_ptcode(this.value)"
 	 onclick="javascript:chg_ptcode(this.value)">
@@ -101,34 +124,8 @@ $prq_fcode=$this->input->cookie('prq_fcode', TRUE);
 	<span class="help-block m-b-none">대리점코드를 선택 합니다.</span>
 	</div><!-- .col-sm-10 -->
 </div><!-- .form-inline-->
-
-
-<div class="form-group"><label class="col-sm-2 control-label">총판 협력사
-</label>
-<div class="col-sm-10">
-<?php 
-$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-if($mb_gcode=="G1"||$mb_gcode=="G2"){
-?>
-<select name="mb_pcode" id="mb_pcode">
-	<option value="A0002">파알큐(문성준_총판)(A0002)</option>
-	<option value="A0003">파알큐(문성준_총판)(A0003)</option>
-	<option value="A0004">파알큐(문성준_총판)(A0004)</option>
-</select><!-- #mb_pcode -->
-<span class="help-block m-b-none">총판협력사를 선택해 주세요.</span>
-<?php 
-}else if($mb_gcode=="G3"){
-echo $this->input->cookie('name', TRUE);echo "(".$prq_fcode.")";
-//echo '<input type="hidden" name="mb_pcode" value="'.$mb_code.'">';
-}else{
-echo "대리점을 등록할 권한이 없습니다.";
-}
-?>
-
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label"><span class="mb_gname">대리점</span> 아이디
 </label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id"> <span class="help-block m-b-none" id="mb_id_assist"><span class="mb_gname">대리점</span>아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.
@@ -440,9 +437,8 @@ function get_pcode()
 var pt_code="";
 function get_ptcode()
 {
-	var ds_code=$("#ds_code").val();
 	$.ajax({
-	url:"/prq/ajax/get_ptcode/"+ds_code,
+	url:"/prq/ajax/get_ptcode/",
 	type: "POST",
 	data:"",
 	dataType:"json",
@@ -495,8 +491,8 @@ function search_ptcode(spt_code)
 	console.log("등록한 코드 갯수 : "+pt_code.length);
 
 	if(pt_code.length==used_pt_code.length){
-		alert("대리점 코드를 모두 소진하여 \n 더 이상 대리점 등록이 불가능 합니다.\n 리스트로 돌아갑니다.");
-		$(location).attr('href','/prq/partner/lists/prq_member/page/1');
+//		alert("대리점 코드를 모두 소진하여 \n 더 이상 대리점 등록이 불가능 합니다.\n 리스트로 돌아갑니다.");
+//		$(location).attr('href','/prq/partner/lists/prq_member/page/1');
 	}
 	/* pt_code는 이미 get_dscode인 부모 코드에서 불러 온다.*/
 	$.each(pt_code,function(key,val){
@@ -544,10 +540,27 @@ function search_ptcode(spt_code)
 }
 
 
+/*
+*/
+function chg_ptcode(v)
+{
+	var ds_code=$("#ds_code").val();
+	$("#pt_code_new").val(v);
+	$("#display_dscode").html(ds_code);
+	$("#display_ptcode").html(v);
+	$("#span_pt_code").html(ds_code+""+v);
+	var search_code=v;
+	console.log(search_code);
+	$.each(pt_code,function(key,val){
+		if(val.pt_code.indexOf(search_code)>-1)
+		$("#edit_pt_name").val(val.pt_name);
+//	$("#edit_pt_name").val(ds_code+"_"+v);
+	});
+}
 
 /*******************************************************************************************************************/
 
-/*
+
 function search_ptcode(ds_code)
 {
 	var object = [];
@@ -562,7 +575,7 @@ function search_ptcode(ds_code)
 			object.push('<option value='+val.pt_code+'>');
 		}
 		chk_max_ptcode.push(val.pt_code);
-		object.push('['+val.pt_code+']');
+		object.push('['+val.pt_code+'] ');
 		object.push(val.pt_name);
 		object.push('</option>');
 //	}
@@ -585,7 +598,7 @@ function search_ptcode(ds_code)
 	$("#prq_fcode").html(result);
 //	chg_ptcode(ds_code+""+pt_code_new);
 }
-*/
+
 /* 모든 정보를 불러 오면 아래 코드를 실행합니다.*/
 window.onload = function() {
 

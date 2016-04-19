@@ -147,6 +147,9 @@ class Store extends CI_Controller {
 		$limit = $config['per_page'];
 
 		$data['list'] = $this->store_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['fr_names'] = json_decode(json_encode($this->store_m->get_frcode()), True);;
+		$data['pt_names'] = json_decode(json_encode($this->store_m->get_ptcode()), True);;
+		$data['ds_names'] = json_decode(json_encode($this->store_m->get_dscode()), True);;
 		$this->load->view('store/list_v', $data);
 	}
 

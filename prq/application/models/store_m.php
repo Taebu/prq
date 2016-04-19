@@ -42,6 +42,15 @@ class Store_m extends CI_Model
      		$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
      	}
 
+
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+
+		/*대리점인 경우*/
+		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+		}
+
     	$limit_query = '';
 
     	if ( $limit != '' OR $offset != '' )
@@ -405,6 +414,56 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
+
+	/**
+	 * 가맹점 코드 이름 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_frcode()
+    {
+    	$sql = "select * from prq_frcode;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+   	return $result;
+    }
+
+	/**
+	 * 대리점 코드 이름 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_ptcode()
+    {
+    	$sql = "select * from prq_ptcode;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+    	return $result;
+    }
+
+
+	/**
+	 * 총판 코드 이름 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_dscode()
+    {
+    	$sql = "select * from prq_dscode;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+    	return $result;
+    }
+
 }
 
 /* End of file store_m.php */

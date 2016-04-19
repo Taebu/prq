@@ -420,6 +420,8 @@
     <!-- Sweet alert -->
     <script src="/prq/include/js/plugins/sweetalert/sweetalert.min.js"></script>
 
+    <!-- Main script -->	
+    <script src="/prq/include/js/main.js"></script>
     <script>
         $(document).ready(function() {
 

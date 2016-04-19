@@ -301,14 +301,19 @@ if(count($list)==0){?>
 <tr><td scope="row" colspan='11' class='text-center'> 조회한 ACTION Log가 없습니다.</td></tr>
 <?php }
 
-foreach ($list as $lt){?>
+
+
+foreach ($list as $lt){
+
+?>
 <tr>
+
 	<td scope="row"><?php echo $lt->mb_id;?></td>
 	<td scope="row"><?php echo $lt->lo_ip;?></td>
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td scope="row"><?php echo $lt->prq_fcode;?></td>
 	<td scope="row"><?php echo $lt->prq_table;?></td>
-	<td scope="row"><?php echo $lt->lo_status;?></td>
+	<td scope="row"><?php echo get_status($lt->lo_status);?></td>
 	<td scope="row"><?php echo $lt->lo_how;?></td>
 	<td scope="row"><?php echo $lt->lo_reason;?></td>
 	<td scope="row"><?php echo $lt->lo_datetime;?></td>

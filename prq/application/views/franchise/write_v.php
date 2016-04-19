@@ -460,7 +460,7 @@ function get_frcode()
 		}
 	});
 }
-/*사용 중인 총판 코드를 불러 옵니다.*/
+/*사용 중인 가맹점 코드를 불러 옵니다.*/
 var used_fr_code=[];
 function get_used_frcode()
 {
@@ -507,10 +507,10 @@ function search_frcode(spt_code)
 		chk_max_frcode.push(val.fr_code);
 		if($.inArray(val.fr_code,arr)>-1){
 		object.push('['+val.fr_code+']');
-		object.push(val.fr_name+" [사용중]");
+		object.push(val.fr_name+" [사용중] ");
 		
 		}else{
-		object.push('['+val.fr_code+']');
+		object.push('['+val.fr_code+'] ');
 		object.push(val.fr_name);
 		}
 		object.push('</option>');
