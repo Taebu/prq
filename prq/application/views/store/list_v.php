@@ -1,3 +1,14 @@
+<?php
+/**
+* 상점 리스트 뷰 페이지
+* file : /prq/application/views/store/list_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-04-27 (수)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+?>
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
@@ -257,8 +268,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 				<tr>
 					<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status()"></th>
 					<th scope="col">No</th>
-					<th scope="col">총판</th>
-					<th scope="col">대리점</th>
+					<th scope="col">코드</th>
 					<th scope="col">상점명</th>
 					<th scope="col">상태</th>
 					<th scope="col">등록일자</th>
@@ -295,8 +305,7 @@ $sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
 				<tr>
 					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->st_no;?>" onclick="chk_btn_status()"></td>
 					<td scope="row"><?php echo $lt->st_no;?></td>
-					<td><?php echo $sub_ds_name;	?></td>
-					<td><?php echo $sub_pt_name;	?></td>
+					<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
  					<td><?php echo $lt->st_name;?></td>
 <!-- 					<td><?php echo $lt->prq_fcode;?></td> -->
  					<td><?php echo get_status($lt->st_status);?></td> 

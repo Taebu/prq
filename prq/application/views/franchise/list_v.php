@@ -1,4 +1,15 @@
-	<script>
+<?php
+/**
+* 가맹점 리스트 뷰 페이지
+* file : /prq/application/views/franchise/list_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-04-27 (수)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+?>
+<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
 				if($("#q").val() == ''){
@@ -271,8 +282,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <tr>
 	<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status()"></th>
 	<th scope="col">No</th>
-	<th scope="col">가맹점 코드</th>
-	<th scope="col">가맹점명</th>
+	<th scope="col">코드</th>
 	<th scope="col">사업자번호</th>
 	<th scope="col">가맹점 ID</th>
 	<th scope="col">구분</th>
@@ -325,8 +335,7 @@ $fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
 	<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
 	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
 	<td scope="row"><?php echo $lt->mb_no;?></td>
-	<td><?php echo $sub_ds_name;?></td>
-	<td><?php echo $sub_pt_name;	?></td>
+	<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;	?></td>
 	<!-- <td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td> -->
 	<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</a></td>
 	<td scope="row"><?php echo $lt->mb_name;?></td>

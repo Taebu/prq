@@ -1,3 +1,14 @@
+<?php
+/**
+* 총판 리스트 뷰 페이지
+* file : /prq/application/views/distributors/list_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-04-27 (수)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+?>
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
@@ -20,7 +31,7 @@
 
 		function set_write(){
 		$('#bd_search').attr('action', "/prq/distributors/write/prq_member/page/1");
-          $("#bd_search").submit();		
+          $("#bd_search").submit();
 		
 		}
 
@@ -400,20 +411,14 @@
 	</div><!-- .row -->
 
 <div class='row'>
-		<?php 
-			$attributes = array(
-				'class' => 'form-horizontal', 
-				'name' => 'write_action',
-				'id' => 'write_action'
-			);
-			echo form_open('board/write/ci_board', $attributes);
-		?>
-	<div class='col-sm-12'>
-<?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-
-if($mb_gcode=="G1"||$mb_gcode=="G2")
-{
+<?php 
+$attributes = array('class' => 'form-horizontal','name' => 'write_action','id' => 'write_action');
+echo form_open('board/write/ci_board', $attributes);
 ?>
+<div class='col-sm-12'>
+<?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+if($mb_gcode=="G1"||$mb_gcode=="G2")
+{?>
 <div class="btn_area">
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
@@ -425,94 +430,67 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
-		<table cellspacing="0" cellpadding="0" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status();return false;"></th>
-					<th scope="col">No</th>
-					<th scope="col">등록일자</th>
-					<th scope="col"><span class="mb_gname">총판</span>ID</th>
-					<!-- <th scope="col"><span class="mb_gname">총판</span>코드</th> -->
-					<th scope="col">코드</th>
-					<!-- <th scope="col">구분</th> -->
-					<!-- <th scope="col">대리점</th> -->
-					<th scope="col"><span class="mb_gname">총판</span>상태</th>
-					<!-- <th scope="col">비고</th> -->
-					<th scope="col">대리점</th>
-				</tr>
-			</thead>
-			<tbody>
+<table cellspacing="0" cellpadding="0" class="table table-striped">
+<thead>
+<tr>
+	<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status();return false;"></th>
+	<th scope="col">No</th>
+	<th scope="col">등록일자</th>
+	<th scope="col">총판 ID</th>
+	<th scope="col">코드</th>
+	<th scope="col">총판 상태</th>
+	<th scope="col">대리점</th>
+</tr>
+</thead>
+<tbody>
 <?php
 if(count($list)==0){
 echo "<tr><td colspan='12' style='text-align:center'>등록된 `총판`이 없습니다. </td>";
 }
 
-//print_r($count);
-//echo $count->mb_pcode;
-//echo $count->cnt;
-//$count=json_decode(json_encode($count), True);
 $array_fr = array_column($count, 'mb_pcode');
+print_r($count);
 $fr_cnt = array_column($count, 'cnt');
-
-
 
 foreach ($list as $lt)
 {
+	$is_fr=array_search($lt->prq_fcode, $array_fr);
+	$fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
 ?>
-				<tr>
-					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
-					<td scope="row"><?php echo $lt->mb_no;?></td>
-					<td>
-					<!-- <a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td> -->
-					<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
-					<td><?php echo $lt->mb_id;?></td>
-				<!-- 	<td><?php echo $lt->mb_code;?></td> -->
-					<td><?php echo $lt->prq_fcode;?></td>
-					<!-- <td><?php echo $lt->mb_gname_kor;?></td> -->
-					<!-- <td><?php echo $lt->mb_gname_eng;?></td> -->
-					<!-- <td><?php echo $lt->mb_business_paper;?></td> -->
- 					 <td><!-- <time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>">  -->
-					 <?php //echo mdate("%y-%m-%d",human_to_unix($lt->reg_date));?><!-- </time> -->
-					<span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
- 					<!-- <td><span class="mb_gname">총판</span></td>  -->
- 					<td><?php $is_fr=array_search($lt->prq_fcode, $array_fr);
-					if($is_fr>-1){
-					echo $fr_cnt[$is_fr];
-					}else{
-					echo "0";
-					}
-					echo "개";
-					?>
-					</td> 
-				</tr>
+<tr>
+	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
+	<td scope="row"><?php echo $lt->mb_no;?></td>
+	<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
+	<td><?php echo $lt->mb_id;?></td>
+	<td><?php echo $lt->prq_fcode;?></td>
+	<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
+	<td><?php echo $fr_count;?></td>
+</tr>
 <?php
 }
 ?>
-
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="12" style="text-align:left">
-					<?php if($mb_gcode=="G1"){?>
-					<div class="btn_area">
-					<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-					<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-					<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-					<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-					<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-					<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
-					<button type="button" class="btn btn-sm btn-danger" onclick="del_code();">총판삭제</button>
-					</div><!-- .btn_area --><?php }?></th>
-				</tr>
-				<tr>
-					<th colspan="12" style="text-align:center;border-top:0">
-					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
-				</tr>
-			</tfoot>
-		</table>
+</tbody>
+<tfoot>
+<tr>
+	<th colspan="12" style="text-align:left">
+	<?php if($mb_gcode=="G1"){?>
+	<div class="btn_area">
+	<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+	<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+	<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+	<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+	<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+	<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+	<button type="button" class="btn btn-sm btn-danger" onclick="del_code();">총판삭제</button>
+	</div><!-- .btn_area --><?php }?></th>
+</tr>
+<tr>
+	<th colspan="12" style="text-align:center;border-top:0">
+	<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
+</tr>
+</tfoot>
+</table>
 </div><!-- .table-responsive -->
-
-
 </div>
 </div>
 </div>

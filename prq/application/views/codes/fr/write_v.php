@@ -62,7 +62,7 @@ $prq_fcode=@$this->session->userdata['prq_fcode'];
 <?php 
 if($mb_gcode=="G1"||$mb_gcode=="G2"){?>
 <div class="row">
-<div class="col-md-3"><label>총판 코드</label>
+<div class="col-md-2"><label>총판 코드</label>
 	<div class="form-inline">
 	<select name="ds_code"  class="form-control" id="ds_code" size='10' style='width:100%' onchange="javascript:search_ptcode(this.value)"></select>
 	<span class="help-block m-b-none" id="mb_id_assist">총판코드를 선택 합니다.</span>
@@ -76,7 +76,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"){?>
 	<span class="help-block m-b-none" id="mb_id_assist">대리점코드를 선택 합니다.</span>
 	</div><!-- .form-inline-->
 </div><!-- col-md-3 -->
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="form-inline">
 	<label for="fr_code">가맹점 코드</label>
 	<select name="fr_code"  class="form-control" id="fr_code" size='10'   style='width:100%' disabled onchange="javascript:changed_frcode(this.value);chg_frcode(this.value)"
@@ -469,6 +469,7 @@ function search_frcode(spt_code)
 			object.push('<option value='+val.fr_code+'>');
 		}
 		chk_max_frcode.push(val.fr_code);
+
 		object.push('['+val.fr_code+']');
 		object.push(val.fr_name);
 		object.push('</option>');
