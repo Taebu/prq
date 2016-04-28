@@ -135,114 +135,111 @@ alert(address + " 주소를 찾을 수 없습니다.");
 
 <!-- rs-body 시작 -->
 <div id="ct" role="main" class="reveal-contents reveal2-contents">
-<div class="ct_wrp">
-<div class="header">
-<div class="gnb_wrp">
-<h1><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
-<!-- top_btn -->
-<a href="javascript:;" class="btn_top_openleft _leftMenu gnb list">
-<span class="btn_top openleft">확장영역 열기</span>
-<!--
-<span class="btn_top_openleft_num">N</span>
--->
-</a>
-<a href="javascript:;" class="btn_top_home" id="btnTopHome" data-id="HOME" data-idx=0>
-<span class="btn_top home">홈 바로가기</span>
-</a>
-<!-- //top_btn -->
-</div>
+	<div class="ct_wrp">
+		<div class="header">
+			<div class="gnb_wrp">
+				<h1><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
+				<!-- top_btn -->
+				<a href="javascript:;" class="btn_top_openleft _leftMenu gnb list">
+					<span class="btn_top openleft">확장영역 열기</span>
+				<!--
+				<span class="btn_top_openleft_num">N</span>
+				-->
+				</a>
+				<a href="javascript:;" class="btn_top_home" id="btnTopHome" data-id="HOME" data-idx=0>
+					<span class="btn_top home">홈 바로가기</span>
+				</a>
+				<!-- //top_btn -->
+			</div>
+			<div class="grd_prev"></div>
+			<div class="grd_next"></div>
 
+			<div id="nav" class="nav">
+				<div class="nav_wrap">
+					<ul class="nav_u" id="nav_u">
+					<!-- 메뉴 -->
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="fa-stack fa-lg"><i class="fa fa-home fa-stack-1x"></i></span>홈</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="fa-stack fa-lg"><i class="fa fa-search fa-stack-1x"></i></span>업체정보</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="fa-stack fa-lg"><i class="fa fa-cutlery fa-stack-1x"></i></span>전단지</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3><span class="fa-stack fa-lg"><i class="fa fa-map-marker fa-stack-1x"></i></span>오시는길</a></li>
+						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="ONLINEORDER" data-idx=3>온라인주문</a></li> -->
+						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="COUPON" data-idx=4>쿠폰</a></li> -->
+						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="EVENT" data-idx=5>이벤트</a></li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
 
-<div class="grd_prev"></div>
-<div class="grd_next"></div>
+		<div id="ct" style="position:relative;">
+			<!-- Demo 영역 -->
+			<div id="mflick">
+				<div class="flick-container">
+					<div class="flick-ct"></div>
+					<div class="flick-ct"></div>
+					<div class="flick-ct"></div>
+				</div>
+			</div>
+			<!--// Demo 영역 -->
+			</div>
+		</div>
 
-<div id="nav" class="nav">
-<div class="nav_wrap">
-<ul class="nav_u" id="nav_u">
-<!-- 메뉴 -->
-<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="fa-stack fa-lg"><i class="fa fa-home fa-stack-1x"></i></span>홈</a></li>
-<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="fa-stack fa-lg"><i class="fa fa-search fa-stack-1x"></i></span>업체정보</a></li>
-<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="fa-stack fa-lg"><i class="fa fa-cutlery fa-stack-1x"></i></span>전단지</a></li>
-<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3><span class="fa-stack fa-lg"><i class="fa fa-map-marker fa-stack-1x"></i></span>오시는길</a></li>
-<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="ONLINEORDER" data-idx=3>온라인주문</a></li> -->
-<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="COUPON" data-idx=4>쿠폰</a></li> -->
-<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="EVENT" data-idx=5>이벤트</a></li> -->
-</ul>
-</div>
-</div>
-</div>
+		<div class="dialog-container" style="position: absolute; overflow: hidden; width: 360px; height: 615px; left: 0px; z-index: 2050; top: 0px; display: block;">
+			<div class="dialog-fog" style="position: absolute; padding: 0px; margin: 0px; border: 0px; background-color: gray; zoom: 1; opacity: 0.5; width: 360px; height: 615px; left: 0px; top: 0px;">
+			</div>
+			<div class="dialog-layer" style="position: relative; background-color: white; width: 292px; height: 198px; top: 208px; left: 60px;">
+				<div id="popup_area" class="popup_center" style="width: 306px;">
+					<div class="pop_title"><h3 class="title">바로가기 설치</h3></div>
+					<div class="shoutcut_area">
+						<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
+						<div class="shoutcut_btn_area">
+							<p>홈화면에 바로가기를 추가하시겠습니까?</p>
+							<a href="javascript:;" class="btn_b_yes" onclick="addFavorite();"> 예 </a>
+							<a href="javascript:;" class="btn_b_no" onclick="javascript:$('.dialog-container').hide();"> 닫기 </a>
+						</div>
+						<p class="shoutcut_info"><i class="fa fa-info"></i><em>네이버 어플이 없으면<br> 플레이스토어로 이동합니다.</em></p>
+						<p class="shoutcut_form"><a id="fa_check_wrapper" class="icon_check" href="javascript:;" onclick="chk7days2();"><i class="fa fa-check"></i></a><a href="javascript:;" onclick="chk7days2();">일주일간 보지 않기</a></p>
+					</div><!-- .shoutcut_area -->
+				</div>
+			</div>
+		</div>
 
-<div id="ct" style="position:relative;">
-<!-- Demo 영역 -->
-<div id="mflick">
-<div class="flick-container">
-<div class="flick-ct"></div>
-<div class="flick-ct"></div>
-<div class="flick-ct"></div>
-</div>
-</div>
-<!--// Demo 영역 -->
-</div>
-</div>
+		<div class="dialog-clone" style="position: absolute; left: -1000px; top: -1000px; display: none;">
+			<div id="popup_area" class="popup_center">
+				<div class="pop_title">
+					<h3 class="title">바로가기 설치</h3>
+				</div>
+				<div class="shoutcut_area">
+					<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
+					<div class="shoutcut_btn_area">
+						<p>홈화면에 바로가기를 추가하시겠습니까?</p>
+						<a href="javascript:;" class="btn_b_yes" onclick="addFavorite();"> 예 </a>
+						<a href="javascript:;" class="btn_b_no" onclick="javascript:$('.dialog-clone').hide();"> 닫기 </a>
+					</div>
+					<p class="shoutcut_info">
+						<i class="fa fa-info">
+						</i>
+						<em>네이버 어플이 없으면<br> 플레이스토어로 이동합니다.</em>
+					</p>
+					<p class="shoutcut_form">
+						<a id="fa_check_wrapper" class="icon_check" href="javascript:;" onclick="chk7days2();">
+							<i class="fa fa-check">
+							</i>
+						</a>
+						<a href="javascript:;" onclick="chk7days2();">일주일간 보지 않기</a>
+					</p>
+				</div>
+			</div>
+		</div>
 
-<div class="dialog-container" style="position: absolute; overflow: hidden; width: 360px; height: 615px; left: 0px; z-index: 2050; top: 0px; display: block;">
-<div class="dialog-fog" style="position: absolute; padding: 0px; margin: 0px; border: 0px; background-color: gray; zoom: 1; opacity: 0.5; width: 360px; height: 615px; left: 0px; top: 0px;">
-</div>
-<div class="dialog-layer" style="position: relative; background-color: white; width: 292px; height: 198px; top: 208px; left: 60px;">
-<div id="popup_area" class="popup_center" style="width: 306px;">
-<div class="pop_title"><h3 class="title">바로가기 설치</h3></div>
-<div class="shoutcut_area">
-	<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
-	<div class="shoutcut_btn_area">
-		<p>홈화면에 바로가기를 추가하시겠습니까?</p>
-		<a href="javascript:;" class="btn_b_yes" onclick="addFavorite();"> 예 </a>
-		<a href="javascript:;" class="btn_b_no" onclick="javascript:$('.dialog-container').hide();"> 닫기 </a>
+		<div id="footer" class="footer footer01">
+			<p><?php echo $views->st_name;?> <span id="mb_business_num">587-09-00247</span></p>
+			<p id="address_area">경기도 부천시 원미구 부천로53번길 52 1층(심곡동) 김은정</p>
+			<p>copyright(c) 2016 prq</p>
+		</div>
+
+		<div id="menuBg" class="menu_bg display_none" style="">메뉴bg</div>
 	</div>
-	<p class="shoutcut_info"><i class="fa fa-info"></i><em>네이버 어플이 없으면<br> 플레이스토어로 이동합니다.</em></p>
-	<p class="shoutcut_form"><a id="fa_check_wrapper" class="icon_check" href="javascript:;" onclick="chk7days2();"><i class="fa fa-check"></i></a><a href="javascript:;" onclick="chk7days2();">일주일간 보지 않기</a></p>
-</div><!-- .shoutcut_area -->
-</div>
-</div>
-</div>
-
-<div class="dialog-clone" style="position: absolute; left: -1000px; top: -1000px; display: none;">
-<div id="popup_area" class="popup_center">
-<div class="pop_title">
-<h3 class="title">바로가기 설치</h3>
-</div>
-<div class="shoutcut_area">
-<span class="thumb" style="background:url(/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>) center center no-repeat; background-size:100% 100%;">매장썸네일</span>
-<div class="shoutcut_btn_area">
-<p>홈화면에 바로가기를 추가하시겠습니까?</p>
-<a href="javascript:;" class="btn_b_yes" onclick="addFavorite();"> 예 </a>
-<a href="javascript:;" class="btn_b_no" onclick="javascript:$('.dialog-clone').hide();"> 닫기 </a>
-</div>
-<p class="shoutcut_info">
-<i class="fa fa-info">
-</i>
-<em>네이버 어플이 없으면<br> 플레이스토어로 이동합니다.</em>
-</p>
-<p class="shoutcut_form">
-<a id="fa_check_wrapper" class="icon_check" href="javascript:;" onclick="chk7days2();">
-<i class="fa fa-check">
-</i>
-</a>
-<a href="javascript:;" onclick="chk7days2();">일주일간 보지 않기</a>
-</p>
-</div>
-</div>
-</div>
-
-<div id="footer" class="footer footer01">
-<p><?php echo $views->st_name;?> <span id="mb_business_num">587-09-00247</span></p>
-<p id="address_area">경기도 부천시 원미구 부천로53번길 52 1층(심곡동) 김은정</p>
-<p>copyright(c) 2016 prq</p>
-</div>
-
-<div id="menuBg" class="menu_bg display_none" style="">메뉴bg</div>
-</div>
 <!-- rs-body 끝 -->
-
 </div>
 <!-- rs-body 끝 -->
 

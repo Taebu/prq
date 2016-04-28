@@ -1,3 +1,14 @@
+<?php
+/**
+* 총판 쓰기 페이지
+* file : /prq/application/views/distributors/write_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-04-28 (목)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+?>
 <style type="text/css">
 option:disabled {
     background: rgb(51, 122, 183);
