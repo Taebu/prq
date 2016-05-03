@@ -350,7 +350,7 @@ $color_type_alpha=${$_GET['theme']."a"};
 #m_footer p{margin:0;padding:0;font-size:11px;font-weight:600}
 .footer{width:100%;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
 #footer.footer{text-align:center;margin:0 auto;width:100%;background:#a3a3a3;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
-#footer.footer p{font-size:11px}
+#footer.footer p{font-size:12px;line-height:18px;}
 .footer.footer01{text-align:center;margin:0 auto;width:100%;background:rgba(0,0,0,.5);height:70px;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}
 .footer.footer01 p{margin:0;font-size:11px;line-height:14px}
 .footer.footer01 p:first-child{padding-top:14px!important}

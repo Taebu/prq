@@ -2,6 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
+<!------sns썸네일--->
+<meta property="og:image" content="http://prq.co.kr/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>" width="190px" />
+<!------sns썸네일--->
+
 <meta http-equiv="Cache-control" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
 
@@ -87,49 +91,55 @@ alert(address + " 주소를 찾을 수 없습니다.");
 <!-- rs-left 시작 -->
 <input type="hidden" name="header_title" id="header_title" value="<?php echo $views->st_name;?>">
 <input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
+
 <div id="celeblist" class="celeb_vw reveal2-nav">
-<div class="celeb_wrap" id="celeblist_scroll">
-<div style="width:100%;">
-<nav class="celeb_lst">
-<div class="left_navtitle">
-<!-- <a href="/member/login.php"> -->
-<a href="#">
-<span class="left_nav_photo">메뉴포토</span>
-<p><?php echo $views->st_name;?></p>
-</a>
-<a href="javascript:;" id="leftNavClose" class="left_nav_close">닫기</a> 
-</div>
-<!-- <ul><li><a href="/member/join.php"><span class="icon_menu imenu01">회원가입아이콘</span>회원가입</a></li></ul>
-<ul>
-	<li><a href="/member/myCoupon.php"><span class="icon_menu imenu03">쿠폰함아이콘</span>쿠폰함</a></li>
-	<li><a href="/order/basket/"><span class="icon_menu imenu04">장바구니아이콘</span>장바구니</a></li>
-	<li><a href="/order/history/"><span class="icon_menu imenu05">주문내역아이콘</span>주문내역</a><span class="msg_num">99</span></li></ul>
-<ul>
-	<li><a href="/notice/"><span class="icon_menu imenu06">공지사항아이콘</span>공지사항</a>span class="msg_num">3</span></li>
-	<li><a href="/help/"><span class="icon_menu imenu07">도움말아이콘</span>도움말</a><span class="msg_num">1</span></li>
-	<li><a href="/board/inquiry/write.php"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li></ul> -->
+	<div class="celeb_wrap" id="celeblist_scroll" style="border:0px solid blue;">
+		<div style="width:100%;">
+			<nav class="celeb_lst">
+				<div class="left_navtitle">
+					<!-- <a href="/member/login.php"> -->
+					<a href="#">
+					<span class="left_nav_photo">메뉴포토</span>
+					<p><?php echo $views->st_name;?></p>
+					</a>
+					<a href="javascript:;" id="leftNavClose" class="left_nav_close">닫기</a> 
+				</div>
+				<!-- <ul>
+					<li><a href="/member/join.php"><span class="icon_menu imenu01">회원가입아이콘</span>회원가입</a></li>
+				</ul>
+				<ul>
+					<li><a href="/member/myCoupon.php"><span class="icon_menu imenu03">쿠폰함아이콘</span>쿠폰함</a></li>
+					<li><a href="/order/basket/"><span class="icon_menu imenu04">장바구니아이콘</span>장바구니</a></li>
+					<li><a href="/order/history/"><span class="icon_menu imenu05">주문내역아이콘</span>주문내역</a><span class="msg_num">99</span></li>
+				</ul>
+				<ul>
+					<li><a href="/notice/"><span class="icon_menu imenu06">공지사항아이콘</span>공지사항</a>span class="msg_num">3</span></li>
+					<li><a href="/help/"><span class="icon_menu imenu07">도움말아이콘</span>도움말</a><span class="msg_num">1</span></li>
+					<li><a href="/board/inquiry/write.php"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li>
+				</ul> -->
 
-<ul><li><a href="#"><span class="icon_menu imenu01">회원가입아이콘</span>홈</a></li></ul>
-<ul>
-	<li><a href="#"><span class="icon_menu imenu03">쿠폰함아이콘</span>업체정보</a></li>
-	<li><a href="#"><span class="icon_menu imenu04">장바구니아이콘</span>전단지</a></li>
-	<li><a href="#"><span class="icon_menu imenu05">주문내역아이콘</span>오시는길</a><!-- <span class="msg_num">99</span> --></li></ul>
-<ul>
-	<li><a href="#"><span class="icon_menu imenu06">공지사항아이콘</span>PRQ 가입문의</a><!--span class="msg_num">3</span>--></li>
-	<li><a href="#"><span class="icon_menu imenu07">도움말아이콘</span>이벤트</a><!--<span class="msg_num">1</span>--></li>
-	<!-- <li><a href="#"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li> --></ul>
-
-<!-- <ul> -->
-	<!-- <li><a href="./introduction/"><span class="icon_menu imenu09">배달홈피 소개 아이콘</span>배달홈피 소개</a></li> -->
-	<!-- <li><a href="./company/"><span class="icon_menu imenu10">배달홈피 제공사 아이콘</span>배달홈피 제공사</a></li></ul> -->
-<div id="shortcutWrapper" class="display_none">
-	<a href="javascript:;" class="add_favorite" onclick="addFavorite();"><span>즐겨찾기아이콘</span>바탕화면 바로가기 추가</a>
-</div>
-<div style="width:100%; height:50px;"></div>
-</nav>
-</div>
-</div>
-
+				<ul>
+					<li><a href="#"><span class="icon_menu imenu01">회원가입아이콘</span>홈</a></li>
+				</ul>
+				<ul>
+					<li><a href="#"><span class="icon_menu imenu03">쿠폰함아이콘</span>업체정보</a></li>
+					<li><a href="#"><span class="icon_menu imenu04">장바구니아이콘</span>전단지</a></li>
+					<li><a href="#"><span class="icon_menu imenu05">주문내역아이콘</span>오시는길</a><!-- <span class="msg_num">99</span> --></li></ul>
+				<ul>
+					<li><a href="#"><span class="icon_menu imenu06">공지사항아이콘</span>PRQ 가입문의</a><!--span class="msg_num">3</span>--></li>
+					<li><a href="#"><span class="icon_menu imenu07">도움말아이콘</span>이벤트</a><!--<span class="msg_num">1</span>--></li>
+					<!-- <li><a href="#"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li> -->
+				</ul>
+				<!-- <div style="width:100%;margin-top:100px;">
+					<img src="/prq/include/images/menu_call.png" style="width:100%;" alt="배달쿠폰북 캐시큐">
+				</div> -->
+				<div id="shortcutWrapper" class="display_none">
+					<a href="javascript:;" class="add_favorite" onclick="addFavorite();"><span>즐겨찾기아이콘</span>바탕화면 바로가기 추가</a>
+				</div>
+				<div style="width:100%; height:50px;"></div>
+			</nav>
+		</div>
+	</div>
 </div>
 <!-- rs-left 끝 -->
 
@@ -231,10 +241,10 @@ alert(address + " 주소를 찾을 수 없습니다.");
 			</div>
 		</div>
 
-		<div id="footer" class="footer footer01">
-			<p><?php echo $views->st_name;?> <span id="mb_business_num">587-09-00247</span></p>
+		<div id="footer" class="footer footer01" style="letter-spacing:0.5px;background:#353840;">
+			<p><!-- <?php echo $views->st_name;?>  --><span id="mb_business_num">587-09-00247</span></p>
 			<p id="address_area">경기도 부천시 원미구 부천로53번길 52 1층(심곡동) 김은정</p>
-			<p>copyright(c) 2016 prq</p>
+			<p>ⓒ <b><?php echo $views->st_name;?></b> Corp.</p>
 		</div>
 
 		<div id="menuBg" class="menu_bg display_none" style="">메뉴bg</div>
