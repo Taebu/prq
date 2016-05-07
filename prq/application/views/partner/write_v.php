@@ -155,17 +155,19 @@ echo "대리점을 등록할 권한이 없습니다.";
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">비밀번호 확인</label>
+<div class="col-sm-10"><input type="password" class="form-control" name="mb_password_2">
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label">이미지 파일 경로</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="mb_imgprefix" value="<?php echo date("Ym");?>">
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">비밀번호 확인</label>
-<div class="col-sm-10"><input type="password" class="form-control" name="mb_password_2">
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 
 <div class="form-group"><label class="col-sm-2 control-label">이메일</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_email" name="mb_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
@@ -490,6 +492,7 @@ function get_used_ptcode()
 
 /*
 대리점코드로 사용중인 코드를  비활성화 합니다.
+
 */
 function search_ptcode(spt_code)
 {
@@ -527,6 +530,7 @@ function search_ptcode(spt_code)
 		object.push('['+val.pt_code+'] ');
 		object.push(val.pt_name);
 		}
+
 		object.push('</option>');
 //	}
 	});

@@ -1,3 +1,15 @@
+<?php
+/**
+* 대리점 스킨 페이지.
+* file : /prq/application/views/partner/list_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-05-07 (토)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+
+?>
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
@@ -271,8 +283,8 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){?>
 				<tr>
 					<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status();return false;"></th>
 					<th scope="col">No</th>
-					<th scope="col"><span class="mb_gname">대리점</span>ID</th>
-					<th scope="col"><span class="mb_gname">대리점</span>코드</th>
+					<th scope="col">대리점 코드</th>
+					<th scope="col">대리점 아이디</th>
 					<th scope="col">가맹점</th>
 					<th scope="col">상점</th>
 					<th scope="col">등록일자</th>

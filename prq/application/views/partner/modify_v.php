@@ -1,20 +1,15 @@
-<!-- 	<script>
-		$(document).ready(function(){
-			$("#write_btn").click(function(){
-				if($("#input01").val() == ''){
-					alert('제목을 입력해주세요.');
-					$("#input01").focus();
-					return false;
-				} else if($("#input02").val() == ''){
-					alert('내용을 입력해주세요.');
-					$("#input02").focus();
-					return false;
-				} else {
-					$("#write_action").submit();
-				}
-			});
-		});
-	</script> -->
+<?php
+/**
+* 대리점 수정 스킨 페이지.
+* file : /prq/application/views/partner/modify_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-05-07 (토)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+
+?>
 <script type="text/javascript">
 
 function modify_ds(){
@@ -112,6 +107,27 @@ echo form_open('/board/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->
 <div class="row">
 <div class="col-md-6">
 <!-- <form method="get" class="form-horizontal"> -->
+
+<div class="form-group"><label for="pt_code" class="col-sm-2 control-label">대리점 코드</label>
+	<div class="col-sm-10">
+	<select name="prq_fcode"  class="form-control" id="prq_fcode" style='width:100%' onchange="javascript:chg_ptcode(this.value)"
+	 onclick="javascript:chg_ptcode(this.value)">
+		<option value="PT0001">[PT0001] 캐시큐1</option>
+		<option value="PT0002">[PT0002] 캐시큐2</option>
+		<option value="PT0003">[PT0003] 캐시큐3</option>
+		<option value="PT0004">[PT0004] 캐시큐4</option>
+		<option value="PT0005">[PT0005] 캐시큐5</option>
+		<option value="PT0006">[PT0006] 캐시큐6</option>
+		<option value="PT0007">[PT0007] 캐시큐7</option>
+		<option value="PT0008">[PT0008] 캐시큐8</option>
+		<option value="PT0009">[PT0009] 캐시큐9</option>
+		<option value="PT0010">[PT0010] 캐시큐10</option>
+		<option value="PT0011">[PT0011] 캐시큐11</option>
+	</select>
+	<span class="help-block m-b-none">대리점코드를 선택 합니다.</span>
+	</div><!-- .col-sm-10 -->
+</div><!-- .form-inline-->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">대리점 아이디</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" value="<?php echo $views->mb_id;?>"> <span class="help-block m-b-none" id="mb_id_assist">대리점아이디를 등록 합니다. 중복 된 아이디를 등록할 수 없습니다.</span>

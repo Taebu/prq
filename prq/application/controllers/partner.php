@@ -2,6 +2,7 @@
 /**
  * 파트너 메인 controller.
  * 생성 : 2015-12-23 (수)
+ * 수정 : 2016-05-07 (토)
  * @author Taebu,Moon<mtaebu@gmail.com>
  */
 class Partner extends CI_Controller {
@@ -106,7 +107,7 @@ class Partner extends CI_Controller {
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/partner/lists/prq_member'.$page_url.'/page/',
 		'total_rows' => $this->partner_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
-		'per_page' => 5,
+		'per_page' => 15,
 		'uri_segment' => $uri_segment,
 
 		//페이지네이션 커스텀 설정 

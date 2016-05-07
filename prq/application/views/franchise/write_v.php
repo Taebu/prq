@@ -1,3 +1,14 @@
+<?php
+/**
+* 가맹점 등록 페이지
+* file : /prq/application/views/franchise/write_v.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-05-07 (토)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
+?>
 <style type="text/css">
 option:disabled {
     background: rgb(51, 122, 183);
@@ -478,8 +489,8 @@ function get_used_frcode()
 		}
 	});
 }
-/*pt_code로 fr 코드를 탐색 합니다.
-*/
+
+/* pt_code로 fr 코드를 탐색 합니다. */
 function search_frcode(spt_code)
 {
 	var object = [];
