@@ -1,9 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Ajax 처리 controller.
- *
- * @author Jongwon, Byun <advisor@cikorea.net>
- */
+* prq ajax 통신을 위한 클래스 입니다.
+* file : /prq/application/controllers/ajax.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-05-09 (월)
+*
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
 class Ajax extends CI_Controller {
 
  	function __construct()
