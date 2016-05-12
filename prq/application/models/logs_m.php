@@ -1,14 +1,15 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * 공통 로그에서 CID , GCM, MMS, ACT(action) 로그 리스트 출력
- * 작성 :2016-02-12 (금)
- * 수정 : 
+ * 공통 로그에서 CID , GCM, MMS, ACT(action),ATA(biztalk) 로그 리스트 출력
+ * 작성 : 2016-02-12 (금)
+ * 수정 : 2016-05-12 (목)
  * 
  * @CID	cid	logs/cid
  * @GCM	gcm	logs/gcm
  * @MMS	mms	logs/mms
  * @ACT	act	logs/act
+ * @ATA	ata	logs/ata [ 2016-05-12 (목) ]
  * 
  * @author Taebu,Moon <mtaebu@gmail.com>
  * @version 1.0
@@ -45,6 +46,8 @@ class Logs_m extends CI_Model
 			$table='prq_log';
 		}else 	if($table=="cid"){
 			$table='prq_cdr';
+		}else 	if($table=="ata"){
+			$table='prq_ata';
 		}
 
 		//검색어가 있을 경우의 처리
@@ -162,6 +165,8 @@ class Logs_m extends CI_Model
 		$table='prq_log';
 		}else 	if($table=="cid"){
 		$table='prq_cdr';
+		}else 	if($table=="ata"){
+		$table='prq_ata';
 		}
 
 		if($table=='prq_gcm_log')

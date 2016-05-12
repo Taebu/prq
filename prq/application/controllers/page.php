@@ -142,6 +142,8 @@ class Page extends CI_Controller {
 		$table = "prq_store";
 //		$board_id = $this->uri->segment(5);
 		$board_id =$this->uri->segment(2);
+		$is_test=$this->uri->segment(3)=="test";
+
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$data['views'] = $this->page_m->get_view($table, $board_id);
 
@@ -151,8 +153,11 @@ class Page extends CI_Controller {
  		//view 호출
  		$config=array('clientId'=>'aWWbsFdRSNQZL6Df5ATr');
 		$data['curl']=$this->curl->simple_get('http://openapi.map.naver.com/openapi/v2/maps.js', $config, array(CURLOPT_BUFFERSIZE => 10)); 
-
+		if($is_test){
+		$this->load->view('page/view2_v', $data);
+		}else{
 		$this->load->view('page/view_v', $data);
+		}
  	}
 
  	/**
