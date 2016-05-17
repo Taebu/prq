@@ -3,7 +3,7 @@
 * prq ajax 통신을 위한 클래스 입니다.
 * file : /prq/application/controllers/ajax.php
 * 작성 : 2015-03-05 (목)
-* 수정 : 2016-05-09 (월)
+* 수정 : 2016-05-17 (화)
 *
 * @author Moon Taebu
 * @Copyright (c) 2016, 태부
@@ -511,17 +511,13 @@ class Ajax extends CI_Controller {
 	public function set_ata()
 	{
 		$json['success']=false;
-
-/*
-		$sql[]="content='".$array['msg']."',";
-		$sql[]="recipient_num='".$array['mb_hp']."',";
-		$sql[]="callback='".$array['tel']."',";
-*/
-		$msg= $this->input->post("msg", TRUE);
+		$msg= $this->input->post("message", TRUE);
+		$subject= $this->input->post("subject", TRUE);
 		$mb_hp= $this->input->post("mb_hp", TRUE);
 		$tel= $this->input->post("tel", TRUE);
 
 		$write_data = array(
+			'subject'=>$subject,
 			'msg'=>$msg,
 			'mb_hp'=>$mb_hp,
 			'tel'=>$tel

@@ -1246,3 +1246,7 @@ CREATE TABLE `prq_mms_log` (
 
 ERROR:
 No query specified
+
+-- 2016-05-17 (화)
+alter table prq_ata_log add at_mmt_no int unsigned default 0 comment 'biztalk log no';
+

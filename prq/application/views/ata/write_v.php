@@ -36,81 +36,45 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="row">
 <div class="col-md-12">
 <!-- <form method="get" class="form-horizontal"> -->
-<div class="form-group"><label class="col-sm-2 control-label">핸드폰</label>
+<div class="form-group"><label class="col-sm-2 control-label">받는 사람 <br> [핸드폰]</label>
 <div class="col-sm-10">
-<input type="text" class="form-control" id="phone" name="phone"> 
-<span class="help-block m-b-none" id="mb_id_assist">핸드폰 번호</span>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">제목</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="title" id="title">
+<input type="text" class="form-control" id="mb_hp" name="mb_hp" value="01030372004"> 
+<span class="help-block m-b-none" id="mb_hp">[비즈톡 @배달맛톡]받는사람</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">내용</label>
 <div class="col-sm-10">
-<textarea name="message" id="message" cols="30" rows="10" class="form-control"  onkeyup='chk_byte()'></textarea>
+<textarea name="message" id="message" cols="30" rows="10" class="form-control"  onkeyup='chk_byte()' style='height:500px'>[PRQ 테스트] 에서 주문 해주셔서 감사합니다
+전화번호 : 050-8515-0001
+적립금액 : 2,000원 적립
+5회 주문시 현금 최대 5,000원
+10회 주문시 현금 최대 10,000원
+20회 주문시 현금 최대 20,000원
+적립기간 : 적립 후 부터 60일 후 소멸
+
+"배달맛톡" 어플로 주문 시 마다 적립을 해드립니다.
+
+적립금은 "배달맛톡" 에서 제공하며 어플에서 미션달성 시 현금으로 교환하여 사용하실 수 있습니다.
+
+12,000원 이하 주문 시 적립금액은 무효 처리됩니다.
+
+적립금 관련 궁금한 점은 1599-9495 으로 문의해 주세요
+
+앱 다운로드 링크
+http://prq.co.kr/prq/page/7"</textarea>
 <span id='bytesize'>0</span> byte
 <!-- <input type="text" class="form-control" name="message" id="message"> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
-
-<div class="form-group"><label class="col-sm-2 control-label">MNO TYPE</label>
-<div class="col-sm-10 ">
-
-<div class="radio radio-info radio-inline">
-<input type="radio" name="mno_type" id="is_mno_1" value='SK' checked><label for="is_mno_1">SK</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-<div class="radio radio-info radio-inline">
-<input type="radio" name="mno_type" id="is_mno_2" value='LG'><label for="is_mno_2">LG</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-<div class="radio radio-info radio-inline">
-<input type="radio" name="mno_type" id="is_mno_3"  value='KT'><label for="is_mno_3">KT</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">MMS</label>
-<div class="col-sm-10 ">
-<div class="radio radio-info radio-inline">
-<input type="radio" name="is_mms" id="is_mms_1" value='false' checked><label for="is_mms_1">아닙니다.</label>
-</div><!-- .radio .radio-info .radio-inline -->
-<div class="radio radio-info radio-inline">
-<input type="radio" name="is_mms" id="is_mms_2"  value='true'><label for="is_mms_2">MMS로 전송 합니다.</label>
-</div><!-- .radio .radio-info .radio-inline -->
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-
-<div class="form-group"><label class="col-sm-2 control-label">받는 사람</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="receiver_num" id="receiver_num">
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-
-<div class="form-group"><label class="col-sm-2 control-label">img_url</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="img_url" id="img_url" value='http://prq.co.kr/prq/uploads/201601/DS_1453950682.jpg'>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-<div class="form-group"><label class="col-sm-2 control-label">상점 번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_no" id="st_no">
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
+<!-- <div class="form-group"><label class="col-sm-2 control-label">보내는 사람</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="receiver_num" id="receiver_num"  value="01077430009">
+</div>.col-sm-10
+</div>.form-group
+<div class="hr-line-dashed"></div>.hr-line-dashed -->
 
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
@@ -118,7 +82,6 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <button class="btn btn-primary" type="button" onclick="set_ata()">ATA 보내기</button>
 </div>
 </div>
-
 
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -212,18 +175,12 @@ $( "#mb_id_assist" ).html(object.join(""));
 function set_ata(){
 var param=$("#write_action").serialize();
 //alert(param);
-if($("#phone").val().length<4){
+if($("#mb_hp").val().length<4){
 	alert("너무 짧다. 다시");
-	$("#phone").focus();
+	$("#mb_hp").focus();
 	return;
 }
 
-
-if($("#title").val().length<4){
-//	alert("너무 짧다. 다시");
-//	$("#title").focus();
-//	return;
-}
 
 if($("#message").val().length<4){
 	alert("너무 짧다. 다시");

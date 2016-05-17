@@ -3,14 +3,15 @@
 /**
  * 공통 로그에서 CID , GCM, MMS, ACT(action),ATA(biztalk) 로그 리스트 출력
  * 작성 : 2016-02-12 (금)
- * 수정 : 2016-05-12 (목)
+ * 수정 : 2016-05-17 (화)
  * 
  * @CID	cid	logs/cid
  * @GCM	gcm	logs/gcm
  * @MMS	mms	logs/mms
  * @ACT	act	logs/act
- * @ATA	ata	logs/ata [ 2016-05-12 (목) ]
- * 
+ * 1. [ 2016-05-12 (목) ] @ATA	ata	logs/ata 
+ * 2. [ 2016-05-17 (화) ] get_mmt_id 추가
+ *
  * @author Taebu,Moon <mtaebu@gmail.com>
  * @version 1.0
  */
@@ -166,7 +167,7 @@ class Logs_m extends CI_Model
 		}else 	if($table=="cid"){
 		$table='prq_cdr';
 		}else 	if($table=="ata"){
-		$table='prq_ata';
+		$table='prq_ata_log';
 		}
 
 		if($table=='prq_gcm_log')
@@ -288,6 +289,8 @@ class Logs_m extends CI_Model
 			$sql[]=" order by cd_date desc ";
 		}else if($table=="prq_log"){
 			$sql[]=" order by lo_datetime desc ";
+		}else if($table=="prq_ata_log"){
+			$sql[]=" order by at_datetime desc ";
 		}
 
 		
@@ -317,7 +320,7 @@ class Logs_m extends CI_Model
     /**
 	 * 게시물 상세보기 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -341,7 +344,7 @@ class Logs_m extends CI_Model
 
 	/**
 	 * 게시물 입력
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -389,7 +392,7 @@ class Logs_m extends CI_Model
 
 	/**
 	 * 회원 코드 입력
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -435,7 +438,7 @@ class Logs_m extends CI_Model
 	 * 2. 실제 적용될 코드값 조회
 
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 멤버아이디 , 멤버가입코드
 	 * @return row 입력 성공한 코드 반환.
 	 */
@@ -478,7 +481,7 @@ class Logs_m extends CI_Model
 	 * 2. 실제 적용될 코드값 조회
 
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 멤버아이디 , 멤버가입코드
 	 * @return row 입력 성공한 코드 반환.
 	 */
@@ -507,7 +510,7 @@ class Logs_m extends CI_Model
 	 * 2. 실제 적용될 코드값 조회
 
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 멤버아이디 , 멤버가입코드
 	 * @return row 입력 성공한 코드 반환.
 	 */
@@ -530,7 +533,7 @@ class Logs_m extends CI_Model
 	/**
 	 * 게시물 수정
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -583,7 +586,7 @@ class Logs_m extends CI_Model
 	/**
 	 * 게시물 삭제
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param string $table 테이블명
 	 * @param string $no 게시물번호
 	 * @return boolean 삭제 성공여부
@@ -603,7 +606,7 @@ class Logs_m extends CI_Model
 	/**
 	 * 게시물 작성자 아이디 반환
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $board_id 게시물번호
 	 * @return string 작성자 아이디
@@ -620,7 +623,7 @@ class Logs_m extends CI_Model
 	/**
 	 * 댓글 입력
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -646,7 +649,7 @@ class Logs_m extends CI_Model
 	/**
 	 * 댓글 리스트 가져오기
 	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @author Taebu,Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -661,7 +664,151 @@ class Logs_m extends CI_Model
 
     	return $result;
     }
+
+	/**
+	 * ATA 코드 정보 가져 오기
+	 *
+	 * @author Taebu,Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_mmt_id($no, $datetime)
+    {
+		$datecode=date("Ym",strtotime($datetime));
+    	$sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_log_".$datecode." WHERE mt_pr='".$no."';";
+   		$query = $this->db->query($sql);
+
+     	//댓글 리스트 반환
+	    $result = $query->result();
+		$count = $query->num_rows();
+		$result['count']=$count;
+		if($count==0)
+		{
+		
+		   $sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_tran WHERE mt_pr='".$no."';";
+	   		$query = $this->db->query($sql);
+		    $result = $query->result();
+		
+		}
+    	return $result;
+    }
+
+	/*
+	작성일 : 2016-04-26 (화)
+	fn getAtaCode()
+	@status=""
+	*/
+	function getAtaCode($status="")
+	{
+		/* OLD ATA V.1.0.4 전송결과코드 */
+		$array['1000']="성공";
+		$array['2000']="전송 시간 초과";
+		$array['2001']="메시지 전송 불가 (예기치 않은 오류 발생)카카오톡을 사용하지 않는 사용자72시간 이내에 카카오톡 사용 이력이 없는 사용자알림톡 차단을 선택한 사용자";
+		$array['3009']="메시지 형식 오류";
+		$array['3014']="알 수 없는 메시지 상태";
+		$array['3023']="메시지 문법 오류";
+		$array['3024']="발신 프로필 키가 유효하지 않음";
+		$array['3025']="메시지 전송 실패 (테스트 시, 친구관계가 아닌 경우)";
+		$array['3026']="메시지와 템플릿의 일치성 확인시 오류 발생";
+		$array['3027']="카카오톡을 사용하지 않는 사용자 (전화번호 오류)카카오톡을 사용하지 않는 사용자 (050 안심번호)";
+		$array['3029']="메시지가 존재하지 않음";
+		$array['3030']="메시지 일련번호가 중복됨";
+		$array['3031']="메시지가 비어 있음";
+		$array['3032']="메시지 길이 제한 오류 (공백 포함 1000 자)";
+		$array['3033']="템플릿을 찾을 수 없음";
+		$array['3034']="메시지가 템플릿과 일치하지 않음";
+		$array['3035']="5 초 이내에 메시지를 중복 발송";
+		$array['1001']="Server Busy (RS 내부 저장 Queue Full)";
+		$array['1002']="수신번호 형식 오류";
+		$array['1003']="회신번호 형식 오류";
+		$array['1009']="CLIENT_MSG_KEY 없음";
+		$array['1010']="CONTENT 없음";
+		$array['1012']="RECIPIENT_INFO 없음";
+		$array['1013']="SUBJECT 없음";
+		$array['1018']="전송 권한 없음";
+		$array['1019']="TTL 초과";
+		$array['1020']="charset conversion error";
+		$array['1099']="인증 실패";
+		$array['E901']="수신번호가 없는 경우";
+		$array['E903']="제목 없는 경우";
+		$array['E904']="메시지가 없는 경우";
+		$array['E905']="회신번호가 없는 경우";
+		$array['E906']="메시지키가 없는 경우";
+		$array['E915']="중복메시지";
+		$array['E916']="인증서버 차단번호";
+		$array['E917']="고객DB 차단번호";
+		$array['E918']="USER CALLBACK FAIL";
+		$array['E919']="발송 제한 시간인 경우, 메시지 재발송 처리가 금지 된 경우";
+		$array['E920']="서비스 타입이 알림톡인 경우, 메시지 테이블에 파일그룹키가 있는 경우";
+		$array['E999']="기타오류";
+
+		/* NEW ATA V.1.0.5 전송결과코드 */
+		$array['1000']="성공";
+		$array['2000']="전송 시간 초과";
+		$array['2001']="메시지 전송 불가 (예기치 않은 오류 발생)";
+		$array['3009']="메시지 형식 오류";
+		$array['3014']="알 수 없는 메시지 상태";
+		$array['3023']="메시지 문법 오류(JSON형식오류)";
+		$array['3024']="발신 프로필 키가 유효하지 않음";
+		$array['3025']="메시지 전송 실패 (테스트 시, 친구관계가 아닌 경우)";
+		$array['3026']="메시지와 템플릿의 일치성 확인시 오류 발생";
+		$array['3027']="카카오톡을 사용하지 않는 사용자 (전화번호 오류 / 050 안심번호)";
+		$array['3029']="메시지가 존재하지 않음";
+		$array['3030']="메시지 일련번호가 중복됨";
+		$array['3031']="메시지가 비어 있음";
+		$array['3032']="메시지 길이 제한 오류 (공백 포함 1000 자)";
+		$array['3033']="템플릿을 찾을 수 없음";
+		$array['3034']="메시지가 템플릿과 일치하지 않음";
+		$array['3035']="5 초 이내에 메시지를 중복 발송";
+		$array['3040']="허브 파트너 키가 유효하지 않음";
+		$array['3041']="Request Body에서 Name을 찾을수 없음";
+		$array['3042']="발신 프로필을 찾을 수 없음";
+		$array['3043']="삭제된 발신 프로필";
+		$array['3044']="차단 상태의 발신 프로필";
+		$array['3045']="차단 상태의 옐로아이디";
+		$array['3046']="닫힘 상태의 옐로아이디";
+		$array['3047']="삭제된 옐로아이디";
+		$array['3048']="계약정보를 찾을수 없음";
+		$array['3049']="내부 시스템 오류로 메시지 전송 실패";
+		$array['3050']="카카오톡을 사용하지 않는 사용자<br>72시간 이내에 카카오톡 사용 이력이 없는 사용자<br>알림톡 차단을 선택한 사용자";
+		$array['3051']="메시지가 발송되지 않은 상태";
+		$array['3052']="메시지 확인 정보를 찾을 수 없음";
+		$array['3054']="메시지 발송 가능한 시간이 아님";
+		$array['3055']="메시지 그룹 정보를 찾을 수 없음";
+		$array['3056']="메시지 전송 결과를 찾을 수 없음";
+		$array['9998']="시스템에 문제가 발생하여 담당자가 확인중(현재 서비스 제공중이 아님)";
+		$array['9999']="시스템에 문제가 발생하여 담당자가 확인중(시스템에 알 수 없는 오류 발생)";
+		$array['1001']="Server Busy (RS 내부 저장 Queue Full)";
+		$array['1002']="수신번호 형식 오류";
+		$array['1003']="회신번호 형식 오류";
+		$array['1009']="CLIENT_MSG_KEY 없음";
+		$array['1010']="CONTENT 없음";
+		$array['1012']="RECIPIENT_INFO 없음";
+		$array['1013']="SUBJECT 없음";
+		$array['1018']="전송 권한 없음";
+		$array['1019']="TTL 초과";
+		$array['1020']="charset conversion error";
+		$array['1099']="인증 실패";
+		$array['E901']="수신번호가 없는 경우";
+		$array['E903']="제목 없는 경우";
+		$array['E904']="메시지가 없는 경우";
+		$array['E905']="회신번호가 없는 경우";
+		$array['E906']="메시지키가 없는 경우";
+		$array['E915']="중복메시지";
+		$array['E916']="인증서버 차단번호";
+		$array['E917']="고객DB 차단번호";
+		$array['E918']="USER CALLBACK FAIL";
+		$array['E919']="발송 제한 시간인 경우, 메시지 재발송 처리가 금지 된 경우";
+		$array['E920']="서비스 타입이 알림톡인 경우, 메시지 테이블에 파일그룹키가 있는 경우";
+		$array['E999']="기타오류";	
+		
+		return $array[$status];
+	}
+
+						
+
 }
 
-/* End of file member_m.php */
-/* Location: ./prq/application/models/member_m.php */
+/* End of file logs_m.php */
+/* Location: ./prq/application/models/logs_m.php */

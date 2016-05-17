@@ -29,7 +29,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/logs/lists/gcm/q/'+$("#gc_receiver").val()+'/page/1';
+					var act = '/prq/logs/lists/ata/q/'+$("#gc_receiver").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -54,9 +54,9 @@
 		function search_form(p,type){
 			$("#page").val(p);
 			if(type=="search"){
-			var act = '/prq/logs/lists/gcm/q/'+$("#gc_receiver").val()+'/page/'+p;
+			var act = '/prq/logs/lists/ata/q/'+$("#gc_receiver").val()+'/page/'+p;
 			}else{
-			var act = '/prq/logs/lists/gcm/page/'+p;
+			var act = '/prq/logs/lists/ata/page/'+p;
 			}
 			$("#bd_search").attr('action', act).submit();
 		}
@@ -263,7 +263,7 @@
 					?>
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>GCM LOG 현황 입니다. <small>콜 정보를 조회해 주세요.</small></h5>
+                            <h5>ATA LOG 현황 입니다. <small>콜 정보를 조회해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -358,14 +358,12 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 			<thead>
 				<tr>
 					<th scope="col">번호</th>
-					<th scope="col" width="600px">내용</th>
-					<th scope="col">이미지</th>
-					<th scope="col">isMMS </th>
+					<th scope="col" width="400px">내용</th>
 					<th scope="col">수신인</th>
-					<th scope="col">발신인(GCM은수신)</th>
+					<th scope="col">발신인</th>
 					<th scope="col">상태</th>
+					<th scope="col">보낸 상태</th>
 					<th scope="col">전송일</th>
-					<th scope="col">gc_stno</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -373,24 +371,24 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 /*리스트가 없으면 없는 값 출력*/
 if(count($list)==0){
 ?>
-<tr><td scope="row" colspan='11' class='text-center'> 조회한 GCM Log가 없습니다.</td></tr>
+<tr><td scope="row" colspan='11' class='text-center'> 조회한 ATA Log가 없습니다.</td></tr>
 <?php
 }
 foreach ($list as $lt)
 {
+$code=$controllers->logs_m->get_mmt_id($lt->at_mmt_no,$lt->at_datetime);
+
+$result_code=isset($code[0]->mt_report_code_ib)?$code[0]->mt_report_code_ib:"E999";
+$result_code=$controllers->logs_m->getAtaCode($result_code);
 ?>
 				<tr>
-					<td scope="row"><?php echo $lt->gc_no;?></td>
-					<td scope="row"><?php echo $lt->gc_subject;?><br><?php echo nl2br($lt->gc_content);?></td>
-					<td scope="row"><img src="<?php echo $lt->gc_imgurl;?>" width="200" height="*"></td>
-					<td scope="row"><?php echo $lt->gc_ismms;?></td>
-					<td scope="row"><?php echo phone_format($lt->gc_receiver);?></td>
-					<td scope="row"><?php echo phone_format($lt->gc_sender);?></td>
-					<td scope="row"><?php echo $lt->gc_result;?></td>
-					<td scope="row"><?php echo $lt->gc_datetime;?></td>
-					<td scope="row"><a href="javascript:chg_store(<?php echo $lt->gc_stno;?>);"><?php echo $lt->gc_stno;?></a></td>
-<!-- 					<td scope="row"><?php echo $lt->gc_status;?></td>
-					<td scope="row"><?php echo $lt->gc_ipaddr;?></td> -->
+					<td scope="row"><?php echo $lt->at_no;?></td>
+					<td scope="row"><?php echo $lt->at_subject;?><br><?php echo nl2br($lt->at_content);?></td>
+					<td scope="row"><?php echo phone_format($lt->at_receiver);?></td>
+					<td scope="row"><?php echo phone_format($lt->at_sender);?></td>
+					<td scope="row"><?php echo $lt->at_result;?></td>
+					<td scope="row"><?php echo $result_code;?></td>
+					<td scope="row"><?php echo $lt->at_datetime;?></td>
 				</tr>
 <?php
 }

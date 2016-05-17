@@ -497,4 +497,4 @@ class Ata extends CI_Controller {
 }
 
 /* End of file board.php */
-/* Location: ./application/controllers/board.php */
+/* Location: ./application/controllers/ata.php */
