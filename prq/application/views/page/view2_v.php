@@ -65,7 +65,15 @@ document.getElementById("longitude").value=lng;
 /*location 정보 불러 오기*/
 map_location();
 } else {
-alert(address + " 주소를 찾을 수 없습니다.");
+
+//alert(address + " 주소를 찾을 수 없어 기본값으러 설정습니다.");
+
+//https://www.google.com/maps/dir//37.6369961,126.7750648/@37.636996,126.775065,1948m/data=!3m1!1e3?hl=ko
+lat = parseFloat(37.6369961);
+lng = parseFloat(126.775065);
+document.getElementById("latitude").value=lat;
+document.getElementById("longitude").value=lng;
+map_location();
 }
 });
 }
@@ -99,11 +107,59 @@ alert(address + " 주소를 찾을 수 없습니다.");
 <!-- rs-body 시작 -->
 <div class="reveal2-wrap">
 
-<!-- rs-left 시작 -->
+
+<!-- ..........
+			<a href="#" class="gnb prev" onclick="window.history.back(); return false;"><span>이전</span></a>
+            <a href="#" class="_rightMenu gnb list"><img src="./im/right_top_btn.png" style="margin: 9px;margin-right : 8px;"></img></a>
+        </div>
+    </header>
+    <div style="height:48px;">
+
+    </div>
+    <aside id="celeblist" class="celeb_vw reveal2-nav" >
+...... -->
+
+
+<!-- rs-body 시작 -->
+<div id="ct" role="main" class="reveal-contents reveal2-contents">
+	<div class="ct_wrp">
+		<div class="header">
+			<div class="gnb_wrp">
+				<h1 class="left"><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
+				<!-- top_btn -->
+				<a href="javascript:;" class="btn_top_openright _leftMenu gnb list">
+					<span class="btn_top openleft">확장영역 열기</span>
+				<!--
+				<span class="btn_top_openleft_num">N</span>
+				-->
+				</a>
+<!-- 				<a href="javascript:;" class="btn_top_home" id="btnTopHome" data-id="HOME" data-idx=0>
+					<span class="btn_top home">홈 바로가기</span>
+				</a> -->
+				<!-- //top_btn -->
+			</div>
+			<div class="grd_prev"></div>
+			<div class="grd_next"></div>
+			<div id="nav" class="nav">
+				<div class="nav_wrap">
+					<ul class="nav_u" id="nav_u">
+					<!-- 메뉴 -->
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="fa-stack fa-lg"><i class="fa fa-home fa-stack-1x"></i></span>홈</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="fa-stack fa-lg"><i class="fa fa-search fa-stack-1x"></i></span>업체정보</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="fa-stack fa-lg"><i class="fa fa-cutlery fa-stack-1x"></i></span>전단지</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3><span class="fa-stack fa-lg"><i class="fa fa-map-marker fa-stack-1x"></i></span>오시는길</a></li>
+						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="ONLINEORDER" data-idx=3>온라인주문</a></li> -->
+						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="COUPON" data-idx=4>쿠폰</a></li> -->
+						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="EVENT" data-idx=5>이벤트</a></li> -->
+					</ul>
+				</div>
+			</div>
+
+
+			<!-- rs-left 시작 -->
 <input type="hidden" name="header_title" id="header_title" value="<?php echo $views->st_name;?>">
 <input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
-
-<div id="celeblist" class="celeb_vw reveal2-nav">
+<div id="celeblist" class="celeb_vw reveal2-nav" style="width: 100%; position: absolute; top: 0px; left: 0px; z-index: 2500; -webkit-tap-highlight-color: transparent; transform: translateX(-240px) translateY(0px);">
 	<div class="celeb_wrap" id="celeblist_scroll" style="border:0px solid blue;">
 		<div style="width:100%;">
 			<nav class="celeb_lst">
@@ -154,42 +210,8 @@ alert(address + " 주소를 찾을 수 없습니다.");
 </div>
 <!-- rs-left 끝 -->
 
-<!-- rs-body 시작 -->
-<div id="ct" role="main" class="reveal-contents reveal2-contents">
-	<div class="ct_wrp">
-		<div class="header">
-			<div class="gnb_wrp">
-				<h1 class="left"><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
-				<!-- top_btn -->
-				<a href="javascript:;" class="btn_top_openright _leftMenu gnb list">
-					<span class="btn_top openleft">확장영역 열기</span>
-				<!--
-				<span class="btn_top_openleft_num">N</span>
-				-->
-				</a>
-<!-- 				<a href="javascript:;" class="btn_top_home" id="btnTopHome" data-id="HOME" data-idx=0>
-					<span class="btn_top home">홈 바로가기</span>
-				</a> -->
-				<!-- //top_btn -->
-			</div>
-			<div class="grd_prev"></div>
-			<div class="grd_next"></div>
-
-			<div id="nav" class="nav">
-				<div class="nav_wrap">
-					<ul class="nav_u" id="nav_u">
-					<!-- 메뉴 -->
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="fa-stack fa-lg"><i class="fa fa-home fa-stack-1x"></i></span>홈</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="fa-stack fa-lg"><i class="fa fa-search fa-stack-1x"></i></span>업체정보</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="fa-stack fa-lg"><i class="fa fa-cutlery fa-stack-1x"></i></span>전단지</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3><span class="fa-stack fa-lg"><i class="fa fa-map-marker fa-stack-1x"></i></span>오시는길</a></li>
-						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="ONLINEORDER" data-idx=3>온라인주문</a></li> -->
-						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="COUPON" data-idx=4>쿠폰</a></li> -->
-						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="EVENT" data-idx=5>이벤트</a></li> -->
-					</ul>
-				</div>
-			</div>
 		</div>
+
 
 		<div id="ct" style="position:relative;">
 			<!-- Demo 영역 -->
@@ -203,6 +225,7 @@ alert(address + " 주소를 찾을 수 없습니다.");
 			<!--// Demo 영역 -->
 			</div>
 		</div>
+
 
 		<div class="dialog-container" style="position: absolute; overflow: hidden; width: 360px; height: 615px; left: 0px; z-index: 2050; top: 0px; display: block;">
 			<div class="dialog-fog" style="position: absolute; padding: 0px; margin: 0px; border: 0px; background-color: gray; zoom: 1; opacity: 0.5; width: 360px; height: 615px; left: 0px; top: 0px;">
@@ -223,6 +246,7 @@ alert(address + " 주소를 찾을 수 없습니다.");
 				</div>
 			</div>
 		</div>
+
 
 		<div class="dialog-clone" style="position: absolute; left: -1000px; top: -1000px; display: none;">
 			<div id="popup_area" class="popup_center">

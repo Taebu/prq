@@ -1204,3 +1204,45 @@ END
 $$
 
 DELIMITER ;
+
+-- 2016-05-12 (목)
+-- [ BIZTALK ATA ] 2016-05-11 (수) 설치 
+
+CREATE TABLE `prq_ata_log` (
+  `at_no` int(11) NOT NULL AUTO_INCREMENT,
+  `at_subject` varchar(255) DEFAULT NULL COMMENT '발송 제목',
+  `at_content` text COMMENT '발송 내용',
+  `at_ismms` enum('false','true') NOT NULL DEFAULT 'false' COMMENT 'GCM만 혹은 MMS 같이 전송여부',
+  `at_receiver` varchar(16) DEFAULT '0' COMMENT '수신번호',
+  `at_sender` varchar(16) DEFAULT '0' COMMENT '발신번호',
+  `at_imgurl` varchar(255) DEFAULT '' COMMENT '이미지 전송 URL',
+  `at_result` varchar(255) NOT NULL COMMENT '전송결과',
+  `at_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `at_status` char(1) NOT NULL DEFAULT 'I',
+  `at_ipaddr` varchar(15) NOT NULL DEFAULT '',
+  `at_stno` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`at_no`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='ATA LOG'
+
+
+CREATE TABLE `prq_mms_log` (
+  `mm_no` int(11) NOT NULL AUTO_INCREMENT,
+  `mm_subject` varchar(255) DEFAULT NULL COMMENT '발송 제목',
+  `mm_content` text COMMENT '발송 내용',
+  `mm_type` enum('mms','sms','lms') NOT NULL DEFAULT 'mms' COMMENT '발송 타입 기본값 mms',
+  `mm_receiver` varchar(16) DEFAULT '0' COMMENT '수신번호',
+  `mm_sender` varchar(16) DEFAULT '0' COMMENT '발신번호',
+  `mm_imgurl` varchar(255) DEFAULT '' COMMENT '이미지 전송 URL',
+  `mm_result` varchar(255) NOT NULL COMMENT '전송결과',
+  `mm_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `mm_status` char(1) DEFAULT 'I',
+  `mm_ipaddr` varchar(15) NOT NULL DEFAULT '',
+  `mm_stno` int(11) NOT NULL DEFAULT '0',
+  `mm_monthly_cnt` varchar(255) DEFAULT '',
+  `mm_daily_cnt` varchar(255) DEFAULT '',
+  PRIMARY KEY (`mm_no`)
+) ENGINE=MyISAM AUTO_INCREMENT=5371 DEFAULT CHARSET=utf8 COMMENT='MMS LOG'
+1 row in set (0.00 sec)
+
+ERROR:
+No query specified

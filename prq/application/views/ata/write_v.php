@@ -1,10 +1,10 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2>GCM Send</h2>
+<h2>ATA Send</h2>
 <ol class="breadcrumb">
 <li><a href="/prq/">Home</a></li>
-<li><a>GCM</a></li>
-<li class="active"><strong>GCM Send</strong></li></ol></div>
+<li><a>ATA</a></li>
+<li class="active"><strong>ATA Send</strong></li></ol></div>
 <div class="col-lg-2"></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -22,7 +22,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
-	<h5>GCM Send <small>GCM을 MMS 형태로 전송처리 합니다.</small></h5>
+	<h5>ATA Send <small>ATA를 카카오톡 형태로 전송처리 합니다.</small></h5>
 	<div class="ibox-tools">
 	<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
@@ -115,7 +115,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
 
-<button class="btn btn-primary" type="button" onclick="set_gcm()">GCM 보내기</button>
+<button class="btn btn-primary" type="button" onclick="set_ata()">ATA 보내기</button>
 </div>
 </div>
 
@@ -208,8 +208,8 @@ object.push("</span>");
 $( "#mb_id_assist" ).html(object.join(""));
 }
 
-/*gcm 연동 테스트*/
-function set_gcm(){
+/*ata 연동 테스트*/
+function set_ata(){
 var param=$("#write_action").serialize();
 //alert(param);
 if($("#phone").val().length<4){
@@ -232,11 +232,13 @@ if($("#message").val().length<4){
 }
 	
 $.ajax({
-url:"/prq/set_gcm.php",
+url:"/prq/ajax/set_ata",
 type: "POST",
 data:param,
 dataType:"json",
 success: function(data) {
+	console.log(data);
+/*
 	if(data.success){
 
 	var string="전송 성공  \n";
@@ -245,7 +247,7 @@ success: function(data) {
 	}else{
 	alert("전송실패");
 	}
-
+*/
 	}
 });
 

@@ -152,12 +152,13 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                         </ul>
                     </li>
 					<?php 
-					echo $this->uri->segment(1)=="board"?'<li class="active">':'<li>';
+					echo $this->uri->segment(1)=="board"||$this->uri->segment(1)=="ata"?'<li class="active">':'<li>';
 					 ?>
                         <a href="#">
-						<i class="fa fa-desktop"></i><span class="nav-label">GCM</span><span class="fa arrow"></span></a>
+						<i class="fa fa-desktop"></i><span class="nav-label">Notification</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li class="active"><a href="/prq/board/write">GCM Send</a></li>
+                            <?php echo $this->uri->segment(1)=="board"?'<li class="active">':'<li>';?><a href="/prq/board/write/">GCM Send</a></li>
+                            <?php echo $this->uri->segment(1)=="ata"?'<li class="active">':'<li>';?><a href="/prq/ata/write/">ATA Send</a></li>
                         </ul>
                     </li>
 <!-- 					<?php 

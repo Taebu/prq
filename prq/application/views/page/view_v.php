@@ -39,8 +39,8 @@ return true;
 /*구글 지도 */
 var geocoder = new google.maps.Geocoder();
 var markersArray = []; 
-//지도 셋팅
 
+//지도 셋팅
 function setMarkerByGeocoding1(address) {
 if (geocoder) {
 var lat;
@@ -54,7 +54,15 @@ document.getElementById("longitude").value=lng;
 /*location 정보 불러 오기*/
 map_location();
 } else {
-alert(address + " 주소를 찾을 수 없습니다.");
+
+//alert(address + " 주소를 찾을 수 없어 기본값으러 설정습니다.");
+
+//https://www.google.com/maps/dir//37.6369961,126.7750648/@37.636996,126.775065,1948m/data=!3m1!1e3?hl=ko
+lat = parseFloat(37.6369961);
+lng = parseFloat(126.775065);
+document.getElementById("latitude").value=lat;
+document.getElementById("longitude").value=lng;
+map_location();
 }
 });
 }

@@ -507,6 +507,31 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 
+	/* set_ata */
+	public function set_ata()
+	{
+		$json['success']=false;
+
+/*
+		$sql[]="content='".$array['msg']."',";
+		$sql[]="recipient_num='".$array['mb_hp']."',";
+		$sql[]="callback='".$array['tel']."',";
+*/
+		$msg= $this->input->post("msg", TRUE);
+		$mb_hp= $this->input->post("mb_hp", TRUE);
+		$tel= $this->input->post("tel", TRUE);
+
+		$write_data = array(
+			'msg'=>$msg,
+			'mb_hp'=>$mb_hp,
+			'tel'=>$tel
+		);
+
+		$result = $this->ajax_m->set_ata($write_data);
+		echo $result;
+	}
+
+
 }
 
 /* End of file ajax_board.php */

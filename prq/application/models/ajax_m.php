@@ -1255,6 +1255,54 @@ class Ajax_m extends CI_Model
 	}
 
 
+
+	/*
+	set_ata($array)
+	/prq/ajax/set_ata
+	@param $array data
+	@return json
+	*/
+	function set_ata($array)
+	{
+		$json=array();
+		$json['success']=false;
+		if(is_null($array['mb_hp'])||strlen($array['msg'])<2){
+		$json['mb_hp']=$array['mb_hp']." is empty";
+		$json['msg']=$array['msg']." is smaller";
+		$json['tel']=$array['tel']." is smaller";
+		echo json_encode($json);
+		return ;
+		}
+
+		$sql=array();
+		$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
+		$sql[]="date_client_req=SYSDATE(), ";
+		$sql[]="template_code='R00001',";
+		$sql[]="content='".$array['msg']."',";
+		$sql[]="recipient_num='".$array['mb_hp']."',";
+		$sql[]="callback='".$array['tel']."',";
+		$sql[]="msg_status='1',";
+		$sql[]="subject=' ', ";
+		$sql[]="sender_key='70b606cac13417a4dccc7577fb8d5f177e9ab8e3', ";
+		$sql[]="service_type='3', ";
+		$sql[]="msg_type='1008';";
+
+		$join_sql=join("",$sql);
+		$json['query']=$join_sql;
+		//$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
+
+
 }
 
 /* End of file auth_m.php */
