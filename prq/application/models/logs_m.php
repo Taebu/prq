@@ -168,6 +168,8 @@ class Logs_m extends CI_Model
 		$table='prq_cdr';
 		}else 	if($table=="ata"){
 		$table='prq_ata_log';
+		}else 	if($table=="first"){
+		$table='prq_first_log';
 		}
 
 		if($table=='prq_gcm_log')
@@ -291,6 +293,8 @@ class Logs_m extends CI_Model
 			$sql[]=" order by lo_datetime desc ";
 		}else if($table=="prq_ata_log"){
 			$sql[]=" order by at_datetime desc ";
+		}else if($table=="prq_first_log"){
+			$sql[]=" order by pf_no desc ";
 		}
 
 		

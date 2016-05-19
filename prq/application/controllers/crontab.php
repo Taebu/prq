@@ -47,6 +47,19 @@ class Crontab extends CI_Controller {
  		$this->load->view('crontab/view_v', $data);
  	}
 
+
+	/**
+	 * 처음인 사용자 보기
+	 */
+	function first()
+ 	{
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+		$data['list'] = $this->crontab_m->get_first();
+		$data['controller']=$this; 
+
+ 		//view 호출
+ 		$this->load->view('crontab/first_v', $data);
+ 	}
 	/**
 	 * 게시물 보기
 	 */

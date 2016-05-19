@@ -426,6 +426,35 @@ class Crontab_m extends CI_Model
 	    
     	return $result;
     }
+
+
+	/**
+	 * 처음 사용자 리스트 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_first()
+    {
+		/* 처음인 것만 조회 하여 처리 2016-05-19 (목) */
+    	$sql = "SELECT * FROM `prq_first_log` WHERE pf_status='first';";
+   		$query = $this->db->query($sql);
+
+     	//댓글 리스트 반환
+	    $result = $query->result();
+		
+		/*처리한 번호 핸드폰 발송 처리 */
+		//$sql = "UPDATE `prq_first_log` SET pf_status='before_send' WHERE  pf_status='first';";
+   		//$query = $this->db->query($sql);
+
+     	//처음 사용자 리스트 반환
+	    //$result2 = $query->result();
+    	return $result;
+    }
+
+
 }
 
 /* End of file crontab_m.php */

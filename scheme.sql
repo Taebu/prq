@@ -1250,3 +1250,108 @@ No query specified
 -- 2016-05-17 (화)
 alter table prq_ata_log add at_mmt_no int unsigned default 0 comment 'biztalk log no';
 
+-- 2016-05-18 (수)
+drop TABLE `prq_first_log`;
+CREATE TABLE `prq_first_log` (
+  `pf_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pf_hp` char(12) DEFAULT '0' COMMENT '수신번호',
+  `pf_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pf_status` enum('first','before_send','sended','send_fail','member') NOT NULL DEFAULT 'first'  COMMENT '전송 상태 ',
+  PRIMARY KEY (`pf_no`),
+  UNIQUE KEY `pf_hp_chk` (`pf_hp`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='BDMT App FIRST LOG';
+
+insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
+insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
+
+
+
+ERROR 2006 (HY000): MySQL server has gone away
+No connection. Trying to reconnect...
+Connection id:    28649
+Current database: prq
+
+Query OK, 1 row affected (0.00 sec)
+
+
+insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
+
+ERROR 1062 (23000): Duplicate entry '01030372004' for key 'pf_hp_chk'
+
+
+
+
+
+
+
+
+use callerid;
+
+show triggers;
+
+DELIMITER $$
+
+drop TRIGGER IF EXISTS cdr_inserted $$
+
+CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
+BEGIN
+IF (NEW.port=0) THEN
+
+INSERT INTO prq.prq_cdr SET
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid,
+cd_calledid=NEW.calledid;
+
+ELSE
+SELECT
+st_name,st_tel_1,st_hp_1
+INTO
+@st_name,@st_tel,@st_hp
+FROM
+prq.prq_store
+WHERE
+st_port=NEW.port and mb_id=NEW.UserID;
+
+
+INSERT INTO prq.prq_cdr SET
+cd_date=NEW.date,
+cd_id=NEW.UserID,
+cd_port=NEW.port,
+cd_callerid=NEW.callerid,
+cd_name=@st_name,
+cd_tel=@st_tel,
+cd_hp=@st_hp;
+
+END IF;
+END
+$$
+
+DELIMITER ;
+
+-- 2016-05-19 (목)
+
+  `cd_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cd_id` varchar(30) NOT NULL,
+  `cd_port` varchar(10) NOT NULL DEFAULT '',
+  `cd_callerid` varchar(30) NOT NULL DEFAULT '',
+  `cd_calledid` varchar(30) DEFAULT '',
+  `cd_state` tinyint(1) DEFAULT '0'
+
+drop TABLE `prq_first_log`;
+CREATE TABLE `prq_first_log` (
+  `pf_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pf_id` varchar(30) NOT NULL DEFAULT '' COMMENT '가맹점 아이디',
+  `pf_port` varchar(10) NOT NULL DEFAULT '' COMMENT '가맹점 포트',
+  `pf_hp` char(12) DEFAULT '0' COMMENT '수신번호',
+  `pf_name` varchar(255)  NOT NULL DEFAULT '' COMMENT '상점명',
+  `pf_tel` char(30)   NOT NULL DEFAULT '' COMMENT '상점번호',
+  `pf_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pf_status` enum('first','before_send','sended','send_fail','member','pause') NOT NULL DEFAULT 'first'  COMMENT '전송 상태 ',
+  PRIMARY KEY (`pf_no`),
+  UNIQUE KEY `pf_hp_chk` (`pf_hp`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='BDMT App FIRST LOG';
+
+insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
+insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();

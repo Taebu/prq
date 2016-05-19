@@ -1,11 +1,11 @@
 <?php
 /********************************************************
 * 1분마다 콜로그를 조회하여 gcm과 mms 를 전송하는 페이지 크론탭에 등록 되어 있습니다.
-* location : /prq/application/views/crontab/view_v.php
-* url : /prq/crontab/view
-* 작성일 : 2016-03-30 (수)
-* 수정일 : 2016-05-19 (목)
-*
+* location : /prq/application/views/crontab/first_v.php
+* url : /prq/crontab/first
+* 작성일 : 2016-05-19 (목)
+* 수정일 : 
+* 1. [ 2016-05-19 (목) ] prq_first_log 추가
 ********************************************************/
 $host_name="localhost";
 $db_name="prq";
@@ -88,10 +88,10 @@ echo "<th>아이디</th>";
 echo "<th>포트</th>";
 echo "<th>전화1</th>";
 echo "<th>전화2</th>";
-echo "<th>cd_state</th>";
-echo "<th>cd_name</th>";
-echo "<th>cd_tel</th>";
-echo "<th>cd_hp</th>";
+echo "<th>pf_state</th>";
+echo "<th>pf_name</th>";
+echo "<th>pf_tel</th>";
+echo "<th>pf_hp</th>";
 echo "<th>query</th>";
 echo "<th>중복발송제한</th>";
 echo "<th>결과</th>";
@@ -113,17 +113,33 @@ foreach($list as $li)
 	* SELECT TIMESTAMPDIFF(DAY,'2009-05-18','2009-07-29');
 	***************************************************/
 	echo "<tr>";
-	echo "<td>".$li->cd_date."</td>";
-	echo "<td>".$li->cd_id."</td>";
-	echo "<td>".$li->cd_port."</td>";
-	echo "<td>".$li->cd_callerid."</td>";
-	echo "<td>".$li->cd_calledid."</td>";
-	echo "<td>".$li->cd_state."</td>";
-	echo "<td>".$li->cd_name."</td>";
-	echo "<td>".$li->cd_tel."</td>";
-	echo "<td>".$li->cd_hp."</td>";
-	echo "<td>".$li->cd_day_cnt."</td>";
-	echo "<td>".$li->cd_day_limit."</td>";
+	echo "<td>".$li->pf_datetime."</td>";
+	echo "<td>".$li->pf_id."</td>";
+	echo "<td>".$li->pf_port."</td>";
+	echo "<td>".$li->pf_tel."</td>";
+	echo "<td>".$li->pf_hp."</td>";
+	echo "<td>".$li->pf_status."</td>";
+	echo "<td>".$li->pf_name."</td>";
+	echo "<td>".$li->pf_tel."</td>";
+	echo "<td>".$li->pf_hp."</td>";
+	echo "<td><textarea style=\"margin: 0px; height: 366px; width: 342px;\">[".$li->pf_name."] 에서 주문 해주셔서 감사합니다
+전화번호 : ".$li->pf_tel."
+적립금액 : 2,000원 적립
+5회 주문시 현금 최대 5,000원
+10회 주문시 현금 최대 10,000원
+20회 주문시 현금 최대 20,000원
+적립기간 : 적립 후 부터 60일 후 소멸
+
+\"배달맛톡\" 어플로 주문 시 마다 적립을 해드립니다.
+
+적립금은 \"배달맛톡\" 에서 제공하며 어플에서 미션달성 시 현금으로 교환하여 사용하실 수 있습니다.
+
+12,000원 이하 주문 시 적립금액은 무효 처리됩니다.
+
+적립금 관련 궁금한 점은 1599-9495 으로 문의해 주세요
+
+앱 다운로드 링크
+http://bdmt.cashq.co.kr/m/p\"".$li->pf_hp."</textarea></td>";
 
 	/*******************************************************************************
 	* 3. get_last_cdr 
@@ -132,12 +148,11 @@ foreach($list as $li)
 	* - 처음 보내는 것은 first_send로 명명한다.
 	*******************************************************************************/
 	$cdr_info = array(
-	'cd_date'=> $li->cd_date,
-	'cd_tel'=> $li->cd_tel,
-	'cd_hp' =>$li->cd_hp,
-	'cd_callerid' =>$li->cd_callerid
+	'pf_datetime'=> $li->pf_datetime,
+	'pf_tel'=> $li->pf_tel,
+	'pf_hp' =>$li->pf_hp
 	);
-	$last_cdr=$controller->crontab_m->get_last_cdr($cdr_info);
+	//$last_cdr=$controller->crontab_m->get_last_cdr($cdr_info);
 
 	
 
@@ -152,43 +167,43 @@ foreach($list as $li)
 	* - 3일 동안 보내지 않습니다.  
 	* - NEW] mn_limit_
 	********************************************************************************/
-	$array=array('mb_hp'=>$li->cd_hp);
-	$get_mno_limit=$controller->crontab_m->get_mno_limit($li->cd_id);
+	$array=array('mb_hp'=>$li->pf_hp);
+	//$get_mno_limit=$controller->crontab_m->get_mno_limit($li->pf_id);
 
 	/********************************************************************************
 	* 5. array get_send_cnt
 	* - 이번달 발송 수 조회 
 	********************************************************************************/
-	$array=array('mb_hp'=>$li->cd_hp);
-	$get_day_cnt=$controller->crontab_m->get_send_cnt($array);
+	$array=array('mb_hp'=>$li->pf_hp);
+	//$get_day_cnt=$controller->crontab_m->get_send_cnt($array);
 	
 	/********************************************************************************
 	* 6-1. array get_mms_daily
 	* - mms_daily 정보 가져 오기
 	********************************************************************************/
-	$mno_device_daily=$controller->crontab_m->get_mms_daily($li->cd_hp);
-	echo "<td>".$mno_device_daily->mm_daily_cnt."</td>";
+	//$mno_device_daily=$controller->crontab_m->get_mms_daily($li->pf_hp);
+	//echo "<td>".$mno_device_daily->mm_daily_cnt."</td>";
 
 	/********************************************************************************
 	* 6-2. void set_cdr
 	* - cdr 정보 세팅
 	********************************************************************************/
-	$get_mno_limit->mn_mms_limit=$get_mno_limit->mn_mms_limit?$get_mno_limit->mn_mms_limit:150;
+	//$get_mno_limit->mn_mms_limit=$get_mno_limit->mn_mms_limit?$get_mno_limit->mn_mms_limit:150;
 	$cdr_info = array(
-		'cd_date'=> $li->cd_date,
-		'cd_tel'=> $li->cd_tel,
-		'cd_hp' =>$li->cd_hp,
-		'cd_device_day_cnt' =>$mno_device_daily->mm_daily_cnt,
-		'cd_day_limit'=> $get_mno_limit->mn_mms_limit,
+		'pf_date'=> $li->pf_date,
+		'pf_tel'=> $li->pf_tel,
+		'pf_hp' =>$li->pf_hp,
+		'pf_device_day_cnt' =>$mno_device_daily->mm_daily_cnt,
+		'pf_day_limit'=> $get_mno_limit->mn_mms_limit,
 		'get_day_cnt' =>$get_day_cnt->cnt);       
-	$controller->crontab_m->set_cdr($cdr_info);
-	echo "<td>".$li->cd_port."</td>";
-	$cd_date=$last_cdr->cd_date;
+	//$controller->crontab_m->set_cdr($cdr_info);
+	echo "<td>".$li->pf_port."</td>";
+	$pf_date=$last_cdr->pf_date;
 	echo "<td>".$get_day_cnt->cnt."/".$get_mno_limit->mn_mms_limit."</td>";
-	echo "<td>".$cd_date."</td>";
+	echo "<td>".$pf_date."</td>";
 	echo "<td>".$get_mno_limit->mn_mms_limit."</td>";
 	echo "<td>".$get_mno_limit->mn_dup_limit."</td>";
-	$chk_limit_date=$get_mno_limit->mn_dup_limit>$cd_date?"보내면 안됨":"보냄";
+	//$chk_limit_date=$get_mno_limit->mn_dup_limit>$pf_date?"보내면 안됨":"보냄";
 	echo "<td>".$chk_limit_date."</td>";
 
 
@@ -200,16 +215,16 @@ foreach($list as $li)
 	*
 	********************************************************************************/
 	$config = array(
-	'cd_id'=> $li->cd_id,
-	'cd_port' =>$li->cd_port);
-	$store=$controller->crontab_m->get_store($config);
+	'pf_id'=> $li->pf_id,
+	'pf_port' =>$li->pf_port);
+	//$store=$controller->crontab_m->get_store($config);
 
 	/* 콜로그가 KT 장비 인 경우*/
 	foreach($store as $st)
 	{
 
 		$st_hp=$st->st_hp_1;
-		if($li->cd_port=="0")
+		if($li->pf_port=="0")
 		{
 			/********************************************************************************
 			* 8. void set_cdr_kt 
@@ -220,16 +235,16 @@ foreach($list as $li)
 			********************************************************************************/
 			$cdr_info = array(
 			//페이지네이션 기본 설정
-			'cd_date'=>$li->cd_date,
-			'cd_callerid'=>$li->cd_callerid,
-			'cd_calledid'=>$li->cd_calledid,
+			'pf_date'=>$li->pf_date,
+			'pf_callerid'=>$li->pf_callerid,
+			'pf_calledid'=>$li->pf_calledid,
 			'st_name'=> $st->st_name,
 			'st_tel_1'=> $st->st_tel_1,
 			'st_hp_1' =>$st->st_hp_1
 			);
 			$controller->crontab_m->set_cdr_kt($cdr_info);
-			$li->cd_hp=$st->st_hp_1;
-		}/* if($li->cd_port=="0"){...} */
+			$li->pf_hp=$st->st_hp_1;
+		}/* if($li->pf_port=="0"){...} */
 
 		/*mms 발송 여부*/
 		$chk_mms=true;
@@ -259,23 +274,23 @@ foreach($list as $li)
 		********************************************************************************/
 		$img_url="http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper;
 		//수신거부 여부 체크
-		if(in_array($li->cd_callerid,$black_arr))
+		if(in_array($li->pf_callerid,$black_arr))
 		{
 			/*gcm 로그 발생*/
 			$result_msg= "수신거부";
 			$gc_ipaddr='123.142.52.91';
 			$sql=array();
 
-			if($li->cd_port==0)
+			if($li->pf_port==0)
 			{
-				$li->cd_hp=$st->st_hp_1;
+				$li->pf_hp=$st->st_hp_1;
 			}
 			$sql[]="INSERT INTO `prq_gcm_log` SET ";
 			$sql[]="gc_subject='web',";
 			$sql[]="gc_content='".$msg."',";
 			$sql[]="gc_ismms='true',";
-			$sql[]="gc_receiver='".$li->cd_callerid."',";
-			$sql[]="gc_sender='".$li->cd_hp."',";
+			$sql[]="gc_receiver='".$li->pf_callerid."',";
+			$sql[]="gc_sender='".$li->pf_hp."',";
 			$sql[]="gc_imgurl='".$img_url."',";
 			$sql[]="gc_result='".$result_msg."',";
 			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
@@ -291,22 +306,22 @@ foreach($list as $li)
 		* 중복 제한 보내면 안됨
 		* prq_gcm_log 중복제한 로그 발생
 		********************************************************************************/
-		if($get_mno_limit->mn_dup_limit>$cd_date){
+		if($get_mno_limit->mn_dup_limit>$pf_date){
 			/*gcm 로그 발생*/
-			$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
+			$result_msg= $pf_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
 			$gc_ipaddr='123.142.52.91';
 			$sql=array();
-			if($li->cd_port==0)
+			if($li->pf_port==0)
 			{
-				$li->cd_hp=$st->st_hp_1;
+				$li->pf_hp=$st->st_hp_1;
 			}
 
 			$sql[]="INSERT INTO `prq_gcm_log` SET ";
 			$sql[]="gc_subject='web',";
 			$sql[]="gc_content='".$msg."',";
 			$sql[]="gc_ismms='true',";
-			$sql[]="gc_receiver='".$li->cd_callerid."',";
-			$sql[]="gc_sender='".$li->cd_hp."',";
+			$sql[]="gc_receiver='".$li->pf_callerid."',";
+			$sql[]="gc_sender='".$li->pf_hp."',";
 			$sql[]="gc_imgurl='".$img_url."',";
 			$sql[]="gc_result='".$result_msg."',";
 			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
@@ -326,25 +341,25 @@ foreach($list as $li)
 		/* 일간 mms 발송건 디바이스 값 */
 		$daily_mms_cnt+=$mno_device_daily->mm_daily_cnt;
 		/* 일간 mms 발송건 prq 값 */
-		$daily_mms_cnt+=$li->cd_day_cnt;
+		$daily_mms_cnt+=$li->pf_day_cnt;
 		
-		//if($get_mno_limit->mn_dup_limit>$cd_date){
+		//if($get_mno_limit->mn_dup_limit>$pf_date){
 		if($daily_mms_cnt>$get_mno_limit->mn_mms_limit){
 			/*gcm 로그 발생*/
-			$result_msg= $li->cd_day_cnt."/".$get_mno_limit->mn_mms_limit."건 제한";
+			$result_msg= $li->pf_day_cnt."/".$get_mno_limit->mn_mms_limit."건 제한";
 			$gc_ipaddr='123.142.52.91';
 			$sql=array();
-			if($li->cd_port==0)
+			if($li->pf_port==0)
 			{
-				$li->cd_hp=$st->st_hp_1;
+				$li->pf_hp=$st->st_hp_1;
 			}
 
 			$sql[]="INSERT INTO `prq_gcm_log` SET ";
 			$sql[]="gc_subject='web',";
 			$sql[]="gc_content='".$msg."',";
 			$sql[]="gc_ismms='true',";
-			$sql[]="gc_receiver='".$li->cd_callerid."',";
-			$sql[]="gc_sender='".$li->cd_hp."',";
+			$sql[]="gc_receiver='".$li->pf_callerid."',";
+			$sql[]="gc_sender='".$li->pf_hp."',";
 			$sql[]="gc_imgurl='".$img_url."',";
 			$sql[]="gc_result='".$result_msg."',";
 			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
@@ -371,13 +386,13 @@ foreach($list as $li)
 				'message'=>$msg,
 				'st_no'=>$st->st_no,
 				'title'=>'web',
-				'receiver_num'=>$li->cd_callerid,
-				'phone'=>$li->cd_hp,
+				'receiver_num'=>$li->pf_callerid,
+				'phone'=>$li->pf_hp,
 				'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper,
 				'mode'=>'crontab'
 			);
 			
-			$curl=$controller->curl->simple_post('http://prq.co.kr/prq/set_gcm.php', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+			//$curl=$controller->curl->simple_post('http://prq.co.kr/prq/set_gcm.php', $config, array(CURLOPT_BUFFERSIZE => 10)); 
 			echo $curl;
 		}/*if($chk_mms){...}*/
 	}/* foreach($store as $st){...}*/

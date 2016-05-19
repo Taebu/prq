@@ -215,6 +215,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
                             <?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
                             <?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST<span class="label label-warning pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 
