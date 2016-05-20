@@ -439,7 +439,8 @@ class Crontab_m extends CI_Model
     function get_first()
     {
 		/* 처음인 것만 조회 하여 처리 2016-05-19 (목) */
-    	$sql = "SELECT * FROM `prq_first_log` WHERE pf_status='first';";
+    	$sql = "SELECT * FROM `prq_first_log` WHERE pf_status='first' order by pf_no desc;";
+    	$sql = "SELECT * FROM `prq_first_log` WHERE 1=1 order by pf_no desc;";
    		$query = $this->db->query($sql);
 
      	//댓글 리스트 반환
@@ -454,6 +455,96 @@ class Crontab_m extends CI_Model
     	return $result;
     }
 
+
+	/**
+	 * first 로그 정보 갱신
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function set_firt_status($array)
+    {
+		$sql=array();
+		$sql[] = "UPDATE prq_first_log SET ";
+		$sql[] = "pf_status='".$array['pf_status']."' ";
+		$sql[] = " WHERE pf_no='".$array['pf_no']."';";
+		$str_sql=join("",$sql);
+   		$query = $this->db->query($str_sql);
+    }
+
+	/*
+	set_ata($array)
+	/prq/ajax/set_ata
+	@param $array data
+	@return json
+	*/
+	function set_ata($array)
+	{
+
+		
+		$json=array();
+		$json['success']=false;
+
+		/*
+			$ata_info = array(
+			'pf_no'=>$li->pf_no,
+			'msg'=>$msg,
+			'mb_hp'=>$li->pf_hp,
+			'tel'=>$li->pf_tel,
+			'subject'=>"TEST"
+		);*/
+
+		/* Biztalk 전송 */
+		$sql=array();
+		$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
+		$sql[]="date_client_req=SYSDATE(), ";
+		$sql[]="template_code='R00001',";
+		$sql[]="content='".$array['msg']."',";
+		$sql[]="recipient_num='".$array['mb_hp']."',";
+		$sql[]="callback='".$array['tel']."',";
+		$sql[]="msg_status='1',";
+		$sql[]="subject=' ', ";
+		$sql[]="sender_key='70b606cac13417a4dccc7577fb8d5f177e9ab8e3', ";
+		$sql[]="service_type='3', ";
+		$sql[]="msg_type='1008';";
+
+		$join_sql=join("",$sql);
+		$json['query']=$join_sql;
+		$query = $this->db->query($join_sql);
+		$insert_id = $this->db->insert_id();
+		$status=$query?"성공":"실패";
+
+		$array['pf_status']=$status?"sended":"send_fail";
+		$sql=array();
+		$sql[] = "UPDATE prq_first_log SET ";
+		$sql[] = "pf_status='".$array['pf_status']."' ";
+		$sql[] = " WHERE pf_no='".$array['pf_no']."';";
+		$str_sql=join("",$sql);
+   		$query = $this->db->query($str_sql);
+
+		$sql=array();
+		$sql[]="INSERT INTO `prq_ata_log` SET ";
+		$sql[]=" at_subject='".$array['subject']."', ";
+		$sql[]=" at_content='".$array['msg']."', ";
+		$sql[]=" at_receiver='".$array['mb_hp']."', ";
+		$sql[]=" at_sender='".$array['tel']."', ";
+		$sql[]=" at_mmt_no='".$insert_id."', ";
+		$sql[]=" at_datetime=now(); ";
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
 
 }
 

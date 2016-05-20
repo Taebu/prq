@@ -1353,5 +1353,8 @@ CREATE TABLE `prq_first_log` (
   UNIQUE KEY `pf_hp_chk` (`pf_hp`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='BDMT App FIRST LOG';
 
+alter table prq_member_code change mb_pcode mb_pcode char(6) after `mb_no`;
+alter table `prq_first_log` change `pf_status` `pf_status` enum('first','before_send','sended','send_fail','member','pause','not_regi') NOT NULL DEFAULT 'first'  COMMENT '전송 상태 ';
+
 insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
 insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();

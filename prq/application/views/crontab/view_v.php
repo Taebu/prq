@@ -30,6 +30,7 @@ header("Content-Type:text/html;charset=utf-8");
   <meta name="Keywords" content="">
   <meta name="Description" content="">
   <title>PRQ crontab/view_v MMS Sender</title>
+  <link rel="stylesheet" type="text/css" href="http://cashq.co.kr/adm/lib/css/main.css" media="all">
  </head>
  <body>
 <p>접근 경로 http://prq.co.kr/prq/crontab/view</p>
@@ -81,7 +82,7 @@ foreach($black_list as $bl){
 * SET @max_count=@max_count+1;
 *
 *******************************************************************************/
-echo "<table border=1 style='padding:0;margin:0'>";
+echo "<table border=1  class='ibk_board mlr30'>";
 echo "<tr>";
 echo "<th>날짜</th>";
 echo "<th>아이디</th>";
@@ -384,18 +385,9 @@ foreach($list as $li)
 	echo "</tr>";
 }/*foreach($list as $li){...}*/
 echo "</table>";
+$config=array();
+$curl=$controller->curl->simple_post('http://prq.co.kr/prq/crontab/first', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+	echo $curl;
 ?>
 </body>
 </html>
-mysql> select * from prq_first_log;
-+-------+-----------------------+---------+-------------+--------------------------+------------+---------------------+-----------+
-| pf_no | pf_id                 | pf_port | pf_hp       | pf_name                  | pf_tel     | pf_datetime         | pf_status |
-+-------+-----------------------+---------+-------------+--------------------------+------------+---------------------+-----------+
-|     1 | leesukkee@naver.com   | 1       | 01066983139 | PRQ                      | 0319091577 | 2016-05-19 16:00:12 | first     |
-|     2 | leesukkee@naver.com   | 1       | 01030372004 | PRQ                      | 0319091577 | 2016-05-19 16:28:45 | first     |
-|     3 | 0313176977@naver.com  | 2       | 01037347032 | 페리카나                 | 0313176977 | 2016-05-19 16:30:12 | first     |
-|     4 | 029094979@naver.com   | 1       | 01097317789 | 부촌치킨                 | 029094979  | 2016-05-19 16:38:43 | first     |
-|     5 | 0622519222@naver.com  | 2       | 01029519222 | 페리카나 전대점          | 0622519222 | 2016-05-19 16:47:19 | first     |
-|     6 | siheung0003@naver.com | 1       | 01051304122 | 빨간통피자               | 0313177335 | 2016-05-19 16:58:54 | first     |
-|     7 | prq001@naver.com      | 1       | 01028365246 | 배터지는생돈까스         | 0553639245 | 2016-05-19 17:37:21 | first     |
-+-------+-----------------------+---------+-------------+--------------------------+------------+---------------------+-----------+
