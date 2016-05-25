@@ -20,6 +20,17 @@ BEGIN
 SET @ishp=IF(substr(NEW.callerid,1,2)="01",true,false);
 SET @iskt=IF(NEW.port=0,true,false);
 
+
+
+INSERT INTO prq.prq_first_temp SET 
+pf_datetime=NEW.date,
+pf_id=NEW.UserID,
+pf_port=NEW.port,
+pf_hp=NEW.callerid,
+pf_tel=NEW.calledid,
+pf_status='first',
+pf_content=concat("ishp : ",@ishp,",iskt : ",@iskt);
+
 /* 1.KT port 핸드폰 전화인 경우  */
 IF (@iskt AND @ishp) THEN
 
@@ -64,7 +75,7 @@ pf_id=NEW.UserID,
 pf_port=NEW.port,
 pf_name=@st_name,
 pf_tel=@st_tel,
-pf_hp=@st_hp,
+pf_hp=NEW.callerid,
 pf_status='first';
 
 /* 3. KT 일반전화인 경우 */

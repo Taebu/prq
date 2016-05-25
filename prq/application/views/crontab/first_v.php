@@ -180,7 +180,7 @@ $is_ata=$li->pf_name==""?"등록되지 않은 상점 전송불가":"전송가능
 			'CALLER_NUM'=>$li->pf_hp,
 			'point_type'=>$point_type
 		);
-
+		/* 처음 방문시 전송 */
 		$curl=$controller->curl->simple_post('http://cashq.co.kr/ajax/set_bdmt_point.php', $config, array(CURLOPT_BUFFERSIZE => 10)); 
 		$query=json_decode($curl,true);
 		echo $query['query'];
@@ -191,13 +191,3 @@ echo "</table>";
 ?>
 </body>
 </html>
-<pre>
-
-<?php
-
-
-/*query*/
-
-
-
-?>

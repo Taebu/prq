@@ -139,8 +139,8 @@ if($mb_code=="PT"){?>
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
-<div class="form-group"><label class="col-sm-2 control-label">이메일</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_email" name="mb_email"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
+<div class="form-group"><label class="col-sm-2 control-label">CID 이메일</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_email" name="mb_email" value="@naver.com"> <span class="help-block m-b-none">이메일을 기입해주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -392,7 +392,14 @@ type: "POST",
 data:"mb_id="+mb_id,
 dataType:"json",
 success: function(data) {
-	$("#is_member").val(data.success);	
+
+	console.log(data);
+	if(data.num_row==0){
+	$( "#mb_id_assist" ).html("사용가능");
+	}else{
+	$( "#mb_id_assist" ).html("사용불가");
+	}
+//	$("#is_member").val(data.success);	
 	}
 });
 }
@@ -546,7 +553,14 @@ function search_frcode(spt_code)
 //	chg_frcode(spt_code+""+fr_code_new);
 }
 window.onload = function() {
-$( "#mb_id" ).focusout(function() {
+/*
+focusout
+$('#myfield').bind("keyup focusout", function () {
+  //do something
+});
+*/
+//$( "#mb_id" ).focusout(function() {
+$( "#mb_id" ).bind("keyup focusout", function() {
 chk_vali_id();
 })
 .blur(function() {

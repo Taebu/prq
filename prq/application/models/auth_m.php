@@ -67,19 +67,14 @@ class Auth_m extends CI_Model
 		$sql[]="mb_id = '".$auth['mb_id']."';";
 		$join_sql=join("",$sql);
 		$query = $this->db->query($join_sql);
+		
+		$auth_data = array(
+		'mb_id' => $auth['mb_id'],
+		'query'=>$join_sql,
+		'num_row'=>$query->num_rows()
+		);
 
-		if ( $query->num_rows() > 0 )
-		{
-			//맞는 데이터가 있다면 해당 내용 반환
-//			return $query->row();
-//			return $query->row();
-			return FALSE;
-     	}
-     	else
-     	{
-     		//맞는 데이터가 없을 경우
-	    	return TRUE;
-     	}
+		return $auth_data;
     }
 }
 

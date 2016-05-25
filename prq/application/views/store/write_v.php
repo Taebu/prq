@@ -92,13 +92,13 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <?php }else if($mb_gcode!="G5"){?>
 <select name="prq_fcode" id="prq_fcode" class="form-control" onchange="get_mb_id(this.value)" onclick="get_mb_id(this.value)" ></select> 
 <?php }?>
-<span class="help-block m-b-none">가맹점을 선택해 주세요.</span>
+<span class="help-block m-b-none">상점을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">가맹점 아이디 </label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" > <span class="help-block m-b-none">가맹점 아이디 입니다.. </span>
+<div class="form-group"><label class="col-sm-2 control-label">상점 아이디 </label>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_id" name="mb_id" > <span class="help-block m-b-none">상점 아이디 입니다.. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -136,7 +136,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">매장 명</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name"> <span class="help-block m-b-none">매장명을 등록 합니다. </span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name" onkeyup="set_top_msg(this.value)"> <span class="help-block m-b-none">매장명을 등록 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -319,7 +319,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="row">
 <div class="col-md-12">
 <div class="form-group"><label class="col-sm-2 control-label">상단문구(고정)</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_top_msg">
+<div class="col-sm-10"><input type="text" class="form-control" name="st_top_msg" id="st_top_msg">
 <span class="help-block m-b-none">상단 문구 변하지 않습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -328,7 +328,19 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
 <div class="col-sm-10">
-<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)' placeholder="여기에 문자 메세지를 기입해 주세요."></textarea><!-- #form_data -->
+<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)' placeholder="여기에 문자 메세지를 기입해 주세요.">최고의 맛과 서비스로
+보답하겠습니다.
+
+고객님을 위한
+매장 홈페이지를 확인하세요.
+#{homepage}
+
+매장과의 통화는
+아래 번호를 이용해주세요.
+#{st_tel}
+
+무료수신거부
+080-132-1234</textarea><!-- #form_data -->
 <span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -341,7 +353,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">모두홈피 URL 주소 (수정)</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_modoo_url" value="http://sjhero18.moodu.at"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_modoo_url" value=""> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -436,22 +448,8 @@ $("#is_join").val("FALSE");
 object.push("</span>");
 $( "#mb_id_assist" ).html(object.join(""));
 }
-/*mb_code로 등록 정보 변경*/
-function chg_gname(){
-	var chk_code=$("#mb_code").val();
-	switch (chk_code)
-	{
-	case "DS":
-	$(".mb_gname").html("총판");
-	break;
-	case "PT":
-	$(".mb_gname").html("대리점");
-	break;
-	case "FR":
-	$(".mb_gname").html("가맹점");
-	break;
-	}
-}
+
+
 function set_member(){
 var param=$("#write_action").serialize();
 $.ajax({
@@ -472,6 +470,8 @@ function chk_btn_status()
 	
 	if(param.indexOf("st_alltime")>0)
 	{
+		$("#st_open").val('00:00');
+		$("#st_closed").val('24:00');
 		$("#st_open").addClass("disabled").prop('disabled', true); 
 		$("#st_closed").addClass("disabled").prop('disabled', true); 
 	}else{
@@ -566,9 +566,12 @@ function textAreaAdjust(o) {
 }
 
 
+
 window.onload = function() {
+textAreaAdjust(document.getElementById("st_middle_msg"));
 $( "#mb_id" ).focusout(function() {
 chk_vali_id();
+
 })
 .blur(function() {
 blur++;
@@ -586,4 +589,9 @@ get_frmail();
 
 chk_byte();
 };/*window.onload = function() {..}*/
+
+
+function set_top_msg(v){
+$("#st_top_msg").val("(광고) [ "+v+" ] 에서");
+}
 </script>

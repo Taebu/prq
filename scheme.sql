@@ -1358,3 +1358,9 @@ alter table `prq_first_log` change `pf_status` `pf_status` enum('first','before_
 
 insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
 insert into prq_first_log set pf_hp='01030372004',pf_datetime=now();
+
+
+-- 2016-05-23 (월)
+
+
+alter table `prq_first_temp` add `pf_content` varchar(255);
