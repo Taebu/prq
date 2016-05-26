@@ -385,9 +385,9 @@ foreach($list as $li)
 	echo "</tr>";
 }/*foreach($list as $li){...}*/
 echo "</table>";
-$config=array();
-$curl=$controller->curl->simple_post('http://prq.co.kr/prq/crontab/first', $config, array(CURLOPT_BUFFERSIZE => 10)); 
-	echo $curl;
+//$config=array();
+//$curl=$controller->curl->simple_post('http://prq.co.kr/prq/crontab/first', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+//	echo $curl;
 ?>
 </body>
 </html>
