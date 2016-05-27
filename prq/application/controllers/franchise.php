@@ -2,6 +2,7 @@
 /**
  * 가맹점 메인 controller.
  * 생성 : 2015-12-23 (수)
+ * 수정 : 2016-05-27 (금)
  * @author Taebu,Moon<mtaebu@gmail.com>
  */
 class Franchise extends CI_Controller {
@@ -332,6 +333,7 @@ class Franchise extends CI_Controller {
 //				$result = $this->distributors_m->insert_distributors($write_data);
 				$modify_mno_data = array(
 					'mn_id' => $this->input->post('mb_id', TRUE),
+					'mn_email' => $this->input->post('mb_email', TRUE),
 					'mn_dup_limit' => $this->input->post('mn_dup_limit', TRUE),
 					'mn_mms_limit' => $this->input->post('mn_mms_limit', TRUE)
 				);

@@ -174,7 +174,12 @@ class Crontab_m extends CI_Model
 			//맞는 데이터가 있다면 해당 내용 반환
 			$result = $query->row();
      	}else{
-			$arrays=(object)array('mn_dup_limit'=>0,'mn_mms_limit'=>150);
+/* mn_dup_limit 0 이면 계속 발송한다.
+*			$arrays=(object)array('mn_dup_limit'=>0,'mn_mms_limit'=>150);
+*/
+/* mn_dup_limit 7 이면  한번 발송한 사용자에게 7일 이후 발송한다.
+**/
+			$arrays=(object)array('mn_dup_limit'=>7,'mn_mms_limit'=>150);
 			$result = $arrays;
 		}
 

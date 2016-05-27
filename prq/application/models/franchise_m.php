@@ -2,8 +2,8 @@
 
 /**
  * 공통 멤버 총판에서 가맹점 모델 (이미지 포함)
- * 작성 :2015-12-16 (수)
- * 수정 : 
+ * 작성 : 2015-12-16 (수)
+ * 수정 : 2016-05-27 (금)
  * 
  * 총판	Distributors	DS
  * 대리점	Partner	PT
@@ -445,7 +445,12 @@ mysql> select * from prq_member_code;
 		0 같은 번호에 대해 무제한 발송
 		1 ~ # 설정한 일수 만큼 발송 제한
 		*/
-		$sql_array[]="mn_mms_limit ='".$arrays['mn_mms_limit']."' ";
+		$sql_array[]="mn_mms_limit ='".$arrays['mn_mms_limit']."', ";
+		/*
+		* mn_email 이게 없어서 조회 못해 
+		* 중복 발송 제한을 구현하지 못함 
+		**/
+		$sql_array[]="mn_email ='".$arrays['mn_email']."' ";
 		/*
 		mn_mms_limit
 		일일 발송 갯수 제한

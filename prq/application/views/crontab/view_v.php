@@ -81,6 +81,10 @@ foreach($black_list as $bl){
 * SET @max_count=7;
 * SET @max_count=@max_count+1;
 *
+
+e날짜	아이디	포트	전화1	전화2	cd_state	cd_name	cd_tel	cd_hp	query	중복발송제한	결과
+2016-05-27 14:20:04	0319795663@naver.com	3	01034788878		0	효성각	0319795663	01077395675	0	150	0	3	16/150	first_sent	150	0	보냄
+
 *******************************************************************************/
 echo "<table border=1  class='ibk_board mlr30'>";
 echo "<tr>";
@@ -94,8 +98,12 @@ echo "<th>cd_name</th>";
 echo "<th>cd_tel</th>";
 echo "<th>cd_hp</th>";
 echo "<th>query</th>";
-echo "<th>중복발송제한</th>";
 echo "<th>결과</th>";
+echo "<th>중복발송제한</th>";
+echo "<th>상태</th>";
+echo "<th>제한크기</th>";
+echo "<th>발송갯수</th>";
+echo "<th>보낸상태</th>";
 echo "</tr>";
 
 /*****************************************************
@@ -104,7 +112,7 @@ echo "</tr>";
 * 
 *****************************************************/
 if(count($list)==0){
-	echo '<tr><td scope="row" colspan="12" style="text-align:center"> 조회한 prq_cdr `log`가 없습니다.</td></tr>';
+	echo '<tr><td scope="row" colspan="16" style="text-align:center"> 조회한 prq_cdr `log`가 없습니다.</td></tr>';
 }
 
 foreach($list as $li)
@@ -124,7 +132,6 @@ foreach($list as $li)
 	echo "<td>".$li->cd_tel."</td>";
 	echo "<td>".$li->cd_hp."</td>";
 	echo "<td>".$li->cd_day_cnt."</td>";
-	echo "<td>".$li->cd_day_limit."</td>";
 
 	/*******************************************************************************
 	* 3. get_last_cdr 
@@ -183,7 +190,6 @@ foreach($list as $li)
 		'cd_day_limit'=> $get_mno_limit->mn_mms_limit,
 		'get_day_cnt' =>$get_day_cnt->cnt);       
 	$controller->crontab_m->set_cdr($cdr_info);
-	echo "<td>".$li->cd_port."</td>";
 	$cd_date=$last_cdr->cd_date;
 	echo "<td>".$get_day_cnt->cnt."/".$get_mno_limit->mn_mms_limit."</td>";
 	echo "<td>".$cd_date."</td>";
@@ -295,7 +301,7 @@ foreach($list as $li)
 		if($get_mno_limit->mn_dup_limit>$cd_date){
 			/*gcm 로그 발생*/
 			$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
-			$gc_ipaddr='123.142.52.91';
+			$gc_ipaddr='123.142.52.90';
 			$sql=array();
 			if($li->cd_port==0)
 			{
@@ -333,7 +339,7 @@ foreach($list as $li)
 		if($daily_mms_cnt>$get_mno_limit->mn_mms_limit){
 			/*gcm 로그 발생*/
 			$result_msg= $li->cd_day_cnt."/".$get_mno_limit->mn_mms_limit."건 제한";
-			$gc_ipaddr='123.142.52.91';
+			$gc_ipaddr='123.142.52.90';
 			$sql=array();
 			if($li->cd_port==0)
 			{
