@@ -280,13 +280,13 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">주소1</label>
+<div class="form-group"><label class="col-sm-2 control-label">*주소1</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_addr1" name="mb_addr1" value="<?php echo $views->mb_addr1;?>"> <span class="help-block m-b-none">시군구를 등록해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">주소2</label>
+<div class="form-group"><label class="col-sm-2 control-label">*주소2</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="mb_addr2" name="mb_addr2" value="<?php echo $views->mb_addr2;?>"> <span class="help-block m-b-none">동읍면리.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->

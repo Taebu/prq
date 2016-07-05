@@ -263,6 +263,12 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
+<?php 
+		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
+		?>
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>

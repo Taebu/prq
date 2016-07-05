@@ -10,7 +10,7 @@ header("Content-type: text/css; charset: UTF-8");
 * @author : Taebu Moon
 * @Copyright : 2016, 태부
 */
-$red="#c64d4b";
+$red="#e84031";
 $blue="#4d86cb";
 $orange="#fba427";
 $green="#390";
@@ -61,17 +61,20 @@ $color_type_alpha=${$_GET['theme']."a"};
 .gnb_tl{display:inline-block;margin-right:10px;padding:9px 10px 5px;font-size:19px;font-family:helvetica}
 .nav{z-index:20}
 .header .grd_next,.header .grd_prev{position:absolute;width:17px;height:38px;z-index:2001}
+
 .nav_u{display:table;white-space:nowrap}
 .nav_u li:first-child{padding:0 0 0 15px}
 .nav_u li:last-child{padding:0 15px 0 0}
 .nav_l{display:table-cell;margin:0;white-space:nowrap;width:200px;}
 /*width:200px;*/
 .nav_a{display:inline-block;padding:0 7px;font-family:HelveticaNeue-Condensed,Helvetica,sans-serif;font-weight:700;font-size:15px;line-height:36px;color:#333;text-shadow:0 -1px 1px rgba(255,255,255,.7)}
-.nav_lon .nav_a{height:35px;border-bottom:3px solid <?php echo $color_type;?>;color:<?php echo $color_type;?>}
+.nav_lon .nav_a{height:35px;border-bottom:0px solid <?php echo $color_type;?>;color:<?php echo $color_type;?>}
 #review_area,#review_area .box_review,#review_area .review_top,#storedetail_area,.celeb_wrap ul li{border-bottom:1px solid #e2e2e2}
 #review_area{border-bottom:0}
 .header .grd_prev{top:50px;left:0;bottom:3px;background:-webkit-gradient(linear,left top,right top,color-stop(0,#fff),color-stop(100%,rgba(255,255,255,0)))}
 .header .grd_next{top:50px;right:0;bottom:3px;background:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(100%,#fff))}
+.header2 .grd_prev{top:50px;left:0;bottom:3px;background:-webkit-gradient(linear,left top,right top,color-stop(0,#fff),color-stop(100%,rgba(255,255,255,0)))}
+.header2 .grd_next{top:50px;right:0;bottom:3px;background:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(100%,#fff))}
 .nav .sprh_mark{position:absolute;top:13px;right:0}
 .nav_lon .nav_a:after{overflow:hidden;position:absolute;bottom:-4px;left:0;width:100%;height:1px;background-color:<?php echo $color_type;?>}
 .mcds,.mcds_ad{position:relative;margin:10px 8px;background-color:#fff;-webkit-box-shadow:0 0 2px rgba(0,0,0,.08),0 1px 1px rgba(0,0,0,.05);box-shadow:0 0 2px rgba(0,0,0,.08),0 1px 1px rgba(0,0,0,.05)}
@@ -96,12 +99,12 @@ $color_type_alpha=${$_GET['theme']."a"};
 .celeb_wrap ul{margin:0;padding:0;background-color:#fff}
 .celeb_wrap ul li:first-child{border-top:1px solid #e2e2e2;margin-top:4px}
 .celeb_wrap ul li{position:relative}
-.celeb_wrap ul li a{display:block;position:relative;color:#777;font-family:'Nanum Gothic';height:45px;line-height:46px;padding:0 0 0 45px;font-weight:800}
+.celeb_wrap ul li a{display:block;position:relative;color:#777;font-family:'Nanum Gothic';height:45px;line-height:43px;padding:0 0 0 45px;font-weight:800}
 .celeb_wrap_bg,.menu_bg{position:fixed;height:100%}
 .celeb_wrap_bg{background-color:#000;width:100%;text-indent:-9999px;z-index:1004}
 .celeb_wrap a:active,.celeb_wrap a:focus,.celeb_wrap a:hover{background-color:#ededed}
 .menu_bg{background-color:#000;text-indent:-9999px;z-index:2005}
-.celeb_wrap .icon_menu{position:absolute;background:url(../img/icon_01.png)no-repeat;top:9px;left:10px;width:25px;height:25px;display:inline-block;border:1px solid #777;border-radius:30px;-moz-border-radius:30px;-webkit-border-radius:30px;overflow:hidden;text-indent:-9999px}
+.celeb_wrap .icon_menu{position:absolute;background:url(../img/icon_01.png)no-repeat;top:10px;left:10px;width:25px;height:25px;display:inline-block;border:0px solid #777;border-radius:30px;-moz-border-radius:30px;-webkit-border-radius:30px;overflow:hidden;text-indent:-9999px}
 .celeb_wrap .imenu01,.celeb_wrap .imenu02,.celeb_wrap .imenu03,.celeb_wrap .imenu04,.celeb_wrap .imenu05,.celeb_wrap .imenu06,.celeb_wrap .imenu07,.celeb_wrap .imenu08,.celeb_wrap .imenu09,.celeb_wrap .imenu10,.celeb_wrap .imenu11{background-size:130px 130px}
 .celeb_wrap .imenu01{background-position:-3px -4px}
 .celeb_wrap .imenu02{background-position:-35px -5px}
@@ -159,7 +162,8 @@ $color_type_alpha=${$_GET['theme']."a"};
 .btn_top.home,.btn_top.openleft,.btn_top.prev{background-size:180px 180px}
 .btn_top.openleft{background-position:0 2px}
 .btn_top.prev{background-position:-141px -105px;width:40px;height:25px;left:10px;top:14px}
-.btn_top.home{background-position:-43px 2px}
+/*.btn_top.home{background-position:-43px 2px}*/
+.btn_top.home{background-position:-90px -32px}
 .btn_bottom{display:block;width:53px;height:53px;background:url(../img/btn_01.png)no-repeat;background-color:<?php echo $color_type_alpha;?>;text-indent:-9999px;border-radius:55px;overflow:hidden;border:2px solid #fff;border-opacity:.9}
 .btn_bottom.basket{background-size:150px 150px;background-position:-36px -29px}
 .btn_bottom.call{background-size:150px 150px;background-position:8px -29px}

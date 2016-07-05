@@ -278,6 +278,12 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){?>
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
+<?php 
+		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
+		?>
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
@@ -309,6 +315,7 @@ $st_cnt = array_column($st_count, 'cnt');
 foreach ($list as $lt){?>
 <tr>
 	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
+<!-- 	<td scope="col"><?php print_r($lt);?></td> -->
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td>	<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
 	<td><?php echo $lt->mb_id;?></td>

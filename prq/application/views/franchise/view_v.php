@@ -253,13 +253,13 @@
                                 </div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">주소1</label>
+								<div class="form-group"><label class="col-sm-2 control-label">*주소1</label>
                                     <div class="col-sm-10"><?php echo $views->mb_addr1;?> <span class="help-block m-b-none">시군구를 등록해 주세요..</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-								<div class="form-group"><label class="col-sm-2 control-label">주소2</label>
+								<div class="form-group"><label class="col-sm-2 control-label">*주소2</label>
                                     <div class="col-sm-10"><?php echo $views->mb_addr2;?> <span class="help-block m-b-none">동읍면리.</span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->

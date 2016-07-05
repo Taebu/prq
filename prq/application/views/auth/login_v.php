@@ -73,15 +73,16 @@ echo form_open('/auth/login', $attributes);
 						<a href="http://prq.co.kr/prq/uploads/files/Setup.zip" target="_blank"><img src="/prq/img/login_icon1.png" width="100%"></a>
 					</li>
 					<li style="float:left;width:30%;margin-left:15px;">
-						<a href="javascript:alert('준비중입니다.');" target="_blank" target="_blank"><img src="/prq/img/login_icon2.png" width="100%"></a>
+						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"> -->
+						<a href="/prq/down/KTProQ.zip" target="_blank"><img src="/prq/img/login_icon2.png" width="100%"></a>
 					</li>
 					<li style="float:right;width:30%;">
-						<a href="javascript:alert('준비중입니다.');" target="_blank" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a>
+						<a href="javascript:alert('준비중입니다.');" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a>
 					</li>
 					<li style="clear:both;"></li>
 				</ul>
 				<div style="clear:both;height:15px;"></div>
-				<a href="http://download.teamviewer.com/download/TeamViewerQS_ko.exe" target="_blank">
+				<a href="/prq/down/TeamViewer_Setup_ko-rjl.exe" target="_blank">
 				<div style="background:#828282;color:#fff;padding:10px;">
 					본사 원격지원 설치하기
 				</div>

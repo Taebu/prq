@@ -465,9 +465,10 @@ class Ajax_m extends CI_Model
 		$sql[]=" * ";
 		$sql[]="FROM ";
 		$sql[]="`prq_frcode` ";
-		if(isset($pt_code)&&strlen($pt_code)>11)
+
+		if(isset($pt_code)&&strlen($pt_code)>3)
 		{
-			$sql[]=" where fr_code like '".$pt_code."FR____' ";
+			$sql[]=" where fr_code like '".$pt_code."%' ";
 		}
 		$sql[]=" order by fr_code ";
 

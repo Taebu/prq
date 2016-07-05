@@ -91,6 +91,9 @@ $result= (strpos($p_temp,"0:")!==false)?true:false;
 $result=false;
 }
 $json['success']=$result;
+$json['push']=$push;
+$json['sql']=$sql;
+
 echo json_encode($json);
 
 

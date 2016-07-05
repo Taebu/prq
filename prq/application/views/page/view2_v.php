@@ -123,7 +123,7 @@ map_location();
 <!-- rs-body 시작 -->
 <div id="ct" role="main" class="reveal-contents reveal2-contents">
 	<div class="ct_wrp">
-		<div class="header">
+		<div class="header2">
 			<div class="gnb_wrp">
 				<h1 class="left"><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
 				<!-- top_btn -->

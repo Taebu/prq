@@ -3,14 +3,17 @@
 /**
  * 공통 멤버 총판에서 가맹점 모델 (이미지 포함)
  * 작성 : 2015-12-16 (수)
- * 수정 : 2016-04-13 (수) 
+ * 수정 : 2016-07-05 (화)
  * 
  * 총판	Distributors	DS
  * 대리점	Partner	PT
  * 가맹점	Franchise	FR
- * 
+ *
+ * 1.1
+ * 1.2 2016-07-05 (화) 가맹점, 총판에 따른 구분 
+ *
  * @author Taebu, Moon <mtaebu@gmail.com>
- * @version 1.1
+ * @version 1.2
  */
 class Store_m extends CI_Model
 {
@@ -46,8 +49,14 @@ class Store_m extends CI_Model
 		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
 		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
+		/*총판인 경우*/
+		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
 		/*대리점인 경우*/
-		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+		}else if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+		/*가맹점인 경우*/
+		}else if( $mb_gcode=="G5"&&strlen($prq_fcode)>5){
 			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
 		}
 

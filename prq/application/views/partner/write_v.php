@@ -451,7 +451,7 @@ var pt_code="";
 function get_ptcode()
 {
 	$.ajax({
-	url:"/prq/ajax/get_ptcode/",
+	url:"/prq/ajax/get_ptcode/"+$("[name=ds_code]").val(),
 	type: "POST",
 	data:"",
 	dataType:"json",

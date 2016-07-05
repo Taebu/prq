@@ -28,6 +28,8 @@ echo form_open('/store/write/prq_store/board_id/', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
 $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
+
+echo $prq_fcode;
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
@@ -50,6 +52,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <input type="hidden" name="st_main_paper_size" id="st_main_paper_size">
 
 <input type="hidden" name="st_imgprefix" id="st_imgprefix" value="<?php echo date("Ym");?>">
+
+<input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
 
 <div class="row">
 <div class="col-lg-12">
@@ -482,23 +486,26 @@ function chk_btn_status()
 }
 /*가맴점 코드를 불러 옵니다.*/
 var pt_code="";
-function get_frcode(code)
+function get_frcode()
 {
 	$.ajax({
-	url:"/prq/ajax/get_frcode/"+code,
+	url:"/prq/ajax/get_frcode/"+$("#ds_code").val(),
 	type: "POST",
 	data:"",
 	dataType:"json",
 	success: function(data) {
 		pt_code=data.posts;
-		search_frcode("DS0003PT0001");
+		search_frcode();
 		}
 	});
 }
-function search_frcode(ds_code)
+function search_frcode()
 {
 	var object = [];
 	var chk_max_ptcode=[];
+if(pt_code===undefined){
+	$("#prq_fcode").html("<option selected>사용 가능한 가맹점코드가 하나도 없습니다. 코드와 가맹점을 등록 해주세요.</option>");
+}else{
 	$.each(pt_code,function(key,val){
 		if("DS0001"==val.pt_code){
 			object.push('<option value='+val.fr_code+' selected>');
@@ -517,6 +524,7 @@ function search_frcode(ds_code)
 	}else{
 	$("#prq_fcode").html(result);
 	}
+}
 }
 var fr_mail=[];
 function get_frmail()

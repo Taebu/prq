@@ -4,6 +4,7 @@
 <head>
 	
     <meta charset="utf-8">
+	<meta property="og:image" content="http://prq.co.kr/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	

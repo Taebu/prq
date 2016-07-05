@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!------sns썸네일--->
-<meta property="og:image" content="http://prq.co.kr/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>" width="190px" />
+<meta property="og:image" content="http://prq.co.kr/prq/uploads/TH/<?php echo $views->st_thumb_paper;?>"/>
 <!------sns썸네일--->
 
 <meta http-equiv="Cache-control" content="no-cache">
@@ -127,15 +127,15 @@ map_location();
 				</ul> -->
 
 				<ul>
-					<li><a href="#"><span class="icon_menu imenu01">회원가입아이콘</span>홈</a></li>
+					<li><a href="#"><span class="icon_menu imenu01">홈</span>홈</a></li>
 				</ul>
 				<ul>
-					<li><a href="#"><span class="icon_menu imenu03">쿠폰함아이콘</span>업체정보</a></li>
-					<li><a href="#"><span class="icon_menu imenu04">장바구니아이콘</span>전단지</a></li>
-					<li><a href="#"><span class="icon_menu imenu05">주문내역아이콘</span>오시는길</a><!-- <span class="msg_num">99</span> --></li></ul>
+					<li><a href="#"><span class="icon_menu imenu03">업체정보</span>업체정보</a></li>
+					<li><a href="#"><span class="icon_menu imenu04">전단지</span>전단지</a></li>
+					<li><a href="#"><span class="icon_menu imenu05">오시는길</span>오시는길</a><!-- <span class="msg_num">99</span> --></li></ul>
 				<ul>
-					<li><a href="#"><span class="icon_menu imenu06">공지사항아이콘</span>PRQ 가입문의</a><!--span class="msg_num">3</span>--></li>
-					<li><a href="#"><span class="icon_menu imenu07">도움말아이콘</span>이벤트</a><!--<span class="msg_num">1</span>--></li>
+					<li><a href="#"><span class="icon_menu imenu06">PRQ 가입문의</span>PRQ 가입문의</a><!--span class="msg_num">3</span>--></li>
+					<li><a href="#"><span class="icon_menu imenu07">이벤트</span>이벤트</a><!--<span class="msg_num">1</span>--></li>
 					<!-- <li><a href="#"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li> -->
 				</ul>
 				<!-- <div style="width:100%;margin-top:100px;">
@@ -154,18 +154,26 @@ map_location();
 <!-- rs-body 시작 -->
 <div id="ct" role="main" class="reveal-contents reveal2-contents">
 	<div class="ct_wrp">
-		<div class="header">
+		<div class="header" style="position:fixed;width:100%;z-index:9999999;">
 			<div class="gnb_wrp">
 				<h1><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
 				<!-- top_btn -->
-				<a href="javascript:;" class="btn_top_openleft _leftMenu gnb list">
+				<a href="javascript:;" class="btn_top_openleft _leftMenu gnb list" id="btnTopHome">
 					<span class="btn_top openleft">확장영역 열기</span>
 				<!--
 				<span class="btn_top_openleft_num">N</span>
 				-->
 				</a>
-				<a href="javascript:;" class="btn_top_home" id="btnTopHome" data-id="HOME" data-idx=0>
-					<span class="btn_top home">홈 바로가기</span>
+				<?php 
+					$st_tel='';
+					if($views->st_teltype=="cashq"){
+						$st_tel=$views->st_vtel==""?" - ":$views->st_vtel;
+					}else{
+						$st_tel=$views->st_tel==""?" - ":$views->st_tel;
+					}
+				?>
+				<a href="tel:<?php echo $st_tel;?>" class="btn_top_home" data-id="HOME" data-idx=0>
+					<span class="btn_top home">전화연결</span>
 				</a>
 				<!-- //top_btn -->
 			</div>
@@ -178,7 +186,7 @@ map_location();
 					<!-- 메뉴 -->
 						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="HOME" data-idx=0><span class="fa-stack fa-lg"><i class="fa fa-home fa-stack-1x"></i></span>홈</a></li>
 						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="INFO" data-idx=1><span class="fa-stack fa-lg"><i class="fa fa-search fa-stack-1x"></i></span>업체정보</a></li>
-						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="fa-stack fa-lg"><i class="fa fa-cutlery fa-stack-1x"></i></span>전단지</a></li>
+						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="MENU" data-idx=2><span class="fa-stack fa-lg"><i class="fa fa-cutlery fa-stack-1x"></i></span>메뉴보기</a></li>
 						<li class="nav_l"><a href="javascript:;" class="nav_a" data-id="PLACE" data-idx=3><span class="fa-stack fa-lg"><i class="fa fa-map-marker fa-stack-1x"></i></span>오시는길</a></li>
 						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="ONLINEORDER" data-idx=3>온라인주문</a></li> -->
 						<!-- <li class="nav_l"><a href="javascript:;" class="nav_a" data-id="COUPON" data-idx=4>쿠폰</a></li> -->
@@ -187,7 +195,7 @@ map_location();
 				</div>
 			</div>
 		</div>
-
+		<div style="clear:both;height:90px;"></div>
 		<div id="ct" style="position:relative;">
 			<!-- Demo 영역 -->
 			<div id="mflick">
@@ -248,8 +256,21 @@ map_location();
 				</div>
 			</div>
 		</div>
-
-		<div id="footer" class="footer footer01" style="letter-spacing:0.5px;background:#353840;">
+		
+		<div id="footer" class="footer footer01" style="letter-spacing:0.5px;background:#353840;height:105px;">
+			<div style="background:#e84031;margin-bottom:10px;font-size:17px;padding:5px;">
+				<a href="/prq/prqservice.php">
+				<ul style="width:190px;margin:0 auto;">
+					<li style="float:left;">
+						<img src="/prq/img/new/cursor.png" style="width:22px;">
+					</li>
+					<li style="float:right;font-size:17px;padding-top:7px;">
+						PQR 서비스 신청하기
+					</li>
+					<li style="clear:both;"></li>
+				</ul>
+				</a>
+			</div>
 			<p><!-- <?php echo $views->st_name;?>  --><span id="mb_business_num">587-09-00247</span></p>
 			<p id="address_area">경기도 부천시 원미구 부천로53번길 52 1층(심곡동) 김은정</p>
 			<p>ⓒ <b><?php echo $views->st_name;?></b> Corp.</p>
@@ -263,19 +284,10 @@ map_location();
 
 <div class="bottombtn_wrp">
 <!-- bottom_btn -->
-<?php 
 
-$st_tel='';
-if($views->st_teltype=="cashq"){
-	$st_tel=$views->st_vtel==""?" - ":$views->st_vtel;
-}else{
-	$st_tel=$views->st_tel==""?" - ":$views->st_tel;
-}
-?>
-
-<a href="tel:<?php echo $st_tel;?>" class="btn_bottom_call">
-<span class="btn_bottom call">전화걸기</span>
-</a>
+<!-- <a href="tel:<?php echo $st_tel;?>" class="btn_bottom_call">
+<span class="btn_bottom call">전화걸기111</span>
+</a> -->
 <!-- //bottom_btn -->
 </div>
 
@@ -451,6 +463,7 @@ parameters['latitude'] = $("#latitude").val();
 parameters['longitude'] = $("#longitude").val();
 parameters['width'] = $(window).width()-5;
 parameters['height'] = parseInt(parameters['width']/5*3);
+parameters['address_area'] = $("#address_area").html();
 
 $.ajax({
 url : '/prq/include/view/location.php',
