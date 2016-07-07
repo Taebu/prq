@@ -199,6 +199,7 @@
 		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
 		<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
 		<input type="hidden" name="mb_id" id="mb_id" value="<?php echo $lt->mb_id;?>">
+		<input type="hidden" name="mb_hp" id="mb_hp" value="<?php echo $views->mb_hp;?>">
 		
 			<div class="row">
                 <div class="col-lg-12">
@@ -584,7 +585,8 @@ function get_mnoinfo(){
 //	var param=$("#write_action").serialize();
 
     $.ajax({
-		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
+//		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
+		url:"/prq/ajax/get_mnoinfo2/"+$("#mb_hp").val(),
 		type: "POST",
         data:"",
         cache: false,

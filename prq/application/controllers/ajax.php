@@ -527,7 +527,42 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 
+	/* set_device_info */
+	public function set_device_info()
+	{
+		$json['success']=false;
 
+		$mn_hp= $this->input->post("mn_hp", TRUE);
+		$mn_operator= $this->input->post("mn_operator", TRUE);
+		$mn_model= $this->input->post("mn_model", TRUE);
+		$mn_version= $this->input->post("mn_version", TRUE);
+		$mn_mms_limit= $this->input->post("mn_mms_limit", TRUE);
+		$mn_dup_limit= $this->input->post("mn_dup_limit", TRUE);
+		$mn_appvcode = $this->input->post("mn_appvcode ", TRUE);
+		$mn_appvname= $this->input->post("mn_appvname", TRUE);
+
+		$write_data = array(
+			'mn_hp'=>$mn_hp,
+			'mn_operator'=>$mn_operator,
+			'mn_model'=>$mn_model,
+			'mn_version'=>$mn_version,
+			'mn_mms_limit'=>$mn_mms_limit,
+			'mn_dup_limit'=>$mn_dup_limit,
+			'mn_appvcode'=>$mn_appvcode ,
+			'mn_appvname'=>$mn_appvname
+		);
+		$result = $this->ajax_m->set_mno($write_data);
+		echo $result;
+	}
+
+	/* get_mnonfo2() */
+	function get_mnoinfo2()
+	{
+		$mn_hp=$this->uri->segment(3);
+		$result = $this->ajax_m->get_mnoinfo2($mn_hp);
+
+		echo $result;
+	}
 }
 
 /* End of file ajax_board.php */

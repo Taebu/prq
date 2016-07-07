@@ -1008,7 +1008,7 @@ class Ajax_m extends CI_Model
 	}
 
 	/*
-	set_mon($array)
+	set_mno($array)
 	'mn_id'=>$mn_id,
 	'mn_email'=>$mn_email,
 	'mn_hp'=>$mn_hp,
@@ -1318,8 +1318,118 @@ class Ajax_m extends CI_Model
 		echo json_encode($json);
 	}
 
+	/*
+	set_mon($array)
+	'mn_id'=>$mn_id,
+	'mn_email'=>$mn_email,
+	'mn_hp'=>$mn_hp,
+	'mn_model'=>$mn_model,
+	'mn_version'=>$mn_version,
+	'mn_mms_limit'=>$mn_mms_limit,
+	'mn_dup_limit'=>$mn_dup_limit
+	가맹점 mno 정보를 insert 합니다.
+	@param $array data
+	@return json
+	*/
+	function set_device_info($array)
+	{
+		$json=array();
+		$json['success']=false;
+		if(is_null($array['mn_hp'])||strlen($array['mn_hp'])<2){
+		echo `json_encode($json);
+		return ;
+		}
+		$sql=array();
+		$sql[]="SELECT * FROM prq_mno ";
+		$sql[]=" WHERE mn_hp='".$array['mn_hp']."';";
 
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		if($query->num_rows() > 0)
+		{
+			$sql=array();
+			$sql[]="UPDATE `prq_mno` SET ";
+//			$sql[]=" mn_id='".$array['mn_id']."', ";
+			$sql[]=" mn_email='".$array['mn_email']."', ";
+			$sql[]=" mn_hp='".$array['mn_hp']."', ";
+			$sql[]=" mn_operator='".$array['mn_operator']."', ";
+			$sql[]=" mn_model='".$array['mn_model']."', ";
+			$sql[]=" mn_version='".$array['mn_version']."', ";
+			$sql[]=" mn_appvcode='".$array['mn_appvcode']."', ";
+			$sql[]=" mn_appvname='".$array['mn_appvname']."', ";
+			$sql[]=" mn_mms_limit='".$array['mn_dup_limit']."' ";
+			$sql[]=" WHERE mn_hp='".$array['mn_hp']."';";
+		}else{
+			$sql=array();
+			$sql[]="INSERT INTO  `prq_mno` SET ";
+//			$sql[]=" mn_id='".$array['mn_id']."', ";
+			$sql[]=" mn_email='".$array['mn_email']."', ";
+			$sql[]=" mn_hp='".$array['mn_hp']."', ";
+			$sql[]=" mn_operator='".$array['mn_operator']."', ";
+			$sql[]=" mn_model='".$array['mn_model']."', ";
+			$sql[]=" mn_version='".$array['mn_version']."', ";
+			$sql[]=" mn_appvcode='".$array['mn_appvcode']."', ";
+			$sql[]=" mn_appvname='".$array['mn_appvname']."', ";
+			$sql[]=" mn_mms_limit='".$array['mn_dup_limit']."', ";
+			$sql[]=" mn_datetime=now();";
+		}
+		$join_sql=join("",$sql);
+		//$json['query']=$ojin_sql;
+		$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
+
+	/*
+	get_mnoinfo2()
+	mno 정보를 반환 가맹점의 모바일 정보
+	2016-07-07 (목)
+	*/
+	function get_mnoinfo2($mn_hp)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]="  * ";	
+		$sql[]="FROM ";
+		$sql[]="`prq_mno` ";
+		if(isset($mn_hp)&&strlen($mn_hp)>3)
+		{
+			$sql[]=" where mn_hp='".$mn_hp."' ";
+		}
+
+		//$sql[]=" where ds_code like 'rs%' ";
+		//$sql[]=" order by pt_code ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+	
+		$json['posts']=array();
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
 }
 
-/* End of file auth_m.php */
-/* Location: ./application/models/auth_m.php */
+/* End of file ajax_m.php */
+/* Location: ./application/models/ajax_m.php */
