@@ -3,6 +3,7 @@
 * 1분마다 콜로그를 조회하여 gcm과 mms 를 전송하는 페이지 크론탭에 등록 되어 있습니다.
 * location : /prq/application/views/crontab/view_v.php
 * url : /prq/crontab/view
+* FULL URL : http://prq.co.kr/prq/crontab/view
 * 작성일 : 2016-03-30 (수)
 * 수정일 : 2016-05-19 (목)
 *

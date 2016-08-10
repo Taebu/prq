@@ -265,7 +265,7 @@ map_location();
 						<img src="/prq/img/new/cursor.png" style="width:22px;">
 					</li>
 					<li style="float:right;font-size:17px;padding-top:7px;">
-						PQR 서비스 신청하기
+						PRQ 서비스 신청하기
 					</li>
 					<li style="clear:both;"></li>
 				</ul>
@@ -610,8 +610,5 @@ $('.dialog-layer').css('left',re_size_width+'px');
 </script>
 <input type="hidden" name="latitude" id="latitude">
 <input type="hidden" name="longitude" id="longitude">
-
-
 </body>
-
 </html>

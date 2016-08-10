@@ -614,6 +614,7 @@ function get_mnoinfo(){
 				object.push('<td>단말기<td><td>'+val.mn_model+'</td></tr>');
 				object.push('<tr><td>일일문자발송제한</td><td>'+val.mn_mms_limit+'</td>');
 				object.push('<td>* 중복발송제한<td><td>'+val.mn_dup_limit+'</td></tr>');
+				object.push('<tr><td colspan="2"><a href="javascript:set_mno('+val.mn_no+');">삭제</a></td></tr>');
 			});
 			object.push('</tbody>');
 			object.push('</table>');
@@ -623,4 +624,26 @@ function get_mnoinfo(){
     });		
 }
 
+/*mno 정보를 삭제합니다.*/
+function set_mno(v){
+	var is_del=false;
+	is_del=confirm("정말 삭제하시겠습니까?");
+	if(is_del){
+		alert(v+"삭제");
+    $.ajax({
+		url:"/prq/ajax/del_mno/"+v,
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+        }
+    });		
+	}else{
+		alert(v+"취소");
+	}
+
+}
 </script>

@@ -52,6 +52,7 @@ class Page extends CI_Controller {
 				$this->view();
 			}
 			$this->view();
+
 			//푸터 include		
 			$this->load->view('page/footer_v');
 		}
@@ -143,6 +144,7 @@ class Page extends CI_Controller {
 //		$board_id = $this->uri->segment(5);
 		$board_id =$this->uri->segment(2);
 		$is_test=$this->uri->segment(3)=="test";
+		$mobile=$this->uri->segment(3)=="mobile";
 
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$data['views'] = $this->page_m->get_view($table, $board_id);
@@ -153,10 +155,17 @@ class Page extends CI_Controller {
  		//view 호출
  		$config=array('clientId'=>'aWWbsFdRSNQZL6Df5ATr');
 		$data['curl']=$this->curl->simple_get('http://openapi.map.naver.com/openapi/v2/maps.js', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+		$isMobile = $this->check_user_agent('mobile');
+
 		if($is_test){
 		$this->load->view('page/view2_v', $data);
 		}else{
-		$this->load->view('page/view_v', $data);
+			if($isMobile||$mobile)
+			{
+				$this->load->view('page/view_v', $data);
+			}else{
+				$this->load->view('page/pcview_v', $data);
+			}
 		}
  	}
 
@@ -487,6 +496,36 @@ class Page extends CI_Controller {
 		}
 		$seg_exp = explode("/", $seg);
 		return $seg_exp;
+	}
+
+	/* USER-AGENTS
+	================================================== */
+	function check_user_agent ( $type = NULL ) {
+        $user_agent = strtolower ( $_SERVER['HTTP_USER_AGENT'] );
+        if ( $type == 'bot' ) {
+                // matches popular bots
+                if ( preg_match ( "/googlebot|adsbot|yahooseeker|yahoobot|msnbot|watchmouse|pingdom\.com|feedfetcher-google/", $user_agent ) ) {
+                        return true;
+                        // watchmouse|pingdom\.com are "uptime services"
+                }
+        } else if ( $type == 'browser' ) {
+                // matches core browser types
+                if ( preg_match ( "/mozilla\/|opera\//", $user_agent ) ) {
+                        return true;
+                }
+        } else if ( $type == 'mobile' ) {
+                // matches popular mobile devices that have small screens and/or touch inputs
+                // mobile devices have regional trends; some of these will have varying popularity in Europe, Asia, and America
+                // detailed demographics are unknown, and South America, the Pacific Islands, and Africa trends might not be represented, here
+                if ( preg_match ( "/phone|iphone|itouch|ipod|symbian|android|htc_|htc-|palmos|blackberry|opera mini|iemobile|windows ce|nokia|fennec|hiptop|kindle|mot |mot-|webos\/|samsung|sonyericsson|^sie-|nintendo/", $user_agent ) ) {
+                        // these are the most common
+                        return true;
+                } else if ( preg_match ( "/mobile|pda;|avantgo|eudoraweb|minimo|netfront|brew|teleca|lg;|lge |wap;| wap /", $user_agent ) ) {
+                        // these are less common, and might not be worth checking
+                        return true;
+                }
+        }
+        return false;
 	}
 }
 

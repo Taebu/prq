@@ -1336,7 +1336,7 @@ class Ajax_m extends CI_Model
 		$json=array();
 		$json['success']=false;
 		if(is_null($array['mn_hp'])||strlen($array['mn_hp'])<2){
-		echo `json_encode($json);
+		echo json_encode($json);
 		return ;
 		}
 		$sql=array();
@@ -1351,7 +1351,7 @@ class Ajax_m extends CI_Model
 		{
 			$sql=array();
 			$sql[]="UPDATE `prq_mno` SET ";
-//			$sql[]=" mn_id='".$array['mn_id']."', ";
+			$sql[]=" mn_id='".$array['mn_id']."', ";
 			$sql[]=" mn_email='".$array['mn_email']."', ";
 			$sql[]=" mn_hp='".$array['mn_hp']."', ";
 			$sql[]=" mn_operator='".$array['mn_operator']."', ";
@@ -1364,7 +1364,7 @@ class Ajax_m extends CI_Model
 		}else{
 			$sql=array();
 			$sql[]="INSERT INTO  `prq_mno` SET ";
-//			$sql[]=" mn_id='".$array['mn_id']."', ";
+			$sql[]=" mn_id='".$array['mn_id']."', ";
 			$sql[]=" mn_email='".$array['mn_email']."', ";
 			$sql[]=" mn_hp='".$array['mn_hp']."', ";
 			$sql[]=" mn_operator='".$array['mn_operator']."', ";
@@ -1429,6 +1429,44 @@ class Ajax_m extends CI_Model
 		}
 		echo json_encode($json);
 	}
+
+
+	/*
+	del_mno($array)
+
+	'mn_dup_limit'=>$mn_dup_limit
+	가맹점 mno 정보를 insert 합니다.
+	@param $array data
+	@return json
+	*/
+	function del_mno($array)
+	{
+		$json=array();
+		$json['success']=false;
+		if(is_null($array['mn_no'])){
+		echo json_encode($json);
+		return ;
+		}
+		
+		$sql=array();
+		$sql[]="DELETE FROM `prq_mno` WHERE ";
+		$sql[]=" mn_no='".$array['mn_no']."'; ";
+
+		$join_sql=join("",$sql);
+		//$json['query']=$ojin_sql;
+		$query = $this->db->query($join_sql);
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
+
 }
 
 /* End of file ajax_m.php */

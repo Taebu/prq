@@ -123,7 +123,8 @@ function get_mnoinfo(){
 //	var param=$("#write_action").serialize();
 
     $.ajax({
-		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
+//		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
+		url:"/prq/ajax/get_mnoinfo2/"+$("[name=mb_hp]").val(),
 		type: "POST",
         data:"",
         cache: false,

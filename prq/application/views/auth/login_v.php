@@ -17,6 +17,7 @@
 </head>
 
 <body class="gray-bg">
+
 <?php
 $attributes = array('class' => 'form-horizontal', 'id' => 'auth_login');
 echo form_open('/auth/login', $attributes);
@@ -70,11 +71,11 @@ echo form_open('/auth/login', $attributes);
 				<div style="font-weight:bold;font-size:19px;margin:35px 0 10px 0;">PRQ 프로그램</div>
 				<ul style="padding:0px;margin:0px;list-style:none;">
 					<li style="float:left;width:30%;">
-						<a href="http://prq.co.kr/prq/uploads/files/Setup.zip" target="_blank"><img src="/prq/img/login_icon1.png" width="100%"></a>
+						<a href="http://prq.co.kr/prq/uploads/files/PRQ_Serial.zip" target="_blank"><img src="/prq/img/login_icon1.png" width="100%"></a>
 					</li>
 					<li style="float:left;width:30%;margin-left:15px;">
 						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"> -->
-						<a href="/prq/down/KTProQ.zip" target="_blank"><img src="/prq/img/login_icon2.png" width="100%"></a>
+						<a href="/prq/uploads/files/KTProQ.zip" target="_blank"><img src="/prq/img/login_icon2.png" width="100%"></a>
 					</li>
 					<li style="float:right;width:30%;">
 						<a href="javascript:alert('준비중입니다.');" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a>
@@ -88,11 +89,15 @@ echo form_open('/auth/login', $attributes);
 				</div>
 				</a>
 			</div>
-
+			<!-- <div style="width:100%;margin:30px;">
+				<a href="">
+				test
+				</a>
+			</div> -->
 			<p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
         </div>
     </div>
-
+	
 	<div style="clear:both;"></div>
 				
 	

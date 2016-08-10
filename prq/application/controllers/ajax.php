@@ -532,6 +532,7 @@ class Ajax extends CI_Controller {
 	{
 		$json['success']=false;
 
+		$mn_id= $this->input->post("mn_id", TRUE);
 		$mn_hp= $this->input->post("mn_hp", TRUE);
 		$mn_operator= $this->input->post("mn_operator", TRUE);
 		$mn_model= $this->input->post("mn_model", TRUE);
@@ -542,6 +543,7 @@ class Ajax extends CI_Controller {
 		$mn_appvname= $this->input->post("mn_appvname", TRUE);
 
 		$write_data = array(
+			'mn_id'=>$mn_id,
 			'mn_hp'=>$mn_hp,
 			'mn_operator'=>$mn_operator,
 			'mn_model'=>$mn_model,
@@ -551,7 +553,7 @@ class Ajax extends CI_Controller {
 			'mn_appvcode'=>$mn_appvcode ,
 			'mn_appvname'=>$mn_appvname
 		);
-		$result = $this->ajax_m->set_mno($write_data);
+		$result = $this->ajax_m->set_device_info($write_data);
 		echo $result;
 	}
 
@@ -563,6 +565,21 @@ class Ajax extends CI_Controller {
 
 		echo $result;
 	}
+
+	/* del_mno */
+	public function del_mno()
+	{
+		$json['success']=false;
+		$mn_no=$this->uri->segment(3);
+
+
+		$write_data = array(
+			'mn_no'=>$mn_no
+		);
+		$result = $this->ajax_m->del_mno($write_data);
+		echo $result;
+	}
+
 }
 
 /* End of file ajax_board.php */
