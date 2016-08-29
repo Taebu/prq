@@ -260,12 +260,12 @@ map_location();
 		<div id="footer" class="footer footer01" style="letter-spacing:0.5px;background:#353840;height:105px;">
 			<div style="background:#e84031;margin-bottom:10px;font-size:17px;padding:5px;">
 				<a href="/prq/prqservice.php">
-				<ul style="width:190px;margin:0 auto;">
+				<ul style="width:180px;margin:0 auto;">
 					<li style="float:left;">
 						<img src="/prq/img/new/cursor.png" style="width:22px;">
 					</li>
 					<li style="float:right;font-size:17px;padding-top:7px;">
-						PRQ 서비스 신청하기
+						톡톡메시지 신청하기
 					</li>
 					<li style="clear:both;"></li>
 				</ul>

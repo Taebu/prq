@@ -15,12 +15,12 @@
 			<img src="/prq/img/new/prqservice.png" width="100%">
 		</div>
 		<div style="width:100%;">
-			<ul style="padding:0px;margin:0px;list-style:none;font-size:45px;line-height:115px;text-align:center;color:#fff;">
+			<ul style="padding:0px;margin:0px;list-style:none;font-size:45px;line-height:55px;text-align:center;color:#fff;">
 				<a href="tel:031-904-4084" style="color:#fff;">
-				<li style="float:left;width:30%;background:#a7a7a7;">테스트 전화</li>
+				<li style="float:left;width:30%;background:#a7a7a7;"><img src="/prq/img/new/prqcall.png" width="100%"></li>
 				</a>
 				<a href="tel:1599-7571" style="color:#fff;">
-				<li style="float:left;width:70%;background:#e84031;">전화문의</li>
+				<li style="float:left;width:70%;background:#e84031;"><img src="/prq/img/new/prqcall2.png" width="100%"></li>
 				</a>
 				<li style="clear:both;"></li>
 			</ul>

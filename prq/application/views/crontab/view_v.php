@@ -83,9 +83,12 @@ foreach($black_list as $bl){
 * SET @max_count=@max_count+1;
 *
 
-e날짜	아이디	포트	전화1	전화2	cd_state	cd_name	cd_tel	cd_hp	query	중복발송제한	결과
+e날짜	
+아이디	
+포트	
+전화1	전화2	cd_state	cd_name	cd_tel	cd_hp	query	중복발송제한	결과
 2016-05-27 14:20:04	0319795663@naver.com	3	01034788878		0	효성각	0319795663	01077395675	0	150	0	3	16/150	first_sent	150	0	보냄
-
+5
 *******************************************************************************/
 echo "<table border=1  class='ibk_board mlr30'>";
 echo "<tr>";
@@ -238,6 +241,7 @@ foreach($list as $li)
 			$controller->crontab_m->set_cdr_kt($cdr_info);
 			$li->cd_hp=$st->st_hp_1;
 		}/* if($li->cd_port=="0"){...} */
+		
 
 		/*mms 발송 여부*/
 		$chk_mms=true;
@@ -364,7 +368,16 @@ foreach($list as $li)
 
 		/********************************************************************************
 		*
-		* 9-3. curl->simple_post('http://prq.co.kr/prq/set_gcm.php')
+		* 9-3. if($cd_date=="first_send"){...}
+		* - 처음 보낼 때 안보내지던 버그 수정
+		* - $chk_mms = true;
+		*********************************************************************************/
+		if($cd_date=="first_send"){
+			$chk_mms=true;
+		}
+		/********************************************************************************
+		*
+		* 9-4. curl->simple_post('http://prq.co.kr/prq/set_gcm.php')
 		* - 수신거부 중복, 150건 제한 혹은 설정한 일수 제한 아닌 경우만
 		* - $chk_mms = true;
 		*********************************************************************************/

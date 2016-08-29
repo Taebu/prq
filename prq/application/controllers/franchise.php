@@ -334,6 +334,7 @@ class Franchise extends CI_Controller {
 				$modify_mno_data = array(
 					'mn_id' => $this->input->post('mb_id', TRUE),
 					'mn_email' => $this->input->post('mb_email', TRUE),
+					'mn_hp' => $this->input->post('mb_hp', TRUE),
 					'mn_dup_limit' => $this->input->post('mn_dup_limit', TRUE),
 					'mn_mms_limit' => $this->input->post('mn_mms_limit', TRUE)
 				);

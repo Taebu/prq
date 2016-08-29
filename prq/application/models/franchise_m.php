@@ -458,6 +458,8 @@ mysql> select * from prq_member_code;
 		5 임의 설정 (prq에서 5건을 전송후 일 전송이 차단 됩니다. 통신사에서 일전송이 200건이 되면 통신사측(mno)에서 봇으로 간주 차단하고 해지 요청 할 때까지 전송할 수 없기 때문입니다.
 		*/
 		$sql_array[]="where mn_id='".$arrays['mn_id']."' ";
+		$sql_array[]="OR mn_hp='".$arrays['mn_hp']."' ";
+		$sql_array[]="order by mn_datetime limit 1";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환

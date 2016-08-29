@@ -38,7 +38,7 @@ extract($_POST);
   	storedetail -->
 	
 	<div style="border:0px solid red;padding:10px;">
-		<div style="margin-bottom:9px;font-size:23px;text-align:center;">업장정보</div>
+		<div style="margin-bottom:9px;font-size:23px;text-align:center;">업체정보</div>
 		
 		<div style="text-align:center;">
 			<img src="/prq/uploads/TH/<?php echo $st_thumb_paper;?>" style="background:#fff;padding:4px;border:1px solid #bcbcbc;width:160px;border-radius:6px;">
