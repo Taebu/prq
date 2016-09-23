@@ -15,9 +15,13 @@ if ($row['cnt'] == 0){ // 없음
 	echo "true";
 	}
 }else if($row['cnt']>0&&strlen($token_id)>5&&strlen($phone)>5){
-	$sql="delete from prq_token_id where phone='".$phone."';";
-	$query = mysql_query($sql);
+//	$sql="delete from prq_token_id where phone='".$phone."';";
+//	$query = mysql_query($sql);
+	$sql="update prq_token_id set ";
+	$sql.="token_id='".$token_id."',";
+	$sql.="regdate=now() where phone='".$phone."';";
 
+	$query = mysql_query($sql);
 	echo "false";
 }
 }else{

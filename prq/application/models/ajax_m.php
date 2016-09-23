@@ -1230,7 +1230,58 @@ class Ajax_m extends CI_Model
 		echo json_encode($json);
 		return ;
 		}
+/*
 
+데이터베이스 오류가 발생하였습니다.
+
+Error Number: 1062
+
+Duplicate entry '01050421183' for key 'pf_hp_chk'
+
+INSERT INTO `callerid`.`cdr` SET date=now(), UserID='0319044084@naver.com', port='1', callerid='01050421183', calledid='01020135535';
+
+Filename: /var/www/html/prq/models/ajax_m.php
+
+Line Number: 1245
+
+mysql> show create table cdr\G;
+*************************** 1. row ***************************
+       Table: cdr
+Create Table: CREATE TABLE `cdr` (
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `UserID` varchar(255) NOT NULL DEFAULT '',
+  `port` varchar(10) NOT NULL DEFAULT '',
+  `callerid` varchar(30) NOT NULL DEFAULT '',
+  `calledid` varchar(30) DEFAULT '',
+  `state` tinyint(1) DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)
+
+
+1 row in set (0.00 sec)
+
+mysql> show create table prq_first_log\G;
+*************************** 1. row ***************************
+       Table: prq_first_log
+Create Table: CREATE TABLE `prq_first_log` (
+  `pf_no` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pf_id` varchar(30) NOT NULL DEFAULT '' COMMENT '가맹점 아이디',
+  `pf_port` varchar(10) NOT NULL DEFAULT '' COMMENT '가맹점 포트',
+  `pf_hp` char(12) DEFAULT '0' COMMENT '수신번호',
+  `pf_name` varchar(255) NOT NULL DEFAULT '' COMMENT '상점명',
+  `pf_tel` char(30) NOT NULL DEFAULT '' COMMENT '상점번호',
+  `pf_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pf_status` enum('first','before_send','sended','send_fail','member','pause','not_regi') NOT NULL DEFAULT 'first' COMMENT '전송 상태 ',
+  PRIMARY KEY (`pf_no`),
+  UNIQUE KEY `pf_hp_chk` (`pf_hp`)
+) ENGINE=MyISAM AUTO_INCREMENT=16758 DEFAULT CHARSET=utf8 COMMENT='BDMT App FIRST LOG'
+1 row in set (0.00 sec)
+
+ERROR:
+
+
+
+*/
 		$sql=array();
 		$sql[]="INSERT INTO  `callerid`.`cdr` SET ";
 		$sql[]=" date=now(), ";
@@ -1241,7 +1292,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		//$json['query']=$ojin_sql;
+
 		$query = $this->db->query($join_sql);
 		if($query)
 		{

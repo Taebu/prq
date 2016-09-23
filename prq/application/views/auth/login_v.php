@@ -26,13 +26,14 @@ echo form_open('/auth/login', $attributes);
         <div>
             <div>
 
-                <h1 class="logo-name">PRQ</h1>
+                <!-- <h1 class="logo-name">PRQ</h1> -->
+                <img src="/prq/img/logo.png" width="80%">
 
             </div>
-            <h3>Welcome to PRQ</h3>
-            <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-            </p>
+            <h3>톡톡메시지 방문을 환영합니다!</h3>
+            <!--p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+                <Continually expanded and constantly improved Inspinia Admin Them (IN+)>
+            </p-->
             <p>로그인. 시도 해 주세요..</p>
             <form class="m-t" role="form" action="index.html">
                 <div class="form-group">
@@ -68,7 +69,7 @@ echo form_open('/auth/login', $attributes);
 			</div> -->
 			
 			<div>
-				<div style="font-weight:bold;font-size:19px;margin:35px 0 10px 0;">PRQ 프로그램</div>
+				<div style="font-weight:bold;font-size:19px;margin:35px 0 10px 0;">※ TOKTOK MESSAGE 프로그램 ※</div>
 				<ul style="padding:0px;margin:0px;list-style:none;">
 					<li style="float:left;width:30%;">
 						<a href="http://prq.co.kr/prq/uploads/files/PRQ_Serial.zip" target="_blank"><img src="/prq/img/login_icon1.png" width="100%"></a>
@@ -82,7 +83,18 @@ echo form_open('/auth/login', $attributes);
 					</li>
 					<li style="clear:both;"></li>
 				</ul>
+				
+				
 				<div style="clear:both;height:15px;"></div>
+				
+				<a href="/prq/down/dotNetFx40_Full_x86_x64.exe" style="color:#fff;">
+				<div style="background:#bbb;color:#fff;padding:10px;">
+					넷프레임워크 DOWN
+				</div>
+				</a>
+
+				<div style="clear:both;height:15px;"></div>
+								
 				<a href="/prq/down/TeamViewer_Setup_ko-rjl.exe" target="_blank">
 				<div style="background:#828282;color:#fff;padding:10px;">
 					본사 원격지원 설치하기

@@ -354,6 +354,7 @@ aAjaxData.length = 4;
 var parameters = {};
 parameters['store_no'] = storeNo;
 parameters['member_no'] = memberNo;
+parameters['st_main_paper'] = "<?php echo $views->st_main_paper;?>";
 parameters['st_thumb_paper'] = "<?php echo $views->st_thumb_paper;?>";
 $.ajax({
 url : '/prq/include/view/home.php',

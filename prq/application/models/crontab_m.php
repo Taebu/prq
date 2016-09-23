@@ -505,16 +505,17 @@ class Crontab_m extends CI_Model
 		$sql=array();
 		$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
 		$sql[]="date_client_req=SYSDATE(), ";
-		$sql[]="template_code='R00001',";
+//		$sql[]="template_code='R00001',";	//구 @배달맛톡 템플릿
+		$sql[]="template_code='T00006',";
 		$sql[]="content='".$array['msg']."',";
 		$sql[]="recipient_num='".$array['mb_hp']."',";
 		$sql[]="callback='".$array['tel']."',";
 		$sql[]="msg_status='1',";
 		$sql[]="subject=' ', ";
-		$sql[]="sender_key='70b606cac13417a4dccc7577fb8d5f177e9ab8e3', ";
+//		$sql[]="sender_key='70b606cac13417a4dccc7577fb8d5f177e9ab8e3', ";
+		$sql[]="sender_key='dbae1c54597868639f649ecc40d68dd45d100cb7', "; //@배달톡톡 키
 		$sql[]="service_type='3', ";
 		$sql[]="msg_type='1008';";
-
 		$join_sql=join("",$sql);
 		$json['query']=$join_sql;
 		$query = $this->db->query($join_sql);

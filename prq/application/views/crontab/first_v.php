@@ -112,25 +112,27 @@ foreach($list as $li)
 	echo "<td>".$li->pf_hp."</td>";
 	echo "<td>".$li->pf_status."</td>";
 	echo "<td>".$li->pf_name."</td>";
-$message=array();
-$message[]="[".$li->pf_name."] 에서 주문 해주셔서 감사합니다";
-$message[]="전화번호 : ".$li->pf_tel."";
-$message[]="적립금액 : 2,000원 적립";
-$message[]="5회 주문시 현금 최대 10,000원";
-$message[]="10회 주문시 현금 최대 20,000원";
-$message[]="적립기간 : 적립 후 부터 60일 후 소멸";
-$message[]="";
-$message[]="\"배달맛톡\" 어플로 주문 시 마다 적립을 해드립니다.";
-$message[]="";
-$message[]="적립금은 \"배달맛톡\" 에서 제공하며 어플에서 미션달성 시 현금으로 교환하여 사용하실 수 있습니다.";
-$message[]="";
-$message[]="12,000원 이하 주문 시 적립금액은 무효 처리됩니다.";
-$message[]="";
-$message[]="적립금 관련 궁금한 점은 1599-9495 으로 문의해 주세요";
-$message[]="";
-$message[]="앱 다운로드 링크";
-$message[]="http://bdmt.cashq.co.kr/m/p\"";
-$msg=join("\n",$message);
+		$message=array();
+		$message[]="[".$li->pf_name."]을 이용해주셔서 감사합니다.\n";
+		$message[]="적립번호 : [".$li->pf_tel."]\n";
+		$message[]="\n";
+		$message[]="고객님에게 \"2,000원\" 적립 해드렸습니다.\n";
+		$message[]="\"배달톡톡\" 어플로 접속하시면 확인가능합니다.\n";
+		$message[]="\n";
+		$message[]="[새로운 미션내용]\n";
+		$message[]="5회 주문시 현금 최대 10,000원\n";
+		$message[]="10회 주문시 현금 최대 20,000원\n";
+		$message[]="적립기간 : 주문일 부터 60일 후 소멸\n";
+		$message[]="\n";
+		$message[]="요즘 트랜드에 맞게 배달음식을 주문 시 마다 현금적립 어플을 새롭게 출시 하였습니다.\n";
+		$message[]="고객님만을 위한 배달어플을 지금 확인 하세요\!\n";
+		$message[]="\n";
+		$message[]="적립금 관련 궁금한 점은 1599-9495 으로 문의해 주세요\n";
+		$message[]="\n";
+		$message[]="\"배달톡톡\" 앱 포인트 확인 링크\n";
+		$message[]="http://bdtalk.co.kr/m/p/";
+
+		$msg=join("",$message);
 	echo "<td><textarea style=\"margin: 0px; height: 366px; width: 342px;\">".$msg."</textarea></td>";
 $is_ata=$li->pf_name==""?"등록되지 않은 상점 전송불가":"전송가능";
 	echo "<td>".$is_ata."</td>";
@@ -138,19 +140,19 @@ $is_ata=$li->pf_name==""?"등록되지 않은 상점 전송불가":"전송가능
 
 	IF($li->pf_name=="")
 	{
-		$cdr_info = array(
+		//$cdr_info = array(
 		//상점 정보가 존재하지 않는 대리점
-		'pf_no'=>$li->pf_no,
-		'pf_status'=>'not_regi'
-		);
-		$controller->crontab_m->set_firt_status($cdr_info);
+		//'pf_no'=>$li->pf_no,
+		//'pf_status'=>'not_regi'
+		//);
+		//$controller->crontab_m->set_firt_status($cdr_info);
 	}ELSE IF($li->pf_status=="first"){
-		$cdr_info = array(
+		//$cdr_info = array(
 		//상점 정보가 존재하지 않는 대리점
-		'pf_no'=>$li->pf_no,
-		'pf_status'=>'before_send'
-		);
-		$controller->crontab_m->set_firt_status($cdr_info);
+		//'pf_no'=>$li->pf_no,
+		//'pf_status'=>'before_send'
+		//);
+		//$controller->crontab_m->set_firt_status($cdr_info);
 	}
 
 
