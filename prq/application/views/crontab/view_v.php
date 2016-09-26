@@ -67,6 +67,10 @@ foreach($black_list as $bl){
 	$black_arr[]=$bl->bl_hp;
 }
 
+$black_list=join(",",$black_arr);
+echo "<br>";
+echo "black_list : ".$black_list;
+echo "<br>";
 /******************************************************************************
 *
 * 2. 콜 리스트 조회 일부는 조회한 후 필터링 
@@ -210,10 +214,20 @@ foreach($list as $li)
 	* - 이메일과 포트 번호로 상점 정보 조회
 	*
 	********************************************************************************/
-	$config = array(
-	'cd_id'=> $li->cd_id,
-	'cd_port' =>$li->cd_port);
-	$store=$controller->crontab_m->get_store($config);
+	/* kt CID 상점 정보 */
+	if($li->cd_port=="0"){
+		$config = array(
+		'cd_id'=> $li->cd_id,
+		'calledid' =>$li->cd_calledid);
+		$store=$controller->crontab_m->get_store_kt($config);
+
+	}else if($li->cd_port!="0"){
+	/* 일반 CID 상점 정보 */
+		$config = array(
+		'cd_id'=> $li->cd_id,
+		'cd_port' =>$li->cd_port);
+		$store=$controller->crontab_m->get_store($config);
+	}
 
 	/* 콜로그가 KT 장비 인 경우*/
 	foreach($store as $st)

@@ -228,6 +228,50 @@ class Crontab_m extends CI_Model
     }
 
 	/**
+	 * kt STORE 리스트 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $cd_id  콜로그 아이디
+	 * @param string $cd_port 콜로그 포트
+	 * @return array
+	 */
+ 	function get_store_kt($array)
+    {
+
+		/*
+		select * from prq.prq_store where 
+		mb_id='0326110844@naver.com' 
+		and st_tel_1='0326615917';
+		*/
+		$sql=array();
+		$sql[]="select ";
+		$sql[]=" st_no,";
+		$sql[]=" st_name,";
+		$sql[]=" st_mno,";
+		$sql[]=" st_tel_1,";
+		$sql[]=" st_hp_1,";
+		$sql[]=" st_thumb_paper,";
+		$sql[]=" st_top_msg, ";
+		$sql[]=" st_middle_msg,";
+		$sql[]=" st_bottom_msg, ";
+		$sql[]=" st_modoo_url ";
+		$sql[]=" from ";
+		$sql[]="prq_store ";
+		$sql[]="where ";
+		$sql[]="mb_id='".$array['cd_id']."' ";
+		$sql[]="and st_tel_1='".$array['calledid']."' ;";
+
+
+		$str_sql=join("",$sql);
+   		$query = $this->db->query($str_sql);
+
+     	//상점 정보 리스트 반환
+	    $result = $query->result();
+
+    	return $result;
+    }
+
+	/**
 	 * 블랙 리스트 가져오기
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>
