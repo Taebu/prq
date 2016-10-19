@@ -1,0 +1,16 @@
+<Virtualhost *:80 >
+    ServerName prmms.co.kr
+    ServerAlias prmms.co.kr www.prmms.co.kr
+    ServerAdmin erm00@naver.com
+    DocumentRoot /home/hosting_users/prmms/www
+    ErrorDocument 503 http://hostinfo.cafe24.com/overTraffic/503.html?cashq.co.kr
+#    CustomLog logs/prmms_co_kr.log combined
+#    CustomLog "logs/prmmms_co_kr.log.%Y-%m-%d" combined
+#    CustomLog "|bin/rotatelogs /home/apache/logs/prmms_kr.log.%Y-%m-%d 86400"
+      CustomLog "|/home/apache/bin/rotatelogs /home/apache/logs/prmms.log.%Y-%m-%d 86400" common
+    <IfModule mod_spamfilter.c>
+        SpamFilterEngine off
+    </IfModule>
+</VirtualHost>
+
+

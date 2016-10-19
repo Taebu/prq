@@ -116,8 +116,6 @@ class Franchise_m extends CI_Model
     	return $result;
     }
 
-
-
 	/**
 	 * 게시물 입력
 	 * @author Taebu Moon <mtaebu@gmail.com>
@@ -129,7 +127,6 @@ class Franchise_m extends CI_Model
 		$sql_array = array(
 			'mb_pcode' => $arrays['mb_pcode']
 		);
-
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 		$sql_array[]="mb_id='".$arrays['mb_id']."',";
@@ -166,6 +163,109 @@ class Franchise_m extends CI_Model
 		//결과 반환
 		return $result;
  	}
+	/**
+	 * 게시물 목록 가져오기 2
+	 *
+	 * @author Taebu <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $type 총 게시물 수 또는 게시물 배열을 반환할 지를 결정하는 구분자
+	 * @param string $offset 게시물 가져올 순서
+	 * @param string $limit 한 화면에 표시할 게시물 갯수
+	 * @param string $search_array 배열 검색어
+	 * @return array
+	 */
+    function get_list2($table='prq_member', $type='', $offset='', $limit='', $search_array=array())
+    {
+		$sword= ' WHERE 1=1 ';
+		if($table==""){
+		$table='prq_member';
+		}
+		$table='prq_member';
+		/*
+		if ( $search_word != '' )
+     	{
+     		//검색어가 있을 경우의 처리
+     		$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+     	}
+		*/
+    	$limit_query = '';
+		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+		//echo "mb_pcode=>".$mb_pcode."<br/>";
+		//echo "prq_fcode=>".$prq_fcode."<br/>";
+		//echo "mb_gcode=>".$mb_gcode."<br/>";
+		/* 관리자인 경우 */
+		if( $mb_gcode=="G1"|| $mb_gcode=="G2"){
+			$sword.= ' and mb_gcode="G5" ';
+		}
+
+
+		if ( $search_array['mb_id'] != '' )
+		{
+			//검색어가 있을 경우의 처리
+			$sword .= ' and mb_id like "%'.$search_array['mb_id'].'%" ';
+		}
+		
+		if ( $search_array['mb_email'] != '' )
+		{
+			//검색어가 있을 경우의 처리
+			$sword .= ' and mb_email like "%'.$search_array['mb_email'].'%" ';
+		}
+
+		if ( $search_array['mb_name'] != '' )
+		{
+			//검색어가 있을 경우의 처리
+			$sword .= ' and mb_name like "%'.$search_array['mb_name'].'%" ';
+		}
+
+
+		if ( $search_array['mb_hp'] != '' )
+		{
+			//검색어가 있을 경우의 처리
+			// - 기호 제거 - 있는 경우 검색 되지 않음.!!!
+			$search_array['mb_hp']=str_replace("-", "", $search_array['mb_hp']);
+			$sword .= ' and mb_hp like "%'.$search_array['mb_hp'].'%" ';
+		}
+
+		/* 총판인 경우 */
+		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'PT%" ';
+		}
+		
+		/*대리점인 경우*/
+		if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" and mb_gcode="G5" ';
+		}
+
+    	if ( $limit != '' OR $offset != '' )
+     	{
+     		//페이징이 있을 경우의 처리
+     		$limit_query = ' LIMIT '.$offset.', '.$limit;
+     	}else{
+		
+		}
+//		$table="ci_board";
+    	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY mb_no DESC".$limit_query;
+//		echo $sql;
+   		$query = $this->db->query($sql);
+
+		if ( $type == 'count' )
+     	{
+     		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
+	    	$result = $query->num_rows();
+
+	    	//$this->db->count_all($table);
+     	}
+     	else
+     	{
+     		//게시물 리스트 반환
+	    	$result = $query->result();
+     	}
+
+    	return $result;
+    }
 
 	/**
 	 * 회원 코드 입력

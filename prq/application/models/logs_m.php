@@ -56,6 +56,7 @@ class Logs_m extends CI_Model
      	{
 
 			if($table=="gcm"){
+				$search_word=str_replace("-","",$search_word);
 				$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
 			}else if($table=="mms"){
 				/*
@@ -177,12 +178,14 @@ class Logs_m extends CI_Model
 			if ( $search_array['gc_sender'] != '' )
 			{
 				//검색어가 있을 경우의 처리
+				$search_array['gc_sender']=str_replace("-","",$search_array['gc_sender']);
 				$sword .= ' and gc_sender like "%'.$search_array['gc_sender'].'%" ';
 			}
 			
 			if ( $search_array['gc_receiver'] != '' )
 			{
 				//검색어가 있을 경우의 처리
+				$search_array['gc_receiver']=str_replace("-","",$search_array['gc_receiver']);
 				$sword .= ' and gc_receiver like "%'.$search_array['gc_receiver'].'%" ';
 			}
 		}

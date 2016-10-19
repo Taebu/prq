@@ -84,11 +84,18 @@ class Franchise extends CI_Controller {
 
 		//페이지네이션 라이브러리 로딩 추가
 		$this->load->library('pagination');
+		$search_array = array(
+			'mb_name'=>$this->input->post('mb_name', TRUE),
+			'mb_id'=>$this->input->post('mb_id', TRUE),
+			'mb_email'=>$this->input->post('mb_email', TRUE),
+			'mb_hp'=>$this->input->post('mb_hp', TRUE)
+		);
 
 		$config = array(
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/franchise/lists/prq_member'.$page_url.'/page/',
-		'total_rows' => $this->franchise_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		//'total_rows' => $this->franchise_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'total_rows' => $this->franchise_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 25,
 		'uri_segment' => $uri_segment,
 
@@ -115,6 +122,7 @@ class Franchise extends CI_Controller {
 		//페이징 링크를 생성하여 view에서 사용할 변수에 할당
 		$data['pagination'] = $this->pagination->create_links();
 
+
 		//게시판 목록을 불러오기 위한 offset, limit 값 가져오기
 		$data['page'] = $page = $this->uri->segment($uri_segment, 1);
 
@@ -129,7 +137,12 @@ class Franchise extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->franchise_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		/* 검색한 값들 상세 검색 배열*/
+		$data['search']=$search_array;
+
+//		$data['list'] = $this->franchise_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['list'] = $this->franchise_m->get_list2("prq_member", '', $start, $limit, $search_array);
+
 		$data['st_count'] = json_decode(json_encode($this->franchise_m->get_stcnt()), True);
 		$data['pt_names'] = json_decode(json_encode($this->franchise_m->get_ptcode()), True);
 		$data['ds_names'] = json_decode(json_encode($this->franchise_m->get_dscode()), True);

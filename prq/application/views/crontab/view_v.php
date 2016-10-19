@@ -203,7 +203,11 @@ foreach($list as $li)
 	echo "<td>".$cd_date."</td>";
 	echo "<td>".$get_mno_limit->mn_mms_limit."</td>";
 	echo "<td>".$get_mno_limit->mn_dup_limit."</td>";
+	if($cd_date=="first_sent"){
+	$chk_limit_date="처음 보냄";
+	}else{
 	$chk_limit_date=$get_mno_limit->mn_dup_limit>$cd_date?"보내면 안됨":"보냄";
+	}
 	echo "<td>".$chk_limit_date."</td>";
 
 
@@ -266,6 +270,8 @@ foreach($list as $li)
 		}else{
 			$msg[]=str_replace(array("\r\n", "\r", "\n"), '<br>', $st->st_middle_msg);		
 		}
+		//$mms_title=strlen($st->st_top_msg)>3?$st->st_top_msg:"web";
+		$mms_title=$st->st_top_msg;
 		$msg[]=$st->st_bottom_msg;
 		$msg[]=$st->st_modoo_url;
 		$param=array();
@@ -297,7 +303,7 @@ foreach($list as $li)
 				$li->cd_hp=$st->st_hp_1;
 			}
 			$sql[]="INSERT INTO `prq_gcm_log` SET ";
-			$sql[]="gc_subject='web',";
+			$sql[]="gc_subject='".$mms_title."',";
 			$sql[]="gc_content='".$msg."',";
 			$sql[]="gc_ismms='true',";
 			$sql[]="gc_receiver='".$li->cd_callerid."',";
@@ -313,11 +319,41 @@ foreach($list as $li)
 		}
 
 		/********************************************************************************
-		* 9-1. void set_gcm_log
-		* 중복 제한 보내면 안됨
+		*
+		* 9-1. if($cd_date=="first_send"){...}
+		* - 처음 보낼 때 안보내지던 버그 수정
+		* - $chk_mms = true;
+		*********************************************************************************/
+		if($cd_date=="first_sent"){
+			/*gcm 로그 발생*/
+			$result_msg= "처음 발송 / ".$get_mno_limit->mn_dup_limit;
+			$gc_ipaddr='123.142.52.90';
+			$sql=array();
+			if($li->cd_port==0)
+			{
+				$li->cd_hp=$st->st_hp_1;
+			}
+
+			$sql[]="INSERT INTO `prq_gcm_log` SET ";
+			$sql[]="gc_subject='".$mms_title."',";
+			$sql[]="gc_content='".$msg."',";
+			$sql[]="gc_ismms='true',";
+			$sql[]="gc_receiver='".$li->cd_callerid."',";
+			$sql[]="gc_sender='".$li->cd_hp."',";
+			$sql[]="gc_imgurl='".$img_url."',";
+			$sql[]="gc_result='".$result_msg."',";
+			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
+			$sql[]="gc_stno='".$st->st_no."',";
+			$sql[]="gc_datetime=now();";
+			mysql_query(join("",$sql));
+			$chk_mms=true;
+		
+		/********************************************************************************
+		* 9-2. void set_gcm_log
+		* 중복 제한 보내면 안됨 
 		* prq_gcm_log 중복제한 로그 발생
 		********************************************************************************/
-		if($get_mno_limit->mn_dup_limit>$cd_date){
+		}else if($get_mno_limit->mn_dup_limit>$cd_date){
 			/*gcm 로그 발생*/
 			$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
 			$gc_ipaddr='123.142.52.90';
@@ -328,7 +364,7 @@ foreach($list as $li)
 			}
 
 			$sql[]="INSERT INTO `prq_gcm_log` SET ";
-			$sql[]="gc_subject='web',";
+			$sql[]="gc_subject='".$mms_title."',";
 			$sql[]="gc_content='".$msg."',";
 			$sql[]="gc_ismms='true',";
 			$sql[]="gc_receiver='".$li->cd_callerid."',";
@@ -340,10 +376,10 @@ foreach($list as $li)
 			$sql[]="gc_datetime=now();";
 			mysql_query(join("",$sql));
 			$chk_mms=false;
-		}
+		} 
 
 		/********************************************************************************
-		* 9-2. void set_gcm_log
+		* 9-3. void set_gcm_log
 		* 150건 제한
 		* prq_gcm_log 150건 제한 로그 발생
 		********************************************************************************/
@@ -366,7 +402,7 @@ foreach($list as $li)
 			}
 
 			$sql[]="INSERT INTO `prq_gcm_log` SET ";
-			$sql[]="gc_subject='web',";
+			$sql[]="gc_subject='".$mms_title."',";
 			$sql[]="gc_content='".$msg."',";
 			$sql[]="gc_ismms='true',";
 			$sql[]="gc_receiver='".$li->cd_callerid."',";
@@ -380,15 +416,8 @@ foreach($list as $li)
 			$chk_mms=false;
 		}		
 
-		/********************************************************************************
-		*
-		* 9-3. if($cd_date=="first_send"){...}
-		* - 처음 보낼 때 안보내지던 버그 수정
-		* - $chk_mms = true;
-		*********************************************************************************/
-		if($cd_date=="first_send"){
-			$chk_mms=true;
-		}
+
+		
 		/********************************************************************************
 		*
 		* 9-4. curl->simple_post('http://prq.co.kr/prq/set_gcm.php')
@@ -405,7 +434,7 @@ foreach($list as $li)
 				'is_mms'=>'true',
 				'message'=>$msg,
 				'st_no'=>$st->st_no,
-				'title'=>'web',
+				'title'=>$mms_title,
 				'receiver_num'=>$li->cd_callerid,
 				'phone'=>$li->cd_hp,
 				'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper,

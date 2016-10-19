@@ -25,7 +25,7 @@
 	<script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
-				if($("#gc_receiver").val() == ''){
+				if($("#gc_receiver").val() == ''||$("#gc_sender").val() == ''){
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
@@ -288,37 +288,15 @@
         <div class='col-sm-6'>    
             <div class='form-group'>
                 <label for="gc_receiver">수신인</label>
-                <input class="form-control" id="gc_receiver" name="gc_receiver" size="30" type="text" value="<?php echo $search['gc_receiver'];?>"/>
+                <input class="form-control" id="gc_receiver" name="gc_receiver" size="30" type="text" value="<?php echo $search['gc_receiver'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
                 <label for="gc_sender">발신인</label>
-                <input class="form-control" id="gc_sender" name="gc_sender" required="true" size="30" type="text" value="<?php echo $search['gc_sender'];?>" />
+                <input class="form-control" id="gc_sender" name="gc_sender" required="true" size="30" type="text" value="<?php echo $search['gc_sender'];?>" OnKeyDown="javascript:board_search_enter();" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
-    </div><!-- .row -->
-    <div class='row'>
-        <div class='col-sm-6'>    
-            <div class='form-group'>
-                <label for="user_title"><span class="mb_gname">총판</span>명</label>
-                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
-        <div class='col-sm-6'>
-            <div class='form-group'>
-                <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
-    </div><!-- .row -->
-    <div class='row'>
-        <div class='col-sm-12'>
-            <div class='form-group'>
-                <label for="user_email"><span class="mb_gname">총판</span> 목록</label>
-                <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
-            </div>
-        </div>
     </div><!-- .row -->
     <div class='row'>
 	<div class='col-sm-12 right'>

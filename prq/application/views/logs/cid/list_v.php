@@ -289,13 +289,13 @@
         <div class='col-sm-6'>    
             <div class='form-group'>
                 <label for="user_title">이메일</label>
-                <input class="form-control" id="cd_id" name="cd_id" size="30" type="text" value="<?php echo $search['cd_id'];?>"/>
+                <input class="form-control" id="cd_id" name="cd_id" size="30" type="text" value="<?php echo $search['cd_id'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
                 <label for="cd_name">상점명</label>
-                <input class="form-control" id="cd_name" name="cd_name" required="true" size="30" type="text" value="<?php echo $search['cd_name'];?>"/>
+                <input class="form-control" id="cd_name" name="cd_name" required="true" size="30" type="text" value="<?php echo $search['cd_name'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->
@@ -303,13 +303,13 @@
         <div class='col-sm-6'>    
             <div class='form-group'>
                 <label for="cd_callerid">수신인</label>
-                <input class="form-control" id="cd_callerid" name="cd_callerid" size="30" type="text"  value="<?php echo $search['cd_callerid'];?>"/>
+                <input class="form-control" id="cd_callerid" name="cd_callerid" size="30" type="text"  value="<?php echo $search['cd_callerid'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
                 <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" OnKeyDown="javascript:board_search_enter();" />
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->
@@ -317,7 +317,7 @@
         <div class='col-sm-12'>
             <div class='form-group'>
                 <label for="user_email"><span class="mb_gname">총판</span> 목록</label>
-                <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
+                <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text"  OnKeyDown="javascript:board_search_enter();"/>
             </div>
         </div>
     </div><!-- .row -->
