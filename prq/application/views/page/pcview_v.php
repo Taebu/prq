@@ -1,4 +1,9 @@
 <?php
+
+if(empty($views->st_name)){
+show_404('page/8');
+}
+
 $url=$_SERVER['PATH_INFO'];
 ?>
 <!doctype html>
@@ -143,7 +148,7 @@ $(function(){
 		<div id="search0">
 			<ul style="padding:0;margin:0;list-style:none;">
 				<li>스마트폰으로 QR코드를 찍어보세요!</li>
-				<li>더욱 편리하게 홈페이지를 확인 하실 수 있습니다.</li>
+				<li>더욱 편리하게 홈페이지를 확인 하실 수 있습니다ddddd.</li>
 			</ul>
 		</div>
 		<div id="search1"><img src="/prq/img/search1.png"></div>

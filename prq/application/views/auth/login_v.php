@@ -34,7 +34,7 @@ echo form_open('/auth/login', $attributes);
             <!--p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
                 <Continually expanded and constantly improved Inspinia Admin Them (IN+)>
             </p-->
-            <p>로그인. 시도 해 주세요..</p>
+            <p>로그인을 해주세요..</p>
             <form class="m-t" role="form" action="index.html">
                 <div class="form-group">
                     <!-- <input type="email" class="form-control" placeholder="Username" required=""> -->
@@ -79,7 +79,8 @@ echo form_open('/auth/login', $attributes);
 						<a href="/prq/uploads/files/KTProQ.zip" target="_blank"><img src="/prq/img/login_icon2.png" width="100%"></a>
 					</li>
 					<li style="float:right;width:30%;">
-						<a href="javascript:alert('준비중입니다.');" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a>
+						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a> -->
+						<a href="/prq/uploads/files/PRQ_KT.zip" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a>
 					</li>
 					<li style="clear:both;"></li>
 				</ul>
@@ -88,24 +89,35 @@ echo form_open('/auth/login', $attributes);
 				<div style="clear:both;height:15px;"></div>
 				
 				<a href="/prq/down/dotNetFx40_Full_x86_x64.exe" style="color:#fff;">
-				<div style="background:#bbb;color:#fff;padding:10px;">
+				<div style="background:#cecece;color:#000;padding:10px;font-weight:bold;border:1px solid #bbb;">
 					넷프레임워크 DOWN
 				</div>
 				</a>
 
 				<div style="clear:both;height:15px;"></div>
 								
-				<a href="/prq/down/TeamViewer_Setup_ko-rjl.exe" target="_blank">
-				<div style="background:#828282;color:#fff;padding:10px;">
-					본사 원격지원 설치하기
+				
+				<div style="width:100%;">
+					<ul style="list-style:none;padding:0;margin:0;">
+						<a href="/prq/down/TeamViewer_Setup_ko-rjl.exe" target="_blank">
+						<li style="float:left;width:49%;background:#3c3c3c;color:#fff;padding:10px;">
+						본사 원격지원 설치
+						</li>
+						</a>
+						<a href="https://open.bizphone.co.kr/api_admin/cp/regist_check.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;">
+						<li style="float:right;width:49%;background:#da2327;color:#fff;padding:10px;">
+						KT 가입회선 확인
+						</li>
+						</a>
+					</ul>
 				</div>
-				</a>
 			</div>
 			<!-- <div style="width:100%;margin:30px;">
 				<a href="">
 				test
 				</a>
 			</div> -->
+			<div style="clear:both;height:10px;"></div>
 			<p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
         </div>
     </div>
@@ -134,7 +146,9 @@ echo form_open('/auth/login', $attributes);
     <!-- Mainly scripts -->
     <script src="/prq/include/js/jquery-2.1.1.js"></script>
     <script src="/prq/include/js/bootstrap.min.js"></script>
-
+	
+	
+	
 </body>
 
 </html>

@@ -101,6 +101,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 
 <div class="form-group"><label class="col-sm-2 control-label">img_url</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="img_url" id="img_url" value='http://prq.co.kr/prq/uploads/201601/DS_1453950682.jpg'>
+<button class="btn btn-primary" type="button" onclick="set_img_url()">기본 이미지</button>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -143,10 +144,89 @@ $mb_code=$this->input->post('mb_code',TRUE);
 
 <!-- </div> --><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
-/*
-server에 <span class="mb_gname">총판</span>을 등록 합니다.
+/* server에 <span class="mb_gname">총판</span>을 등록 합니다. */
 
-*/
+/*-------------------------------------------------------------------
+기능:  쿠키값을 셋팅한다.
+사용예: 
+setCookie('isEnter','OK');//브라우저쿠키로 사용
+setCookie('isEnter','OK',1);//하루동안 설정
+*-------------------------------------------------------------------*/
+function setCookie(name, value, expiredays) {
+ var expire_date = new Date(); 
+ var strDomain = document.domain;
+ var posDot = strDomain.indexOf(".");
+ if(posDot>-1){
+  strDomain = strDomain.substring(posDot);
+ }
+ if(undefined==expiredays){
+  //if(false && posDot>-1){
+  // document.cookie = name + "=" + escape( value ) + "; path=/; domain="+strDomain+"";//
+  //}
+  //else{
+   document.cookie = name + "=" + escape( value ) + "; path=/;";
+  //}
+ }
+ else{
+  expire_date.setDate(expire_date.getDate() + expiredays );
+  document.cookie = name + "=" + escape( value ) + "; expires=" + expire_date.toGMTString() + "; path=/";
+ }
+} 
+
+/*-------------------------------------------------------------------
+기능: 쿠키값을 얻어온다.  
+사용예: var val=getCookie('cookiename');
+*-------------------------------------------------------------------*/
+function getCookie(name){
+    var nameOfCookie = name + "=";
+    var x = 0;
+    while ( x <= document.cookie.length ){
+        var y = (x+nameOfCookie.length);
+        if ( document.cookie.substring( x, y ) == nameOfCookie ) {
+            if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) {
+                endOfCookie = document.cookie.length;
+            }
+            return unescape( document.cookie.substring( y, endOfCookie ) );
+        }
+        x = document.cookie.indexOf(" ", x ) + 1;
+        if ( x == 0 )
+        break;
+    }
+    return "";
+}
+
+
+/*-------------------------------------------------------------------
+기능: 2014-06-24 날짜를 가져온다. YYYY-MM-DD  
+사용예: 
+	오늘 var val=getDateISO();
+	한달전 var val=getDateISO(-1);
+	한달후 var val=getDateISO(1);
+*-------------------------------------------------------------------*/
+
+function getDateISO(editmonth)
+{
+	var myDate, day, month, year, date;
+	myDate = new Date();
+
+	if(editmonth){
+	month=myDate.getMonth()+1;
+	myDate.setMonth(month+editmonth);
+	}
+
+	year = myDate.getFullYear();
+	month = myDate.getMonth()+1;
+	day = myDate.getDate();
+
+	month=month<10?"0"+month:month;
+	day=day<10?"0"+day:day;
+
+	date = year + "-" + month + "-" + day;
+	return date;
+}
+
+
+
 function set_ds(){
 var param=$("#write_action").serialize();
 if($("#is_join").val()=="TRUE"){
@@ -210,6 +290,16 @@ $( "#mb_id_assist" ).html(object.join(""));
 
 /*gcm 연동 테스트*/
 function set_gcm(){
+	/* 세팅된 값 쿠키에 저장*/
+	setCookie("phone", $("#phone").val(), 365);
+	setCookie("title", $("#title").val(), 365);
+	setCookie("message", $("#message").val(), 365);
+	setCookie("img_url", $("#img_url").val(), 365);
+	setCookie("st_no", $("#st_no").val(), 365);
+	setCookie("receiver_num", $("#receiver_num").val(), 365);
+	setCookie("mno_type", $(':radio[name="mno_type"]:checked').val(), 365);
+	setCookie("is_mms", $(':radio[name="is_mms"]:checked').val(), 365);
+
 var param=$("#write_action").serialize();
 //alert(param);
 if($("#phone").val().length<4){
@@ -272,6 +362,10 @@ console.log(bytesize);
 document.getElementById("bytesize").innerHTML=bytesize;
 }
 
+function set_img_url(){
+$("#img_url").val("http://prq.co.kr/prq/uploads/201601/DS_1453950682.jpg");
+
+}
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
@@ -281,8 +375,25 @@ chk_vali_id();
 blur++;
 chk_vali_id();
 });
+
+
+
+
+$("#phone").val(getCookie("phone"));
+$("#title").val(getCookie("title"));
+$("#message").html(getCookie("message"));
+$("#img_url").val(getCookie("img_url"));
+$("#st_no").val(getCookie("st_no"));
+$("#receiver_num").val(getCookie("receiver_num"));
+
+
+$("input:radio[name='mno_type']:radio[value='"+getCookie("mno_type")+"']").attr("checked",true);
+$("input:radio[name='is_mms']:radio[value='"+getCookie("is_mms")+"']").attr("checked",true);
+
 /* 메세지 길이 */
 chk_byte();
+
+
 };/*window.onload = function() {..}*/
 
 

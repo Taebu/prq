@@ -680,3 +680,5 @@ $color_type_alpha=${$_GET['theme']."a"};
 #refusalm_area .refusalm_form td label{display:block;line-height:25px;height:18px;margin:0 0 2px}
 #refusalm_area .refusalm_form td label span{vertical-align:-5px}
 #refusalm_area .refusalm_btn_area{padding:20px 0;text-align:center}
+.btn_menu_zoom a{display:block;position:fixed;top:10px;right:10px;width:50px;height:50px;overflow:hidden;z-index:999!important}
+.btn_menu_zoom a.move{top:20px!important}

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PRQ | Dashboard</title>
+    <title>톡톡메세지 | Dashboard</title>
     <script src="/prq/include/js/jquery-2.1.1.js"></script>
     <link href="/prq/include/css/bootstrap.min.css" rel="stylesheet">
     <link href="/prq/include/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -119,7 +119,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             </ul>
                         </div>
                         <div class="logo-element">
-                            PRQ
+                            톡톡
                         </div>
                     </li>
 					<?php 
@@ -276,7 +276,7 @@ if($mb_gcode=='G3'){
                             </ul>
                         </div>
                         <div class="logo-element">
-                            PRQ
+                          톡톡
                         </div>
                     </li>
 					<?php 

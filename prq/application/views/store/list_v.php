@@ -16,7 +16,8 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/store/lists/ci_board/q/'+$("#q").val()+'/page/1';
+//					var act = '/prq/store/lists/ci_board/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/store/lists/prq_store/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -160,7 +161,7 @@
 		<div class="container-fluid">
 
     <div class='row'>
-<?php echo form_open('prq/store/lists/ci_board', array('id'=>'bd_search', 'class'=>'well form-search'));?>
+<?php echo form_open('/prq/store/lists/prq_store/', array('id'=>'bd_search', 'class'=>'well form-search'));?>
 <!--form id="bd_search" method="post" class="well form-search" -->
 
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
@@ -193,40 +194,33 @@
                         <div class="ibox-content">
     <div class='row'>
         <div class='col-sm-6'>    
-            <div class='form-group'>
-                <label for="user_title">등록일자</label>
-                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
+			<div class='form-group'>
+                <label for="st_name">상점명</label>
+                <input class="form-control" id="st_name" name="st_name" size="30" type="text" value="<?php echo $search['st_name'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="user_firstname">상태</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+                <label for="mb_id">아이디</label>
+                <input class="form-control" id="mb_id" name="mb_id" required="true" size="30" type="text" value="<?php echo $search['mb_id'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="user_title"><span class="mb_gname">총판</span>명</label>
-                <input class="form-control" id="user_title" name="user[title]" size="30" type="text" />
+                <label for="prq_fcode">풀코드</label>
+                <input class="form-control" id="prq_fcode" name="prq_fcode" size="30" type="text" value="<?php echo $search['prq_fcode'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
-        <div class='col-sm-6'>
+        <!--<div class='col-sm-6'>
             <div class='form-group'>
                 <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
+                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
+        <!--</div><!-- .col-sm-6 -->
     </div><!-- .row -->
-    <div class='row'>
-        <div class='col-sm-12'>
-            <div class='form-group'>
-                <label for="user_email"><span class="mb_gname">총판</span> 목록</label>
-                <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
-            </div>
-        </div>
-    </div><!-- .row -->
+
     <div class='row'>
 	<div class='col-sm-12 right'>
             <div class='form-group'><input type="button" value="검색" id="search_btn" class="btn btn-primary" /> </div>
@@ -276,6 +270,8 @@ echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
 					<th scope="col">No</th>
 					<th scope="col">코드</th>
 					<th scope="col">상점명</th>
+					<th scope="col">아이디</th>
+					<th scope="col">풀코드</th>
 					<th scope="col">상태</th>
 					<th scope="col">등록일자</th>
 				</tr>
@@ -313,7 +309,8 @@ $sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
 					<td scope="row"><?php echo $lt->st_no;?></td>
 					<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
  					<td><?php echo $lt->st_name;?></td>
-<!-- 					<td><?php echo $lt->prq_fcode;?></td> -->
+ 					<td><?php echo $lt->mb_id;?></td>
+ 					<td><?php echo $lt->prq_fcode;?></td>
  					<td><?php echo get_status($lt->st_status);?></td> 
 					<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
 				</tr>

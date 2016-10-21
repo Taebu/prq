@@ -343,9 +343,20 @@ echo $prq_fcode;
 아래 번호를 이용해주세요.
 #{st_tel}
 
+현금주는 배달어플 출시!!
+다운로드 시 무조건 2,000원 적립
+http://bdtalk.co.kr/m/p/
+
 무료수신거부
 080-132-1234</textarea><!-- #form_data -->
-<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
+<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>
+#{homepage}<br>
+ - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>
+<br>
+#{st_tel}<br>
+ - "매장 번호1"의 값을 불러와 031####### 을 031-###-#### 상태로 수정하여 발송 합니다.<br>
+ <br>
+중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

@@ -411,7 +411,12 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
 <div class="col-sm-10">
 <textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)'><?php echo $views->st_middle_msg;?></textarea><!-- #form_data -->
-<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
+<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>#{homepage}<br>
+ - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>
+<br>
+#{st_tel}<br>
+ - "매장 번호1"의 값을 불러와 031####### 을 031-###-#### 상태로 수정하여 발송 합니다.<br>
+ <br>중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

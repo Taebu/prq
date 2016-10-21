@@ -265,7 +265,7 @@
                             </ul>
                         </div>
                         <div class="logo-element">
-                            PRQ
+                            톡톡
                         </div>
                     </li>
                     <li class="active">

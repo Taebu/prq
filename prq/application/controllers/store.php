@@ -92,6 +92,12 @@ class Store extends CI_Controller {
 			<li><a href="/prq/board/lists/ci_board/page/20">5</a></li>
 			<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>&nbsp;</ul>
 		*/
+		$search_array = array(
+			'st_name'=>$this->input->post('st_name', TRUE),
+			'mb_id'=>$this->input->post('mb_id', TRUE),
+			'prq_fcode'=>$this->input->post('prq_fcode', TRUE)
+		);
+ 		
 		$this->load->library('pagination');
 
 		/*
@@ -104,7 +110,8 @@ class Store extends CI_Controller {
 		$config = array(
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/store/lists/prq_store'.$page_url.'/page/',
-		'total_rows' => $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		//'total_rows' => $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'total_rows' => $this->store_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 25,
 		'uri_segment' => $uri_segment,
 
@@ -146,7 +153,12 @@ class Store extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->store_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+
+		/* 검색한 값들 상세 검색 배열*/
+		$data['search']=$search_array;
+
+		//$data['list'] = $this->store_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+		$data['list'] = $this->store_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_array);
 		$data['fr_names'] = json_decode(json_encode($this->store_m->get_frcode()), True);;
 		$data['pt_names'] = json_decode(json_encode($this->store_m->get_ptcode()), True);;
 		$data['ds_names'] = json_decode(json_encode($this->store_m->get_dscode()), True);;

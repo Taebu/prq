@@ -92,7 +92,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 					{?><li><a href="/prq/auth/logout">Logout</a></li><?php }else{?><li><a href="/prq/auth/">LogIn</a></li><?php }?></ul>
                         </div>
                         <div class="logo-element">
-                            PRQ
+                          톡톡
                         </div>
                     </li>
 					<?php 
@@ -239,7 +239,7 @@ if($mb_gcode=='G3'){
                             </ul>
                         </div>
                         <div class="logo-element">
-                            PRQ
+                          톡톡
                         </div>
                     </li>
 					<?php 
@@ -354,7 +354,7 @@ if($mb_gcode=='G4'){
                             </ul>
                         </div>
                         <div class="logo-element">
-                            PRQ
+                          톡톡
                         </div>
                     </li>
 					<?php 

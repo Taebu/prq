@@ -91,7 +91,12 @@
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 								
 								<div class="form-group"><label class="col-sm-2 control-label">중단메세지</label>
-                                    <div class="col-sm-10"><?php echo nl2br($views->st_middle_msg);?><span class="help-block m-b-none">MMS 중간에 들어갈 메세지 입니다.</span>
+                                    <div class="col-sm-10"><?php echo nl2br($views->st_middle_msg);?><span class="help-block m-b-none">MMS 중간에 들어갈 메세지 입니다.<br>#{homepage}<br>
+ - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>
+<br>
+#{st_tel}<br>
+ - "매장 번호1"의 값을 불러와 031####### 을 031-###-#### 상태로 수정하여 발송 합니다.<br>
+ <br></span>
                                     </div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

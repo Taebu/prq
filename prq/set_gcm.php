@@ -65,10 +65,13 @@ mysql_query(join("",$sql));
 if($mode=="manual")
 {
 
-if($mno_type=="KT"){
+if($mno_type=="LG"){
+//	$message=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $message);
+	//LG도 아무것도 하지 않는다
+}else if($mno_type=="KT"){
 	$message=str_replace(array("\r\n", "\r", "\n"), '<br>', $message);
- }else{
-	$message=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $message);
+}else if($mno_type=="SK"){
+	// SK 는 아무것도 하지 않는다
 }
 /* if($mno_type=="KT"){...} */
 

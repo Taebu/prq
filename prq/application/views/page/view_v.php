@@ -1,3 +1,8 @@
+<?php
+if(empty($views->st_name)){
+show_404('page/8');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>

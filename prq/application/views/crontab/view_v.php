@@ -21,6 +21,13 @@ extract($_GET);
 extract($_POST);
 $ROOT = $_SERVER['DOCUMENT_ROOT'];
 header("Content-Type:text/html;charset=utf-8");
+
+
+ 
+ //phone regex http://blog.acronym.co.kr/243
+ function phone_format($num){
+ 	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
+ }
 ?>
 <!doctype html>
 <html lang="en">
@@ -266,9 +273,13 @@ foreach($list as $li)
 		$msg=array();
 		$msg[]=$st->st_top_msg;
 		if($st->st_mno=="LG"){
-			$msg[]=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $st->st_middle_msg);
-		}else{
+			//$msg[]=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $st->st_middle_msg);
+			$msg[]=$st->st_middle_msg;
+		}else if($st->st_mno=="KT"){
 			$msg[]=str_replace(array("\r\n", "\r", "\n"), '<br>', $st->st_middle_msg);		
+		}else if($st->st_mno=="SK"){
+			// SK 는 아무것도 하지 않는다
+			$msg[]=$st->st_middle_msg;
 		}
 		//$mms_title=strlen($st->st_top_msg)>3?$st->st_top_msg:"web";
 		$mms_title=$st->st_top_msg;
@@ -277,11 +288,17 @@ foreach($list as $li)
 		$param=array();
 		$param['url']="http://prq.co.kr/prq/set_gcm.php";
 		$param['return_type']='';
-		if($st->st_mno=="LG"){	
-		$msg=join("\n",$msg);
-		}else{
+		if($st->st_mno=="LG"){
+		$msg=join("\r\n",$msg);
+		}else if($st->st_mno=="KT"){
 		$msg=join("<br>",$msg);
+		}else if($st->st_mno=="SK"){
+		$msg=join("\r\n",$msg);
 		}
+
+		
+		$msg=str_replace("#{homepage}","http://prq.co.kr/prq/page/".$st->st_no,$msg);
+		$msg=str_replace("#{st_tel}",phone_format($st->st_tel_1),$msg);
 		//echo $msg;
 
 		/********************************************************************************
@@ -318,6 +335,15 @@ foreach($list as $li)
 			$chk_mms=false;
 		}
 
+
+
+		/* 일간 mms 발송건 초기값 */
+		$daily_mms_cnt=0;
+		/* 일간 mms 발송건 디바이스 값 */
+		$daily_mms_cnt+=$mno_device_daily->mm_daily_cnt;
+		/* 일간 mms 발송건 prq 값 */
+		$daily_mms_cnt+=$li->cd_day_cnt;
+		
 		/********************************************************************************
 		*
 		* 9-1. if($cd_date=="first_send"){...}
@@ -333,19 +359,7 @@ foreach($list as $li)
 			{
 				$li->cd_hp=$st->st_hp_1;
 			}
-
-			$sql[]="INSERT INTO `prq_gcm_log` SET ";
-			$sql[]="gc_subject='".$mms_title."',";
-			$sql[]="gc_content='".$msg."',";
-			$sql[]="gc_ismms='true',";
-			$sql[]="gc_receiver='".$li->cd_callerid."',";
-			$sql[]="gc_sender='".$li->cd_hp."',";
-			$sql[]="gc_imgurl='".$img_url."',";
-			$sql[]="gc_result='".$result_msg."',";
-			$sql[]="gc_ipaddr='".$gc_ipaddr."',";
-			$sql[]="gc_stno='".$st->st_no."',";
-			$sql[]="gc_datetime=now();";
-			mysql_query(join("",$sql));
+			
 			$chk_mms=true;
 		
 		/********************************************************************************
@@ -376,22 +390,12 @@ foreach($list as $li)
 			$sql[]="gc_datetime=now();";
 			mysql_query(join("",$sql));
 			$chk_mms=false;
-		} 
-
 		/********************************************************************************
 		* 9-3. void set_gcm_log
 		* 150건 제한
 		* prq_gcm_log 150건 제한 로그 발생
 		********************************************************************************/
-		/* 일간 mms 발송건 초기값 */
-		$daily_mms_cnt=0;
-		/* 일간 mms 발송건 디바이스 값 */
-		$daily_mms_cnt+=$mno_device_daily->mm_daily_cnt;
-		/* 일간 mms 발송건 prq 값 */
-		$daily_mms_cnt+=$li->cd_day_cnt;
-		
-		//if($get_mno_limit->mn_dup_limit>$cd_date){
-		if($daily_mms_cnt>$get_mno_limit->mn_mms_limit){
+		}else if($daily_mms_cnt>$get_mno_limit->mn_mms_limit){
 			/*gcm 로그 발생*/
 			$result_msg= $li->cd_day_cnt."/".$get_mno_limit->mn_mms_limit."건 제한";
 			$gc_ipaddr='123.142.52.90';

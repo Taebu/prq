@@ -1,13 +1,18 @@
 <?php
 /**
 * prq 상점 모바일 페이지
-* file : /prq/application/views/page/view_v.php
+* file : /prq/application/views/page/view2_v.php
 * 작성 : 2015-03-05 (목)
-* 수정 : 2016-05-12 (목)
+* 수정 : 2016-10-20 (목)
 *
 * @author Moon Taebu
 * @Copyright (c) 2016, 태부
 */
+
+if($views->st_name==""){
+show_404();
+return;
+}
 ?>
 <!DOCTYPE html>
 <html>
