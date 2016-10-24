@@ -48,7 +48,21 @@ echo form_open('/auth/login', $attributes);
 				
 				<div style="clear:both;"></div>
 				
-				
+				<div style="">
+					<ul style="padding:0px;margin:0px;list-style:none;">
+						<li style="float:left;width:45%;">
+							<!-- <button class="btn" onclick="document.location.reload()">취소</button><br> -->
+							<!-- <a href="#"> --><small>비밀번호를 분실 하셨나요?</small><!-- </a> -->
+							<div style="border:1px solid #e7eaec;width:130px;background:#fff;margin-top:10px;padding:5px;">PW찾기</div>
+						</li>
+						<li style="float:right;width:45%;">
+							<p class="text-muted text-center"><small><!-- Do not have an account? -->방문을 환영합니다.</small></p>
+							<!-- <a class="btn btn-sm btn-white btn-block" href="register.html" style="width:130px;"> --><div style="border:1px solid #e7eaec;width:130px;background:#fff;margin-top:10px;padding:5px;">가입 하기</div><!-- </a> -->
+						</li>
+						<li style="clear:both;"></li>
+					</ul>
+					<!-- <button type="submit" class="btn btn-primary">확인</button> -->
+				</div>
 			</form>
 			<!-- <div class="controls">
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -103,7 +117,7 @@ echo form_open('/auth/login', $attributes);
 				test
 				</a>
 			</div> -->
-			<div style="clear:both;"></div>
+			<div style="clear:both;height:10px;"></div>
 			<p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
         </div>
     </div>
@@ -133,21 +147,29 @@ echo form_open('/auth/login', $attributes);
     <script src="/prq/include/js/jquery-2.1.1.js"></script>
     <script src="/prq/include/js/bootstrap.min.js"></script>
 	<div style="height:80px;"></div>
-	<div style="position:fixed;bottom:0px;right:0px;background:#e1f3f9;width:100%;">
-		<ul style="list-style:none;margin:0;padding:0;font-size:18px;">
-			<li style="float:left;width:24.99%;background:#5b7d7b;color:#fff;">
-				배달톡톡 제안서
+	<div style="position:fixed;bottom:0px;right:0px;background:#000;width:100%;">
+		<ul style="list-style:none;margin:0;padding:0;">
+			<li style="float:left;width:30%;">
+				<img src="/skin/view/images/main/nv_1.png" width="70px;">
 			</li>
-			<li style="float:left;width:24.99%;background:#5b7d7b;color:#fff;border-right:1px solid #aadad7;border-left:1px solid #aadad7;">
-				톡톡메시지 제안서
+			<li style="float:left;width:30%;">
+				<a href="/skin/view/images/main/TeamViewer_Setup_ko-rjl.exe"><img src="/skin/view/images/main/nv_2.png" width="70px;"></a>
 			</li>
-			<li style="float:left;width:24.99%;background:#5b7d7b;color:#fff;border-right:1px solid #aadad7;">
-				PC설치가이드
+			<li style="float:left;width:30%;">
+				<a href="#top">
+				<img src="/skin/view/images/main/nv_3.png" width="70px;">
+				</a>
 			</li>
-			<li style="float:right;width:24.99%;background:#5b7d7b;color:#fff;">
-				KTok설치가이드
+			<!-- <li>
+				<a href="/skin/view/bdtoktok.php" target="_bank">
+				배달톡톡
+				</a>
 			</li>
-			<li style="clear:both;"></li>
+			<li>
+				<a href="/page_1.php" target="_bank">
+				톡톡메시지
+				</a>
+			</li> -->
 		</ul>
 	</div>
 	

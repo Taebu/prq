@@ -54,9 +54,23 @@ p {
 </style>
 </head>
 <body>
-	<div id="container">
+	<!-- <div id="container">
 		<h1><?php echo $heading; ?></h1>
 		<?php echo $message; ?>
+	</div> -->
+	<div style="height:180px;"></div>
+	<div style="width:600px;margin:0 auto;text-align:center;">
+		<ul style="padding:0;margin:0;list-style:none;">
+			<li>
+				<img src="/prq/img/shop_ing.png" width="45%">
+			</li>
+			<li style="margin-top:55px;">
+				<p style="font-size:45px;font-weight:bold;">입점 <span style="color:#da2327;">준비중</span>입니다.</p>
+				<div style="margin-top:30px;font-size:17px;">
+				빠른시일내에 컨텐츠를 준비하여 이용에 불편함이 없도록 하겠습니다.
+				</div>
+			</li>
+		</ul>
 	</div>
 </body>
 </html>
