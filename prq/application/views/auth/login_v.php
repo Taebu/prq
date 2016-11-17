@@ -76,7 +76,13 @@ echo form_open('/auth/login', $attributes);
 				
 				<a href="/prq/down/dotNetFx40_Full_x86_x64.exe" style="color:#fff;">
 				<div style="background:#cecece;color:#000;padding:10px;font-weight:bold;border:1px solid #bbb;">
-					넷프레임워크 DOWN
+					닷넷프레임워크 DOWN
+				</div>
+				</a>
+				<div style="clear:both;height:10px;"></div>
+				<a href="/prq/down/sqlite-netFx40-setup-bundle-x86-2010-1.0.103.0.exe" style="color:#fff;">
+				<div style="background:#cecece;color:#000;padding:10px;font-weight:bold;border:1px solid #bbb;">
+					KT OK 전용 닷넷프레임워크 DOWN
 				</div>
 				</a>
 
@@ -133,22 +139,32 @@ echo form_open('/auth/login', $attributes);
     <script src="/prq/include/js/jquery-2.1.1.js"></script>
     <script src="/prq/include/js/bootstrap.min.js"></script>
 	<div style="height:80px;"></div>
-	<div style="position:fixed;bottom:0px;right:0px;background:#e1f3f9;width:100%;">
-		<ul style="list-style:none;margin:0;padding:0;font-size:18px;">
-			<li style="float:left;width:24.99%;background:#5b7d7b;color:#fff;">
-				배달톡톡 제안서
+	<div style="width:140px;position:fixed;bottom:150px;right:0px;text-align:center;">
+		<ul style="background:#ececec;list-style:none;margin:0;padding:0;font-size:15px;">
+			<li style="background:#3c3c3c;color:#fff;padding:7px;">
+				<img src="/prq/img/quick.png" width="10px"> &nbsp;Quick Menu
 			</li>
-			<li style="float:left;width:24.99%;background:#5b7d7b;color:#fff;border-right:1px solid #aadad7;border-left:1px solid #aadad7;">
-				톡톡메시지 제안서
+			<li style="border:1px solid #bfbfbf;color:3c3c3c;padding:20px;font-weight:bold;">
+				<a href="/prq/down/bdtoktok_proposal.pdf" target="pdf" style="color:3c3c3c;"><img src="/prq/img/bdtoktok.png" width="75px"><p style="margin-top:11px;line-height:16px;">배달톡톡<br>제안서</p></a>
 			</li>
-			<li style="float:left;width:24.99%;background:#5b7d7b;color:#fff;border-right:1px solid #aadad7;">
-				PC설치가이드
+			<li style="border:1px solid #bfbfbf;color:#3c3c3c;padding:20px;font-weight:bold;">
+				<a href="/prq/down/toktokmessage_proposal.pdf" target="pdf" style="color:#3c3c3c;"><img src="/prq/img/toktokms.png" width="50px"><p style="margin-top:11px;line-height:16px;">톡톡메시지<br>제안서</p></a>
 			</li>
-			<li style="float:right;width:24.99%;background:#5b7d7b;color:#fff;">
-				KTok설치가이드
+		</ul>
+		<ul style="list-style:none;margin:0;padding:0;font-size:14px;">
+			<li style="float:left;width:49.99%;background:#3c3c3c;color:#fff;padding:10px;border-bottom:1px solid #fff;border-right:1px solid #fff;">
+				<a href="/prq/down/toktok_pcguide.pdf" target="pdf" style="color:#fff;"><img src="/prq/img/pc.png" width="40px"><p style="margin-top:11px;line-height:16px;"><b>PC</b><br>설치<br>가이드</p></a>
+			</li>
+			<li style="float:right;width:49.99%;background:#da2327;color:#fff;padding:10px;">
+				<a href="/prq/down/KTok_guide.pdf" target="pdf" style="color:#fff;"><img src="/prq/img/pc_kt.png" width="40px"><p style="margin-top:11px;line-height:16px;"><b>KTok</b><br>설치<br>가이드</p></a>
 			</li>
 			<li style="clear:both;"></li>
 		</ul>
+		<div style="width:100%;text-align:center;font-weight:bold;background:#ececec;padding:8px 0 15px 0;">
+			<a href="/prq/down/KTok_framework.php" style="color:#000;">
+			KTok<br>닷넷프레임워크 설명
+			</a>
+		</div>
 	</div>
 	
 	

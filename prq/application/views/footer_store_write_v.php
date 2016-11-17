@@ -68,12 +68,6 @@
     <!-- DROPZONE -->
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
     <script>
-        $(document).ready(function(){
-
-
-		Dropzone.autoDiscover = false;
-
-		
 		function set_dropzone_config(id)
 		{
 			var file_key=[];
@@ -149,6 +143,7 @@
 					this.removeFile(this.files[0]);
 				  }
 				});
+				this.removeAllFiles();
 			  },success: function(file,data)
 			{
 				var thisDropzone=this;
@@ -202,7 +197,18 @@
 							//alert("요소를 제거: " + name); 
 							$("#"+id).val("");
 							$("#"+id+"_paper").val("");
+							$("#my-awesome-dropzone1").dropzone(set_dropzone_config(id));
+			/* 계약서 이미지 */
+			file_key["st_business_paper"]="ST";
+			/* 썸네일 이미지 */
+			file_key["st_thumb_paper"]="TH";
+			/* 메뉴이미지 */
+			file_key["st_menu_paper"]="ME";
+			/* 대표이미지 */
+			file_key["st_main_paper"]="MA";
+
 						}
+
 					},error: function(data)
 					{
 						file.previewElement.parentNode.removeChild(file.previewElement);
@@ -215,7 +221,13 @@
 			}
 		};
 		}
+		
+		$(document).ready(function(){
 
+
+		Dropzone.autoDiscover = false;
+
+		
 		/* 계약서 */
 		//$("#my-awesome-dropzone1").dropzone(set_dropzone_config("st_store_paper"));
 		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("st_business_paper"));

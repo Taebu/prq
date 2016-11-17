@@ -298,7 +298,7 @@
 			dictCancelUploadConfirmation: "정말 업로드를 취소 하시겠습니까?",
 			dictRemoveFile: "파일 삭제",
 			dictRemoveFileConfirmation: null,
-			dictMaxFilesExceeded: "더이상 파일을 업로드 할 수 없습니다.",
+			dictMaxFilesExceeded: "더 이상 파일을 업로드 할 수 없습니다.",
 			/**/
 			dictResponseError: "Ha ocurrido un error en el server",
 			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
@@ -355,8 +355,8 @@
 			},
 			error: function(file)
 			{
-///				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
-//				file.previewElement.parentNode.removeChild(file.previewElement);
+				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
+				file.previewElement.parentNode.removeChild(file.previewElement);
 			},
 			removedfile: function(file, serverFileName) 
 			{

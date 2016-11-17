@@ -5,6 +5,11 @@ show_404('page/8');
 }
 
 $url=$_SERVER['PATH_INFO'];
+
+ //phone regex http://blog.acronym.co.kr/243
+ function phone_format($num){
+ 	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
+ }
 ?>
 <!doctype html>
 <html lang="en">
@@ -28,11 +33,21 @@ $url=$_SERVER['PATH_INFO'];
 			}
 			#title{
 				position: absolute;
-				top: 314px;
+				top: 264px;
 				left: 875px;
-				width: 500px;
+				width: 800px;
+				border:0px solid red;
 				font-size: 51px;
 				font-weight: bold;
+				color:#3f4040;
+				font-family: '맑은 고딕','Malgun Gothic','돋움',Dotum,Helvetica,AppleGothic,Sans-serif;
+			}
+			#number{
+				position: absolute;
+				top: 335px;
+				left: 875px;
+				width: 500px;
+				font-size: 40px;
 				color:#3f4040;
 				font-family: '맑은 고딕','Malgun Gothic','돋움',Dotum,Helvetica,AppleGothic,Sans-serif;
 			}
@@ -138,17 +153,20 @@ $(function(){
 });
 		</script>
 	</head>
-
+	<!-- <?php
+		print_r($views);
+	?> -->
 	<body style="overflow-x:hidden; overflow-y:hidden;">
 		<input type="hidden" name="stname" id="stname" value="<?php echo $views->st_name;?>">
 		<img src="/prq/img/pc_main.png" alt="PR메시지">
 		<div id="phon"><img src="/prq/img/phon.png"></div>
 		<div id="title"><?php echo $views->st_name;?></div>
+		<div id="number">☎ <?php echo phone_format($views->st_vtel);?></div>
 		<div id="url">http://prq.co.kr/prq<?php echo $url;?></div>
 		<div id="search0">
 			<ul style="padding:0;margin:0;list-style:none;">
 				<li>스마트폰으로 QR코드를 찍어보세요!</li>
-				<li>더욱 편리하게 홈페이지를 확인 하실 수 있습니다ddddd.</li>
+				<li>더욱 편리하게 홈페이지를 확인 하실 수 있습니다.</li>
 			</ul>
 		</div>
 		<div id="search1"><img src="/prq/img/search1.png"></div>
