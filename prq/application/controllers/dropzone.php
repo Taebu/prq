@@ -194,6 +194,120 @@ class Dropzone extends CI_Controller {
 			echo json_encode(array("res" => true,"sql"=>$sql));
 		}
     }
+
+	public function thumnail($file,$rpath,$size){
+		// File Variables
+		$fileName=$_FILES[$file]['name'];
+		$fileTmpLoc=$_FILES[$file]['tmp_name'];
+		$fileType=$_FILES[$file]['type'];
+		$fileSize=$_FILES[$file]['size'];
+		$fileSize2=getimagesize($fileTmpLoc);
+		$fileErrorMsg = $_FILES[$file]["error"]; // 0 for false ... and 1 for true
+		if (!$fileTmpLoc){ //if file not chosen
+			echo "ERROR: Please browse for a file befor clicking the upload button.";
+			exit();
+		}
+		/* outer function thumbs*/
+			$width=$fileSize2[0];
+			$height=	$fileSize2[1];
+		//	$upload=md5( rand( 0, 1000 ) . rand( 0, 1000 ) . rand( 0, 1000 ) . rand( 0, 1000 ) );
+			$ftemp = time(); //파일네임에 사용할 시리얼 생성
+			$serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 시리얼 번호 생성
+			srand((double)microtime()*1000000);
+			$upload = "";
+			for($j=0; $j<5; $j++){ 
+				$upload .= $serial_make[rand()%strlen($serial_make)];
+				uniqid($upload);
+			}
+			// Restrictions for uploading
+			$maxwidth=1920;
+			$maxheight=1080;
+			$allowed=array("image/jpeg", "image/png", "image/gif" );
+			// Recognizing the extension
+			switch( $fileType ){
+				// Image/Jpeg
+				case 'image/jpeg':
+					$ext= '.jpg';
+				break;
+				
+				// Image/png
+				case 'image/png':
+					$ext= '.png';
+				break;
+				
+				// Image/gif
+				case 'image/gif':
+					$ext= '.gif';
+				break;
+			}
+			$flag="0";
+			resize:
+			$thumb_path=$rpath."/".$ftemp.$upload.$ext;
+			if($size=="120"){$thumb_path=$rpath."/thumbs/".$ftemp.$upload.$ext;}
+			if( $width == $height ){ $shape=1; }
+			if( $width < $height ){ $shape=2; }
+			if( $width > $height ){ $shape=3; }
+			// Ajusting the resize script on shape.
+			switch( $shape ){
+				// Code to resize a square image.
+				case 1:
+					$newwidth=$size;
+					$newheight=$size;
+				break;
+				// Code to resize a tall image.
+				case 2:
+					$newwidth=$size;
+					$ratio=$newwidth / $width;
+					$newheight=round( $height * $ratio );
+				break;
+				// Code to resize a wide image.
+				case 3:
+					$newheight=$size;
+					$ratio=$newheight / $height;
+					$newwidth=round( $width * $ratio );
+				break;
+			}
+			// Resizing according to extension.
+			switch( $fileType ){
+				// Image/Jpeg
+				case 'image/jpeg':
+					$img=		imagecreatefromjpeg( $fileTmpLoc );
+					$thumb=		imagecreatetruecolor( $newwidth, $newheight );
+								imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+								imagejpeg( $thumb, $thumb_path );
+				break;
+				// Image/png
+				case 'image/png':
+					$img=		imagecreatefrompng( $fileTmpLoc );
+					$thumb=		imagecreatetruecolor( $newwidth, $newheight );
+								imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+								imagepng( $thumb, $thumb_path );
+				break;
+				// Image/gif
+				case 'image/gif':
+					$img=	imagecreatefromgif( $fileTmpLoc );
+					$thumb=	imagecreatetruecolor( $newwidth, $newheight );
+								imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+								imagegif( $thumb, $thumb_path );
+				break;
+			}
+			$flag++;
+		//	echo ($size==640)?"640<br><img src=\"../photo/".$ftemp.$upload.$ext."\" width=120 height=120>":"";
+			if($flag==1){$size=120;goto resize;}
+		// Move the original file aswell.
+		/*!outer function thumb */
+		//move_uploaded_file( $fileTmpLoc, $path );
+		//echo $filename."function upload is complets";
+		echo ($size==120)?"<img src=\"/data/file/notice/thumbs/".$ftemp.$upload.$ext."\" width=120 height=120>":"";
+		echo "<input type=\"hidden\" name='tmp' id=\"".$file."_thumbs\" value=".$ftemp.$upload.$ext.">";
+		echo "<input type=\"hidden\" name='width[]' value=".$width.">";
+		echo "<input type=\"hidden\" name='height[]' value=".$height.">";
+		echo "<input type=\"hidden\" name='fileType[]' value=".$fileType.">";
+		echo "<input type=\"hidden\" name='fileSize[]' value=".$fileSize.">";
+		echo "<input type=\"hidden\" name='fileName[]' value=".$fileName.">";
+								//echo $filename."move_uploaded_file function failed";
+								// Putting out the data.
+	}
 }
  
 /* End of file dropzone.js */

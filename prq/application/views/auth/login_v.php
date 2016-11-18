@@ -165,6 +165,11 @@ echo form_open('/auth/login', $attributes);
 			KTok<br>닷넷프레임워크 설명
 			</a>
 		</div>
+		<div style="width:100%;text-align:center;font-weight:bold;background:#ececec;padding:8px 0 15px 0;border-top:1px solid #bcbcbc;">
+			<a href="https://open.bizphone.co.kr/cp/join1.jsp?cpkey=cb514c196a9f5885b62637f898716152cba04c7e" target="_blank" style="color:#000;">
+			Web KT회선청약
+			</a>
+		</div>
 	</div>
 	
 	

@@ -112,8 +112,14 @@ echo $prq_fcode;
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
 <div class="col-sm-10">
-<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)' placeholder="고객의 힘으로 상점과 고객간에 따뜻한 격려가 담긴 이용후기를 남겨주세요."></textarea><!-- #form_data -->
-<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>
+<textarea  class="form-control" name="content[]"  id="content1" rows="4" cols="50" 
+
+onkeyup='chk_byte(1);textAreaAdjust(this)' 
+onkeydown='chk_byte(1);textAreaAdjust(this)' 
+onkeypress='chk_byte(1);textAreaAdjust(this)' 
+
+placeholder="고객의 힘으로 상점과 고객간에 따뜻한 격려가 담긴 이용후기를 남겨주세요."></textarea><!-- #form_data -->
+<span class="help-block m-b-none"><span id='bytesize_1'>0</span> byte <br>
 #{homepage}<br>
 
  - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>
@@ -123,10 +129,15 @@ echo $prq_fcode;
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
 <div class="col-sm-10">
-<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)' placeholder="정성스러운 이용후기가 가게 사장님들께 더 큰 힘이 됩니다!"></textarea><!-- #form_data -->
-<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>
-#{homepage}<br>
- - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>
+<textarea  class="form-control" name="content[]"  id="content2" rows="4" cols="50" 
+
+onkeyup='chk_byte(2);textAreaAdjust(this)' 
+onkeydown='chk_byte(2);textAreaAdjust(this)' 
+onkeypress='chk_byte(2);textAreaAdjust(this)' 
+placeholder="정성스러운 이용후기가 가게 사장님들께 더 큰 힘이 됩니다!"></textarea><!-- #form_data -->
+<span class="help-block m-b-none"><span id='bytesize_2'>0</span> byte <br>
+100 byte 이상 작성하셔야 합니다.~ !!! <br>
+무성의한 글은 신청시 포인트 지급이 거절 될 수 있습니다.
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -134,8 +145,15 @@ echo $prq_fcode;
 
 <div class="form-group"><label class="col-sm-2 control-label">중단문구(수정)</label>
 <div class="col-sm-10">
-<textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)' placeholder="잘찍은 사진 한장! 100댓글이 안부럽다~!"></textarea><!-- #form_data -->
-<span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>
+<textarea  class="form-control" name="content[]"  id="content3" rows="4" cols="50" 
+
+onkeyup='chk_byte(3);textAreaAdjust(this)' 
+onkeydown='chk_byte(3);textAreaAdjust(this)' 
+onkeypress='chk_byte(3);textAreaAdjust(this)' 
+ placeholder="잘찍은 사진 한장! 100댓글이 안부럽다~!"></textarea><!-- #form_data -->
+
+
+<span class="help-block m-b-none"><span id='bytesize_3'>0</span> byte <br>
 #{homepage}<br>
  - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>
 </div><!-- .col-sm-10 -->
@@ -343,12 +361,12 @@ function getstrbyte(string)
 
 
 /* 메세지 길이 */
-function chk_byte(){
-var str=document.getElementById("st_middle_msg").value;
+function chk_byte(id){
+var str=document.getElementById("content"+id).value;
 console.log(str);
 var bytesize=getstrbyte(str);
 console.log(bytesize);
-document.getElementById("bytesize").innerHTML=bytesize;
+document.getElementById("bytesize_"+id).innerHTML=bytesize;
 }
 
 /* Textarea to resize based on content length */
