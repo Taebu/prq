@@ -37,11 +37,12 @@ class Blog extends CI_Controller {
 			$this->load->view('header_write_v');
 			if( method_exists($this, $method) )
 			{
-				$this->{"{$method}"}();
+				//$this->{"{$method}"}();
+				$this->view();
 			}
-
+			//$this->view();
 			//푸터 include		
-			$this->load->view('footer_store_write_v');
+			$this->load->view('footer_blog_v');
 		}else{
 			//헤더 include
 			$this->load->view('header_write_v');

@@ -1,7 +1,7 @@
 <?php
 /********************************************************
 * 1분마다 콜로그를 조회하여 gcm과 mms 를 전송하는 페이지 크론탭에 등록 되어 있습니다.
-* location : /prq/application/views/crontab/view_v.php
+* location : /var/www/html/prq/application/views/crontab/view_v.php
 * url : /prq/crontab/view
 * FULL URL : http://prq.co.kr/prq/crontab/view
 * 작성일 : 2016-03-30 (수)
@@ -369,7 +369,13 @@ foreach($list as $li)
 		********************************************************************************/
 		}else if($get_mno_limit->mn_dup_limit>$cd_date){
 			/*gcm 로그 발생*/
-			$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
+			/* 2016-11-22 (화)
+			* https://github.com/Taebu/prq/issues/57
+			* 조정흠씨 자체 개발로 인해 중복 제한 비활성화
+			*/
+
+			//$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 중복 제한";
+			$result_msg= $cd_date."/".$get_mno_limit->mn_dup_limit."일 발송";
 			$gc_ipaddr='123.142.52.90';
 			$sql=array();
 			if($li->cd_port==0)
@@ -389,7 +395,11 @@ foreach($list as $li)
 			$sql[]="gc_stno='".$st->st_no."',";
 			$sql[]="gc_datetime=now();";
 			mysql_query(join("",$sql));
-			$chk_mms=false;
+			/* 2016-11-22 (화)
+			* https://github.com/Taebu/prq/issues/57
+			* 조정흠씨 자체 개발로 인해 중복 제한 비활성화
+			*/
+			//$chk_mms=false;
 		/********************************************************************************
 		* 9-3. void set_gcm_log
 		* 150건 제한

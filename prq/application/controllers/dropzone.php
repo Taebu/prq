@@ -74,6 +74,10 @@ class Dropzone extends CI_Controller {
 		{
 			$tempFile = $_FILES['file']['tmp_name'];
 			$fileName = $_FILES['file']['name'];
+
+			//file size allowed in kb
+			$allowedMaxSize=1024;
+
 			$mb_imgprefix="";
 			if($this->uri->segment(4)!=""){
 				$mb_imgprefix=$this->uri->segment(4)."/";
@@ -96,9 +100,19 @@ class Dropzone extends CI_Controller {
 			$fileName= $prefix."_".time().".".$extension;
 			//  $file_newname = confirmFname($file_newname,$uploaddir);
 			
+			//file size validation
+			if((filesize($tempFile)/1024)>$allowedMaxSize){
+				header("HTTP/1.0 500 Internal Server Error");
+				echo "File exceeds maximum allowed size";
+				exit();
+			}
+
 			if ($_FILES['file']["error"] > 0)
 			{
 				$errmsg = "에러코드: " . $_FILES['file']["error"];
+//				header("HTTP/1.0 500 Internal Server Error");
+//				echo $errmsg;
+
 			}else {
 				$targetFile = $targetPath . $fileName ;
 				move_uploaded_file($tempFile, $targetFile);
@@ -195,21 +209,73 @@ class Dropzone extends CI_Controller {
 		}
     }
 
-	public function thumnail($file,$rpath,$size){
+	public function thumbnail(){
+
+		if (!empty($_FILES)) 
+		{
+			$tempFile = $_FILES['file']['tmp_name'];
+			$fileName = $_FILES['file']['name'];
+			$mb_imgprefix="";
+			if($this->uri->segment(4)!=""){
+				$mb_imgprefix=$this->uri->segment(4)."/";
+			}
+			$targetPath = getcwd() . '/uploads/'.$mb_imgprefix;
+			if(!is_dir($targetPath)){
+			mkdir($targetPath,0700);
+			}
+			//$targetFile = $targetPath . $fileName ;
+			//	move_uploaded_file($tempFile, $targetFile);
+			
+			$prefix="DF";
+			if($this->uri->segment(3)!=""){
+				$prefix=$this->uri->segment(3);
+			}
+
+
+			$chk_file = explode(".", $fileName);
+			$extension = $chk_file[sizeof($chk_file)-1];
+			$fileName= $prefix."_".time().".".$extension;
+			//  $file_newname = confirmFname($file_newname,$uploaddir);
+			
+			if ($_FILES['file']["error"] > 0)
+			{
+				$errmsg = "에러코드: " . $_FILES['file']["error"];
+			}else {
+				$targetFile = $targetPath . $fileName ;
+				move_uploaded_file($tempFile, $targetFile);
+				// if you want to save in db,where here
+				// with out model just for example
+				// $this->load->database(); // load database
+				// $this->db->insert('file_table',array('file_name' => $fileName));
+				
+				$result=array();
+				$obj['name']=$fileName;
+				$obj['size']=filesize($targetFile);
+				$result[]=$obj;
+//				echo json_encode(array("filename" => $fileName));
+				header("Content-type: text/json");
+				header("Content-type: application/json");
+				echo json_encode($result);
+			}
+		}/* if (!empty($_FILES)){...} */
+		
+		// public function thumnail($file,$rpath,$size){
+		if (!empty($_FILES)) 
+		{
 		// File Variables
-		$fileName=$_FILES[$file]['name'];
-		$fileTmpLoc=$_FILES[$file]['tmp_name'];
-		$fileType=$_FILES[$file]['type'];
-		$fileSize=$_FILES[$file]['size'];
+		$fileName=$_FILES['file']['name'];
+		$fileTmpLoc=$_FILES['file']['tmp_name'];
+		$fileType=$_FILES['file']['type'];
+		$fileSize=$_FILES['file']['size'];
 		$fileSize2=getimagesize($fileTmpLoc);
-		$fileErrorMsg = $_FILES[$file]["error"]; // 0 for false ... and 1 for true
+		$fileErrorMsg = $_FILES['file']["error"]; // 0 for false ... and 1 for true
 		if (!$fileTmpLoc){ //if file not chosen
 			echo "ERROR: Please browse for a file befor clicking the upload button.";
 			exit();
 		}
 		/* outer function thumbs*/
 			$width=$fileSize2[0];
-			$height=	$fileSize2[1];
+			$height=$fileSize2[1];
 		//	$upload=md5( rand( 0, 1000 ) . rand( 0, 1000 ) . rand( 0, 1000 ) . rand( 0, 1000 ) );
 			$ftemp = time(); //파일네임에 사용할 시리얼 생성
 			$serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 시리얼 번호 생성
@@ -271,29 +337,37 @@ class Dropzone extends CI_Controller {
 			switch( $fileType ){
 				// Image/Jpeg
 				case 'image/jpeg':
-					$img=		imagecreatefromjpeg( $fileTmpLoc );
-					$thumb=		imagecreatetruecolor( $newwidth, $newheight );
-								imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
-								imagejpeg( $thumb, $thumb_path );
+				$img=imagecreatefromjpeg( $fileTmpLoc );
+				$thumb=imagecreatetruecolor( $newwidth, $newheight );
+				imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+				imagejpeg( $thumb, $thumb_path );
 				break;
 				// Image/png
 				case 'image/png':
-					$img=		imagecreatefrompng( $fileTmpLoc );
-					$thumb=		imagecreatetruecolor( $newwidth, $newheight );
-								imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
-								imagepng( $thumb, $thumb_path );
+				$img=imagecreatefrompng( $fileTmpLoc );
+				$thumb=imagecreatetruecolor( $newwidth, $newheight );
+				imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+				imagepng( $thumb, $thumb_path );
 				break;
 				// Image/gif
 				case 'image/gif':
-					$img=	imagecreatefromgif( $fileTmpLoc );
-					$thumb=	imagecreatetruecolor( $newwidth, $newheight );
-								imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
-								imagegif( $thumb, $thumb_path );
+				$img=imagecreatefromgif( $fileTmpLoc );
+				$thumb=imagecreatetruecolor( $newwidth, $newheight );
+				imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+				imagegif( $thumb, $thumb_path );
 				break;
 			}
 			$flag++;
 		//	echo ($size==640)?"640<br><img src=\"../photo/".$ftemp.$upload.$ext."\" width=120 height=120>":"";
 			if($flag==1){$size=120;goto resize;}
+				$result=array();
+				$obj['name']=$fileName;
+				$obj['size']=filesize($targetFile);
+				$result[]=$obj;
+
+				header("Content-type: text/json");
+				header("Content-type: application/json");
+				echo json_encode($result);
 		// Move the original file aswell.
 		/*!outer function thumb */
 		//move_uploaded_file( $fileTmpLoc, $path );
@@ -305,8 +379,9 @@ class Dropzone extends CI_Controller {
 		echo "<input type=\"hidden\" name='fileType[]' value=".$fileType.">";
 		echo "<input type=\"hidden\" name='fileSize[]' value=".$fileSize.">";
 		echo "<input type=\"hidden\" name='fileName[]' value=".$fileName.">";
-								//echo $filename."move_uploaded_file function failed";
-								// Putting out the data.
+		//echo $filename."move_uploaded_file function failed";
+		// Putting out the data.
+	}/* if (!empty($_FILES)){...} */
 	}
 }
  

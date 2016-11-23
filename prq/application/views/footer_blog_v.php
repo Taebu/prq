@@ -1,6 +1,7 @@
        <div class="footer">
             <div class="pull-right">
-			Page rendered in <strong>{elapsed_time}</strong> seconds. {memory_usage}
+			Page rendered in <strong>{elapsed_time}</strong> seconds. {memory_usage}<br>
+			blog write
                 <!-- 10GB of <strong>250GB</strong> Free. -->
             </div>
             <div>
@@ -68,16 +69,6 @@
     <!-- DROPZONE -->
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
     <script>
-Dropzone.prototype.defaultOptions.dictDefaultMessage = "Drop files here to upload";
-Dropzone.prototype.defaultOptions.dictFallbackMessage = "Your browser does not support drag'n'drop file uploads.";
-Dropzone.prototype.defaultOptions.dictFallbackText = "Please use the fallback form below to upload your files like in the olden days.";
-Dropzone.prototype.defaultOptions.dictFileTooBig = "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.";
-Dropzone.prototype.defaultOptions.dictInvalidFileType = "You can't upload files of this type.";
-Dropzone.prototype.defaultOptions.dictResponseError = "Server responded with {{statusCode}} code.";
-Dropzone.prototype.defaultOptions.dictCancelUpload = "Cancel upload";
-Dropzone.prototype.defaultOptions.dictCancelUploadConfirmation = "Are you sure you want to cancel this upload?";
-Dropzone.prototype.defaultOptions.dictRemoveFile = "Remove file";
-Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "You can not upload any more files.";
         $(document).ready(function(){
 
 		Dropzone.autoDiscover = false;
@@ -125,7 +116,8 @@ Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "You can not upload any
 				param+=prefix_path+"/";
 			}
 			return {
-			url: "/prq/dropzone/upload/"+param,
+			//url: "/prq/dropzone/upload/"+param,
+			url: "/prq/dropzone/thumbnail/"+param,
 			init: function() {
 				
 				thisDropzone.on('maxfilesexceeded',function(fil){
@@ -177,7 +169,8 @@ Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "You can not upload any
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#st_imgprefix").val()+"/"+value.name);
 					});
-
+					image_file_count++;
+					console.log("image_file_count : "+image_file_count);
 				}
 			},
 			error: function(file)
@@ -212,6 +205,8 @@ console.log('error');
 							//alert("요소를 제거: " + name); 
 							$("#"+id).val("");
 							$("#"+id+"_paper").val("");
+							image_file_count--;
+							console.log("image_file_count : "+image_file_count);
 						}
 					},error: function(data)
 					{

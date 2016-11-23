@@ -57,6 +57,22 @@ echo $prq_fcode;
 
 <div class="row">
 <div class="col-lg-12">
+<div id="image_area">
+<input type="text" name="img_src[]" id="img_1" class="form-control" value="1" >
+<input type="text" name="img_src[]" id="img_2" class="form-control" value="2">
+<input type="text" name="img_src[]" id="img_3" class="form-control" value="3">
+<input type="text" name="img_src[]" id="img_4" class="form-control" value="4">
+<input type="text" name="img_src[]" id="img_5" class="form-control" value="5">
+<input type="text" name="img_src[]" id="img_6" class="form-control" value="6">
+<input type="text" name="img_src[]" id="img_7" class="form-control" value="7">
+<input type="text" name="img_src[]" id="img_8" class="form-control" value="8">
+<input type="text" name="img_src[]" id="img_9" class="form-control" value="9">
+#image_area</div>
+</div><!--.col-lg-12-->
+</div><!--.row-->
+
+<div class="row">
+<div class="col-lg-12">
 <div class="ibox float-e-margins">
 <div class="ibox-title">
 <h5>작성하기 <small>이용후기의 사진 광고 목적으로 사용 할 수 있습니다.</small></h5>
@@ -200,6 +216,7 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
+var image_file_count=0;
 /*
 server에 <span class="mb_gname">총판</span>을 등록 합니다.
 */
@@ -397,7 +414,9 @@ var code=$("#prq_fcode").val();
 get_frcode(code);
 get_frmail();
 
-chk_byte();
+chk_byte(1);
+chk_byte(2);
+chk_byte(3);
 };/*window.onload = function() {..}*/
 
 
