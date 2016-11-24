@@ -196,7 +196,7 @@ class Dropzone extends CI_Controller {
 //			$link = mysql_connect("localhost", "root", "");
 //			mysql_select_db("dropzone", $link);
 //			mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);
-//			mysql_close($link);
+//		mysql_close($link);
 			echo json_encode(array("res" => true,"sql"=>$sql));
 		}
 		else
@@ -258,10 +258,17 @@ class Dropzone extends CI_Controller {
 			}
 		}*/
 		
-		/* if (!empty($_FILES)){...} */
+		/* 
+		if (!empty($_FILES)){...} 
+		*/
 		
-		$size=763;
+		$size="763";
 		// public function thumnail($file,$rpath,$size){
+			if ($_FILES['file']["error"] > 0)
+			{
+				$errmsg = "에러코드: " . $_FILES['file']["error"];
+				echo $errmsg;
+			}
 		if (!empty($_FILES)) 
 		{
 		// File Variables
@@ -308,7 +315,7 @@ class Dropzone extends CI_Controller {
 				break;
 			}
 			$flag="0";
-			resize:
+			//resize:
 			$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/201611/".$ftemp.$upload.$ext;
 //			if($size=="120"){$thumb_path=$rpath."/thumbs/".$ftemp.$upload.$ext;}
 			if($size=="120"){
@@ -362,9 +369,9 @@ class Dropzone extends CI_Controller {
 				imagegif( $thumb, $thumb_path );
 				break;
 			}
-			$flag++;
+			//$flag++;
 		//	echo ($size==640)?"640<br><img src=\"../photo/".$ftemp.$upload.$ext."\" width=120 height=120>":"";
-			if($flag==1){$size=120;goto resize;}
+			//if($flag==1){$size=120;goto resize;}
 				$result=array();
 				$obj['name']=$fileName;
 				$obj['name']=$ftemp.$upload.$ext;
@@ -391,6 +398,7 @@ class Dropzone extends CI_Controller {
 		//echo $filename."move_uploaded_file function failed";
 		// Putting out the data.
 	}/* if (!empty($_FILES)){...} */
+	
 	}
 }
  
