@@ -83,27 +83,6 @@
 			file_key["mb_distributors_paper"]="DS";
 			/* 통장 사본 */
 			file_key["mb_bank_paper"]="BK";
-			thisDropzone.options.myDropzone={
-			autoProcessQueue: true,
-			uploadMultiple: false,
-			parallelUploads: 1,
-			maxFiles: 1,
-			addRemoveLinks: true,
-			maxFileSize: 1,
-			dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",
-			dictFallbackMessage: "이 브라우저는 드래그앤 드롭을 지원하지 않습니다.",
-			dictFallbackText: "옛날에 같은 파일을 업로드 아래의 대체 양식을 사용하세요",
-			dictFileTooBig: "파일이 너무 큽니다.({{filesize}}MiB). 최대 가능 파일 사이즈 : {{maxFilesize}}MiB.",
-			dictInvalidFileType: "업로드 할 수 없는 타입니다.",
-			dictResponseError: "서버 에러 {{statusCode}} 코드.",
-			dictCancelUpload: "업로드 취소",
-			dictCancelUploadConfirmation: "정말 업로드를 취소 하시겠습니까?",
-			dictRemoveFile: "파일 삭제",
-			dictRemoveFileConfirmation: null,
-			dictMaxFilesExceeded: "더이상 파일을 업로드 할 수 없습니다.",
-			dictResponseError: "Ha ocurrido un error en el server",
-			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',			
-			};
 			var param="";
 			if(id!="")
 			{
@@ -118,6 +97,26 @@
 			return {
 			//url: "/prq/dropzone/upload/"+param,
 			url: "/prq/dropzone/thumbnail/"+param,
+			autoProcessQueue: true,
+			uploadMultiple: false,
+			parallelUploads: 5,
+			maxFiles: 5,
+			addRemoveLinks: true,
+			maxFileSize: 10,
+			dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",
+			dictFallbackMessage: "이 브라우저는 드래그앤 드롭을 지원하지 않습니다.",
+			dictFallbackText: "옛날에 같은 파일을 업로드 아래의 대체 양식을 사용하세요",
+			dictFileTooBig: "파일이 너무 큽니다.({{filesize}}MiB). 최대 가능 파일 사이즈 : {{maxFilesize}}MiB.",
+			dictInvalidFileType: "업로드 할 수 없는 타입니다.",
+			dictResponseError: "서버 에러 {{statusCode}} 코드.",
+			dictCancelUpload: "업로드 취소",
+			dictCancelUploadConfirmation: "정말 업로드를 취소 하시겠습니까?",
+			dictRemoveFile: "파일 삭제",
+			dictRemoveFileConfirmation: null,
+			dictMaxFilesExceeded: "더이상 파일을 업로드 할 수 없습니다.",
+			/**/
+			dictResponseError: "Ha ocurrido un error en el server",
+			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
 			init: function() {
 				
 				thisDropzone.on('maxfilesexceeded',function(fil){

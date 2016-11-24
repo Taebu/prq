@@ -210,7 +210,7 @@ class Dropzone extends CI_Controller {
     }
 
 	public function thumbnail(){
-
+		/*
 		if (!empty($_FILES)) 
 		{
 			$tempFile = $_FILES['file']['tmp_name'];
@@ -230,7 +230,6 @@ class Dropzone extends CI_Controller {
 			if($this->uri->segment(3)!=""){
 				$prefix=$this->uri->segment(3);
 			}
-
 
 			$chk_file = explode(".", $fileName);
 			$extension = $chk_file[sizeof($chk_file)-1];
@@ -252,13 +251,16 @@ class Dropzone extends CI_Controller {
 				$obj['name']=$fileName;
 				$obj['size']=filesize($targetFile);
 				$result[]=$obj;
-//				echo json_encode(array("filename" => $fileName));
+			//	echo json_encode(array("filename" => $fileName));
 				header("Content-type: text/json");
 				header("Content-type: application/json");
 				echo json_encode($result);
 			}
-		}/* if (!empty($_FILES)){...} */
+		}*/
 		
+		/* if (!empty($_FILES)){...} */
+		
+		$size=763;
 		// public function thumnail($file,$rpath,$size){
 		if (!empty($_FILES)) 
 		{
@@ -295,7 +297,6 @@ class Dropzone extends CI_Controller {
 				case 'image/jpeg':
 					$ext= '.jpg';
 				break;
-				
 				// Image/png
 				case 'image/png':
 					$ext= '.png';
@@ -308,8 +309,12 @@ class Dropzone extends CI_Controller {
 			}
 			$flag="0";
 			resize:
-			$thumb_path=$rpath."/".$ftemp.$upload.$ext;
-			if($size=="120"){$thumb_path=$rpath."/thumbs/".$ftemp.$upload.$ext;}
+			$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/201611/".$ftemp.$upload.$ext;
+//			if($size=="120"){$thumb_path=$rpath."/thumbs/".$ftemp.$upload.$ext;}
+			if($size=="120"){
+				$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/201611/".$ftemp.$upload.$ext;
+				//$thumb_path=$rpath."/thumbs/".$ftemp.$upload.$ext;
+			}
 			if( $width == $height ){ $shape=1; }
 			if( $width < $height ){ $shape=2; }
 			if( $width > $height ){ $shape=3; }
@@ -362,23 +367,27 @@ class Dropzone extends CI_Controller {
 			if($flag==1){$size=120;goto resize;}
 				$result=array();
 				$obj['name']=$fileName;
-				$obj['size']=filesize($targetFile);
+				$obj['name']=$ftemp.$upload.$ext;
+				//$obj['size']=filesize($targetFile);
+				$obj['size']=filesize($thumb_path);
+				$obj['thumb_path']=$thumb_path;
+
 				$result[]=$obj;
 
 				header("Content-type: text/json");
 				header("Content-type: application/json");
 				echo json_encode($result);
 		// Move the original file aswell.
-		/*!outer function thumb */
+		/*!outer function thumb `*/
 		//move_uploaded_file( $fileTmpLoc, $path );
 		//echo $filename."function upload is complets";
-		echo ($size==120)?"<img src=\"/data/file/notice/thumbs/".$ftemp.$upload.$ext."\" width=120 height=120>":"";
-		echo "<input type=\"hidden\" name='tmp' id=\"".$file."_thumbs\" value=".$ftemp.$upload.$ext.">";
-		echo "<input type=\"hidden\" name='width[]' value=".$width.">";
-		echo "<input type=\"hidden\" name='height[]' value=".$height.">";
-		echo "<input type=\"hidden\" name='fileType[]' value=".$fileType.">";
-		echo "<input type=\"hidden\" name='fileSize[]' value=".$fileSize.">";
-		echo "<input type=\"hidden\" name='fileName[]' value=".$fileName.">";
+		//		$result=array();
+		//		$obj['name']=$fileName;
+		//		$obj['size']=filesize($targetFile);
+		//		$result[]=$obj;
+		//		header("Content-type: text/json");
+		//		header("Content-type: application/json");
+		//		echo json_encode($result);
 		//echo $filename."move_uploaded_file function failed";
 		// Putting out the data.
 	}/* if (!empty($_FILES)){...} */

@@ -91,7 +91,12 @@ echo form_open('/auth/login', $attributes);
 				
 				<div style="width:100%;">
 					<ul style="list-style:none;padding:0;margin:0;">
-						<a href="https://download.teamviewer.com/download/TeamViewerQS_ko-rjl.exe" target="_blank">
+						<!-- <a href="https://download.teamviewer.com/download/TeamViewerQS_ko-rjl.exe" target="_blank">
+						<li style="float:left;width:49%;background:#3c3c3c;color:#fff;padding:10px;">
+						본사 원격지원 설치
+						</li>
+						</a> -->
+						<a href="http://939.co.kr/anpr" target="_blank">
 						<li style="float:left;width:49%;background:#3c3c3c;color:#fff;padding:10px;">
 						본사 원격지원 설치
 						</li>
