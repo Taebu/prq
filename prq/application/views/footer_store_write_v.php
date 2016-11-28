@@ -98,7 +98,7 @@
 			parallelUploads: 1,
 			maxFiles: 1,
 			addRemoveLinks: true,
-			maxFileSize: 1,
+			maxFileSize: 3,
 			/**/
 
 			dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",

@@ -76,7 +76,8 @@ class Dropzone extends CI_Controller {
 			$fileName = $_FILES['file']['name'];
 
 			//file size allowed in kb
-			$allowedMaxSize=1024;
+			//$allowedMaxSize=1024;
+			$allowedMaxSize=1024*10;
 
 			$mb_imgprefix="";
 			if($this->uri->segment(4)!=""){
@@ -264,19 +265,31 @@ class Dropzone extends CI_Controller {
 		
 		$size="763";
 		// public function thumnail($file,$rpath,$size){
-			if ($_FILES['file']["error"] > 0)
-			{
-				$errmsg = "에러코드: " . $_FILES['file']["error"];
-				echo $errmsg;
-			}
+		if ($_FILES['file']["error"][0] > 0)
+		{
+			$errmsg = "에러코드: " . print_r($_FILES['file']["error"]);
+			echo $errmsg;
+		}
+
 		if (!empty($_FILES)) 
 		{
 		// File Variables
 		$fileName=$_FILES['file']['name'];
-		$fileTmpLoc=$_FILES['file']['tmp_name'];
+		if(is_array($_FILES['file']['tmp_name'])){
+		$fileTmpLoc=$_FILES['file']['tmp_name'][0];
+		}else{
+		$fileTmpLoc2=$_FILES['file']['tmp_name'];
+		}
+
+		$fileTmpLoc2=$_FILES['file']['tmp_name'];
+
+		print_r($fileTmpLoc);
 		$fileType=$_FILES['file']['type'];
 		$fileSize=$_FILES['file']['size'];
 		$fileSize2=getimagesize($fileTmpLoc);
+		//print_r($fileSize2);
+		//print_r($fileType);
+		//$fileType
 		$fileErrorMsg = $_FILES['file']["error"]; // 0 for false ... and 1 for true
 		if (!$fileTmpLoc){ //if file not chosen
 			echo "ERROR: Please browse for a file befor clicking the upload button.";
@@ -299,7 +312,7 @@ class Dropzone extends CI_Controller {
 			$maxheight=1080;
 			$allowed=array("image/jpeg", "image/png", "image/gif" );
 			// Recognizing the extension
-			switch( $fileType ){
+			switch( $fileType[0] ){
 				// Image/Jpeg
 				case 'image/jpeg':
 					$ext= '.jpg';
@@ -323,8 +336,8 @@ class Dropzone extends CI_Controller {
 				//$thumb_path=$rpath."/thumbs/".$ftemp.$upload.$ext;
 			}
 			if( $width == $height ){ $shape=1; }
-			if( $width < $height ){ $shape=2; }
-			if( $width > $height ){ $shape=3; }
+			if( $width > $height ){ $shape=2; }
+			if( $width < $height ){ $shape=3; }
 			// Ajusting the resize script on shape.
 			switch( $shape ){
 				// Code to resize a square image.
@@ -346,27 +359,71 @@ class Dropzone extends CI_Controller {
 				break;
 			}
 			// Resizing according to extension.
+			/**
+			*
+			$uploadTempFile = $myField[ 'tmp_name' ]
+			list( $uploadWidth, $uploadHeight, $uploadType ) 
+			  = getimagesize( $uploadTempFile );
+
+			$srcImage = imagecreatefrompng( $uploadTempFile ); 
+
+			$targetImage = imagecreatetruecolor( 128, 128 );   
+			imagealphablending( $targetImage, false );
+			imagesavealpha( $targetImage, true );
+
+			imagecopyresampled( $targetImage, $srcImage, 
+								0, 0, 
+								0, 0, 
+								128, 128, 
+								$uploadWidth, $uploadHeight );
+
+			imagepng(  $targetImage, 'out.png', 9 );
+
+			-----
+
+			$im = ImageCreateFromPNG($source);
+			$new_im = imagecreatetruecolor($new_size[0],$new_size[1]);
+			imagecolortransparent($new_im, imagecolorallocate($new_im, 0, 0, 0));
+			imagecopyresampled($new_im,$im,0,0,0,0,$new_size[0],$new_size[1],$size[0],$size[1]);
+			*/
 			switch( $fileType ){
 				// Image/Jpeg
 				case 'image/jpeg':
-				$img=imagecreatefromjpeg( $fileTmpLoc );
+				$img = ImageCreateFromJPEG( $fileTmpLoc2 );
 				$thumb=imagecreatetruecolor( $newwidth, $newheight );
 				imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
 				imagejpeg( $thumb, $thumb_path );
+                //imagedestroy($thumb);
+                //imagedestroy($img);
 				break;
 				// Image/png
 				case 'image/png':
+				
+				/* png */
+				$img = ImageCreateFromPNG($fileTmpLoc2);
+				$thumb = imagecreatetruecolor( $newwidth, $newheight );
+				imagecolortransparent($thumb, imagecolorallocate($thumb, 0, 0, 0));
+				imagecopyresampled($thumb,$img,0,0,0,0,$newwidth, $newheight,$width, $height );
+				/*
 				$img=imagecreatefrompng( $fileTmpLoc );
 				$thumb=imagecreatetruecolor( $newwidth, $newheight );
-				imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
-				imagepng( $thumb, $thumb_path );
+				imagealphablending($thumb, false );
+				imagesavealpha($thumb, true );
+				
+				imagecopyresized( $thumb, $img,0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+				*/
+				imagepng( $thumb, $thumb_path);
+                //imagedestroy($thumb);
+                //imagedestroy($img);
 				break;
 				// Image/gif
 				case 'image/gif':
-				$img=imagecreatefromgif( $fileTmpLoc );
+				$img=ImageCreateFromGIF( $fileTmpLoc2 );
 				$thumb=imagecreatetruecolor( $newwidth, $newheight );
 				imagecopyresized( $thumb, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
 				imagegif( $thumb, $thumb_path );
+                //imagedestroy($thumb);
+                //imagedestroy($img);
 				break;
 			}
 			//$flag++;
@@ -376,8 +433,11 @@ class Dropzone extends CI_Controller {
 				$obj['name']=$fileName;
 				$obj['name']=$ftemp.$upload.$ext;
 				//$obj['size']=filesize($targetFile);
+				//$obj['size']=filesize($fileTmpLoc);
 				$obj['size']=filesize($thumb_path);
 				$obj['thumb_path']=$thumb_path;
+				$obj['fileTmpLoc']=$fileTmpLoc;
+				$obj['tmp_name']=$_FILES['file']['tmp_name'];
 
 				$result[]=$obj;
 
@@ -398,7 +458,6 @@ class Dropzone extends CI_Controller {
 		//echo $filename."move_uploaded_file function failed";
 		// Putting out the data.
 	}/* if (!empty($_FILES)){...} */
-	
 	}
 }
  

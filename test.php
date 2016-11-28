@@ -1,5 +1,12 @@
 <?php
 //echo "test";
-ini_set('upload_max_filesize', '10M');
-phpinfo();
+echo filesize('/var/www/html/prq/uploads/201611/1480293374GECAC.jpg');
+
+//phpinfo();
+$im = imagecreatefrompng("test.png");
+
+header('Content-Type: image/png');
+
+imagepng($im);
+imagedestroy($im);
 ?>

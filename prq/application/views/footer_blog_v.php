@@ -98,9 +98,9 @@
 			//url: "/prq/dropzone/upload/"+param,
 			url: "/prq/dropzone/thumbnail/"+param,
 			autoProcessQueue: true,
-			uploadMultiple: false,
-			parallelUploads: 5,
-			maxFiles: 5,
+			uploadMultiple: true,
+			parallelUploads: 9,
+			maxFiles: 9,
 			addRemoveLinks: true,
 			maxFileSize: 10,
 			dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",
@@ -128,6 +128,7 @@
 					var thisDropzone=this;
 					var object=[];
 					object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});
+					$("#img_1").val($("#"+id).val());
 					console.log(object);
 					$.each(object,function(key,value){
 						var mockfile={name:value.name,size:value.size};
