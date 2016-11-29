@@ -69,6 +69,13 @@
     <!-- DROPZONE -->
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
     <script>
+	
+	var img_file_cnt=0;
+
+	var img_index=1;
+
+	var img_filenames=[];
+
         $(document).ready(function(){
 
 		Dropzone.autoDiscover = false;
@@ -86,14 +93,16 @@
 			var param="";
 			if(id!="")
 			{
-				param=file_key[id]+"/";
+				param=$("#st_imgprefix").val()+"/";
 			}
+			/*
 			var prefix_path="";
 			prefix_path=$("#mb_imgprefix").val();
 			if(prefix_path!="")
 			{
 				param+=prefix_path+"/";
 			}
+			*/
 			return {
 			//url: "/prq/dropzone/upload/"+param,
 			url: "/prq/dropzone/thumbnail/"+param,
@@ -128,7 +137,7 @@
 					var thisDropzone=this;
 					var object=[];
 					object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});
-					$("#img_1").val($("#"+id).val());
+					
 					console.log(object);
 					$.each(object,function(key,value){
 						var mockfile={name:value.name,size:value.size};
@@ -137,8 +146,9 @@
 						{
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
+						
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#mb_imgprefix").val()+"/"+value.name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#st_imgprefix").val()+"/"+value.name);
 						}
 					});
 				}
@@ -149,43 +159,82 @@
 					this.removeFile(this.files[0]);
 				  }
 				});
-			  },success: function(file,data)
+			  },
+			success:function(file,data){
+				//alert('test');
+			 },
+			successmultiple: function(file,data)
 			{
+
+				
+				var success_index=0;
 				var thisDropzone=this;
-				if(file.status == "success")
+				if(file[0].status == "success")
 				{
 					//var json = JSON.parse(response);
 					console.log(data);
 					var element;
+					img_file_cnt=$("#my-awesome-dropzone1>.dz-preview").length;
+					img_file_cnt+=$("#my-awesome-dropzone2>.dz-preview").length;
+					img_file_cnt+=$("#my-awesome-dropzone3>.dz-preview").length;
+					console.log("img_file_cnt : "+img_index+" / "+img_file_cnt);
 
-					(element = file.previewElement) != null ? 
-					element.parentNode.removeChild(file.previewElement) : 
-					false;
+					console.log(file);	
+					for (var i=0;i<file.length;i++)
+					{
+					(element = file[i].previewElement) != null ?element.parentNode.removeChild(file[i].previewElement) :false;
+					}
+					console.log(element);
 
 					$.each(data,function(key,value){
+
 						var mockfile={name:value.name,size:value.size};
+						console.log("name : "+value.name);
+						console.log("size : "+value.size);
+						img_filenames.push(value.size);
+						console.log(id);
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
+
+
+
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#st_imgprefix").val()+"/"+value.name);
+						console.log("success_index : "+success_index);
 					});
-					image_file_count++;
-					console.log("image_file_count : "+image_file_count);
+					for (var img_arr=img_index;img_arr<= img_file_cnt;img_arr++)
+					{
+							console.log(img_arr);
+							//if(img_file_cnt==img_arr)
+							$("#img_"+img_arr).val(value.name);
+					}
+					img_index=img_file_cnt;
+					//image_file_count++;
+					//console.log("image_file_count : "+image_file_count);
 				}
 			},
 			error: function(file)
 			{
-///				alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
-//				file.previewElement.parentNode.removeChild(file.previewElement);
+				//alert("오류 파일 여러개를 지원하지 않거나 업로드에 실패 했습니다. \n따라서 "+file.name+" 업로드 된 파일을 삭제 합니다.");
+				//file.previewElement.parentNode.removeChild(file.previewElement);
 
-//<div class="dz-message" data-dz-message><span>Your Custom Message</span></div>
-console.log('error');
+				//<div class="dz-message" data-dz-message><span>Your Custom Message</span></div>
+				console.log('error');
 			},
 			removedfile: function(file, serverFileName) 
 			{
+				img_index--;
+				/**/
+
+				var myArray = ['a', 'b', 'c', 'd'];
+				myArray.splice(myArray.indexOf('b'), 1);
+				myArray;
 				var name = file.name;
 				var param="filename="+name;
-				
+				console.log("removedfile : ");
+				console.log(this);
+				var remove_file=this;
+				console.log("file size : "+this.files);
 				param+="&mb_imgprefix="+$("#mb_imgprefix").val();
 				param+="&mb_no="+$("#mb_no").val();
 				param+="&mb_removetype="+id;
@@ -231,7 +280,7 @@ console.log('error');
 		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
 
 		/* 통장 사본 */
-		$("#my-awesome-dropzone4").dropzone(set_dropzone_config("mb_bank_paper"));
+		//$("#my-awesome-dropzone4").dropzone(set_dropzone_config("mb_bank_paper"));
 
 		});
 </script>

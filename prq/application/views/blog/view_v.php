@@ -395,7 +395,7 @@ function textAreaAdjust(o) {
 
 
 window.onload = function() {
-textAreaAdjust(document.getElementById("st_middle_msg"));
+//textAreaAdjust(document.getElementById("st_middle_msg"));
 $( "#mb_id" ).focusout(function() {
 chk_vali_id();
 
