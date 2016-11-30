@@ -37,8 +37,8 @@ class Blog extends CI_Controller {
 			$this->load->view('header_write_v');
 			if( method_exists($this, $method) )
 			{
-				//$this->{"{$method}"}();
-				$this->view();
+				$this->{"{$method}"}();
+				//$this->view();
 			}
 			//$this->view();
 			//푸터 include		
@@ -180,8 +180,7 @@ class Blog extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_name', '상점이름', 'required');
-			$this->form_validation->set_rules('st_tel', '상점번호', 'required');
+			$this->form_validation->set_rules('st_no', '상점이름', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -191,64 +190,104 @@ class Blog extends CI_Controller {
 
 				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
 
+				$img_src=$this->input->post('img_src', TRUE);
+
+/*
+*************************** 7. row ***************************
+bo_table: notice
+wr_id: 57
+bf_no: 0
+bf_source: img_5956_1.jpg
+bf_file: 2072917083_Bb07YUvN_img_5956_1.jpg
+bf_download: 0
+bf_content:
+bf_filesize: 613611
+bf_width: 640
+bf_height: 857
+bf_type: 2
+bf_datetime: 2014-06-09 17:59:09
+*************************** 8. row ***************************
+bo_table: notice
+bl_no: 58
+bf_no: 0
+bf_source: site_ad_c.png
+bf_file: 2072917083_6qOLvjY1_site_ad_c.png
+bf_download: 0
+bf_content:
+bf_filesize: 1440963
+bf_width: 1154
+bf_height: 2784
+bf_type: 3
+bf_datetime: 2014-06-13 19:30:08
+
+*/
+
+				for($i=0;$i<=count($img_src);$i++){
+					//echo $is;
+					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
+					$files=getimagesize($filelocation);
+
+					$write_data = array(
+						'pr_table' => "review",
+						'bl_no' => $this->input->post('bl_imgprefix', TRUE),
+						'bf_no' => "0",
+						'bf_source' => $img_src[$i],
+						'bf_file' => $img_src[$i],
+						'bf_download' => "0",
+						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
+						'bf_filesize' => filesize($filelocation),
+						'bf_width' => $files[0],
+						'bf_height' => $files[1],
+						'bf_type' => $files[2],
+					);
+					/*
+					</div>Array
+				(
+					[pr_table] => review
+					[bl_no] => 201611
+					[bf_no] => 0
+					[bf_source] => 
+					[bf_file] => 
+					[bf_download] => 0
+					[bf_content] => 201611
+					[bf_filesize] => 4096
+					[bf_width] => 
+					[bf_height] => 
+					[bf_type] => 
+				)
+
+				Fatal error: Call to und
+					*/
+					print_r($write_data);
+					//$result = $this->blog_m->insert_file($write_data);
+				}
+				//$this->input->post(NULL, TRUE); 
+				$array_content=$this->input->post('content', TRUE);
+				
 				$write_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
-					'st_category' => $this->input->post('st_category', TRUE),
-					'st_name' => $this->input->post('st_name', TRUE),
-					'st_tel' => $this->input->post('st_tel', TRUE),
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'st_open' => $this->input->post('st_open', TRUE),
-					'st_closed' => $this->input->post('st_closed', TRUE),
-					'st_alltime' => $this->input->post('st_alltime', TRUE),
-					'st_mno' => $this->input->post('st_mno', TRUE),
-//					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
-					'st_closingdate' => join(",",$this->input->post('st_closingdate', TRUE)),
-					'st_destination' => $this->input->post('st_destination', TRUE),
-					'st_intro' => $this->input->post('st_intro', TRUE),
-					'st_password' => $this->input->post('st_password', TRUE),
-					'st_nick' => $this->input->post('st_nick', TRUE),
-					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
-					'st_email' => $this->input->post('st_email', TRUE),
-					'st_homepage' => $this->input->post('st_homepage', TRUE),
-					'st_business_name' => $this->input->post('st_business_name', TRUE),
-					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
-					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
-					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
-					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
-					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
-					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
-					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
-					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
-					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
-					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
-					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
-					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
-					'st_business_num' => $this->input->post('st_business_num', TRUE),
-					'st_datetime' => $this->input->post('st_datetime', TRUE),
-					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
-					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
-					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
-					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
-					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
-					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
-					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
-					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
-					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
-					'st_status' => $this->input->post('st_status', TRUE)
+					'st_no' => $this->input->post('st_no', TRUE),
+					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
+					'bl_file' => $this->input->post('bl_file', TRUE),
+					'bl_name' => $this->input->post('bl_name', TRUE),
+					'bl_hp' => $this->input->post('bl_hp', TRUE),
+					'content1' => $array_content[0],
+					'content2' => $array_content[1],
+					'content3' => $array_content[2],
+					'post_data' => $this->input->post(null, TRUE),
 				);
-				$result = $this->blog_m->insert_store($write_data);
+				$result = $this->blog_m->insert_blog($write_data);
+				print_r($result);
 
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/blog/write/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/blog/write/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
@@ -256,7 +295,7 @@ class Blog extends CI_Controller {
 			else
 			{
 				//쓰기폼 view 호출
-				$this->load->view('store/write_v');	
+				$this->load->view('blog/view_v');	
 			}
 		}
 		else

@@ -23,7 +23,7 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-echo form_open('/store/write/prq_store/board_id/', $attributes);
+echo form_open('/blog/write/prq_store/board_id/', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
@@ -50,24 +50,19 @@ echo $prq_fcode;
 <input type="hidden" name="st_thumb_paper_size" id="st_thumb_paper_size">
 <input type="hidden" name="st_menu_paper_size" id="st_menu_paper_size">
 <input type="hidden" name="st_main_paper_size" id="st_main_paper_size">
+<input type="text" name="bl_file" id="bl_file" value="0">
+<input type="text" name="bl_name" id="bl_name" value="홍길동">
+<input type="text" name="bl_hp" id="bl_hp" value="010-1234-5678">
+<input type="text" name="bl_naverid" id="bl_naverid" value="testid">
+<input type="text" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>">
 
-<input type="hidden" name="st_imgprefix" id="st_imgprefix" value="<?php echo date("Ym");?>">
+<input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo date("Ym");?>">
 
 <input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
 
 <div class="row">
 <div class="col-lg-12">
-<div id="image_area">
-<input type="text" name="img_src[]" id="img_1" class="form-control" value="1" >
-<input type="text" name="img_src[]" id="img_2" class="form-control" value="2">
-<input type="text" name="img_src[]" id="img_3" class="form-control" value="3">
-<input type="text" name="img_src[]" id="img_4" class="form-control" value="4">
-<input type="text" name="img_src[]" id="img_5" class="form-control" value="5">
-<input type="text" name="img_src[]" id="img_6" class="form-control" value="6">
-<input type="text" name="img_src[]" id="img_7" class="form-control" value="7">
-<input type="text" name="img_src[]" id="img_8" class="form-control" value="8">
-<input type="text" name="img_src[]" id="img_9" class="form-control" value="9">
-#image_area</div>
+<div id="image_area">#image_area</div>
 </div><!--.col-lg-12-->
 </div><!--.row-->
 
@@ -182,13 +177,13 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 
 
 <div class="controls">
-<p class="help-block"><?php echo validation_errors(); ?></p>
+<p class="help-block">1234<?php echo validation_errors(); ?></p>
 </div>
 
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
-<!-- <button type="submit" class="btn btn-primary" id="write_btn">작성</button> -->
-<button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button>
+<button type="button" class="btn btn-primary" onclick="set_member()">set_member</button>
+<!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <button class="btn btn-white" type="reset">취소</button>
 
 <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button>
@@ -276,7 +271,7 @@ $( "#mb_id_assist" ).html(object.join(""));
 function set_member(){
 var param=$("#write_action").serialize();
 $.ajax({
-url:"/prq/board/write/prq_member",
+url:"/prq/blog/write",
 type: "POST",
 data:param,
 cache: false,
@@ -422,5 +417,21 @@ chk_byte(3);
 
 function set_top_msg(v){
 $("#st_top_msg").val("(광고) [ "+v+" ] 에서");
+}
+
+function get_store()
+{
+	$.ajax({
+	url:"/prq/ajax/get_frmail/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				
+				fr_mail[val.prq_fcode]=val.mb_email;
+			});
+		}
+	});
 }
 </script>

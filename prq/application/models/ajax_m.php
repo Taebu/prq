@@ -1518,6 +1518,40 @@ ERROR:
 		echo json_encode($json);
 	}
 
+	/*2016-11-30 (수) 14:56:44 
+	get_store_info()
+
+
+	사용 중인 모든 상점 코드를 반환한다.
+	*/
+	function get_store_info()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_store`; ";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->db->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		echo json_encode($json);
+	}
+
 }
 
 /* End of file ajax_m.php */

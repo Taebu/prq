@@ -75,6 +75,8 @@
 	var img_index=1;
 
 	var img_filenames=[];
+	
+	
 
         $(document).ready(function(){
 
@@ -131,6 +133,7 @@
 				thisDropzone.on('maxfilesexceeded',function(fil){
 					console.log('you con only upload 1 file');
 				});
+				
 				var mode=$("#mode").val();
 
 				if(mode=="modify"||mode=="view"){
@@ -191,7 +194,9 @@
 						var mockfile={name:value.name,size:value.size};
 						console.log("name : "+value.name);
 						console.log("size : "+value.size);
-						img_filenames.push(value.size);
+						img_filenames.push(value.name);
+
+						console.log(img_filenames);
 						console.log(id);
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
@@ -202,15 +207,14 @@
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#st_imgprefix").val()+"/"+value.name);
 						console.log("success_index : "+success_index);
 					});
-					for (var img_arr=img_index;img_arr<= img_file_cnt;img_arr++)
-					{
-							console.log(img_arr);
-							//if(img_file_cnt==img_arr)
-							$("#img_"+img_arr).val(value.name);
+					var object=[];
+					for (var i in img_filenames) {
+						object.push('<input type="text" name="img_src[]" id="img_'+i+'" class="form-control" value="'+img_filenames[i]+'">');
 					}
+					$("#image_area").html(object.join(""));
+
+					$("#bl_file").val(img_filenames.length);
 					img_index=img_file_cnt;
-					//image_file_count++;
-					//console.log("image_file_count : "+image_file_count);
 				}
 			},
 			error: function(file)
@@ -223,24 +227,28 @@
 			},
 			removedfile: function(file, serverFileName) 
 			{
-				img_index--;
-				/**/
+				/* 이미지 파일 이름 배열에서 제거 */
+				img_filenames.splice(img_filenames.indexOf(file.name), 1);
+				console.log(img_filenames);
+				var object=[];
+				for (var i in img_filenames) {
+					object.push('<input type="text" name="img_src[]" id="img_'+i+'" class="form-control" value="'+img_filenames[i]+'">');
+				}
+				$("#image_area").html(object.join(""));
+				$("#bl_file").val(img_filenames.length);
 
-				var myArray = ['a', 'b', 'c', 'd'];
-				myArray.splice(myArray.indexOf('b'), 1);
-				myArray;
 				var name = file.name;
 				var param="filename="+name;
 				console.log("removedfile : ");
 				console.log(this);
 				var remove_file=this;
 				console.log("file size : "+this.files);
-				param+="&mb_imgprefix="+$("#mb_imgprefix").val();
-				param+="&mb_no="+$("#mb_no").val();
+				param+="&st_imgprefix="+$("#st_imgprefix").val();
+//				param+="&mb_no="+$("#mb_no").val();
 				param+="&mb_removetype="+id;
 				$.ajax({
 					type: "POST",
-					url: "/prq/dropzone/delete",
+					url: "/prq/dropzone/delthumb",
 					data:param,
 					success: function(data)
 					{
@@ -256,7 +264,11 @@
 							$("#"+id+"_paper").val("");
 							image_file_count--;
 							console.log("image_file_count : "+image_file_count);
+							alert(json.file);
+						}else{
+							alert(json.file);
 						}
+
 					},error: function(data)
 					{
 						file.previewElement.parentNode.removeChild(file.previewElement);

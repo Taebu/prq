@@ -1,5 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+* prq ajax 통신을 위한 클래스 입니다.
+* file : /prq/application/controllers/ajax.php
+* 작성 : 2015-03-05 (목)
+* 수정 : 2016-11-30 (수) 11:42:55 
+* 
+* @author Moon Taebu
+* @Copyright (c) 2016, 태부
+*/
 define('DS', DIRECTORY_SEPARATOR);
 define('DES', 'uploads');
 $action = "upload";
@@ -179,14 +187,14 @@ class Dropzone extends CI_Controller {
 
 	public function delete_st() {
 		$name = $_POST["filename"];
-		$st_imgprefix = $_POST["st_imgprefix"];
+		$bl_imgprefix = $_POST["bl_imgprefix"];
 		$st_no = $_POST["st_no"];
 		$st_removetype = $_POST["st_removetype"];
 		
-		if(file_exists(getcwd().'/uploads/'.$st_imgprefix."/".$name))
+		if(file_exists(getcwd().'/uploads/'.$bl_imgprefix."/".$name))
 		{
 			$sql=array();
-			unlink(getcwd().'/uploads/'.$st_imgprefix."/".$name);
+			unlink(getcwd().'/uploads/'.$bl_imgprefix."/".$name);
 			$sql[]="update prq_store set ";
 			$sql[]=$st_removetype."='',";
 			$sql[]=$st_removetype."_size=0";
@@ -210,6 +218,60 @@ class Dropzone extends CI_Controller {
 		}
     }
 
+	public function delthumb() {
+		/*
+		move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/".$file
+		*/
+		$name = $_POST["filename"];
+		$bl_imgprefix = $_POST["bl_imgprefix"];
+//		$mb_no = $_POST["mb_no"];
+		$mb_removetype = $_POST["mb_removetype"];
+		$name = $_POST["filename"];
+		//print_r($_POST);
+//		$name = "106745763.jpg";
+		
+		/* 파일이 존재하는 경우 */
+		if(file_exists(getcwd().'/uploads/'.$bl_imgprefix."/".$name))
+		{
+			$sql=array();
+			unlink(getcwd().'/uploads/'.$bl_imgprefix."/".$name);
+			/*
+			$sql[]="update prq_member set ";
+			$sql[]=$mb_removetype."='',";
+			$sql[]=$mb_removetype."_size=0";
+			$sql[]=" where ";
+			$sql[]="mb_no='".$mb_no."';";
+			
+			$result= $this->db->query(join("",$sql));
+			*/
+//			$link = mysql_connect("localhost", "root", "");
+//			mysql_select_db("dropzone", $link);
+//			mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);
+//			mysql_close($link);
+			$result=array(
+				"res" => true,
+				"sql"=>$sql,
+				"file"=>"file deleted and db upate!!!"	
+			);
+			echo json_encode($result);
+		}
+		else
+		{
+			//$result=array("res" => false);
+			//echo json_encode($result);
+//			$sql="update prq_member set ".$mb_removetype."='',".$mb_removetype."_size=0 where mb_no='".$mb_no."';";
+//			$result= $this->db->query($sql);
+			$sql="testing!!!";
+			$result=array(
+				"res" => true,
+				"sql"=>$sql,
+				"file"=>"file it's not onldy db update!!!"	
+			);
+			echo json_encode($result);
+		}
+
+    }
+
 	public function thumbnail(){
 		$size="763";
 		$result=array();
@@ -221,14 +283,14 @@ class Dropzone extends CI_Controller {
 		}
 		
 		if($this->uri->segment(3)!=""){
-			$st_imgprefix=$this->uri->segment(3);
+			$bl_imgprefix=$this->uri->segment(3);
 		}else{
-			$st_imgprefix=date("Ym");
+			$bl_imgprefix=date("Ym");
 		}
 
 		if (!empty($_FILES)) 
 		{
-		//$st_imgprefix = "201611";
+		//$bl_imgprefix = "201611";
 
 			//echo count($_FILES['file']['name']);
 			$file_sizes=count($_FILES['file']['name']);
@@ -276,9 +338,9 @@ class Dropzone extends CI_Controller {
 				break;
 			}
 
-			$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/".$st_imgprefix."/".$ftemp.$upload.$ext;
+			$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/".$bl_imgprefix."/".$ftemp.$upload.$ext;
 
-			$targetPath = $_SERVER['DOCUMENT_ROOT'].'/prq/uploads/'.$st_imgprefix;
+			$targetPath = $_SERVER['DOCUMENT_ROOT'].'/prq/uploads/'.$bl_imgprefix;
 			
 			if(!is_dir($targetPath)){
 				mkdir($targetPath,0700);
@@ -345,7 +407,7 @@ class Dropzone extends CI_Controller {
 				//$json['posts']=array();
 				$obj['name']=$ftemp.$upload.$ext;
 				$obj['size']=filesize($thumb_path);
-				$obj['st_imgprefix']=$st_imgprefix;
+				$obj['bl_imgprefix']=$bl_imgprefix;
 				$obj['file_sizes']=$file_sizes;
 				//array_push($json['posts'],$obj);
 				$result[]=$obj;

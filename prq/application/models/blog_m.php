@@ -110,42 +110,31 @@ class Blog_m extends CI_Model
 	 */
 	function insert_blog($arrays)
  	{
+		/*
 		$sql_array = array(
 			'mb_pcode' => $arrays['mb_pcode']
 		);
-
+					'st_no' => $this->input->post('st_no', TRUE),
+					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
+					'bl_file' => $this->input->post('bl_file', TRUE),
+					'content1' => $array_content[0],
+					'content2' => $array_content[1],
+					'content3' => $array_content[2],
+		*/
+		$result=$this->input->post(null, TRUE);
 		$sql_array=array();
-		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
-		$sql_array[]="mb_id='".$arrays['mb_id']."',";
-		$sql_array[]="mb_name='".$arrays['mb_name']."',";
-		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
-		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
-		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
-		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
-		$sql_array[]="mb_gname_kor='".$arrays['mb_gname_kor']."',";
-		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
-		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
-		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
-		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
-		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
-		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
-		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
-		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
-		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
-		$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
-		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
-		$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
-		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
-		$sql_array[]="mb_blog_paper ='".$arrays['mb_blog_paper']."',";
-		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
-		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
-		$sql_array[]="mb_blog_paper_size ='".$arrays['mb_blog_paper_size']."',";
-		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
-		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
-		$sql_array[]="mb_datetime=now();";
-		$sql=join("",$sql_array);
-		$result = $this->db->query($sql);
+		$sql_array[]="INSERT INTO prq_blog SET ";
+		$sql_array[]="st_no='".$arrays['st_no']."',";
+		$sql_array[]="bl_imgprefix='".$arrays['bl_imgprefix']."',";
+		$sql_array[]="bl_file='".$arrays['bl_file']."',";
+		$sql_array[]="bl_name='".$arrays['bl_name']."',";
+		$sql_array[]="bl_hp='".$arrays['bl_hp']."',";
+		$sql_array[]="bl_content1='".$arrays['content1']."',";
+		$sql_array[]="bl_content2='".$arrays['content2']."',";
+		$sql_array[]="bl_content3='".$arrays['content3']."',";
+		$sql_array[]="bl_datetime=now();";
+	//	$sql=join("",$sql_array);
+//		$result = $this->db->query($sql);
 		//결과 반환
 		return $result;
  	}
