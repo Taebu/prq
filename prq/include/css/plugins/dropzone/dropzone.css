@@ -366,6 +366,7 @@
   text-align: center;
   color: #aaa;
   margin-top: 26px;
+  cursor:pointer
 }
 .dropzone a.dz-remove:hover,
 .dropzone-previews a.dz-remove:hover {

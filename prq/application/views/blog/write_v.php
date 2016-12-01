@@ -9,7 +9,7 @@
 <a>블로그 관리</a>
 </li>
 <li class="active">
-<strong>블로그 등록</strong>
+<strong>블로그 등록w</strong>
 </li>
 </ol>
 </div>
@@ -41,11 +41,11 @@ echo $prq_fcode;
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 
-<input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>">
+<input type="text" name="bl_file" id="bl_file" value="0">
 <input type="text" name="bl_naverid" id="bl_naverid" value="testid">
 <input type="text" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>">
 
-<input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo $views->bl_imgprefix;?>">
+<input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo date("Ym");?>">
 
 <input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
 
@@ -91,7 +91,7 @@ onkeyup='chk_byte(1);textAreaAdjust(this)'
 onkeydown='chk_byte(1);textAreaAdjust(this)' 
 onkeypress='chk_byte(1);textAreaAdjust(this)' 
 
-placeholder="고객의 힘으로 상점과 고객간에 따뜻한 격려가 담긴 이용후기를 남겨주세요."><?php echo $views->bl_content1;?></textarea><!-- #form_data -->
+placeholder="고객의 힘으로 상점과 고객간에 따뜻한 격려가 담긴 이용후기를 남겨주세요."></textarea><!-- #form_data -->
 <span class="help-block m-b-none"><span id='bytesize_1'>0</span> byte <br>
 100 byte 이상 작성하셔야 합니다.~ !!! <br>
 </div><!-- .col-sm-10 -->
@@ -115,7 +115,7 @@ placeholder="고객의 힘으로 상점과 고객간에 따뜻한 격려가 담�
 onkeyup='chk_byte(2);textAreaAdjust(this)' 
 onkeydown='chk_byte(2);textAreaAdjust(this)' 
 onkeypress='chk_byte(2);textAreaAdjust(this)' 
-placeholder="정성스러운 이용후기가 가게 사장님들께 더 큰 힘이 됩니다!"><?php echo $views->bl_content2;?></textarea><!-- #form_data -->
+placeholder="정성스러운 이용후기가 가게 사장님들께 더 큰 힘이 됩니다!"></textarea><!-- #form_data -->
 <span class="help-block m-b-none"><span id='bytesize_2'>0</span> byte <br>
 100 byte 이상 작성하셔야 합니다.~ !!! <br>
 무성의한 글은 신청시 포인트 지급이 거절 될 수 있습니다.
@@ -141,7 +141,7 @@ placeholder="정성스러운 이용후기가 가게 사장님들께 더 큰 힘�
 onkeyup='chk_byte(3);textAreaAdjust(this)' 
 onkeydown='chk_byte(3);textAreaAdjust(this)' 
 onkeypress='chk_byte(3);textAreaAdjust(this)' 
- placeholder="잘찍은 사진 한장! 100댓글이 안부럽다~!"><?php echo $views->bl_content3;?></textarea><!-- #form_data -->
+ placeholder="잘찍은 사진 한장! 100댓글이 안부럽다~!"></textarea><!-- #form_data -->
 
 
 <span class="help-block m-b-none"><span id='bytesize_3'>0</span> byte <br>
@@ -154,7 +154,7 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 
 <div class="form-group"><label class="col-sm-2 control-label">이름</label>
 <div class="col-sm-10">
-<input type="text" name="bl_name" id="bl_name"  class="form-control" value="<?php echo $views->bl_name;?>" placeholder="고객님 이름을 기재해 주세요.">
+<input type="text" name="bl_name" id="bl_name"  class="form-control" value="" placeholder="고객님 이름을 기재해 주세요.">
  - 고객님 이름을 기재해 주세요.<br>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -163,7 +163,7 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 
 <div class="form-group"><label class="col-sm-2 control-label">핸드폰</label>
 <div class="col-sm-10">
-<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="<?php echo $views->bl_hp;?>" placeholder="고객님 핸드폰을 기재해 주세요.">
+<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="" placeholder="고객님 핸드폰을 기재해 주세요.">
  - 고객님 핸드폰을 기재해 주세요.<br>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -431,9 +431,6 @@ function textAreaAdjust(o) {
 
 
 window.onload = function() {
-	chk_byte(1);
-	chk_byte(2);
-	chk_byte(3);
     var checkload = true;
  
     $("#write_btn").click(function () {

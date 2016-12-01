@@ -38,6 +38,9 @@
 
     <link href="/prq/include/css/plugins/select2/select2.min.css" rel="stylesheet">
 
+	<!-- Toastr style -->
+    <link href="/prq/include/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
     <link href="/prq/include/css/animate.css" rel="stylesheet">
     <link href="/prq/include/css/style.css" rel="stylesheet">
 

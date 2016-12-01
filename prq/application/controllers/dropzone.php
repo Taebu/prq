@@ -225,7 +225,7 @@ class Dropzone extends CI_Controller {
 		$name = $_POST["filename"];
 		$bl_imgprefix = $_POST["bl_imgprefix"];
 //		$mb_no = $_POST["mb_no"];
-		$mb_removetype = $_POST["mb_removetype"];
+		//$mb_removetype = $_POST["mb_removetype"];
 		$name = $_POST["filename"];
 		//print_r($_POST);
 //		$name = "106745763.jpg";
@@ -251,7 +251,7 @@ class Dropzone extends CI_Controller {
 			$result=array(
 				"res" => true,
 				"sql"=>$sql,
-				"file"=>"file deleted and db upate!!!"	
+				"file"=>"파일을 삭제 하였습니다."	
 			);
 			echo json_encode($result);
 		}
@@ -263,9 +263,9 @@ class Dropzone extends CI_Controller {
 //			$result= $this->db->query($sql);
 			$sql="testing!!!";
 			$result=array(
-				"res" => true,
+				"res" => false,
 				"sql"=>$sql,
-				"file"=>"file it's not onldy db update!!!"	
+				"file"=>"파일이 존재하지않습니다. 테이블 정보만 갱신하였습니다."	
 			);
 			echo json_encode($result);
 		}

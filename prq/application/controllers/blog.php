@@ -49,10 +49,10 @@ class Blog extends CI_Controller {
 			//
 			if( method_exists($this, $method) )
 			{
-				//$this->{"{$method}"}();
-				$this->view();
+				$this->{"{$method}"}();
+				//$this->view();
 			}
-			$this->view();
+			//$this->view();
 
 			//푸터 include		
 			$this->load->view('footer_write_v');
@@ -141,9 +141,9 @@ class Blog extends CI_Controller {
 	 */
 	function view()
  	{
-		$table = "prq_store";
+		$table = "prq_blog";
 //		$board_id = $this->uri->segment(5);
-		$board_id =$this->uri->segment(2);
+		$board_id =$this->uri->segment(3);
 		$is_test=$this->uri->segment(3)=="test";
 		$mobile=$this->uri->segment(3)=="mobile";
 
@@ -154,8 +154,8 @@ class Blog extends CI_Controller {
  		//$data['comment_list'] = $this->blog_m->get_comment($table, $board_id);
 
  		//view 호출
- 		$config=array('clientId'=>'aWWbsFdRSNQZL6Df5ATr');
-		$data['curl']=$this->curl->simple_get('http://openapi.map.naver.com/openapi/v2/maps.js', $config, array(CURLOPT_BUFFERSIZE => 10)); 
+ 		//$config=array('clientId'=>'aWWbsFdRSNQZL6Df5ATr');
+		//$data['curl']=$this->curl->simple_get('http://openapi.map.naver.com/openapi/v2/maps.js', $config, array(CURLOPT_BUFFERSIZE => 10)); 
 		$isMobile = $this->check_user_agent('mobile');
 
 		if($is_test){
@@ -219,48 +219,7 @@ bf_width: 1154
 bf_height: 2784
 bf_type: 3
 bf_datetime: 2014-06-13 19:30:08
-
 */
-
-				for($i=0;$i<=count($img_src);$i++){
-					//echo $is;
-					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
-					$files=getimagesize($filelocation);
-
-					$write_data = array(
-						'pr_table' => "review",
-						'bl_no' => $this->input->post('bl_imgprefix', TRUE),
-						'bf_no' => "0",
-						'bf_source' => $img_src[$i],
-						'bf_file' => $img_src[$i],
-						'bf_download' => "0",
-						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
-						'bf_filesize' => filesize($filelocation),
-						'bf_width' => $files[0],
-						'bf_height' => $files[1],
-						'bf_type' => $files[2],
-					);
-					/*
-					</div>Array
-				(
-					[pr_table] => review
-					[bl_no] => 201611
-					[bf_no] => 0
-					[bf_source] => 
-					[bf_file] => 
-					[bf_download] => 0
-					[bf_content] => 201611
-					[bf_filesize] => 4096
-					[bf_width] => 
-					[bf_height] => 
-					[bf_type] => 
-				)
-
-				Fatal error: Call to und
-					*/
-					print_r($write_data);
-					//$result = $this->blog_m->insert_file($write_data);
-				}
 				//$this->input->post(NULL, TRUE); 
 				$array_content=$this->input->post('content', TRUE);
 				
@@ -277,8 +236,33 @@ bf_datetime: 2014-06-13 19:30:08
 				);
 				$result = $this->blog_m->insert_blog($write_data);
 				print_r($result);
+				
+				
+				for($i=0;$i<count($img_src);$i++)
+				{
+					//echo $is;
+					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
+					$files=getimagesize($filelocation);
 
-				if ( $result )
+					$write_data = array(
+						'pr_table' => "review",
+						'bl_no' => $result['insert_id'],
+						'bf_no' => $i,
+						'bf_source' => $img_src[$i],
+						'bf_file' => $img_src[$i],
+						'bf_download' => "0",
+						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
+						'bf_filesize' => filesize($filelocation),
+						'bf_width' => $files[0],
+						'bf_height' => $files[1],
+						'bf_type' => $files[2],
+					);
+					//print_r($write_data);
+					$result2 = $this->blog_m->insert_file($write_data);
+					echo $result2;
+				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
+
+				if ( $result['result'] )
 				{
 					//글 작성 성공시 게시판 목록으로
 					alert('입력되었습니다.', '/prq/blog/write/'.$this->uri->segment(3).'/page/'.$pages);
@@ -295,7 +279,7 @@ bf_datetime: 2014-06-13 19:30:08
 			else
 			{
 				//쓰기폼 view 호출
-				$this->load->view('blog/view_v');	
+				$this->load->view('blog/write_v');	
 			}
 		}
 		else

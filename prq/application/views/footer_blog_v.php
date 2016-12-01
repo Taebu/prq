@@ -68,7 +68,10 @@
 
     <!-- DROPZONE -->
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
-    <script>
+
+	<!-- Toastr script -->
+    <script src="/prq/include/js/plugins/toastr/toastr.min.js"></script>
+	<script>
 	
 	var img_file_cnt=0;
 
@@ -95,7 +98,7 @@
 			var param="";
 			if(id!="")
 			{
-				param=$("#st_imgprefix").val()+"/";
+				param=$("#bl_imgprefix").val()+"/";
 			}
 			/*
 			var prefix_path="";
@@ -105,13 +108,14 @@
 				param+=prefix_path+"/";
 			}
 			*/
+
 			return {
 			//url: "/prq/dropzone/upload/"+param,
 			url: "/prq/dropzone/thumbnail/"+param,
 			autoProcessQueue: true,
 			uploadMultiple: true,
-			parallelUploads: 9,
-			maxFiles: 9,
+			parallelUploads: 12,
+			maxFiles: 12,
 			addRemoveLinks: true,
 			maxFileSize: 10,
 			dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",
@@ -129,17 +133,18 @@
 			dictResponseError: "Ha ocurrido un error en el server",
 			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
 			init: function() {
-				
+				/*
 				thisDropzone.on('maxfilesexceeded',function(fil){
 					console.log('you con only upload 1 file');
 				});
+				*/
 				
 				var mode=$("#mode").val();
 
 				if(mode=="modify"||mode=="view"){
 					var thisDropzone=this;
 					var object=[];
-					object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});
+					//object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});
 					
 					console.log(object);
 					$.each(object,function(key,value){
@@ -147,21 +152,22 @@
 						/*파일이 경로가 존재한다면*/
 						if(value.name!="")
 						{
-						$("#"+id).val(value.name);
-						$("#"+id+"_size").val(value.size);
+						//$("#"+id).val(value.name);
+						//$("#"+id+"_size").val(value.size);
 						
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#st_imgprefix").val()+"/"+value.name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#bl_imgprefix").val()+"/"+value.name);
 						}
 					});
 				}
-
+				/*
 				this.on("addedfile", function() {
 				  if (this.files[1]!=null){
 
-					this.removeFile(this.files[0]);
+					//this.removeFile(this.files[0]);
 				  }
 				});
+				*/
 			  },
 			success:function(file,data){
 				//alert('test');
@@ -195,16 +201,17 @@
 						console.log("name : "+value.name);
 						console.log("size : "+value.size);
 						img_filenames.push(value.name);
-
+						/*
 						console.log(img_filenames);
+
 						console.log(id);
 						$("#"+id).val(value.name);
 						$("#"+id+"_size").val(value.size);
-
+						*/
 
 
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
-						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#st_imgprefix").val()+"/"+value.name);
+						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#bl_imgprefix").val()+"/"+value.name);
 						console.log("success_index : "+success_index);
 					});
 					var object=[];
@@ -243,9 +250,8 @@
 				console.log(this);
 				var remove_file=this;
 				console.log("file size : "+this.files);
-				param+="&st_imgprefix="+$("#st_imgprefix").val();
-//				param+="&mb_no="+$("#mb_no").val();
-				param+="&mb_removetype="+id;
+				param+="&bl_imgprefix="+$("#bl_imgprefix").val();
+
 				$.ajax({
 					type: "POST",
 					url: "/prq/dropzone/delthumb",
@@ -260,21 +266,23 @@
 							element.parentNode.removeChild(file.previewElement) : 
 							false;
 							//alert("요소를 제거: " + name); 
+							/*
 							$("#"+id).val("");
 							$("#"+id+"_paper").val("");
+							*/
 							image_file_count--;
 							console.log("image_file_count : "+image_file_count);
-							alert(json.file);
+							toastr.clear();
+							toastr.success(json.file,"파일삭제");
 						}else{
-							alert(json.file);
+							toastr.clear();
+							toastr.error(json.file,"파일삭제");
 						}
 
 					},error: function(data)
 					{
 						file.previewElement.parentNode.removeChild(file.previewElement);
 						alert("서버 에러 업로드 파일을 삭제 합니다." ); 
-						$("#"+id).val("");
-						$("#"+id+"_paper").val("");
 						console.log("error");
 					}
 				});
@@ -293,6 +301,9 @@
 
 		/* 통장 사본 */
 		//$("#my-awesome-dropzone4").dropzone(set_dropzone_config("mb_bank_paper"));
+
+
+
 
 		});
 </script>

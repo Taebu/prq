@@ -88,16 +88,16 @@ class Blog_m extends CI_Model
     function get_view($table, $id)
     {
     	//조회수 증가
-//    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
-//   		$this->db->query($sql0);
+    	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
+   		//$this->db->query($sql0);
 
-//    	$sql = "SELECT * FROM ".$table." WHERE mb_no='".$id."'";
-//   		$query = $this->db->query($sql);
+    	$sql = "SELECT * FROM ".$table." WHERE bl_no='".$id."'";
+   		$query = $this->db->query($sql);
 
      	//게시물 내용 반환
-//	    $result = $query->row();
+	    $result = $query->row();
 
-//    	return $result;
+    	return $result;
     }
 
 
@@ -133,11 +133,21 @@ class Blog_m extends CI_Model
 		$sql_array[]="bl_content2='".$arrays['content2']."',";
 		$sql_array[]="bl_content3='".$arrays['content3']."',";
 		$sql_array[]="bl_datetime=now();";
-	//	$sql=join("",$sql_array);
-//		$result = $this->db->query($sql);
+		$sql=join("",$sql_array);
+		$result = $this->db->query($sql);
+		$insert_id = $this->db->insert_id();
+		$result=array(
+			'result' => $result,
+			'insert_id' => $insert_id
+		);
 		//결과 반환
 		return $result;
  	}
+	/**
+	*
+	*
+
+	*/
 
 	/**
 	 * 회원 코드 입력
@@ -427,14 +437,43 @@ class Blog_m extends CI_Model
    		$query = $this->db->query($sql);
 
      	//상점 갯수 반환
-	//    $result = $query->row();
+		//$result = $query->row();
 		$result = $query->result();
     	return $result;
     }
 
 
 
+	/**
+	 * 파일 입력
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param array $arrays 이미지 파일 정보 일체
+	 * @return boolean 입력 성공여부
+	 */
+	function insert_file($arrays)
+ 	{
 
+		$sql_array=array();
+		$sql_array[]="INSERT INTO prq_file SET ";
+		$sql_array[]="pr_table='".$arrays['pr_table']."',";
+		$sql_array[]="bl_no='".$arrays['bl_no']."',";
+		$sql_array[]="bf_no='".$arrays['bf_no']."',";
+		$sql_array[]="bf_source='".$arrays['bf_source']."',";
+		$sql_array[]="bf_file='".$arrays['bf_file']."',";
+		$sql_array[]="bf_download='".$arrays['bf_download']."',";
+		$sql_array[]="bf_content='".$arrays['bf_content']."',";
+		$sql_array[]="bf_filesize='".$arrays['bf_filesize']."',";
+		$sql_array[]="bf_width='".$arrays['bf_width']."',";
+		$sql_array[]="bf_height='".$arrays['bf_height']."',";
+		$sql_array[]="bf_type='".$arrays['bf_type']."',";
+		$sql_array[]="bf_datetime=now();";
+		$sql=join("",$sql_array);
+		
+		$result = $this->db->query($sql);
+
+		//결과 반환
+		return $sql;
+ 	}
 }
 
 /* End of file member_m.php */
