@@ -78,8 +78,13 @@
 	var img_index=1;
 
 	var img_filenames=[];
-	
-	
+	var imgs=[];
+	imgs[0]=0;
+	imgs[1]=0;
+	imgs[2]=0;
+	var str_img1="";
+	var str_img2="";
+	var str_img3="";
 
         $(document).ready(function(){
 
@@ -100,6 +105,8 @@
 			{
 				param=$("#bl_imgprefix").val()+"/";
 			}
+
+
 			/*
 			var prefix_path="";
 			prefix_path=$("#mb_imgprefix").val();
@@ -175,7 +182,7 @@
 			successmultiple: function(file,data)
 			{
 
-				
+				console.log("file_key  ->  "+file_key[id]);
 				var success_index=0;
 				var thisDropzone=this;
 				if(file[0].status == "success")
@@ -210,6 +217,19 @@
 						*/
 
 
+						if(file_key[id]=="BS"){
+							imgs[0]++;
+						}
+
+						if(file_key[id]=="DS"){
+							imgs[1]++;
+						}
+
+						if(file_key[id]=="BK"){
+							imgs[2]++;
+						}
+
+
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#bl_imgprefix").val()+"/"+value.name);
 						console.log("success_index : "+success_index);
@@ -220,7 +240,8 @@
 					}
 					$("#image_area").html(object.join(""));
 
-					$("#bl_file").val(img_filenames.length);
+	//`				$("#bl_file").val(img_filenames.length);
+					$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
 					img_index=img_file_cnt;
 				}
 			},
@@ -241,8 +262,21 @@
 				for (var i in img_filenames) {
 					object.push('<input type="text" name="img_src[]" id="img_'+i+'" class="form-control" value="'+img_filenames[i]+'">');
 				}
+
+				if(file_key[id]=="BS"){
+					imgs[0]--;
+				}
+
+				if(file_key[id]=="DS"){
+					imgs[1]--;
+				}
+
+				if(file_key[id]=="BK"){
+					imgs[2]--;
+				}
+
 				$("#image_area").html(object.join(""));
-				$("#bl_file").val(img_filenames.length);
+				$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
 
 				var name = file.name;
 				var param="filename="+name;

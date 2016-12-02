@@ -281,13 +281,13 @@ toastr.options = {
 };
 	toastr.clear();
 if($("#content1").val().length<100){
-	toastr.error('첫번째 글이 너무 적어요 ㅠ ㅠ','100자이상 작성해주세요.');
+	toastr.error('첫 번째 글이 너무 적어요 ㅠ ㅠ','100자이상 작성해주세요.');
 	//$("#content1").focus();
 	return;
 }
 
 if($("#content2").val().length<100){
-	toastr.error('두번째 글이 너무 적어요 ㅠ ㅠ','100자이상 작성해주세요.');
+	toastr.error('두 번째 글이 너무 적어요 ㅠ ㅠ','100자이상 작성해주세요.');
 	//$("#content2").focus();
 	return;
 }
@@ -298,11 +298,12 @@ if($("#bl_name").val().length<2){
 	return;
 }
 
-if($("#bl_hp").val().length<12){
+if($("#bl_hp").val().length<10){
 	toastr.error('핸드폰을 작성해야 지급이 가능합니다 .','10자이상 작성해주세요.');
 	//$("#content2").focus();
 	return;
 }
+$("#write_action").submit();
 /*
 if($("#content3").val().length<100){
 	toastr.success('Without any options','글이 너무 적습니다!!!');
@@ -310,7 +311,7 @@ if($("#content3").val().length<100){
 	return;
 }
 */
-
+/*
 $.ajax({
 url:"/prq/blog/write",
 type: "POST",
@@ -321,6 +322,7 @@ success: function(data) {
 console.log(data);
 }
 });		
+*/
 }
 function chk_btn_status()
 {

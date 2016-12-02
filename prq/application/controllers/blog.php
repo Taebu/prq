@@ -55,7 +55,8 @@ class Blog extends CI_Controller {
 			//$this->view();
 
 			//푸터 include		
-			$this->load->view('footer_write_v');
+			//$this->load->view('footer_write_v');
+			$this->load->view('footer_blog_v');
 		}
 		
     }
@@ -149,7 +150,10 @@ class Blog extends CI_Controller {
 
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$data['views'] = $this->blog_m->get_view($table, $board_id);
-
+		$array = json_decode(json_encode($data['views']),true);
+		$data['files'] = $this->blog_m->get_files($array);
+		//$array = json_decode(json_encode($data['files']),true);
+		//print_r($array);
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
  		//$data['comment_list'] = $this->blog_m->get_comment($table, $board_id);
 
@@ -174,7 +178,8 @@ class Blog extends CI_Controller {
 		$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		//if( @$this->session->userdata('logged_in') == TRUE )
+		if(TRUE)
 		{
 			//폼 검증 라이브러리 로드
 			$this->load->library('form_validation');
@@ -211,7 +216,14 @@ bo_table: notice
 bl_no: 58
 bf_no: 0
 bf_source: site_ad_c.png
-bf_file: 2072917083_6qOLvjY1_site_ad_c.png
+bf_file: 
+
+2072917083_
+6qOLvjY1_
+site_
+ad_
+c.png
+
 bf_download: 0
 bf_content:
 bf_filesize: 1440963
@@ -235,7 +247,7 @@ bf_datetime: 2014-06-13 19:30:08
 					'post_data' => $this->input->post(null, TRUE),
 				);
 				$result = $this->blog_m->insert_blog($write_data);
-				print_r($result);
+				//print_r($result);
 				
 				
 				for($i=0;$i<count($img_src);$i++)
@@ -284,8 +296,8 @@ bf_datetime: 2014-06-13 19:30:08
 		}
 		else
 		{
-			alert('로그인후 작성하세요', '/prq/auth/login/');
-			exit;
+			//alert('로그인후 작성하세요', '/prq/auth/login/');
+			//exit;
 		}
  	}
 

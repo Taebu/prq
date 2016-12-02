@@ -244,10 +244,11 @@ class Dropzone extends CI_Controller {
 			
 			$result= $this->db->query(join("",$sql));
 			*/
-//			$link = mysql_connect("localhost", "root", "");
-//			mysql_select_db("dropzone", $link);
-//			mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);
-//			mysql_close($link);
+			//$link = mysql_connect("localhost", "root", "");
+			//mysql_select_db("dropzone", $link);
+			//mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);
+			//mysql_close($link);
+
 			$result=array(
 				"res" => true,
 				"sql"=>$sql,
@@ -259,8 +260,9 @@ class Dropzone extends CI_Controller {
 		{
 			//$result=array("res" => false);
 			//echo json_encode($result);
-//			$sql="update prq_member set ".$mb_removetype."='',".$mb_removetype."_size=0 where mb_no='".$mb_no."';";
-//			$result= $this->db->query($sql);
+			//$sql="update prq_member set ".$mb_removetype."='',".$mb_removetype."_size=0 where mb_no='".$mb_no."';";
+			//$result= $this->db->query($sql);
+
 			$sql="testing!!!";
 			$result=array(
 				"res" => false,
@@ -305,15 +307,18 @@ class Dropzone extends CI_Controller {
 				echo "ERROR: Please browse for a file befor clicking the upload button.";
 				exit();
 			}		
-		/* outer function thumbs*/
+			
+			/* outer function thumbs*/
 			$width=$fileSize2[0];
 			$height=$fileSize2[1];
 			$ftemp = time(); //파일네임에 사용할 시리얼 생성
 			$ftemp = "RV_"; //파일네임에 사용할 시리얼 생성
-			$serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // 시리얼 번호 생성
+			$ftemp.= time()."_";
+			$serial_make = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; // 시리얼 번호 생성
+
 			srand((double)microtime()*1000000);
 			$upload = "";
-			for($j=0; $j<5; $j++){ 
+			for($j=0; $j<10; $j++){ 
 				$upload .= $serial_make[rand()%strlen($serial_make)];
 				uniqid($upload);
 			}
@@ -338,7 +343,7 @@ class Dropzone extends CI_Controller {
 				break;
 			}
 
-			$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/".$bl_imgprefix."/".$ftemp.$upload.$ext;
+			$thumb_path=$_SERVER['DOCUMENT_ROOT']."/prq/uploads/".$bl_imgprefix."/".$ftemp.$upload."_".$fileName;
 
 			$targetPath = $_SERVER['DOCUMENT_ROOT'].'/prq/uploads/'.$bl_imgprefix;
 			
@@ -405,7 +410,7 @@ class Dropzone extends CI_Controller {
 
 
 				//$json['posts']=array();
-				$obj['name']=$ftemp.$upload.$ext;
+				$obj['name']=$ftemp.$upload."_".$fileName;;
 				$obj['size']=filesize($thumb_path);
 				$obj['bl_imgprefix']=$bl_imgprefix;
 				$obj['file_sizes']=$file_sizes;

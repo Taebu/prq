@@ -474,6 +474,29 @@ class Blog_m extends CI_Model
 		//결과 반환
 		return $sql;
  	}
+
+    /**
+	 * 게시물 상세보기 가져오기
+	 *
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_files($arrays)
+    {
+    	//조회수 증가
+    	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
+   		//$this->db->query($sql0);
+
+    	$sql = "SELECT * FROM prq_file WHERE bl_no='".$arrays['bl_no']."'";
+   		$query = $this->db->query($sql);
+
+     	//댓글 리스트 반환
+	    $result = $query->result();
+
+    	return $result;
+    }
 }
 
 /* End of file member_m.php */

@@ -52,6 +52,16 @@ echo $prq_fcode;
 <div class="row">
 <div class="col-lg-12">
 <div id="image_area">#image_area</div>
+<?php
+$arrays=array();
+foreach($files as $fi){
+	$arrays[]="http://".$_SERVER['SERVER_NAME'].'/prq/uploads/'.$fi->bf_content."/".$fi->bf_source;
+}
+
+foreach($arrays as $ar){
+	echo "<img src='".$ar."'>";
+}
+?>
 </div><!--.col-lg-12-->
 </div><!--.row-->
 
@@ -310,7 +320,7 @@ if($("#content3").val().length<100){
 	return;
 }
 */
-
+$("#write_action").submit();
 $.ajax({
 url:"/prq/blog/write",
 type: "POST",
