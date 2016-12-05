@@ -229,6 +229,9 @@
 			return object[code];
 		}
 	</script>
+<style type="text/css">
+.mms5{font-size:1.5em;}
+</style>
 	<article id="board_area">
 		<header>
 			<h1></h1>
@@ -389,7 +392,7 @@ foreach ($list as $lt)
 					<td scope="row"><?php echo $lt->mm_type;?></td>
 					<td scope="row"><?php echo phone_format($lt->mm_receiver);?></td>
 					<td scope="row"><?php echo phone_format($lt->mm_sender);?></td>
-					<td scope="row"><?php echo $lt->mm_result;?></td>
+					<td scope="row" class="mms5"><?php echo $lt->mm_result;?></td>
 					<td scope="row"><?php echo $lt->mm_datetime;?></td>
 					<td scope="row"><?php echo $lt->mm_daily_cnt;?></td>
 					<td scope="row"><?php echo $lt->mm_monthly_cnt;?></td>

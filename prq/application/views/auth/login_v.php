@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Login</title>
+    <title>톡톡메시지 | Login</title>
 
     <link href="/prq/include/css/bootstrap.min.css" rel="stylesheet">
     <link href="/prq/include/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -58,15 +58,15 @@ echo form_open('/auth/login', $attributes);
 				<div style="font-weight:bold;font-size:19px;margin:35px 0 10px 0;">※ TOKTOK MESSAGE 프로그램 ※</div>
 				<ul style="padding:0px;margin:0px;list-style:none;">
 					<li style="float:left;width:30%;">
-						<a href="http://prq.co.kr/prq/uploads/files/PRQ_Serial.zip" target="_blank"><img src="/prq/img/login_icon1.png" width="100%"></a>
+						<a target="_blank"><img src="/prq/img/login_icon1.png" width="100%"  data-toggle="modal" data-target="#myModal1"></a>
 					</li>
 					<li style="float:left;width:30%;margin-left:15px;">
 						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"> -->
-						<a href="/prq/uploads/files/KTProQ.zip" target="_blank"><img src="/prq/img/login_icon2.png" width="100%"></a>
+						<a target="_blank" data-toggle="modal" data-target="#myModal1"><img src="/prq/img/login_icon2.png" width="100%"></a>
 					</li>
 					<li style="float:right;width:30%;">
 						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a> -->
-						<a href="/prq/uploads/files/PRQ_KT.zip" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a>
+						<a target="_blank" data-toggle="modal" data-target="#myModal1"><img src="/prq/img/login_icon3.png" width="100%"></a>
 					</li>
 					<li style="clear:both;"></li>
 				</ul>
@@ -158,7 +158,7 @@ echo form_open('/auth/login', $attributes);
 		</ul>
 		<ul style="list-style:none;margin:0;padding:0;font-size:14px;">
 			<li style="float:left;width:49.99%;background:#3c3c3c;color:#fff;padding:10px;border-bottom:1px solid #fff;border-right:1px solid #fff;">
-				<a href="/prq/down/toktok_pcguide.pdf" target="pdf" style="color:#fff;"><img src="/prq/img/pc.png" width="40px"><p style="margin-top:11px;line-height:16px;"><b>PC</b><br>설치<br>가이드</p></a>
+				<a href="/prq/down/toktok_pcguide.pdf" target="pdf" style="color:#fff;"><img src="/prq/img/pc.png" width="40px"><p style="margin-top:11px;line-height:16px;"><b>KT</b><br>설치<br>가이드</p></a>
 			</li>
 			<li style="float:right;width:49.99%;background:#da2327;color:#fff;padding:10px;">
 				<a href="/prq/down/KTok_guide.pdf" target="pdf" style="color:#fff;"><img src="/prq/img/pc_kt.png" width="40px"><p style="margin-top:11px;line-height:16px;"><b>KTok</b><br>설치<br>가이드</p></a>
@@ -176,8 +176,93 @@ echo form_open('/auth/login', $attributes);
 			</a>
 		</div>
 	</div>
-	
-	
-</body>
 
+
+<div class="modal inmodal" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
+<form id="downloadForm" action="/prq/ajax/download">
+<div class="modal-dialog">
+<div class="modal-content animated flipInY">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h4 class="modal-title">다운로드</h4>
+<small class="font-bold">주의 사항 필독후 다운 받으세요.</small>
+</div><!-- .modal-header -->
+<div class="modal-body">
+<p><strong>해당 다운로드 파일을 타사에 제공 하지 않습니다.</strong> 보안상 이유로 배포를 금지 합니다!!!</p>
+<p><strong>해당 다운로드 파일을 타사에 제공 하지 않습니다.</strong> 보안상 이유로 배포를 금지 합니다!!!</p>
+<p><strong>해당 다운로드 파일을 타사에 제공 하지 않습니다.</strong> 보안상 이유로 배포를 금지 합니다!!!</p>
+<p><strong>해당 다운로드 파일을 타사에 제공 하지 않습니다.</strong> 보안상 이유로 배포를 금지 합니다!!!</p>
+
+<div class="form-group">
+<!-- <input type="email" class="form-control" placeholder="Username" required=""> -->
+<input type="text" class="input-large form-control" id="setup_id" name="setup_id" value="">
+</div><!-- .form-group -->
+<div class="form-group">
+<!-- <input type="password" class="form-control" placeholder="Password" required=""> -->
+<input type="password" class="input-large form-control" id="setup_pw" name="setup_pw" value="">
+</div><!-- .form-group -->
+</div><!-- .modal-body -->
+<div class="modal-footer">
+<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-primary" onclick="javascript:download(1);">CID 다운로드</button>
+<button type="button" class="btn btn-primary" onclick="javascript:download(2);">KT 다운로드</button>
+<button type="button" class="btn btn-primary" onclick="javascript:download(3);">KTok 다운로드</button>
+</div><!-- .modal-footer -->
+</div><!-- .modal-content animated flipInY -->
+</div><!-- .modal-dialog -->
+</form><!-- #downloadForm -->
+</div><!-- #myModal1 -->
+	
+<script type="text/javascript">
+function download(v) {
+	var $id = $.trim( $('#downloadForm').find( $('input[name="setup_id"]') ).val() );
+	var $pw = $.trim( $('#downloadForm').find( $('input[name="setup_pw"]') ).val() );
+	
+	if ( $id.length > 0 && $pw.length > 0 ) {
+		var action = $('#downloadForm').attr('action');
+		var form_data = {
+			setup_id: $id,
+			setup_pw: $pw,
+			setup_v:v
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: action,
+			data: form_data,
+			success: function (response) {
+				var obj = $.parseJSON(response);
+				
+				if ( obj.success_yn.toLowerCase() == 'y' ) {
+					location.href = obj.url;
+					$('a.closeDOMWindow').trigger('click');
+				}
+				else {
+					if ( obj.cause == 'fail' ) {
+						alert( '파트너/담당자코드 또는 비밀번호를 바르게 입력하세요.' );
+					}
+					else {
+						alert( '오류가 발생하였습니다.' );
+					}
+				}
+				
+				
+			}
+		});
+	}
+	else {
+		if ( $id.length == 0 ) {
+			alert( '파트너/담당자코드를 입력하세요.' );
+			$('#downloadForm').find( $('input[name="setup_id"]') ).focus();
+			return;
+		}
+		else {
+			alert( '비밀번호를 입력하세요' );
+			$('#downloadForm').find( $('input[name="setup_pw"]') ).focus();
+			return;
+		}
+	}
+}
+</script>
+</body>
 </html>

@@ -1552,6 +1552,53 @@ ERROR:
 		echo json_encode($json);
 	}
 
+
+	/**
+	 * 아이디, 비밀번호 체크
+	 *
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param array $auth 폼전송 받은 아이디, 비밀번호
+	 * @return array
+	 */
+    function get_login($auth)
+    {
+		$sql=array();
+		$sql[]="SELECT * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_member` ";
+		$sql[]="WHERE ";
+		$sql[]="mb_id = '".$auth['setup_id']."' ";
+		$sql[]="AND mb_password = password('".$auth['setup_pw']."'); ";
+
+		$url_1="http://prq.co.kr/prq/uploads/files/PRQ_Serial.zip";
+		$url_2="http://prq.co.kr/prq/uploads/files/KTProQ.zip";
+		$url_3="http://prq.co.kr/prq/uploads/files/PRQ_KT.zip";
+		
+		$url_no=${"url_".$auth['setup_v']};
+
+
+	//	$query = $this->db->query(join("",$sql));
+//		if ( $query->num_rows() > 0 )
+		if ( $auth['setup_pw']=="eoqkr9495"&&$auth['setup_id']=="admin")
+		{
+			//맞는 데이터가 있다면 해당 내용 반환
+			$result = array(
+				'success_yn'=>'Y',
+				'url'=>$url_no
+			);
+			return json_encode($result);
+     	}
+     	else
+     	{
+     		//맞는 데이터가 없을 경우
+			$result = array(
+				'success_yn'=>'N',
+				'cause'=>'fail'
+			);
+			return json_encode($result);
+     	}
+    }
+
 }
 
 /* End of file ajax_m.php */

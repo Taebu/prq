@@ -580,6 +580,27 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 
+	/* download */
+	public function download()
+	{
+		$json['success']=false;
+		//$url_no=$this->uri->segment(3);
+		$setup_id=$this->input->post("setup_id", TRUE);
+		$setup_pw=$this->input->post("setup_pw", TRUE);
+		$setup_v=$this->input->post("setup_v", TRUE);
+
+
+		$write_data = array(
+			'success_yn'=>'N',
+			'cause'=>'fail',
+			'setup_id'=>$setup_id,
+			'setup_pw'=>$setup_pw,
+			'setup_v'=>$setup_v
+		);
+		$result = $this->ajax_m->get_login($write_data);
+		echo $result;
+	}
+
 }
 
 /* End of file ajax_board.php */
