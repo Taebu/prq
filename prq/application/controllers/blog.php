@@ -90,8 +90,8 @@ class Blog extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/store/lists/prq_store'.$page_url.'/page/',
-		'total_rows' => $this->blog_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'base_url'=> '/prq/blog/lists/prq_store'.$page_url.'/page/',
+		'total_rows' => $this->blog_m->get_list("prq_blog", 'count', '', '', $search_word),
 		'per_page' => 5,
 		'uri_segment' => $uri_segment,
 
@@ -133,8 +133,8 @@ class Blog extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->blog_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
-		$this->load->view('store/list_v', $data);
+		$data['list'] = $this->blog_m->get_list("prq_blog", '', $start, $limit, $search_word);
+		$this->load->view('blog/list_v', $data);
 	}
 
 	/**
@@ -152,21 +152,10 @@ class Blog extends CI_Controller {
  		$data['views'] = $this->blog_m->get_view($table, $board_id);
 		$array = json_decode(json_encode($data['views']),true);
 		$data['files'] = $this->blog_m->get_files($array);
-		//$array = json_decode(json_encode($data['files']),true);
-		//print_r($array);
-		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
- 		//$data['comment_list'] = $this->blog_m->get_comment($table, $board_id);
+		$data['store'] = $this->blog_m->get_store($array);
+		//$isMobile = $this->check_user_agent('mobile');
 
- 		//view 호출
- 		//$config=array('clientId'=>'aWWbsFdRSNQZL6Df5ATr');
-		//$data['curl']=$this->curl->simple_get('http://openapi.map.naver.com/openapi/v2/maps.js', $config, array(CURLOPT_BUFFERSIZE => 10)); 
-		$isMobile = $this->check_user_agent('mobile');
-
-		if($is_test){
-			$this->load->view('blog/view2_v', $data);
-		}else{
-			$this->load->view('blog/view_v', $data);
-		}
+		$this->load->view('blog/view_v', $data);
  	}
 
  	/**
@@ -197,41 +186,6 @@ class Blog extends CI_Controller {
 
 				$img_src=$this->input->post('img_src', TRUE);
 
-/*
-*************************** 7. row ***************************
-bo_table: notice
-wr_id: 57
-bf_no: 0
-bf_source: img_5956_1.jpg
-bf_file: 2072917083_Bb07YUvN_img_5956_1.jpg
-bf_download: 0
-bf_content:
-bf_filesize: 613611
-bf_width: 640
-bf_height: 857
-bf_type: 2
-bf_datetime: 2014-06-09 17:59:09
-*************************** 8. row ***************************
-bo_table: notice
-bl_no: 58
-bf_no: 0
-bf_source: site_ad_c.png
-bf_file: 
-
-2072917083_
-6qOLvjY1_
-site_
-ad_
-c.png
-
-bf_download: 0
-bf_content:
-bf_filesize: 1440963
-bf_width: 1154
-bf_height: 2784
-bf_type: 3
-bf_datetime: 2014-06-13 19:30:08
-*/
 				//$this->input->post(NULL, TRUE); 
 				$array_content=$this->input->post('content', TRUE);
 				
@@ -325,7 +279,7 @@ bf_datetime: 2014-06-13 19:30:08
 		if( @$this->session->userdata('logged_in') == TRUE )
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
-			$writer_id = $this->blog_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+			//$writer_id = $this->blog_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
@@ -337,90 +291,81 @@ bf_datetime: 2014-06-13 19:30:08
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_name', 'st_name', 'required');
+			$this->form_validation->set_rules('st_no', 'st_no', 'required');
 			//$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
 //				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
-				if ( !$this->input->post('st_name', TRUE))
+				if ( !$this->input->post('st_no', TRUE))
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
 					alert('비정상적인 접근입니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
 					exit;
 				}
 
-				//var_dump($_POST);
-				/*
-				$modify_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'distributors_id' => $this->uri->segment(5), //게시물번호
-					'subject' => $this->input->post('subject', TRUE),
-					'contents' => $this->input->post('contents', TRUE)
+
+				$this->load->model('blog_m');
+				//주소중에서 blog 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+				$uri_array = $this->segment_explode($this->uri->uri_string());
+
+				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
+
+				$img_src=$this->input->post('img_src', TRUE);
+
+				//$this->input->post(NULL, TRUE); 
+				$array_content=$this->input->post('content', TRUE);
+				
+				$write_data = array(
+					'table' => "prq_blog",
+					'st_no' => $this->input->post('st_no', TRUE),
+					'bl_no' => $this->input->post('bl_no', TRUE),
+					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
+					'bl_file' => $this->input->post('bl_file', TRUE),
+					'bl_name' => $this->input->post('bl_name', TRUE),
+					'bl_hp' => $this->input->post('bl_hp', TRUE),
+					'content1' => $array_content[0],
+					'content2' => $array_content[1],
+					'content3' => $array_content[2],
+					'post_data' => $this->input->post(null, TRUE),
 				);
+				$result = $this->blog_m->modify_blog($write_data);
+				$result2 = $this->blog_m->delete_file($write_data);
+				
+				for($i=0;$i<count($img_src);$i++)
+				{
+					//echo $is;
+					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
+					$files=getimagesize($filelocation);
 
-				$result = $this->page_m->modify_distributors($modify_data);
-*/
-				$modify_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'st_no' => $this->uri->segment(5), //게시판 번호
-					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
-					'st_category' => $this->input->post('st_category', TRUE),
-					'st_name' => $this->input->post('st_name', TRUE),
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'st_tel' => $this->input->post('st_tel', TRUE),
-					'st_open' => $this->input->post('st_open', TRUE),
-					'st_closed' => $this->input->post('st_closed', TRUE),
-					'st_alltime' => $this->input->post('st_alltime', TRUE),
-					'st_mno' => $this->input->post('st_mno', TRUE),
-					'st_closingdate' => join(",",$this->input->post('st_closingdate', TRUE)),
-					'st_destination' => $this->input->post('st_destination', TRUE),
-					'st_intro' => $this->input->post('st_intro', TRUE),
-					'st_password' => $this->input->post('st_password', TRUE),
-					'st_nick' => $this->input->post('st_nick', TRUE),
-					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
-					'st_email' => $this->input->post('st_email', TRUE),
-					'st_homepage' => $this->input->post('st_homepage', TRUE),
-					'st_business_name' => $this->input->post('st_business_name', TRUE),
-					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
-					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
-					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
-					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
-					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
-					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
-					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
-					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
-					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
-					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
-					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
-					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
-					'st_business_num' => $this->input->post('st_business_num', TRUE),
-					'st_datetime' => $this->input->post('st_datetime', TRUE),
-					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
-					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
-					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
-					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
-					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
-					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
-					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
-					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
-					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
-					'st_status' => $this->input->post('st_status', TRUE)
-				);
-//				$result = $this->distributors_m->insert_distributors($write_data);
+					$write_data = array(
+						'pr_table' => "review",
+						'bl_no' => $this->input->post('bl_no', TRUE),
+						'bf_no' => $i,
+						'bf_source' => $img_src[$i],
+						'bf_file' => $img_src[$i],
+						'bf_download' => "0",
+						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
+						'bf_filesize' => filesize($filelocation),
+						'bf_width' => $files[0],
+						'bf_height' => $files[1],
+						'bf_type' => $files[2],
+					);
+					//print_r($write_data);
+					$result3 = $this->blog_m->insert_file($write_data);
+					echo $result3;
+				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
 
-				$result = $this->blog_m->modify_store($modify_data);
-
-				if ( $result )
+				if ( $result3 )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/blog/view/'.$this->input->post('bl_no', TRUE).'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/store/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/blog/modify/'.$this->input->post('bl_no', TRUE).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 
@@ -428,10 +373,11 @@ bf_datetime: 2014-06-13 19:30:08
 			else
 			{
 				//게시물 내용 가져오기
-				$data['views'] = $this->blog_m->get_view($this->uri->segment(3), $this->uri->segment(5));
-
+				$data['views'] = $this->blog_m->get_view("prq_blog", $this->uri->segment(3));
+				$array = json_decode(json_encode($data['views']),true);
+				$data['files'] = $this->blog_m->get_files($array);
 				//쓰기폼 view 호출
-				$this->load->view('store/modify_v', $data);
+				$this->load->view('blog/modify_v', $data);
 			}
 		}
 		else

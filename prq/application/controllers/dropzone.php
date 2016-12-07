@@ -235,15 +235,13 @@ class Dropzone extends CI_Controller {
 		{
 			$sql=array();
 			unlink(getcwd().'/uploads/'.$bl_imgprefix."/".$name);
-			/*
-			$sql[]="update prq_member set ";
-			$sql[]=$mb_removetype."='',";
-			$sql[]=$mb_removetype."_size=0";
-			$sql[]=" where ";
-			$sql[]="mb_no='".$mb_no."';";
 			
-			$result= $this->db->query(join("",$sql));
-			*/
+			$sql[]="delete from prq_file  ";
+			$sql[]=" where pr_table='review' ";
+			$sql[]=" and bf_source='".$name."';";
+			
+			//$result= $this->db->query(join("",$sql));
+			
 			//$link = mysql_connect("localhost", "root", "");
 			//mysql_select_db("dropzone", $link);
 			//mysql_query("DELETE FROM uploads WHERE name = '$name'", $link);
@@ -251,7 +249,7 @@ class Dropzone extends CI_Controller {
 
 			$result=array(
 				"res" => true,
-				"sql"=>$sql,
+				"sql"=>join("",$sql),
 				"file"=>"파일을 삭제 하였습니다."	
 			);
 			echo json_encode($result);
@@ -262,11 +260,16 @@ class Dropzone extends CI_Controller {
 			//echo json_encode($result);
 			//$sql="update prq_member set ".$mb_removetype."='',".$mb_removetype."_size=0 where mb_no='".$mb_no."';";
 			//$result= $this->db->query($sql);
+			$sql=array();
 
-			$sql="testing!!!";
+			
+			$sql[]="delete from prq_file  ";
+			$sql[]=" where pr_table='review' ";
+			$sql[]=" and bf_source='".$name."';";
+			$result= $this->db->query(join("",$sql));
 			$result=array(
 				"res" => false,
-				"sql"=>$sql,
+				"sql"=>join("",$sql),
 				"file"=>"파일이 존재하지않습니다. 테이블 정보만 갱신하였습니다."	
 			);
 			echo json_encode($result);

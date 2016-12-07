@@ -3457,7 +3457,10 @@ body.body-small .footer.fixed {
 /* PANELS */
 .page-heading {
   border-top: 0;
-  padding: 0px 10px 20px 10px;
+ /*
+	padding: 0px 10px 20px 10px;
+	YJ 161207
+ */
 }
 .panel-heading h1,
 .panel-heading h2 {

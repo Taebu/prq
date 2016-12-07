@@ -95,11 +95,11 @@
 		{
 			var file_key=[];
 			/* 사업자등록증*/
-			file_key["mb_business_paper"]="BS";
+			file_key["d1x"]="BS";
 			/* 총판 계약서*/
-			file_key["mb_distributors_paper"]="DS";
+			file_key["d2x"]="DS";
 			/* 통장 사본 */
-			file_key["mb_bank_paper"]="BK";
+			file_key["d3x"]="BK";
 			var param="";
 			if(id!="")
 			{
@@ -145,15 +145,61 @@
 					console.log('you con only upload 1 file');
 				});
 				*/
-				
 				var mode=$("#mode").val();
-
-				if(mode=="modify"||mode=="view"){
+				var d1x_max=$("#d1x_size").val();
+				var d2x_max=$("#d2x_size").val();
+				var d3x_max=$("#d3x_size").val()-1;
+				imgs[0]=d1x_max;
+				imgs[1]=d2x_max-d1x_max;
+				imgs[2]=d3x_max-d2x_max;
+				//if(mode=="modify"||mode=="view"){
+				if(mode=="modify"){
 					var thisDropzone=this;
 					var object=[];
-					//object.push({"name":$("#"+id).val(),"size":$("#"+id+"_size").val()});
+					var img_name="";
+					if(file_key[id]=="BS"){
+						for (var i=0;i<d1x_max;i++)
+						{
+							console.log(i);
+							console.log("test");
+							img_name=$("#img_zone_"+i).val();
+							object.push({
+							name: img_name, 
+							size:  $("#img_size_"+i).val()
+							});
+							img_filenames.push(img_name);
+						}
+					}
 					
-					console.log(object);
+					if(file_key[id]=="DS"){
+						for (var i=d1x_max;i<d2x_max;i++)
+						{
+							console.log(i);
+							console.log("test");
+							img_name=$("#img_zone_"+i).val();
+							object.push({
+							name: img_name, 
+							size:  $("#img_size_"+i).val()
+							});
+							img_filenames.push(img_name);
+						}
+					}
+					
+					if(file_key[id]=="BK"){
+						console.log(d2x_max+" / "+d3x_max);
+						for (var i=d2x_max;i<d3x_max;i++)
+						{
+							console.log("test");
+							console.log(i);
+							img_name=$("#img_zone_"+i).val();
+
+							object.push({
+							name: img_name, 
+							size:  $("#img_size_"+i).val()
+							});
+							img_filenames.push(img_name);
+						}
+					}
 					$.each(object,function(key,value){
 						var mockfile={name:value.name,size:value.size};
 						/*파일이 경로가 존재한다면*/
@@ -185,6 +231,7 @@
 				console.log("file_key  ->  "+file_key[id]);
 				var success_index=0;
 				var thisDropzone=this;
+				var file_index=0;
 				if(file[0].status == "success")
 				{
 					//var json = JSON.parse(response);
@@ -207,7 +254,29 @@
 						var mockfile={name:value.name,size:value.size};
 						console.log("name : "+value.name);
 						console.log("size : "+value.size);
-						img_filenames.push(value.name);
+						
+						if(file_key[id]=="BS"){
+							console.log("BS index -> : ");	
+							file_index=$("#my-awesome-dropzone1 .dz-preview").length;
+
+							console.log(file_index);	
+						}
+
+						if(file_key[id]=="DS"){
+							console.log("DS index -> : ");	
+							file_index=$("#my-awesome-dropzone1 .dz-preview").length+$("#my-awesome-dropzone2 .dz-preview").length;
+							console.log(file_index);	
+						}
+						
+						if(file_key[id]=="BK"){
+							console.log("BK index -> : ");	
+							file_index=$("#my-awesome-dropzone1 .dz-preview").length+$("#my-awesome-dropzone2 .dz-preview").length+$("#my-awesome-dropzone3 .dz-preview").length;
+							console.log(file_index);
+
+						}						
+						//img_filenames.push(value.name);
+						//arr.splice(2, 0, "Lene");
+						img_filenames.splice(file_index, 0, value.name);
 						/*
 						console.log(img_filenames);
 
@@ -217,19 +286,12 @@
 						*/
 
 
-						if(file_key[id]=="BS"){
-							imgs[0]++;
-						}
-
-						if(file_key[id]=="DS"){
-							imgs[1]++;
-						}
-
-						if(file_key[id]=="BK"){
-							imgs[2]++;
-						}
-
-
+						imgs[0]=$("#my-awesome-dropzone1 .dz-preview").length;
+						imgs[1]=$("#my-awesome-dropzone2 .dz-preview").length;
+						imgs[2]=$("#my-awesome-dropzone3 .dz-preview").length;
+						
+						console.log("thisDropzone : ");
+						console.log(thisDropzone.options);
 						thisDropzone.options.addedfile.call(thisDropzone,mockfile);
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#bl_imgprefix").val()+"/"+value.name);
 						console.log("success_index : "+success_index);
@@ -240,7 +302,7 @@
 					}
 					$("#image_area").html(object.join(""));
 
-	//`				$("#bl_file").val(img_filenames.length);
+	//				$("#bl_file").val(img_filenames.length);
 					$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
 					img_index=img_file_cnt;
 				}
@@ -263,20 +325,6 @@
 					object.push('<input type="text" name="img_src[]" id="img_'+i+'" class="form-control" value="'+img_filenames[i]+'">');
 				}
 
-				if(file_key[id]=="BS"){
-					imgs[0]--;
-				}
-
-				if(file_key[id]=="DS"){
-					imgs[1]--;
-				}
-
-				if(file_key[id]=="BK"){
-					imgs[2]--;
-				}
-
-				$("#image_area").html(object.join(""));
-				$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
 
 				var name = file.name;
 				var param="filename="+name;
@@ -309,9 +357,21 @@
 							toastr.clear();
 							toastr.success(json.file,"파일삭제");
 						}else{
+							var element;
+							(element = file.previewElement) != null ? 
+							element.parentNode.removeChild(file.previewElement) : 
+							false;
 							toastr.clear();
 							toastr.error(json.file,"파일삭제");
 						}
+
+
+						imgs[0]=$("#my-awesome-dropzone1 .dz-preview").length;
+						imgs[1]=$("#my-awesome-dropzone2 .dz-preview").length;
+						imgs[2]=$("#my-awesome-dropzone3 .dz-preview").length;
+
+						$("#image_area").html(object.join(""));
+						$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
 
 					},error: function(data)
 					{
@@ -325,13 +385,13 @@
 		}
 
 		/* 사업자 등록증 */
-		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("mb_business_paper"));
+		$("#my-awesome-dropzone1").dropzone(set_dropzone_config("d1x"));
 
 		/* 총판 계약서*/
-		$("#my-awesome-dropzone2").dropzone(set_dropzone_config("mb_distributors_paper"));
+		$("#my-awesome-dropzone2").dropzone(set_dropzone_config("d2x"));
 
 		/* 통장 사본 */
-		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
+		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("d3x"));
 
 		/* 통장 사본 */
 		//$("#my-awesome-dropzone4").dropzone(set_dropzone_config("mb_bank_paper"));

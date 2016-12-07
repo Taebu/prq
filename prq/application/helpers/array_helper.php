@@ -150,4 +150,47 @@ if (!function_exists('get_status')) {
 	}
 }/* end get_status */
 
+
+if (!function_exists('get_status2')) {
+	/* 가맹점 상태 보기 
+	<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">1,2개 미흡</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패</button>
+	*/
+	function get_status2($code)
+	{
+		switch ($code) {
+		case "wa":
+			$result='<button type="button" class="btn btn-default btn-xs">대기</button>';
+			break;
+		case "pr":
+			$result='<button type="button" class="btn btn-primary btn-xs">처리중</button>';
+			break;
+		case "ac":
+			$result='<button type="button" class="btn btn-success btn-xs">완료</button>';
+			break;
+		case "ad":
+			$result='<button type="button" class="btn btn-danger btn-xs">승인거부</button>';
+			break;
+		case "ec":
+			$result='<button type="button" class="btn btn-info btn-xs">1,2개 미흡</button>';
+			break;
+		case "ca":
+			$result='<button type="button" class="btn btn-warning btn-xs">설치실패</button>';
+			break;
+		case "delete":
+			$result='<button type="button" class="btn btn-danger btn-xs">삭제</button>';
+			break;
+		case "modify":
+			$result='<button type="button" class="btn btn-warning btn-xs">수정</button>';
+			break;
+
+		}
+		return $result;
+	}
+}/* end get_status */
+//echo realpath(__FILE__);;
 /* End of file */
