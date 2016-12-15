@@ -54,6 +54,8 @@
 	<div style="padding:3px 0 8px 0;border:0px solid red;font-size:19px;font-weight:bold;">
 		상점명
 	</div>
+
+		
 	<!----상점명 불러와주세요.---->
 	<input type="hidden" type="text" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>">
 	<!---맨위input text-->
