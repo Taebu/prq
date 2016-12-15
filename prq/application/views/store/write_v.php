@@ -146,8 +146,29 @@ echo $prq_fcode;
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
+
+<div class="form-group"><label class="col-sm-2 control-label">전화 번호 Type</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_teltype" id="st_teltype_1" value='prq'><label for="st_teltype_1">prq</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="st_teltype" id="st_teltype_2"  value='cashq'  checked><label for="st_teltype_2">bdtalk(구 cashq)</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
+
 <div class="form-group"><label class="col-sm-2 control-label">전화번호</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="st_tel" id="st_tel"> <span class="help-block m-b-none">연락처를 기입해 주세요..</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">050 번호</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_vtel" id="st_vtel"> <span class="help-block m-b-none">050번호를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

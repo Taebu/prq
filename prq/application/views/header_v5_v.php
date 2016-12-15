@@ -26,6 +26,8 @@
 
     <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 <script type="text/javascript">
+var application="<?php echo $this->uri->segment(1);?>";
+var method="<?php echo $this->uri->segment(2);?>";
 
 function set_menu_write(id)
 {
@@ -543,7 +545,7 @@ echo $prq_fcode;
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
+            <form role="search" class="navbar-form-custom" action="">
                 <div class="form-group">
                     <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
                 </div>

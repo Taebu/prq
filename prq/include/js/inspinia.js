@@ -100,8 +100,11 @@ $(document).ready(function () {
 	*/
     $.get("/prq/include/html/skin-config.html")
 		.done(function (data) {
-        if (!$('body').hasClass('no-skin-config'))
-            $('body').append(data);
+			if(application=="blog"){
+			
+			}else if (!$('body').hasClass('no-skin-config')){
+				$('body').append(data);
+			}
 		}).fail(function(){
 			alert("skin-config file exists");
 		});

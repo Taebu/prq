@@ -3310,7 +3310,7 @@ video {
 }
 /* GALLERY */
 .gallery > .row > div {
-  margin-bottom: 15px;
+ /* margin-bottom: 15px;*/
 }
 .fancybox img {
   margin-bottom: 5px;
@@ -3683,7 +3683,7 @@ code {
 .ibox-content {
   background-color: #ffffff;
   color: inherit;
-  padding: 15px 20px 20px 20px;
+  /*padding: 15px 20px 20px 20px;*/
   border-color: #e7eaec;
   border-image: none;
   border-style: solid solid none;

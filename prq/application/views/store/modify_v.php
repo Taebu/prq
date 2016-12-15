@@ -200,7 +200,7 @@ stdClass Object
 <input type="radio" name="st_teltype" id="st_teltype_1" value='prq' <?php echo $views->st_teltype=="prq"?"checked":"";?>><label for="st_teltype_1">prq</label>
 </div><!-- .radio .radio-info .radio-inline -->
 <div class="radio radio-info radio-inline">
-<input type="radio" name="st_teltype" id="st_teltype_2"  value='cashq' <?php echo $views->st_teltype=="cashq"?"checked":"";?>><label for="st_teltype_2">cashq</label>
+<input type="radio" name="st_teltype" id="st_teltype_2"  value='cashq' <?php echo $views->st_teltype=="cashq"?"checked":"";?>><label for="st_teltype_2">bdtalk(구 cashq)</label>
 </div><!-- .radio .radio-info .radio-inline -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->

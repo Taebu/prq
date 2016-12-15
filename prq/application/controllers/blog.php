@@ -92,7 +92,7 @@ class Blog extends CI_Controller {
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/blog/lists/prq_store'.$page_url.'/page/',
 		'total_rows' => $this->blog_m->get_list("prq_blog", 'count', '', '', $search_word),
-		'per_page' => 5,
+		'per_page' => 15,
 		'uri_segment' => $uri_segment,
 
 		//페이지네이션 커스텀 설정 

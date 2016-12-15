@@ -563,6 +563,21 @@ mysql> select * from prq_member_code;
     	return $result;
     }
 
+	/**
+	 * 싱크 상점 리스트 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_syncstore()
+    {
+    	$sql = "select * from sync_store;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+   	return $result;
+    }
 }
 
 /* End of file store_m.php */

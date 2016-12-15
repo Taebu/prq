@@ -148,7 +148,7 @@
 				var mode=$("#mode").val();
 				var d1x_max=$("#d1x_size").val();
 				var d2x_max=$("#d2x_size").val();
-				var d3x_max=$("#d3x_size").val()-1;
+				var d3x_max=$("#d3x_size").val();
 				imgs[0]=d1x_max;
 				imgs[1]=d2x_max-d1x_max;
 				imgs[2]=d3x_max-d2x_max;
@@ -396,6 +396,16 @@
 		/* 통장 사본 */
 		//$("#my-awesome-dropzone4").dropzone(set_dropzone_config("mb_bank_paper"));
 
+
+
+
+	if(application=="blog"&&method=="write"){
+		$("nav").hide();
+		
+		$(".footer").hide();
+
+		$(".theme-config").hide();
+	}
 
 
 

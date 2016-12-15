@@ -1,21 +1,28 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-<div class="col-lg-10">
-<h2>블로그 리뷰 </h2>
-<ol class="breadcrumb">
-<li>
-<a href="/">Home</a>
-</li>
-<li>
-<a>블로그 관리</a>
-</li>
-<li class="active">
-<strong>블로그 리뷰 보기</strong>
-</li>
-</ol>
-</div>
-<div class="col-lg-2">
 
-</div>
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div style="border:0px solid red;text-align:center;">
+		<img src="/prq/img/new/view_top.png" width="100%">
+	</div>
+	<div class="col-lg-10" style="text-align:center;">
+		<ul style="margin:0;padding:10px 0 10px 0;list-style:none;">
+			<li style="font-weight:bold;font-size:27px;"><?php echo $store->st_name;?></li>
+			<li>블로그 리뷰</li>
+		</ul>
+		<!-- <ol class="breadcrumb">
+			<li>
+				<a href="/">Home</a>
+			</li>
+			<li>
+				<a>블로그 관리</a>
+			</li>
+			<li class="active">
+				<strong>블로그 리뷰 보기</strong>
+			</li>
+		</ol> -->
+	</div>
+	<div class="col-lg-2">
+
+	</div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
@@ -37,9 +44,9 @@ $d3x=$d2x+$arr_file[2];
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 
-<input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>">
+<!-- <input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>">
 <input type="text" name="bl_naverid" id="bl_naverid" value="testid">
-<input type="text" name="bl_no" id="bl_no" value="<?php echo $this->uri->segment(3);?>">
+<input type="text" name="bl_no" id="bl_no" value="<?php echo $this->uri->segment(3);?>"> -->
 
 <input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo $views->bl_imgprefix;?>">
 
@@ -47,12 +54,12 @@ $d3x=$d2x+$arr_file[2];
 
 <div class="row">
 <div class="col-lg-12">
-<div id="image_area">#image_area</div>
-<?php echo $store->st_name;?>
-<?php echo $store->st_tel;?>
+<!-- <div id="image_area">#image_area</div> -->
+
 <?php
 $arrays=array();
-print_r($store);
+
+//print_r($store);
 
 foreach($files as $fi){
 	$arrays[]="http://".$_SERVER['SERVER_NAME'].'/prq/uploads/'.$fi->bf_content."/".$fi->bf_source;
@@ -71,20 +78,20 @@ foreach($files as $fi){
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
-<div class="ibox-title">
-<h5>사용자가 올린 리뷰 보기 <small>이용후기의 사진 광고 목적으로 사용 할 수 있습니다.</small></h5>
-<div class="ibox-tools">
-<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
-<ul class="dropdown-menu dropdown-user">
-<li><a href="#">Config option 1</a></li>
-<li><a href="#">Config option 2</a></li>
-</ul>
-<a class="close-link"><i class="fa fa-times"></i></a>
-</div><!-- .ibox-tools -->
-</div><!-- .ibox-title -->
+<!-- <div class="ibox-title">
+<h5>"<?php echo $store->st_name;?>"에 사용자가 올린 리뷰 보기 <small>이용후기의 사진 광고 목적으로 사용 할 수 있습니다.</small></h5>
+	<div class="ibox-tools">
+	<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
+	<ul class="dropdown-menu dropdown-user">
+	<li><a href="#">Config option 1</a></li>
+	<li><a href="#">Config option 2</a></li>
+	</ul>
+	<a class="close-link"><i class="fa fa-times"></i></a>
+	</div> 
+</div> --><!-- .ibox-title -->
 
-<div class="ibox-content">
+<div class="ibox-content" style="padding-top:15px;">
 
 <div class="col-md-12">
 
@@ -92,7 +99,7 @@ foreach($files as $fi){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title">
+                        <!-- <div class="ibox-title">
                             <h5>배달음식 사진</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
@@ -110,8 +117,8 @@ foreach($files as $fi){
                                 <a class="close-link">
                                     <i class="fa fa-times"></i>
                                 </a>
-                            </div><!-- .ibox-tools -->
-                        </div><!-- .ibox-title -->
+                            </div>
+                        </div> --><!-- .ibox-title -->
                         <div class="ibox-content">
                             <div class="carousel slide" id="carousel1">
                                 <div class="carousel-inner">
@@ -127,12 +134,12 @@ foreach($files as $fi){
 										</div>
                                     </div>
                                 </div>
-                                <a data-slide="prev" href="#carousel1" class="left carousel-control">
+                                <!-- <a data-slide="prev" href="#carousel1" class="left carousel-control">
                                     <span class="icon-prev"></span>
                                 </a>
                                 <a data-slide="next" href="#carousel1" class="right carousel-control">
                                     <span class="icon-next"></span>
-                                </a>
+                                </a> -->
                             </div>
                         </div><!-- .ibox-content -->
                     </div><!-- .ibox float-e-margins -->
@@ -140,22 +147,22 @@ foreach($files as $fi){
             </div><!-- .row -->
 
 
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">첫 번째 글</label>
-<div class="col-sm-10">
+<div class="form-group"><!-- <label class="col-sm-2 control-label">첫 번째 글</label> -->
+<div class="col-sm-10" style="word-break:break-all;word-wrap:break-word;">
 <?php 
 $bl_content1=nl2br($views->bl_content1);
 echo $bl_content1;?><!-- #form_data -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
 
-            <div class="row">
+            <div class="row" style="margin-top:25px;">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title">
+                        <!-- <div class="ibox-title">
                             <h5>먹방 사진</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
@@ -173,8 +180,8 @@ echo $bl_content1;?><!-- #form_data -->
                                 <a class="close-link">
                                     <i class="fa fa-times"></i>
                                 </a>
-                            </div><!-- .ibox-tools -->
-                        </div><!-- .ibox-title -->
+                            </div> 
+                        </div> --><!-- .ibox-title -->
                         <div class="ibox-content">
                             <div class="carousel slide" id="carousel2">
                                 <div class="carousel-inner">
@@ -190,37 +197,37 @@ echo $bl_content1;?><!-- #form_data -->
 										</div>
                                     </div>
                                 </div>
-                                <a data-slide="prev" href="#carousel2" class="left carousel-control">
+                                <!-- <a data-slide="prev" href="#carousel2" class="left carousel-control">
                                     <span class="icon-prev"></span>
                                 </a>
                                 <a data-slide="next" href="#carousel2" class="right carousel-control">
                                     <span class="icon-next"></span>
-                                </a>
+                                </a> -->
                             </div>
                         </div><!-- .ibox-content -->
                     </div><!-- .ibox float-e-margins -->
                 </div><!-- .col-lg-12 -->
             </div><!-- .row -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">두 번째 글</label>
-<div class="col-sm-10">
+<div class="form-group"><!-- <label class="col-sm-2 control-label">두 번째 글</label> -->
+<div class="col-sm-10" style="word-break:break-all;word-wrap:break-word;">
 <?php 
 $bl_content2=nl2br($views->bl_content2);
 echo $bl_content2;?><!-- #form_data -->
-<span class="help-block m-b-none"><span id='bytesize_2'>0</span> byte <br>
+<!-- <span class="help-block m-b-none"><span id='bytesize_2'>0</span> byte <br>
 100 byte 이상 작성하셔야 합니다.~ !!! <br>
-무성의한 글은 신청시 포인트 지급이 거절 될 수 있습니다.
+무성의한 글은 신청시 포인트 지급이 거절 될 수 있습니다. -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
 
 
-            <div class="row">
+            <div class="row" style="margin-top:25px;">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title">
+                        <!-- <div class="ibox-title">
                             <h5>잘찍은 사진</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
@@ -238,8 +245,8 @@ echo $bl_content2;?><!-- #form_data -->
                                 <a class="close-link">
                                     <i class="fa fa-times"></i>
                                 </a>
-                            </div><!-- .ibox-tools -->
-                        </div><!-- .ibox-title -->
+                            </div> 
+                        </div> --><!-- .ibox-title -->
                         <div class="ibox-content">
                             <div class="carousel slide" id="carousel3">
                                 <div class="carousel-inner">
@@ -255,46 +262,44 @@ echo $bl_content2;?><!-- #form_data -->
 										</div>
                                     </div>
                                 </div>
-                                <a data-slide="prev" href="#carousel3" class="left carousel-control">
+                                <!-- <a data-slide="prev" href="#carousel3" class="left carousel-control">
                                     <span class="icon-prev"></span>
                                 </a>
                                 <a data-slide="next" href="#carousel3" class="right carousel-control">
                                     <span class="icon-next"></span>
-                                </a>
+                                </a> -->
                             </div>
                         </div><!-- .ibox-content -->
                     </div><!-- .ibox float-e-margins -->
                 </div><!-- .col-lg-12 -->
             </div><!-- .row -->
 
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">세 번째 글</label>
-<div class="col-sm-10"><?php 
-$bl_content3=nl2br($views->bl_content3);
+<div class="form-group"><!-- <label class="col-sm-2 control-label">세 번째 글</label> -->
+<div class="col-sm-10" style="word-break:break-all;word-wrap:break-word;"><?php $bl_content3=nl2br($views->bl_content3);
 echo $bl_content3;?><!-- #form_data -->
 
 
-<span class="help-block m-b-none"><span id='bytesize_3'>0</span> byte <br>
-여기까지 작성하시면 특별한 혜택을 더해 드려요. ☆♥♡♥♡☆
+<!-- <span class="help-block m-b-none"><span id='bytesize_3'>0</span> byte <br>
+여기까지 작성하시면 특별한 혜택을 더해 드려요. ☆♥♡♥♡☆ -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 </div><!-- .col-md-12 -->
 
 
-<div class="form-group"><label class="col-sm-2 control-label">이름</label>
-<div class="col-sm-10"><?php echo $views->bl_name;?>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<!-- <div class="form-group">
+	<label class="col-sm-2 control-label">이름</label> <div class="col-sm-10"><?php echo $views->bl_name;?></div> 
+</div> --><!-- .form-group -->
+<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
-
-<div class="form-group"><label class="col-sm-2 control-label">핸드폰</label>
-<div class="col-sm-10"><?php echo $views->bl_hp;?>
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="form-group" style="text-align:center;font-size:17px;">
+	<label class="col-sm-2 control-label">핸드폰</label>
+	<div class="col-sm-10" style=""><?php echo $views->bl_hp;?></div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+
 
 
 <div class="controls">
@@ -303,8 +308,8 @@ echo $bl_content3;?><!-- #form_data -->
 </div>
 
 <div class="form-group">
-<div class="col-sm-10 col-sm-offset-2">
-<button type="button" class="btn btn-primary btn-block" onclick="javascript:modify_blog()" id="write_btn">리뷰 수정하기</button>
+<div class="col-sm-10 col-sm-offset-2" style="width:100%;">
+<!-- <button type="button" class="btn btn-primary btn-block" onclick="javascript:modify_blog()" id="write_btn" style="background:#10cdf4;border:1px solid #05c2e9;font-size:16px;font-weight:bold;">리뷰 수정하기</button> -->
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <!-- <button class="btn btn-white" type="reset">취소</button> -->
 <!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->
@@ -317,7 +322,7 @@ echo $bl_content3;?><!-- #form_data -->
 <!-- .form-group -->
 
 <div class="row"><div class="col-md-12">
-<textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
+<!-- <textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea> --><!-- #form_data -->
 </div></div>
 </div><!-- .col-md-6 Right Menu-->
 <!-- <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button> -->

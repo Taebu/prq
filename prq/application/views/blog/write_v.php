@@ -49,6 +49,7 @@
 	<input type="hidden" type="text" name="bl_file" id="bl_file" value="0">
 	
 	<div style="margin-top:15px;;border:3px solid #676a6c;width:35px;"></div>
+
 	<!--상점명 불러와주세요. <input type="text" name="bl_naverid" id="bl_naverid" value="testid" style="width:100%"> -->
 	<div style="padding:3px 0 8px 0;border:0px solid red;font-size:19px;font-weight:bold;">
 		상점명
@@ -62,7 +63,7 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<!-- <div id="image_area">#image_area</div> -->
+			<div id="image_area">#image_area</div>
 		</div><!--.col-lg-12-->
 	</div><!--.row-->
 	<div class="row">
@@ -94,7 +95,7 @@
 					<div class="col-md-12">
 
 						<div class="form-group">
-							<div style="text-align:center;color:#676a6c;">
+							<div style="text-align:center;color:#676a6c;padding-top:8px;">
 								<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 배달음식 사진을 3장이상 등록해주세요!
 							</div>
 							<div class="col-sm-10" style="width:100%;margin-top:10px;">
@@ -224,6 +225,7 @@
 									</div><!-- .col-sm-10 -->
 								</div><!-- .form-group -->
 								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+								<!--------3번째단락 시작------->
 							</div><!-- .col-md-12 -->
 							
 							<div style="width:100%;text-align:center;">
@@ -234,31 +236,33 @@
 									<li style="font-size:25px;font-weight:bold;;">연락처 입력</li>
 									<li style="border-bottom:2px solid #d0d0d0;width:50px;margin:0 auto;padding-top:6px;"></li>
 									<li style="clear:both;height:6px;"></li>
-									<li style="marign-top:15px;color:#bbb;">개인정보 처리방침 동의</li>
+									<li style="marign-top:15px;color:#9c9ea0;font-weight:bold;">주문시 이용하셨던 핸드폰번호를 입력해주세요.</li>
 								</ul>
 							</div>
 
-							<div class="form-group"><label class="col-sm-2 control-label">이름(필수)</label>
+							<!-- <div class="form-group"><label class="col-sm-2 control-label">이름(필수)</label>
 								<div class="col-sm-10">
 									<input type="text" name="bl_name" id="bl_name"  class="form-control" value="" placeholder="이름을 입력해 주세요.">
-								</div><!-- .col-sm-10 -->
-							</div><!-- .form-group -->
+								</div>
+							</div> -->
+							
 
-							<div class="form-group"><label class="col-sm-2 control-label">핸드폰(필수)</label>
+							<div class="form-group" style="margin-top:15px;"><!-- <label class="col-sm-2 control-label">핸드폰(필수)</label> -->
 								<div class="col-sm-10">
 									<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="" placeholder="핸드폰번호를 입력해 주세요.">
 								</div><!-- .col-sm-10 -->
 							</div><!-- .form-group -->
 
 
-								<div class="controls">
+								<!-- <div class="controls">
 
 								<p class="help-block"><?php echo validation_errors(); ?></p>
-								</div>
+								</div> -->
 
-								<div class="form-group">
-									<div class="col-sm-10 col-sm-offset-2">
-										<button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn" style="background:#10cdf4;border:1px solid #05c2e9;">리뷰 등록</button>
+								<div class="form-group" style="margin-top:-10px;">
+									<div class="col-sm-12 col-sm-offset-2">
+										<button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn" style="background:#10cdf4;border:1px solid #05c2e9;font-size:16px;font-weight:bold;">리뷰 등록</button>
+										<!-- <button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn" style="background:#10cdf4;border:1px solid #05c2e9;font-size:16px;font-weight:bold;">리뷰 등록</button> -->
 										<!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 										<!-- <button class="btn btn-white" type="reset">취소</button> -->
 										<!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->
@@ -266,16 +270,16 @@
 										<div class="form-actions">
 										<button type="submit" class="btn btn-primary" id="write_btn">작성</button>
 										<button class="btn" onclick="document.location.reload()">취소</button>
-										</div> -->
+										</div> 
 
 										<!-- .form-group -->
 
 										<!-- <div class="row">
 											<div class="col-md-12">
-												<textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea>
+												<textarea id="form_data" class="form-control" rows="4" cols="50">#form_data</textarea>
 											</div>
 										</div> -->
-										<div style="clear:both;height:20px;"></div>
+										
 									</div><!-- .col-md-6 Right Menu-->
 								<!-- <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button> -->
 								</div><!-- .row -->
@@ -364,20 +368,14 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 	toastr.clear();
-if($("#content1").val().length<50){
-	toastr.error('첫 번째 글이 너무 적어요 ㅠ ㅠ','100자이상 작성해주세요.');
+if(getstrbyte($("#content1").val())<100){
+	toastr.error('첫 번째 글이 너무 적습니다.','100자이상 작성해주세요.');
 	//$("#content1").focus();
 	return;
 }
 
-if($("#content2").val().length<50){
-	toastr.error('두 번째 글이 너무 적어요 ㅠ ㅠ','100자이상 작성해주세요.');
-	//$("#content2").focus();
-	return;
-}
-
-if($("#bl_name").val().length<2){
-	toastr.error('이름을 작성하셔야 합니다.','2자이상 작성해주세요.');
+if(getstrbyte($("#content2").val())<100){
+	toastr.error('두 번째 글이 너무 적습니다.','100자이상 작성해주세요.');
 	//$("#content2").focus();
 	return;
 }
@@ -550,3 +548,6 @@ function get_store()
 	});
 }
 </script>
+<style type="text/css">
+#image_area{display:none}
+</style>

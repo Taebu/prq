@@ -8,8 +8,17 @@
 * @author Moon Taebu
 * @Copyright (c) 2016, 태부
 */
+
+/* 싱크 상점 불러 오기 */
+$tt_no = array_column($sync_store, 'tt_no');
+$tt_no=array_unique($tt_no);
+
 ?>
 	<script>
+var tt_nos=[<?php echo join(",",$tt_no);?>];
+//console.log(tt_nos);
+
+		/* onload */
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
 				if($("#q").val() == ''){
@@ -24,7 +33,10 @@
 
 			/*버튼 비활성화.*/
 			chk_btn_status();
-
+			for(var i in tt_nos){
+				//console.log(tt_nos[i]);
+				$("#ttno_"+tt_nos[i]).html('<i class="fa fa-refresh  text-success"></i>');
+			}
 		});
 
 		function board_search_enter(form) {
@@ -274,7 +286,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
 		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
 		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
+//echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
 		?>
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
@@ -302,8 +314,11 @@ $ds_name = array_column($ds_names, 'ds_name');
 $pt_code = array_column($pt_names, 'pt_code');
 $pt_name = array_column($pt_names, 'pt_name');
 
+
 //print_r($pt_code);
 //print_r($pt_name);
+
+
 
 foreach ($list as $lt)
 {
@@ -317,16 +332,17 @@ $sub_ptcode=substr($lt->prq_fcode,0,12);
 $index=array_search($sub_ptcode, $pt_code);
 $sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
 ?>
-				<tr>
-					<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->st_no;?>" onclick="chk_btn_status()"></td>
-					<td scope="row"><?php echo $lt->st_no;?></td>
-					<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
- 					<td><?php echo $lt->st_name;?></td>
- 					<td><?php echo $lt->mb_id;?></td>
- 					<td><?php echo $lt->prq_fcode;?></td>
- 					<td><?php echo get_status2($lt->st_status);?></td> 
-					<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
-				</tr>
+	<tr>
+		<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->st_no;?>" onclick="chk_btn_status()"></td>
+		<td scope="row"><?php echo $lt->st_no;?></td>
+		<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
+		<td><?php echo $lt->st_name;?> 
+		<span id="ttno_<?php echo $lt->st_no;?>"></span></td>
+		<td><?php echo $lt->mb_id;?></td>
+		<td><?php echo $lt->prq_fcode;?></td>
+		<td><?php echo get_status2($lt->st_status);?></td> 
+		<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
+	</tr>
 <?php
 }
 

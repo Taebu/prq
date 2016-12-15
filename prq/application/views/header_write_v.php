@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -6,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PRQ | 등록 메뉴</title>
+    <title>톡톡메시지 | 등록 메뉴</title>
 
     <link href="/prq/include/css/bootstrap.min.css" rel="stylesheet">
     <link href="/prq/include/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -47,6 +48,13 @@
 	<!-- form_file_upload.html dropzone-->
 	<link href="/prq/include/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/prq/include/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+<script type="text/javascript">
+
+	var application="<?php echo $this->uri->segment(1);?>";
+	var method="<?php echo $this->uri->segment(2);?>";
+
+
+</script>
 </head>
 <body class="skin-3">
     <div id="wrapper">
@@ -511,20 +519,20 @@ if($mb_gcode=='G5'){
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
+            <form role="search" class="navbar-form-custom" action="<?php echo $_SERVER['REQUEST_URI'];?>">
                 <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="q" id="q" value="<?php echo isset($_GET['q'])?$_GET['q']:"";?>">
                 </div>
             </form>
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <!-- <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span> -->
-                    <span class="m-r-sm text-muted welcome-message">PRQ 본사 관리자 1.0</span>
+                    <span class="m-r-sm text-muted welcome-message">톡톡메시지 본사 관리자 1.0</span>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
+                        <i class="fa fa-envelope"></i>  <span class="label label-warning">0</span>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
                         <li>
@@ -577,7 +585,7 @@ if($mb_gcode=='G5'){
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+                        <i class="fa fa-bell"></i>  <span class="label label-primary">0</span>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
                         <li>
@@ -640,4 +648,4 @@ if($mb_gcode=='G5'){
             </ul>
 
         </nav>
-        </div><!-- .row border-bottom -->
+</div><!-- .row border-bottom -->
