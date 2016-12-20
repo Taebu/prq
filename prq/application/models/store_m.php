@@ -576,7 +576,7 @@ mysql> select * from prq_member_code;
 
 		$result = $query->result();
 
-   	return $result;
+   		return $result;
     }
 }
 

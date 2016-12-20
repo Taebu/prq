@@ -47,8 +47,10 @@ class Logs_m extends CI_Model
 			$table='prq_log';
 		}else 	if($table=="cid"){
 			$table='prq_cdr';
-		}else 	if($table=="ata"){
+		}else if($table=="ata"){
 			$table='prq_ata';
+		}else if($table=="blog"){
+			$table='prq_blog';
 		}
 
 		//검색어가 있을 경우의 처리
@@ -171,6 +173,8 @@ class Logs_m extends CI_Model
 		$table='prq_ata_log';
 		}else 	if($table=="first"){
 		$table='prq_first_log';
+		}else if($table=="sms"){
+		$table='prq_sms_log';
 		}
 
 		if($table=='prq_gcm_log')

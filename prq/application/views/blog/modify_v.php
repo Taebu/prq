@@ -69,7 +69,7 @@ echo '</div>';
 <input type="text" name="bl_no" id="bl_no" value="<?php echo $views->bl_no;?>" class="form-control">
 <input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>" class="form-control">
 <input type="text" name="bl_naverid" id="bl_naverid" value="testid" class="form-control">
-<input type="text" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>" class="form-control">
+<input type="text" name="st_no" id="st_no" value="<?php echo $views->st_no;?>" class="form-control">
 <input type="text" name="d1x_size" id="d1x_size" value="<?php echo $d1x;?>" class="form-control">
 <input type="text" name="d2x_size" id="d2x_size" value="<?php echo $d2x;?>" class="form-control">
 <input type="text" name="d3x_size" id="d3x_size" value="<?php echo $d3x;?>" class="form-control">

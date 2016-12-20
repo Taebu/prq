@@ -369,7 +369,8 @@ echo $prq_fcode;
 http://bdtalk.co.kr/m/p/
 
 무료수신거부
-080-132-1234</textarea><!-- #form_data -->
+080-130-8119
+</textarea><!-- #form_data -->
 <span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>
 #{homepage}<br>
  - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>

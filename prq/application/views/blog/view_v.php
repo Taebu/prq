@@ -91,9 +91,9 @@ foreach($files as $fi){
 	</div> 
 </div> --><!-- .ibox-title -->
 
-<div class="ibox-content" style="padding-top:15px;">
+<div class="ibox-content" style="padding-top:20px;">
 
-<div class="col-md-12">
+<div class="col-md-12" style="padding:0px;">
 
 
             <div class="row">
@@ -119,14 +119,14 @@ foreach($files as $fi){
                                 </a>
                             </div>
                         </div> --><!-- .ibox-title -->
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="padding:0px;">
                             <div class="carousel slide" id="carousel1">
                                 <div class="carousel-inner">
                                     <div class="item gallery active">
                                         <div class="row">
 										<?php
 											for($i=0;$i<$d1x;$i++){
-												echo "<div class=\"col-sm-12\">";
+												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
 												echo "<img src='".$arrays[$i]."' class=\"img-responsive\">";
 												echo "</div>";
 											}                                        
@@ -182,14 +182,14 @@ echo $bl_content1;?><!-- #form_data -->
                                 </a>
                             </div> 
                         </div> --><!-- .ibox-title -->
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="padding:0px;">
                             <div class="carousel slide" id="carousel2">
                                 <div class="carousel-inner">
                                     <div class="item gallery active">
                                         <div class="row">
 										<?php
 											for($i=$d1x;$i<$d2x;$i++){
-												echo "<div class=\"col-sm-12\">";
+												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
 												echo "<img src='".$arrays[$i]."' class=\"img-responsive\">";
 												echo "</div>";
 											}                                        
@@ -247,14 +247,14 @@ echo $bl_content2;?><!-- #form_data -->
                                 </a>
                             </div> 
                         </div> --><!-- .ibox-title -->
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="padding:0px;">
                             <div class="carousel slide" id="carousel3">
                                 <div class="carousel-inner">
                                     <div class="item gallery active">
                                         <div class="row">
 										<?php
 											for($i=$d2x;$i<$d3x;$i++){
-												echo "<div class=\"col-sm-12\">";
+												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
 												echo "<img src='".$arrays[$i]."' class=\"img-responsive\">";
 												echo "</div>";
 											}                                        
@@ -299,8 +299,18 @@ echo $bl_content3;?><!-- #form_data -->
 	<label class="col-sm-2 control-label">핸드폰</label>
 	<div class="col-sm-10" style=""><?php echo $views->bl_hp;?></div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-
-
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div style="text-align:center;margin-top:30px;">
+	<ul style="margin:0;padding:0;list-style:none;color:#fff;font-weight:bold;font-size:15px;">
+		<li style="float:left;width:48%;background:#676a6c;border-radius:25px;padding:10px;">
+			거　절
+		</li>
+		<li style="float:right;width:48%;background:#34c5ed;border-radius:25px;padding:10px;">
+			승　인
+		</li>
+		<li style="clear:both;"></li>
+	</ul>
+</div>
 
 <div class="controls">
 
