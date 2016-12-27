@@ -11,6 +11,8 @@ class Ajax_m extends CI_Model
     {
         parent::__construct();
 		$this->load->library('user_agent');
+		$this->load->library('curl'); 
+
 		/* 이기종간 디비 불러오기 */
         $this->prq = $this->load->database('default', TRUE);
         $this->cashq = $this->load->database('cashq', TRUE);
@@ -116,21 +118,8 @@ class Ajax_m extends CI_Model
 		
 		/* 블로그 상태 변경시 */
 		$st=$array['mb_status'];
-		if($st=='view'||$st=='review'){
-			//$this->blog->
-		}else if($st=='ceo_allow'){
 
-		}else if($st=='ceo_deny'){
 
-		}else if($st=='co_blog_allow'){
-
-		}else if($st=='co_blog_deny'){
-
-		}else if($st=='po_blog_allow'){
-
-		}else if($st=='po_blog_deny'){
-
-		}
 
 		foreach($arr_no as $an)
 		{
@@ -138,6 +127,91 @@ class Ajax_m extends CI_Model
 			/* 블로그인 경우 코드 예외 처리 */
 			if($array['prq_table']=="prq_blog"){
 				$items['mb_status']=$this->get_status_blog($array['mb_status']);
+			    
+				/* 일반승인*/
+				if($st=="co_blog_allow"){
+					/* 소비자에게 전송 */
+					$array['content']="일반 승인 되었습니다.\n";
+					$array['content'].=$array['mb_reason'];
+					$array_data=array(
+								'st_no'=>$array['mb_id'],
+								'mb_hp'=>$array['bl_hp'],
+								'subject'=>'소비자에게 일반승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);
+				
+				/* 일반거절*/
+				}else if($st=="co_blog_deny"){
+					/* 소비자에게 전송 */
+					$array['content']="일반 거절 되었습니다.\n";
+					$array['content'].=$array['mb_reason'];
+					$array_data=array(
+								'st_no'=>$array['mb_id'],
+								'mb_hp'=>$array['bl_hp'],
+								'subject'=>'소비자에게 일반거절',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+				/* 포인트승인 */
+				}else if($st=="po_blog_allow"){
+					/* 소비자에게 전송 */
+					$array['content']="블로그 이용 후기 완료\n";
+					$array['content'].=$array['bl_url'];
+
+					$array_data=array(
+								'st_no'=>$array['mb_id'],
+								'mb_hp'=>$array['bl_hp'],
+								'subject'=>'소비자에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+
+					/* 사장에게 전송 */
+					$array['content']="블로그 리뷰 등록확인\n";
+					$array['content'].=$array['bl_hp']."\n";
+					$array['content'].=$array['bl_url'];
+					$array_data=array(
+								'st_no'=>$array['mb_id'],
+								'mb_hp'=>$array['st_hp_1'],
+								'subject'=>'사장에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+					
+					/* 영업자에게 전송 */
+					$array['content']="블로그 리뷰 등록확인\n";
+					$array['content'].=$array['bl_hp']."\n";
+					$array['content'].=$array['bl_url'];
+					$array_data=array(
+								'st_no'=>$array['mb_id'],
+								'mb_hp'=>$array['mb_hp'],
+								'subject'=>'영업자에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+					
+					// Simple call to remote URL
+					$this->curl->simple_get('http://cashq.co.kr/m/ajax_data/set_reviewpt.php?mb_hp='.$array['bl_hp'].'&bl_no='.$an.'&bl_status=ceo_allow');
+				/* 포인트거절 */
+				}else if($st=="po_blog_deny"){
+					/* 소비자에게 전송 */
+					$array['content']="포인트 거절 되었습니다.\n";
+					$array['content'].=$array['mb_reason'];
+					$array_data=array(
+								'st_no'=>$array['mb_id'],
+								'mb_hp'=>$array['mb_hp'],
+								'subject'=>'소비자에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_darta);				
+				}
 			/* 상  점인 경우 코드 예외 처리 */
 			}else if($array['prq_table']=="prq_store"){
 				$items['mb_status']=$this->get_status_store($array['mb_status']);
@@ -1793,45 +1867,46 @@ ERROR:
 	 */
 	function set_sms($array)
 	{
-		$msg="블로그 리뷰 확인\n";
-		$msg.="http://prq.co.kr/prq/blog/view/".$insert_id;
-
-		$array=array('st_no'=>$arrays['st_no']);
-		$store=$this->get_store($array);
+		$store=$this->get_store($array['st_no']);
 		$store=json_decode(json_encode($store),true);
 		$st_hp=$store['st_hp_1'];
 		$result_msg="test";
+
+		/* 182.cashq.SMS 전송 */
+		$sql_array=array();
+		$sql_array[]="insert into SMSQ_SEND set";
+		$sql_array[]="	msg_type='S', ";
+		$sql_array[]="	dest_no='".$array['mb_hp']."',";
+		$sql_array[]="	call_back='15999495',";
+		$sql_array[]="	msg_contents='".$array['content']."' , ";
+		$sql_array[]="	sendreq_time=now();";
+
+		$sql=join("",$sql_array);
+		$results = $this->cashq->query($sql);
+		$sms_result=$results?"성공":"실패";
+
+		/* 182.cashq.SMS_log 생성 */
 		$sql_array=array();
 		$sql_array[]="insert into `site_push_log` set ";
 		$sql_array[]="stype='SMS',";
 		$sql_array[]="biz_code='central',";
 		$sql_array[]="caller='15999495',";
-		$sql_array[]="called='".$st_hp."',";
-		$sql_array[]="wr_subject='".$msg."',";
+		$sql_array[]="called='".$array['mb_hp']."',";
+		$sql_array[]="wr_subject='".$array['content']."',";
 		$sql_array[]="wr_content='push를 테스트 합니다.',";
 		$sql_array[]="regdate=now(),";
 		$sql_array[]="result='".$result_msg."';";
 		$sql=join("",$sql_array);
 		$results = $this->cashq->query($sql);
-		
-		$sql_array=array();
-		$sql_array[]="insert into SMSQ_SEND set";
-		$sql_array[]="	msg_type='S', ";
-		$sql_array[]="	dest_no='".$st_hp."',";
-		$sql_array[]="	call_back='15999495',";
-		$sql_array[]="	msg_contents='".$msg."' , ";
-		$sql_array[]="	sendreq_time=now();";
 
-		$sql=join("",$sql_array);
-		$results = $this->cashq->query($sql);
+		/* 21.prq.sms_log  */
 		$results = true;
-		$sms_result=$results?"성공":"실패";
 		$sql_array=array();
 		$sql_array[]="INSERT INTO prq_sms_log SET ";
-		$sql_array[]="`sm_subject`='사장문자 확인',";
-		$sql_array[]="`sm_content`='".$msg."',";
+		$sql_array[]="`sm_subject`='".$array['subject']."',";
+		$sql_array[]="`sm_content`='".$array['content']."',";
 		$sql_array[]="`sm_type`='SMS',";
-		$sql_array[]="`sm_receiver`='".$st_hp."',";
+		$sql_array[]="`sm_receiver`='".$array['mb_hp']."',";
 		$sql_array[]="`sm_sender`='0215999495',";
 		$sql_array[]="`sm_result`='".$sms_result."',";
 		$sql_array[]="`sm_datetime`=now(),";
