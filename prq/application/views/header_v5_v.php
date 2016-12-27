@@ -189,6 +189,15 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         </ul>
                     </li>
 					<?php 
+					echo $this->uri->segment(1)=="blog"?'<li class="active">':'<li>';
+					 ?>
+                        <a href="#">
+						<i class="fa fa-pie-chart"></i><span class="nav-label">블로그</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li class="active"><a href="/prq/blog/">리뷰 목록</a></li>
+                        </ul>
+                    </li>
+					<?php 
 					echo $this->uri->segment(1)=="board"||$this->uri->segment(1)=="ata"?'<li class="active">':'<li>';
 					 ?>
                         <a href="#">

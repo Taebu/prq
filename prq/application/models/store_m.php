@@ -578,7 +578,29 @@ mysql> select * from prq_member_code;
 
    		return $result;
     }
+
+    /**
+	 * 로그 정보 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param $array['table'] 상점 테이블, 멤버
+	 * @param $array['st_no'] 상점 이름
+	 * @return list
+	 */
+    function get_logs($array)
+    {
+
+    	$sql = "SELECT * FROM prq_log WHERE prq_table='prq_store' and mb_no='".$array['st_no']."';";
+		echo $sql;
+   		$query = $this->db->query($sql);
+
+     	//게시물 내용 반환
+	    $result = $query->result();
+
+    	return $result;
+    }
 }
+
 
 /* End of file store_m.php */
 /* Location: ./prq/application/models/store_m.php */

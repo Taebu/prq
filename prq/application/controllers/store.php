@@ -178,7 +178,9 @@ class Store extends CI_Controller {
 
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$data['views'] = $this->store_m->get_view($table, $board_id);
+		$array=json_decode(json_encode($data['views']), True);
 
+		$data['logs'] = $this->store_m->get_logs($array);
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
  		$data['comment_list'] = $this->store_m->get_comment($table, $board_id);
 

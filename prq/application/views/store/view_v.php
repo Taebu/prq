@@ -24,12 +24,25 @@
 				'id' => 'write_action'
 			);
 			echo form_open('stoer/write/prq_store', $attributes);
+			echo "<ul>";
+			foreach ($logs as $lo)
+			{
+			echo "<li>";
+			echo $lo->lo_datetime;echo "&nbsp;";
+			echo get_status2($lo->lo_status);echo "&nbsp;";
+			echo $lo->lo_reason;echo "&nbsp;";
+			echo "</li>";
+			}
+			echo "</ul>";
+			
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
 		<input type="hidden" name="is_join" id="is_join" value="">
 		<input type="hidden" name="mb_business_paper" id="mb_business_paper">
 		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
+		<input type="hidden" name="st_no" id="st_no" value="<?php echo $this->uri->segment(5);?>">
+		
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
@@ -165,11 +178,12 @@
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div><!-- .col-md-6 Right Menu-->
+
+
 </div><!-- .row -->
 
 
 
-<div>
 			  <div class="controls">
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
 		      </div>
@@ -195,7 +209,9 @@
 						</div><!-- .ibox-content -->
                     </div><!-- .ibox float-e-margins -->
                 </div><!-- .col-lg-12 -->
+	
 			</div><!-- .row -->
+
 
         </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
@@ -289,5 +305,22 @@ function set_store(){
         }
     });		
 
+}
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+e = e || window.event;
+console.log(e.keyCode);
+var st_no=$("#st_no").val();
+if(e.keyCode==37){
+	st_no++;
+location.href='/prq/store/view/prq_store/board_id/'+st_no;
+}
+
+if(e.keyCode==39){
+	st_no--;
+location.href='/prq/store/view/prq_store/board_id/'+st_no;
+}
 }
 </script>

@@ -127,7 +127,7 @@
 			parallelUploads: 12,
 			maxFiles: 12,
 			addRemoveLinks: true,
-			maxFileSize: 10,
+			maxFileSize: 20,
 			dictDefaultMessage: "여기에 드래그 해서 업로드 해주세요.",
 			dictFallbackMessage: "이 브라우저는 드래그앤 드롭을 지원하지 않습니다.",
 			dictFallbackText: "옛날에 같은 파일을 업로드 아래의 대체 양식을 사용하세요",
@@ -141,7 +141,8 @@
 			dictMaxFilesExceeded: "더이상 파일을 업로드 할 수 없습니다.",
 			/**/
 			dictResponseError: "Ha ocurrido un error en el server",
-			acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
+			acceptedFiles: 'image/*',
+
 			init: function() {
 				/*
 				thisDropzone.on('maxfilesexceeded',function(fil){
@@ -306,7 +307,7 @@
 					$("#image_area").html(object.join(""));
 
 	//				$("#bl_file").val(img_filenames.length);
-					$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+$("#my-awesome-dropzone3 .dz-preview").length);
+					$("#bl_file").val($("#my-awesome-dropzone1 .dz-preview").length+"_"+$("#my-awesome-dropzone2 .dz-preview").length+"_"+$("#my-awesome-dropzone3 .dz-preview").length);
 					img_index=img_file_cnt;
 				}
 			},

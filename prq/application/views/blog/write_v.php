@@ -125,7 +125,7 @@
 									<div style="">
 										<ul style="padding:0;margin:0;list-style:none;font-size:12px;">
 											<li style="float:left;width:75%;margin-top:5px;font-weight:bold;">
-												100 byte 이상 작성하셔야 합니다.
+												50 byte 이상 작성하셔야 합니다.
 											</li>
 											<li style="float:right;width:25%;text-align:right;font-size:12px;">
 												<span class="help-block m-b-none"><span id='bytesize_1'>0</span> byte
@@ -169,7 +169,7 @@
 										<div style="">
 											<ul style="padding:0;margin:0;list-style:none;font-size:12px;">
 												<li style="float:left;width:75%;margin-top:5px;font-weight:bold;">
-													100 byte 이상 작성하셔야 합니다.
+													50 byte 이상 작성하셔야 합니다.
 												</li>
 												<li style="float:right;width:25%;text-align:right;font-size:12px;">
 													<span class="help-block m-b-none"><span id='bytesize_2'>0</span> byte
@@ -214,7 +214,7 @@
 										<div style="">
 											<ul style="padding:0;margin:0;list-style:none;font-size:12px;">
 												<li style="float:left;width:75%;margin-top:5px;font-weight:bold;">
-													100 byte 이상 작성하셔야 합니다.
+													50 byte 이상 작성하셔야 합니다.
 												</li>
 												<li style="float:right;width:25%;text-align:right;font-size:12px;">
 													<span class="help-block m-b-none"><span id='bytesize_3'>0</span> byte
@@ -375,14 +375,14 @@ if($.trim($("#st_name").val().length)<2){
 	return;
 }
 
-if(getstrbyte($("#content1").val())<100){
-	toastr.error('첫 번째 글이 너무 적습니다.','100자이상 작성해주세요.');
+if(getstrbyte($("#content1").val())<50){
+	toastr.error('첫 번째 글이 너무 적습니다.','50자이상 작성해주세요.');
 	//$("#content1").focus();
 	return;
 }
 
-if(getstrbyte($("#content2").val())<100){
-	toastr.error('두 번째 글이 너무 적습니다.','100자이상 작성해주세요.');
+if(getstrbyte($("#content2").val())<50){
+	toastr.error('두 번째 글이 너무 적습니다.','50자이상 작성해주세요.');
 	//$("#content2").focus();
 	return;
 }
