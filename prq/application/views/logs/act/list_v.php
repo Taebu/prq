@@ -288,7 +288,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 	<th scope="col">mb_no</th>
 	<th scope="col">코드</th>
 	<th scope="col">테이블</th>
-	<th scope="col">상태</th>
+<!-- 	<th scope="col">상태</th> -->
 	<th scope="col">변경상태</th>
 	<th scope="col">변경이유</th>
 	<th scope="col">변경일</th>
@@ -307,14 +307,19 @@ foreach ($list as $lt){
 
 ?>
 <tr>
-
 	<td scope="row"><?php echo $lt->mb_id;?></td>
 	<td scope="row"><?php echo $lt->lo_ip;?></td>
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td scope="row"><?php echo $lt->prq_fcode;?></td>
 	<td scope="row"><?php echo $lt->prq_table;?></td>
+	<?php if($lt->prq_table=="prq_blog"){?>
+	<td scope="row"><?php echo get_status_blog($lt->lo_status);?></td>
+	<?php }else if($lt->prq_table=="prq_store"){?>
+	<td scope="row"><?php echo get_status2($lt->lo_status);?></td>
+	<?php }else{?>
 	<td scope="row"><?php echo get_status($lt->lo_status);?></td>
-	<td scope="row"><?php echo $lt->lo_how;?></td>
+	<?php }?>
+<!-- 	<td scope="row"><?php echo $lt->lo_how;?></td> -->
 	<td scope="row"><?php echo $lt->lo_reason;?></td>
 	<td scope="row"><?php echo $lt->lo_datetime;?></td>
 </tr>

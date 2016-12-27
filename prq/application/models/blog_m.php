@@ -17,6 +17,8 @@ class Blog_m extends CI_Model
     function __construct()
     {
         parent::__construct();
+        $this->prq = $this->load->database('default', TRUE);
+        $this->cashq = $this->load->database('cashq', TRUE);
     }
 
 	/**
@@ -59,14 +61,14 @@ class Blog_m extends CI_Model
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 		$sql = "SELECT * FROM ".$table.$sword."  ORDER BY bl_no DESC".$limit_query;
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
 		if ( $type == 'count' )
      	{
      		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
 	    	$result = $query->num_rows();
 
-	    	//$this->db->count_all($table);
+	    	//$this->prq->count_all($table);
      	}
      	else
      	{
@@ -89,10 +91,10 @@ class Blog_m extends CI_Model
     {
     	//조회수 증가
     	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
-   		//$this->db->query($sql0);
+   		//$this->prq->query($sql0);
 
     	$sql = "SELECT * FROM ".$table." WHERE bl_no='".$id."'";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
      	//게시물 내용 반환
 	    $result = $query->row();
@@ -114,21 +116,76 @@ class Blog_m extends CI_Model
 		$sql_array=array();
 		$sql_array[]="INSERT INTO prq_blog SET ";
 		$sql_array[]="st_no='".$arrays['st_no']."',";
+		$sql_array[]="st_name='".$arrays['st_name']."',";
 		$sql_array[]="bl_imgprefix='".$arrays['bl_imgprefix']."',";
 		$sql_array[]="bl_file='".$arrays['bl_file']."',";
 		$sql_array[]="bl_name='".$arrays['bl_name']."',";
 		$sql_array[]="bl_hp='".$arrays['bl_hp']."',";
+		$sql_array[]="bl_status='review',";
 		$sql_array[]="bl_content1='".$arrays['content1']."',";
 		$sql_array[]="bl_content2='".$arrays['content2']."',";
 		$sql_array[]="bl_content3='".$arrays['content3']."',";
 		$sql_array[]="bl_datetime=now();";
 		$sql=join("",$sql_array);
-		$result = $this->db->query($sql);
-		$insert_id = $this->db->insert_id();
+		$result = $this->prq->query($sql);
+		$insert_id = $this->prq->insert_id();
+		//prq_store.st_hp_1;
+		$msg="블로그 리뷰 확인\n";
+		$msg.="http://prq.co.kr/prq/blog/view/".$insert_id;
+
+		$array=array('st_no'=>$arrays['st_no']);
+		$store=$this->get_store($array);
+		$store=json_decode(json_encode($store),true);
+		//print_r($store);
+		//echo $store['st_hp_1'];
+		$st_hp=$store['st_hp_1'];
+		$result_msg="test";
+		$sql_array=array();
+		$sql_array[]="insert into `site_push_log` set ";
+		$sql_array[]="stype='SMS',";
+		$sql_array[]="biz_code='central',";
+		$sql_array[]="caller='15999495',";
+		$sql_array[]="called='".$st_hp."',";
+		$sql_array[]="wr_subject='".$msg."',";
+		$sql_array[]="wr_content='push를 테스트 합니다.',";
+		$sql_array[]="regdate=now(),";
+		$sql_array[]="result='".$result_msg."';";
+		$sql=join("",$sql_array);
+		$results = $this->cashq->query($sql);
+		
+		$sql_array=array();
+		$sql_array[]="insert into SMSQ_SEND set";
+		$sql_array[]="	msg_type='S', ";
+		$sql_array[]="	dest_no='".$st_hp."',";
+		$sql_array[]="	call_back='15999495',";
+		$sql_array[]="	msg_contents='".$msg."' , ";
+		$sql_array[]="	sendreq_time=now();";
+
+		$sql=join("",$sql_array);
+		$results = $this->cashq->query($sql);
+		$results = true;
+		$sms_result=$results?"성공":"실패";
+		$sql_array=array();
+		$sql_array[]="INSERT INTO prq_sms_log SET ";
+		$sql_array[]="`sm_subject`='사장문자 확인',";
+		$sql_array[]="`sm_content`='".$msg."',";
+		$sql_array[]="`sm_type`='SMS',";
+		$sql_array[]="`sm_receiver`='".$st_hp."',";
+		$sql_array[]="`sm_sender`='0215999495',";
+		$sql_array[]="`sm_result`='".$sms_result."',";
+		$sql_array[]="`sm_datetime`=now(),";
+		$sql_array[]="`sm_status`='I',";
+		$sql_array[]="`sm_ipaddr`='".$this->input->ip_address()."',";
+		$sql_array[]="`sm_stno`='".$arrays['st_no']."';";
+
+		$sql=join("",$sql_array);
+		$results = $this->prq->query($sql);
+
 		$result=array(
-			'result' => $result,
+			'result' => $results,
 			'insert_id' => $insert_id
 		);
+
 		//결과 반환
 		return $result;
  	}
@@ -167,7 +224,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="mb_datetime=now();";
 		$sql=join("",$sql_array);
 		
-		$result = $this->db->query($sql);
+		$result = $this->prq->query($sql);
 		/*
 		
 		*/
@@ -193,7 +250,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="`mb_pcode`='".$arrays['mb_pcode']."';";
 
 		$sql=join("",$sql_array);
-		$query = $this->db->query($sql);
+		$query = $this->prq->query($sql);
 		$row = $query->row();
 		$mb_no=$row->mb_no;
 		
@@ -208,7 +265,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="mb_code;";
 
 		$sql=join("",$sql_array);
-		$query = $this->db->query($sql);
+		$query = $this->prq->query($sql);
 		$row = $query->row();
 		$result=$row->mb_code;
 		$GLOBALS['mb_code']=$result;
@@ -236,7 +293,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="from prq_dscode;";
 
 		$sql=join("",$sql_array);
-		$query = $this->db->query($sql);
+		$query = $this->prq->query($sql);
 		$row = $query->row();
 		$ds_code=$row->max_dscode;
 		
@@ -267,7 +324,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="where mb_pcode='".$code."';";
 
 		$sql=join("",$sql_array);
-		$query = $this->db->query($sql);
+		$query = $this->prq->query($sql);
 		$row = $query->row();
 
 		//결과 반환
@@ -292,7 +349,7 @@ class Blog_m extends CI_Model
 				'board_id' => $arrays['board_id']
 		);
 
-		$result = $this->db->update($arrays['table'], $modify_array, $where);
+		$result = $this->prq->update($arrays['table'], $modify_array, $where);
 					'table' => "prq_blog",
 					'st_no' => $this->input->post('st_no', TRUE),
 					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
@@ -317,7 +374,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="bl_content3='".$arrays['content3']."' ";
 		$sql_array[]="WHERE bl_no='".$arrays['bl_no']."';";
 		$sql=join("",$sql_array);
-		$result = $this->db->query($sql);
+		$result = $this->prq->query($sql);
 		//결과 반환
 		return $result;
  	}
@@ -336,7 +393,7 @@ class Blog_m extends CI_Model
 			'board_id' => $no
 		);
 
-		$result = $this->db->delete($table, $delete_array);
+		$result = $this->prq->delete($table, $delete_array);
 
 		//결과 반환
 		return $result;
@@ -354,7 +411,7 @@ class Blog_m extends CI_Model
 	{
 		$sql = "SELECT mb_id FROM ".$table." WHERE mb_no = '".$board_id."'";
 
-		$query = $this->db->query($sql);
+		$query = $this->prq->query($sql);
 
 		return $query->row();
 	}
@@ -377,9 +434,9 @@ class Blog_m extends CI_Model
 			'reg_date' => date("Y-m-d H:i:s")
 		);
 
-		$this->db->insert($arrays['table'], $insert_array);
+		$this->prq->insert($arrays['table'], $insert_array);
 
-		$board_id = $this->db->insert_id();
+		$board_id = $this->prq->insert_id();
 
 		//결과 반환
 		return $board_id;
@@ -396,7 +453,7 @@ class Blog_m extends CI_Model
     function get_comment($table, $id)
     {
     	$sql = "SELECT * FROM ".$table." WHERE mb_no='".$id."' ORDER BY mb_no DESC";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
      	//댓글 리스트 반환
 	    $result = $query->result();
@@ -414,7 +471,7 @@ class Blog_m extends CI_Model
     function get_frcnt()
     {
     	$sql = "select mb_pcode,count(*) cnt from prq_member where mb_gcode='G4' group by mb_pcode;";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
      	//상점 갯수 반환
 		//$result = $query->row();
@@ -449,7 +506,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="bf_datetime=now();";
 		$sql=join("",$sql_array);
 		
-		$result = $this->db->query($sql);
+		$result = $this->prq->query($sql);
 
 		//결과 반환
 		return $sql;
@@ -467,10 +524,10 @@ class Blog_m extends CI_Model
     {
     	//조회수 증가
     	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
-   		//$this->db->query($sql0);
+   		//$this->prq->query($sql0);
 
     	$sql = "SELECT * FROM prq_file WHERE bl_no='".$arrays['bl_no']."'";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
      	//댓글 리스트 반환
 	    $result = $query->result();
@@ -490,10 +547,10 @@ class Blog_m extends CI_Model
     {
     	//조회수 증가
     	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
-   		//$this->db->query($sql0);
+   		//$this->prq->query($sql0);
 
     	$sql = "SELECT * FROM prq_store WHERE st_no='".$arrays['st_no']."'";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
      	//댓글 리스트 반환
 	    $result = $query->row();
@@ -514,11 +571,34 @@ class Blog_m extends CI_Model
 		$sql_array[]="WHERE bl_no='".$arrays['bl_no']."';";
 		$sql=join("",$sql_array);
 		
-		$result = $this->db->query($sql);
+		$result = $this->prq->query($sql);
 
 		//결과 반환
 		return $sql;
  	}
+
+    /**
+	 * 대리점점 정보 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_member($arrays)
+    {
+		$prq_fcode=substr($arrays['prq_fcode'], 0, 12);
+    	$sql = "SELECT * FROM prq_member ";
+		$sql.=" where mb_gcode='G4' ";
+		$sql.=" and prq_fcode='".$prq_fcode."' limit 1;";
+   		$query = $this->prq->query($sql);
+
+     	//멤버 리스트 반환
+	    $result = $query->row();
+
+    	return $result;
+    }
+
 }
 
 /* End of file member_m.php */

@@ -5,7 +5,7 @@
  * @author Taebu,Moon<mtaebu@gmail.com>
  */
 class Blog extends CI_Controller {
-
+ 
  	function __construct()
 	{
 		parent::__construct();
@@ -174,7 +174,8 @@ class Blog extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_no', '상점이름', 'required');
+			$this->form_validation->set_rules('st_name', '상점이름', 'required');
+			$this->form_validation->set_rules('st_no', '상점번호', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -191,6 +192,7 @@ class Blog extends CI_Controller {
 				
 				$write_data = array(
 					'st_no' => $this->input->post('st_no', TRUE),
+					'st_name' => $this->input->post('st_name', TRUE),
 					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
 					'bl_file' => $this->input->post('bl_file', TRUE),
 					'bl_name' => $this->input->post('bl_name', TRUE),
@@ -225,19 +227,19 @@ class Blog extends CI_Controller {
 					);
 					//print_r($write_data);
 					$result2 = $this->blog_m->insert_file($write_data);
-					echo $result2;
+					//echo $result2;
 				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
 
 				if ( $result['result'] )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/blog/write/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/blog/view/'.$result['insert_id']);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/blog/write/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/blog/write/'.$this->uri->segment(3));
 					exit;
 				}
 
@@ -375,7 +377,18 @@ class Blog extends CI_Controller {
 				//게시물 내용 가져오기
 				$data['views'] = $this->blog_m->get_view("prq_blog", $this->uri->segment(3));
 				$array = json_decode(json_encode($data['views']),true);
+				//파일 정보 가져오기
 				$data['files'] = $this->blog_m->get_files($array);
+
+
+				//member 정보 가져오기
+				$data['store'] = $this->blog_m->get_store($array);
+				$arrays = json_decode(json_encode($data['store']),true);
+				
+				//member 정보 가져오기
+				$data['member'] = $this->blog_m->get_member($arrays);
+
+
 				//쓰기폼 view 호출
 				$this->load->view('blog/modify_v', $data);
 			}

@@ -51,6 +51,8 @@ class Logs_m extends CI_Model
 			$table='prq_ata';
 		}else if($table=="blog"){
 			$table='prq_blog';
+		}else if($table=="sms"){
+			$table='prq_sms_log';
 		}
 
 		//검색어가 있을 경우의 처리
@@ -122,6 +124,8 @@ class Logs_m extends CI_Model
 			$sql[]=" order by cd_date desc ";
 		}else if($table=="prq_log"){
 			$sql[]=" order by lo_datetime desc ";
+		}else if($table=="prq_sms_log"){
+			$sql[]=" order by sm_no desc ";
 		}
 
 		
@@ -302,6 +306,8 @@ class Logs_m extends CI_Model
 			$sql[]=" order by at_datetime desc ";
 		}else if($table=="prq_first_log"){
 			$sql[]=" order by pf_no desc ";
+		}else if($table=="prq_sms_log"){
+			$sql[]=" order by sm_no desc ";
 		}
 
 		

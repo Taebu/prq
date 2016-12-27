@@ -276,8 +276,8 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
 <button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">1,2개 미흡</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">네이버신규등록</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">네이버권한신청</button>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패</button>
 </div><!-- .btn_area -->
 <?php }?>

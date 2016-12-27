@@ -11,7 +11,11 @@ class Ajax_m extends CI_Model
     {
         parent::__construct();
 		$this->load->library('user_agent');
-    }
+		/* 이기종간 디비 불러오기 */
+        $this->prq = $this->load->database('default', TRUE);
+        $this->cashq = $this->load->database('cashq', TRUE);
+        //$this->blog = $this->load->model('blog');
+	}
 
 	/**
 	 * 아이디, 비밀번호 체크
@@ -32,7 +36,7 @@ class Ajax_m extends CI_Model
 		$sql[]="WHERE ";
 		$sql[]="username = '".$auth['username']."' ";
 		$sql[]="AND password = '".$auth['password']."' ";
-		$query = $this->db->query(join("",$sql));
+		$query = $this->prq->query(join("",$sql));
 
 		if ( $query->num_rows() > 0 )
 		{
@@ -57,7 +61,7 @@ class Ajax_m extends CI_Model
 		$sql[]="WHERE ";
 		$sql[]="mb_id = '".$auth['mb_id']."';";
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 
 		if ( $query->num_rows() > 0 )
 		{
@@ -89,9 +93,14 @@ class Ajax_m extends CI_Model
 			$sql[]=" st_status='".$array['mb_status']."' ";
 			$sql[]="WHERE ";
 			$sql[]="st_no in (".$array['join_chk_seq'].");";		
+		}else if($array['prq_table']=="prq_blog"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" bl_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="bl_no in (".$array['join_chk_seq'].");";		
 		}
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 
 		$json=array();
 		$json['success']=$query;
@@ -104,11 +113,38 @@ class Ajax_m extends CI_Model
 		$lo_reason=$array['mb_reason'];
 		$mb_id=$array['mb_id'];
 		$prq_table=$array['prq_table'];
+		
+		/* 블로그 상태 변경시 */
+		$st=$array['mb_status'];
+		if($st=='view'||$st=='review'){
+			//$this->blog->
+		}else if($st=='ceo_allow'){
+
+		}else if($st=='ceo_deny'){
+
+		}else if($st=='co_blog_allow'){
+
+		}else if($st=='co_blog_deny'){
+
+		}else if($st=='po_blog_allow'){
+
+		}else if($st=='po_blog_deny'){
+
+		}
 
 		foreach($arr_no as $an)
 		{
 			$items=array();
-			$items['mb_status']=$this->get_status($array['mb_status']);
+			/* 블로그인 경우 코드 예외 처리 */
+			if($array['prq_table']=="prq_blog"){
+				$items['mb_status']=$this->get_status_blog($array['mb_status']);
+			/* 상  점인 경우 코드 예외 처리 */
+			}else if($array['prq_table']=="prq_store"){
+				$items['mb_status']=$this->get_status_store($array['mb_status']);
+			}else{
+				$items['mb_status']=$this->get_status($array['mb_status']);
+			}
+
 			$items['mb_no']=$an;
 			array_push($json['posts'],$items);
 
@@ -123,7 +159,7 @@ class Ajax_m extends CI_Model
 			$sql[]=" lo_status='".$array['mb_status']."', ";
 			$sql[]=" lo_datetime=now(); ";
 			$join_sql=join("",$sql);
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 		}
 
 		echo json_encode($json);
@@ -141,7 +177,7 @@ class Ajax_m extends CI_Model
 			$sql[]="WHERE ";
 			$sql[]="ds_code in ('".$array['join_ds_code']."');";
 			$join_sql=join("",$sql);
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			$json['success']=$query;
 		}
 		$ds_name=$array['ds_name'];
@@ -169,7 +205,7 @@ class Ajax_m extends CI_Model
 				$sql[]="WHERE ";
 				$sql[]="ds_code in ('".$an."');";
 				$join_sql=join("",$sql);
-				$query = $this->db->query($join_sql);
+				$query = $this->prq->query($join_sql);
 			}
 			$json['success']=$query;
 			$items=array();
@@ -189,7 +225,7 @@ class Ajax_m extends CI_Model
 			$sql[]=" lo_status='".$array['mb_status']."', ";
 			$sql[]=" lo_datetime=now(); ";
 			$join_sql=join("",$sql);
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 		}
 
 		echo json_encode($json);
@@ -219,8 +255,67 @@ class Ajax_m extends CI_Model
 		}
 		return $result;
 	}
+
+	function get_status_blog($code)
+	{
+		switch ($code) {
+		case "view":
+			$result='<button type="button" class="btn btn-default btn-xs">포스팅</button>';
+			break;
+		case "ceo_allow":
+			$result='<button type="button" class="btn btn-success btn-xs">사장 승인</button>';
+			break;
+		case "ceo_deny":
+			$result='<button type="button" class="btn btn-danger btn-xs">사장 거절</button>';
+			break;
+		case "co_blog_allow":
+			$result='<button type="button" class="btn btn-success btn-xs">일반 승인</button>';
+			break;
+		case "co_blog_deny":
+			$result='<button type="button" class="btn btn-danger btn-xs">일반 거절</button>';
+			break;
+		case "po_blog_allow":
+			$result='<button type="button" class="btn btn-success btn-xs">포인트 승인</button>';
+			break;
+		case "po_blog_deny":
+			$result='<button type="button" class="btn btn-danger btn-xs">포인트 거절</button>';
+			break;
+		}
+		return $result;
+	}	
 	
-	
+
+	function get_status_store($code)
+	{
+		switch ($code) {
+		case "wa":
+			$result='<button type="button" class="btn btn-default btn-xs">대기</button>';
+			break;
+		case "pr":
+			$result='<button type="button" class="btn btn-primary btn-xs">처리중</button>';
+			break;
+		case "ac":
+			$result='<button type="button" class="btn btn-success btn-xs">완료</button>';
+			break;
+		case "ad":
+			$result='<button type="button" class="btn btn-danger btn-xs">네이버신규등록</button>';
+			break;
+		case "ec":
+			$result='<button type="button" class="btn btn-info btn-xs">네이버권한신청</button>';
+			break;
+		case "ca":
+			$result='<button type="button" class="btn btn-warning btn-xs">설치실패</button>';
+			break;
+		case "delete":
+			$result='<button type="button" class="btn btn-danger btn-xs">삭제</button>';
+			break;
+		case "modify":
+			$result='<button type="button" class="btn btn-warning btn-xs">수정</button>';
+			break;
+		}
+		return $result;
+	}
+
 	function get_pcode($array)
 	{
 		$json=array();
@@ -239,7 +334,7 @@ class Ajax_m extends CI_Model
 		$sql[]="mb_gcode='G3';";
 		$join_sql=join("",$sql);
 //		$json['query']=$join_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -281,7 +376,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -316,7 +411,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		$json['posts']=array();
 		/*조회된 갯수 여부*/
@@ -355,7 +450,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -399,7 +494,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -435,7 +530,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -474,7 +569,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -509,7 +604,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -543,7 +638,7 @@ class Ajax_m extends CI_Model
 
 			$join_sql=join("",$sql);
 	//		$json['query']=$join_sql;
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			if($query->num_rows()>0)
 			{
 				$json['result']="이미 존재하는 코드이니 삭제나 수정 바랍니다.";
@@ -556,7 +651,7 @@ class Ajax_m extends CI_Model
 				$sql[]="pt_name='".$array['pt_name']."';";
 
 				$join_sql=join("",$sql);
-				$query = $this->db->query($join_sql);
+				$query = $this->prq->query($join_sql);
 				$json['success']=$query;
 				$json['result']="코드 입력이 성공 되었습니다.";
 			}
@@ -572,7 +667,7 @@ class Ajax_m extends CI_Model
 
 			$join_sql=join("",$sql);
 			//$json['query']=$ojin_sql;
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			if($query)
 			{
 				$json['result']="수정 성공.";
@@ -592,7 +687,7 @@ class Ajax_m extends CI_Model
 
 			$join_sql=join("",$sql);
 	//		$json['query']=$join_sql;
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			if($query)
 			{
 				$json['result']="삭제 성공.";
@@ -626,7 +721,7 @@ class Ajax_m extends CI_Model
 
 			$join_sql=join("",$sql);
 	//		$json['query']=$join_sql;
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			if($query->num_rows()>0)
 			{
 				$json['result']="이미 존재하는 코드이니 삭제나 수정 바랍니다.";
@@ -639,7 +734,7 @@ class Ajax_m extends CI_Model
 				$sql[]="fr_name='".$array['fr_name']."';";
 
 				$join_sql=join("",$sql);
-				$query = $this->db->query($join_sql);
+				$query = $this->prq->query($join_sql);
 				$json['success']=$query;
 				$json['result']="코드 입력이 성공 되었습니다.";
 			}
@@ -655,7 +750,7 @@ class Ajax_m extends CI_Model
 
 			$join_sql=join("",$sql);
 			//$json['query']=$ojin_sql;
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			if($query)
 			{
 				$json['result']="수정 성공.";
@@ -675,7 +770,7 @@ class Ajax_m extends CI_Model
 
 			$join_sql=join("",$sql);
 	//		$json['query']=$join_sql;
-			$query = $this->db->query($join_sql);
+			$query = $this->prq->query($join_sql);
 			if($query)
 			{
 				$json['result']="삭제 성공.";
@@ -708,7 +803,7 @@ class Ajax_m extends CI_Model
 	
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -740,7 +835,7 @@ class Ajax_m extends CI_Model
 	
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -781,7 +876,7 @@ class Ajax_m extends CI_Model
 
 		$join_sql=join("",$sql);
 		//echo $join_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -815,7 +910,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -850,7 +945,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -884,7 +979,7 @@ class Ajax_m extends CI_Model
 
 		$join_sql=join("",$sql);
 		//$json['query']=$ojin_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="수정 성공.";
@@ -929,7 +1024,7 @@ class Ajax_m extends CI_Model
 		ALTER TABLE `callerid`.`black_hp` add bl_duration int NOT NULL default 0;
 		*/
 		$write_array=array($array['phoneno']);
-		$query = $this->db->query($join_sql,$write_array) or die(false);
+		$query = $this->prq->query($join_sql,$write_array) or die(false);
 		if($query->num_rows() > 0){
 			echo "0";
 			return;
@@ -960,7 +1055,7 @@ class Ajax_m extends CI_Model
 			$array['gubun'],
 			$array['dnis'],
 			$array['duration']);
-		$query = $this->db->query($join_sql,$write_array) or die(false);
+		$query = $this->prq->query($join_sql,$write_array) or die(false);
 		if($query)
 		{
 			echo "1";
@@ -991,7 +1086,7 @@ class Ajax_m extends CI_Model
 		$sql[]="mb_gcode='G5';";
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -1033,7 +1128,7 @@ class Ajax_m extends CI_Model
 		$sql[]=" WHERE mn_id='".$array['mn_id']."';";
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		if($query->num_rows() > 0)
@@ -1066,7 +1161,7 @@ class Ajax_m extends CI_Model
 		}
 		$join_sql=join("",$sql);
 		//$json['query']=$ojin_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="성공.";
@@ -1102,7 +1197,7 @@ class Ajax_m extends CI_Model
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -1150,7 +1245,7 @@ class Ajax_m extends CI_Model
 		//$array['mm_sender']
 		$join_sql=join("",$sql);
 		//$json['query']=$ojin_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="성공.";
@@ -1173,7 +1268,7 @@ class Ajax_m extends CI_Model
     function get_franchise($prq_fcode)
     {
     	$sql = "SELECT * FROM prq_member WHERE prq_fcode='".$prq_fcode."'";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 
      	//게시물 내용 반환
 	    $result = $query->row();
@@ -1191,7 +1286,7 @@ class Ajax_m extends CI_Model
     function get_stat($mb_hp,$type="json")
     {
     	$sql = "select * from prq_stat where st_sender='".$mb_hp."'";
-   		$query = $this->db->query($sql);
+   		$query = $this->prq->query($sql);
 		$json['success']=$query->num_rows() > 0;
 	
 		
@@ -1293,7 +1388,7 @@ ERROR:
 
 		$join_sql=join("",$sql);
 
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="성공.";
@@ -1343,8 +1438,8 @@ ERROR:
 
 		$join_sql=join("",$sql);
 		$json['query']=$join_sql;
-		$query = $this->db->query($join_sql);
-		$insert_id = $this->db->insert_id();
+		$query = $this->prq->query($join_sql);
+		$insert_id = $this->prq->insert_id();
 		$status=$query?"성공":"실패";
 
 		$sql=array();
@@ -1356,7 +1451,7 @@ ERROR:
 		$sql[]=" at_mmt_no='".$insert_id."', ";
 		$sql[]=" at_datetime=now(); ";
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="성공.";
@@ -1395,7 +1490,7 @@ ERROR:
 		$sql[]=" WHERE mn_hp='".$array['mn_hp']."';";
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		if($query->num_rows() > 0)
@@ -1428,7 +1523,7 @@ ERROR:
 		}
 		$join_sql=join("",$sql);
 		//$json['query']=$ojin_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="성공.";
@@ -1465,7 +1560,7 @@ ERROR:
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -1505,7 +1600,7 @@ ERROR:
 
 		$join_sql=join("",$sql);
 		//$json['query']=$ojin_sql;
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		if($query)
 		{
 			$json['result']="성공.";
@@ -1536,7 +1631,7 @@ ERROR:
 
 
 		$join_sql=join("",$sql);
-		$query = $this->db->query($join_sql);
+		$query = $this->prq->query($join_sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
@@ -1577,7 +1672,7 @@ ERROR:
 		$url_no=${"url_".$auth['setup_v']};
 
 
-	//	$query = $this->db->query(join("",$sql));
+	//	$query = $this->prq->query(join("",$sql));
 //		if ( $query->num_rows() > 0 )
 		if ( $auth['setup_pw']=="eoqkr9495"&&$auth['setup_id']=="admin")
 		{
@@ -1599,7 +1694,173 @@ ERROR:
      	}
     }
 
-}
+	/*2016-01-28 (목)
+	get_storeno()
+	사용 중인 모든 상점 번호에 상점이름을 반환한다.
+	*/
+	function get_storeno($st_no)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" st_name ";
+		$sql[]="FROM ";
+		$sql[]="`prq_store` ";
+		$sql[]=" where st_no='".$st_no."';";
 
+
+		$join_sql=join("",$sql);
+
+		$query = $this->prq->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json=$query->result_array();
+		}
+		return json_encode($json);
+	}
+
+	/*2016-01-28 (목)
+	get_storeno()
+	사용 중인 모든 상점 번호에 상점이름을 반환한다.
+	*/
+	function set_storeno($st_no)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" st_name ";
+		$sql[]="FROM ";
+		$sql[]="`prq_store` ";
+		$sql[]=" where st_no='".$st_no."';";
+
+
+		$join_sql=join("",$sql);
+
+		$query = $this->prq->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json=$query->result_array();
+		}
+		return json_encode($json);
+	}
+
+	/*2016-12-26 (월) 15:10:04 
+	set_blog_status()
+	블로그의 상태를 변경 합니다.
+	*/
+	function set_blog_status($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="UPDATE prq_blog SET ";
+		$sql[]=" bl_status='".$array['bl_status']."' ";
+		$sql[]=" where bl_no='".$array['bl_no']."';";
+
+
+		$join_sql=join("",$sql);
+
+		$query = $this->prq->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json=$query->result_array();
+		}
+		return json_encode($json);
+	}
+
+	/**
+	 * 사장, 영업사원, 소비자 sms 전송
+	 *
+	 * @param array $auth 폼전송 받은 아이디, 비밀번호
+	 * @return array
+	 */
+	function set_sms($array)
+	{
+		$msg="블로그 리뷰 확인\n";
+		$msg.="http://prq.co.kr/prq/blog/view/".$insert_id;
+
+		$array=array('st_no'=>$arrays['st_no']);
+		$store=$this->get_store($array);
+		$store=json_decode(json_encode($store),true);
+		$st_hp=$store['st_hp_1'];
+		$result_msg="test";
+		$sql_array=array();
+		$sql_array[]="insert into `site_push_log` set ";
+		$sql_array[]="stype='SMS',";
+		$sql_array[]="biz_code='central',";
+		$sql_array[]="caller='15999495',";
+		$sql_array[]="called='".$st_hp."',";
+		$sql_array[]="wr_subject='".$msg."',";
+		$sql_array[]="wr_content='push를 테스트 합니다.',";
+		$sql_array[]="regdate=now(),";
+		$sql_array[]="result='".$result_msg."';";
+		$sql=join("",$sql_array);
+		$results = $this->cashq->query($sql);
+		
+		$sql_array=array();
+		$sql_array[]="insert into SMSQ_SEND set";
+		$sql_array[]="	msg_type='S', ";
+		$sql_array[]="	dest_no='".$st_hp."',";
+		$sql_array[]="	call_back='15999495',";
+		$sql_array[]="	msg_contents='".$msg."' , ";
+		$sql_array[]="	sendreq_time=now();";
+
+		$sql=join("",$sql_array);
+		$results = $this->cashq->query($sql);
+		$results = true;
+		$sms_result=$results?"성공":"실패";
+		$sql_array=array();
+		$sql_array[]="INSERT INTO prq_sms_log SET ";
+		$sql_array[]="`sm_subject`='사장문자 확인',";
+		$sql_array[]="`sm_content`='".$msg."',";
+		$sql_array[]="`sm_type`='SMS',";
+		$sql_array[]="`sm_receiver`='".$st_hp."',";
+		$sql_array[]="`sm_sender`='0215999495',";
+		$sql_array[]="`sm_result`='".$sms_result."',";
+		$sql_array[]="`sm_datetime`=now(),";
+		$sql_array[]="`sm_status`='I',";
+		$sql_array[]="`sm_ipaddr`='".$this->input->ip_address()."',";
+		$sql_array[]="`sm_stno`='".$arrays['st_no']."';";
+
+		$sql=join("",$sql_array);
+		$results = $this->prq->query($sql);
+	}
+
+	/**
+	 * 상점 정보 가져오기
+	 *
+	 * @author Jongwon Byun <advisor@cikorea.net>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_store_no($st_no)
+    {
+    	$sql = "SELECT * FROM prq_store WHERE st_no='".$st_no."'";
+   		$query = $this->prq->query($sql);
+
+     	//댓글 리스트 반환
+	    $result = $query->row();
+
+    	return $result;
+    }
+}
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */

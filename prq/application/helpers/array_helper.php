@@ -146,6 +146,7 @@ if (!function_exists('get_status')) {
 			break;
 
 		}
+
 		return $result;
 	}
 }/* end get_status */
@@ -173,10 +174,10 @@ if (!function_exists('get_status2')) {
 			$result='<button type="button" class="btn btn-success btn-xs">완료</button>';
 			break;
 		case "ad":
-			$result='<button type="button" class="btn btn-danger btn-xs">승인거부</button>';
+			$result='<button type="button" class="btn btn-danger btn-xs">네이버신규등록</button>';
 			break;
 		case "ec":
-			$result='<button type="button" class="btn btn-info btn-xs">1,2개 미흡</button>';
+			$result='<button type="button" class="btn btn-info btn-xs">네이버권한신청</button>';
 			break;
 		case "ca":
 			$result='<button type="button" class="btn btn-warning btn-xs">설치실패</button>';
@@ -191,6 +192,43 @@ if (!function_exists('get_status2')) {
 		}
 		return $result;
 	}
-}/* end get_status */
+}
+
+if (!function_exists('get_status_blog')) {
+	function get_status_blog($code)
+	{
+		switch ($code) {
+		case "view":
+			$result='<button type="button" class="btn btn-default btn-xs">포스팅</button>';
+			break;
+		case "review":
+			$result='<button type="button" class="btn btn-default btn-xs">포스팅</button>';
+			break;
+		case "sms_send":
+			$result='<button type="button" class="btn btn-default btn-xs">sms_send</button>';
+			break;
+		case "ceo_allow":
+			$result='<button type="button" class="btn btn-success btn-xs">사장 승인</button>';
+			break;
+		case "ceo_deny":
+			$result='<button type="button" class="btn btn-danger btn-xs">사장 거부</button>';
+			break;
+		case "co_blog_allow":
+			$result='<button type="button" class="btn btn-success btn-xs">일반 승인</button>';
+			break;
+		case "co_blog_deny":
+			$result='<button type="button" class="btn btn-danger btn-xs">일반 거부</button>';
+			break;
+		case "po_blog_allow":
+			$result='<button type="button" class="btn btn-success btn-xs">포인트 승인</button>';
+			break;
+		case "po_blog_deny":
+			$result='<button type="button" class="btn btn-danger btn-xs">포인트 거부</button>';
+			break;
+		}
+		return $result;
+	}	
+
+}/* end get_status_blog */
 //echo realpath(__FILE__);;
 /* End of file */

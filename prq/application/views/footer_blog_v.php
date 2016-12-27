@@ -24,6 +24,9 @@
     <!-- Chosen -->
     <script src="/prq/include/js/plugins/chosen/chosen.jquery.js"></script>
 
+	<!-- Sweet alert -->
+    <script src="/prq/include/js/plugins/sweetalert/sweetalert.min.js"></script>
+
    <!-- JSKnob -->
    <script src="/prq/include/js/plugins/jsKnob/jquery.knob.js"></script>
 
@@ -303,7 +306,7 @@
 					$("#image_area").html(object.join(""));
 
 	//				$("#bl_file").val(img_filenames.length);
-					$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
+					$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+$("#my-awesome-dropzone3 .dz-preview").length);
 					img_index=img_file_cnt;
 				}
 			},
@@ -371,7 +374,7 @@
 						imgs[2]=$("#my-awesome-dropzone3 .dz-preview").length;
 
 						$("#image_area").html(object.join(""));
-						$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+imgs[2]);
+						$("#bl_file").val(imgs[0]+"_"+imgs[1]+"_"+$("#my-awesome-dropzone3 .dz-preview").length);
 
 					},error: function(data)
 					{
@@ -400,6 +403,26 @@
 
 
 	if(application=="blog"&&method=="write"){
+		$("nav").hide();
+		
+		$(".footer").hide();
+
+		$(".theme-config").hide();
+	}
+
+
+
+	if(application=="blog"&&method=="modify"){
+		$("nav").hide();
+		
+		$(".footer").hide();
+
+		$(".theme-config").hide();
+	}
+
+
+
+	if(application=="blog"&&method=="view"){
 		$("nav").hide();
 		
 		$(".footer").hide();

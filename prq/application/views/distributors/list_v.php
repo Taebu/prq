@@ -82,7 +82,7 @@
 				/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
 				param=param+"&mb_reason="+inputValue;
 				$.ajax({
-				url:"/prq/ajax/chg_status/prq_member",
+				url:"/prq/ajax/chg_status/prq_blog",
 					data:param,
 					dataType:"json",
 					type:"POST",
@@ -420,13 +420,13 @@ echo form_open('board/write/ci_board', $attributes);
 if($mb_gcode=="G1"||$mb_gcode=="G2")
 {?>
 <div class="btn_area">
-<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-default"  onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary"  onclick="chg_list('pr');">처리중</button>
 <button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-danger"  onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info"      onclick="chg_list('ec');">연계완료</button>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="del_code();">총판삭제</button>
+<button type="button" class="btn btn-sm btn-danger"   onclick="del_code();">총판삭제</button>
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">

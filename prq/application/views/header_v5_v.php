@@ -2,10 +2,9 @@
 <html>
 
 <head>
-
+	<meta property="og:image" content="http://prq.co.kr/prq/img/new/meta_logo.png" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>톡톡메세지 | Dashboard</title>
     <script src="/prq/include/js/jquery-2.1.1.js"></script>
     <link href="/prq/include/css/bootstrap.min.css" rel="stylesheet">

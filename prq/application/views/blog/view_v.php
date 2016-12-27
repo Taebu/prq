@@ -6,7 +6,7 @@
 	<div class="col-lg-10" style="text-align:center;">
 		<ul style="margin:0;padding:10px 0 10px 0;list-style:none;">
 			<li style="font-weight:bold;font-size:27px;"><?php echo $store->st_name;?></li>
-			<li>블로그 리뷰</li>
+			<li>BLOG Review</li>
 		</ul>
 		<!-- <ol class="breadcrumb">
 			<li>
@@ -43,10 +43,10 @@ $d3x=$d2x+$arr_file[2];
 <input type="hidden" name="is_member" id="is_member">
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
-
+<input type="hidden" name="chk_seq[]" id="chk_seq" value='<?php echo $views->bl_no;?>' checked>
 <!-- <input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>">
-<input type="text" name="bl_naverid" id="bl_naverid" value="testid">
-<input type="text" name="bl_no" id="bl_no" value="<?php echo $this->uri->segment(3);?>"> -->
+<input type="text" name="bl_naverid" id="bl_naverid" value="testid">-->
+<input type="hidden" name="bl_no" id="bl_no" value="<?php echo $this->uri->segment(3);?>"> 
 
 <input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo $views->bl_imgprefix;?>">
 
@@ -302,11 +302,14 @@ echo $bl_content3;?><!-- #form_data -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 <div style="text-align:center;margin-top:30px;">
 	<ul style="margin:0;padding:0;list-style:none;color:#fff;font-weight:bold;font-size:15px;">
-		<li style="float:left;width:48%;background:#676a6c;border-radius:25px;padding:10px;">
-			거　절
+		<li style="float:left;width:48%;background:#676a6c;border-radius:25px;padding:10px;cursor:pointer" onclick="javascript:set_point('ceo_deny');">
+			사 장 거 절
 		</li>
-		<li style="float:right;width:48%;background:#34c5ed;border-radius:25px;padding:10px;">
-			승　인
+		<li style="float:right;width:48%;background:#34c5ed;border-radius:25px;padding:10px;cursor:pointer" onclick="javascript:set_point('ceo_allow');">
+			사 장 승 인
+		</li>
+		<li style="float:left;width:100%;background:#ff0000;border-radius:25px;padding:10px;cursor:pointer;margin-top:10px" onclick="javascript:location.href='/prq/blog/modify/<?php echo $this->uri->segment(3);?>';">
+			수 정 하 기
 		</li>
 		<li style="clear:both;"></li>
 	</ul>
@@ -555,4 +558,105 @@ function get_store()
 function modify_blog(){
 location.href='/prq/blog/modify/'+$("#bl_no").val();
 }
+
+/* swal 로 적용 */
+function set_point(k)
+{
+	
+	swal({
+		title: "정말 변경 하시겠습니까?",
+		text: "해당 블로그 리뷰를 \""+get_status(k)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+		html:true,
+		type: "input",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		cancelOnConfirm: false,
+		confirmButtonText: "네, 변경할래요!",
+		cancelButtonText: "아니요, 취소할래요!",
+		animation: "slide-from-top",
+		showLoaderOnConfirm: true,
+		allowEscapeKey:true,
+		inputPlaceholder: "변경 사유는 로그에 기록 됩니다." 
+		}, 
+		function(v){
+			set_ajax_status(k,v);
+		});
+}
+
+/* 비동기 통신 적용 */
+function set_ajax_status(k,v){
+		if (v === false) return false;
+		if(!v){
+			swal("취소!", "취소 하였습니다.", "error");
+		}
+		if (v.length<3) {
+		  swal.showInputError("3자이상 사유를 적어 주세요.");
+		  return false
+		}
+
+		var param=$("#write_action").serialize();
+		param=param+"&mb_status="+k;
+		console.log(param);
+		/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+		param=param+"&mb_reason="+v;
+		$.ajax({
+		url:"/prq/ajax/chg_status/prq_blog",
+			data:param,
+			dataType:"json",
+			method:"POST",
+			success:function(data){
+				if(data.success){
+					//alert("변경에 성공하였습니다.");
+					swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+v, "success");
+					/*
+					$.each(data.posts,function(key,val){
+						$("#status_"+val.mb_no).html(val.mb_status);
+					});
+					*/
+				}
+				console.log(data);
+				console.log(data=="9000");
+				if(data=="9000"){
+					//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+					swal({   
+						title: "로그인!",
+						text: "변경하려면 로그인 되어야 합니다. 로그인 하시겠습니까?",
+						type: "warning",
+						showCancelButton: true,
+						closeOnConfirm: false,
+						animation: "slide-from-top"
+					}, 
+					function(v)
+					{
+						/*취소를 눌렀을 때*/
+						if (v === false) return false;
+
+						swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+						
+						setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+						;
+					});	
+				}
+
+			}
+		});
+
+}
+
+
+function get_status(code)
+{
+	var object=[];
+	object['view']='사용자 포스팅 등록';
+	object['ceo_allow']='사장승인';
+	object['ceo_deny']='사장거절';
+	object['co_blog_allow']='일반 승인';
+	object['co_blog_deny']='일반 거절';
+	object['po_blog_allow']='포인트 승인';
+	object['po_blog_deny']='포인트 거절';
+	return object[code];
+}
 </script>
+<style type="text/css">
+#image_area{display:none}
+</style>

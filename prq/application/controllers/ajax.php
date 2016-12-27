@@ -43,6 +43,10 @@ class Ajax extends CI_Controller {
 			$ds_name = $this->input->post("ds_name", TRUE);
 
 			$mb_reason = $this->input->post("mb_reason", TRUE);
+			$bl_url = $this->input->post("bl_url", TRUE);
+			$st_hp_1 = $this->input->post("st_hp_1", TRUE);
+			$mb_hp = $this->input->post("mb_hp", TRUE);
+			$bl_hp = $this->input->post("bl_hp", TRUE);
 			$mb_id = $this->input->cookie('name', TRUE);
 			$join_chk_seq=join(",",$chk_seq);
 			$join_ds_code=join("','",$chk_seq);
@@ -55,6 +59,10 @@ class Ajax extends CI_Controller {
 					'ds_name'=>$ds_name,
 					'mb_id'=>$mb_id,
 					'mb_reason'=>$mb_reason,
+					'bl_url'=>$bl_url,
+					'st_hp_1'=>$st_hp_1,
+					'mb_hp'=>$mb_hp,
+					'bl_hp'=>$bl_hp,
 					'join_chk_seq' => $join_chk_seq,
 					'join_ds_code' => $join_ds_code
 				);
@@ -64,10 +72,11 @@ class Ajax extends CI_Controller {
 					$result = $this->ajax_m->chg_status($write_data);
 				}else if($table=="prq_store"){
 					$result = $this->ajax_m->chg_status($write_data);
+				}else if($table=="prq_blog"){
+					$result = $this->ajax_m->chg_status($write_data);
 				}else if($table!="prq_member"){
 					$result = $this->ajax_m->chg_status_code($write_data);
 				}
-//			}
 //			else
 //			{
 //				//글 내용이 없을 경우
@@ -601,6 +610,27 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 
+	/* get_storeno() */
+	function get_storeno()
+	{
+		$st_no=$this->uri->segment(3);
+		$result = $this->ajax_m->get_storeno($st_no);
+		echo $result;
+	}
+
+	/* set_blog_status() */
+	function set_blog_status()
+	{
+		$bl_no=$this->input->post("bl_no", TRUE);
+		$bl_status=$this->input->post("bl_status", TRUE);
+
+		$write_data = array(
+			'bl_no'=>$bl_no,
+			'bl_status'=>$bl_status,
+		);
+		$result = $this->ajax_m->set_blog_status($write_data);
+		echo $result;
+	}
 }
 
 /* End of file ajax_board.php */

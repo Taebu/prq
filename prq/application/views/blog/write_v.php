@@ -48,16 +48,14 @@
 	
 	<input type="hidden" type="text" name="bl_file" id="bl_file" value="0">
 	
+	<!-----상점명----->
 	<div style="margin-top:15px;;border:3px solid #676a6c;width:35px;"></div>
+	<!--<input type="text" name="bl_naverid" id="bl_naverid" value="testid" style="width:100%"> -->
+	<div style="padding:3px 0 8px 0;border:0px solid red;font-size:19px;font-weight:bold;" id="display_stname"></div>		
+	<!----상점명---->
 
-	<!--상점명 불러와주세요. <input type="text" name="bl_naverid" id="bl_naverid" value="testid" style="width:100%"> -->
-	<div style="padding:3px 0 8px 0;border:0px solid red;font-size:19px;font-weight:bold;">
-		상점명
-	</div>
-
-		
-	<!----상점명 불러와주세요.---->
-	<input type="hidden" type="text" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>">
+	<input type="hidden" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>">
+	<input type="hidden" name="st_name" id="st_name">
 	<!---맨위input text-->
 	<input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo date("Ym");?>">
 
@@ -370,6 +368,13 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 	toastr.clear();
+
+if($.trim($("#st_name").val().length)<2){
+	toastr.error('상점이름이 없습니다. ','올바른 경로로 접근후 다시 작성해주세요.');
+	//$("#content2").focus();
+	return;
+}
+
 if(getstrbyte($("#content1").val())<100){
 	toastr.error('첫 번째 글이 너무 적습니다.','100자이상 작성해주세요.');
 	//$("#content1").focus();
@@ -387,6 +392,7 @@ if($("#bl_hp").val().length<10){
 	//$("#content2").focus();
 	return;
 }
+
 $("#write_action").submit();
 /*
 if($("#content3").val().length<100){
@@ -515,9 +521,25 @@ function textAreaAdjust(o) {
 }
 
 
-
+/* 페이지 모두 로드시 */
 window.onload = function() {
-    var checkload = true;
+	
+	if($("#st_no").val()=="")
+	{
+		alert("잘못된 경로로 접근하였습니다.\n 올바른 경로로 접근해 주세요.!!!");
+		window.history.back();	
+	}else{
+		$.ajax({
+			url:"/prq/ajax/get_storeno/"+$("#st_no").val(),
+			dataType:"json",
+			success:function(data){
+				$("#st_name").val(data[0].st_name);
+				$("#display_stname").html(data[0].st_name);
+			}
+		});
+	}
+/*    
+	var checkload = true;
  
     $("#write_btn").click(function () {
         checkload = false;
@@ -526,6 +548,7 @@ window.onload = function() {
     $(window).on("beforeunload", function () {
         if (checkload == true) return "레알 나감????????????";
     });
+	*/
   //출처 ㅡ 「페이지 벗어날때 확인창 띄우기 - 따블류 랩」 https://lab.hv-l.net/?document_srl=172498
 };/*window.onload = function() {..}*/
 

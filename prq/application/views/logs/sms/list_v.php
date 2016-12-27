@@ -154,59 +154,15 @@
 							});	
 						}
 
-//						if(!data.success){
-							//alert("변경에 실패하였습니다.");
-//							swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
-//						}
 					}
 				});
 
-//				swal("Nice!", "You wrote: " + inputValue, "success"); 
 				});
-			/*
-			
-			
-			*/
-			/*
-			swal({
-				title: "정말 변경 하시겠습니까?",
-				text: "해당 "+get_status(code)+"로 변경 됩니다.\n 진행 하시겠습니까?\n변경 사유",
-				type: "warning",
-				html:true,
-				showCancelButton: true,
-				timer: 2000,
-				showConfirmButton: false,
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "네, 변경할래요!",
-				closeOnConfirm: false
-			}, function () {
 
-				$.ajax({
-				url:"/prq/ajax/chg_status",
-					data:param,
-					dataType:"json",
-					type:"POST",
-					success:function(data){
-						if(data.success){
-							//alert("변경에 성공하였습니다.");
-							swal("변경!", "변경에 성공하였습니다..", "success");
-							$.each(data.posts,function(key,val){
-								$("#status_"+val.mb_no).html(val.mb_status);
-							});
-						}
-						if(!data.success){
-							//alert("변경에 실패하였습니다.");
-							swal("변경!", "변경에 실패하였습니다.", "warning");
-						}
-					}
-				});
-			});
-			*/
 		}
 
 		function chk_btn_status(){
 			var param=$("#write_action").serialize();
-//			$(".btn_area [lass*='btn-']").toggleClass("disabled",param.indexOf("chk_seq")<0).prop('disabled', param.indexOf("chk_seq")<0);
 			
 			if(param.indexOf("chk_seq")<0)
 			{
@@ -359,14 +315,11 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">내용</th>
-					<th scope="col">이미지</th>
 					<th scope="col">타입 </th>
 					<th scope="col">수신인</th>
 					<th scope="col">발신인</th>
 					<th scope="col">상태</th>
 					<th scope="col">전송일</th>
-					<th scope="col">일전송</th>
-					<th scope="col">월전송</th>
 					</tr>
 			</thead>
 			<tbody>
@@ -375,30 +328,23 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 if(count($list)==0){
 ?>
 				<tr>
-					<td scope="row" colspan='11' class='text-center'> 조회한 MMS Log가 없습니다.</td>
+					<td scope="row" colspan='11' class='text-center'> 조회한 SMS Log가 없습니다.</td>
 				</tr>
 <?php
 }
 
 foreach ($list as $lt)
 {
-
-
 ?>
-				<tr>
-					<td scope="row"><?php echo $lt->sm_no;?></td>
-					<td scope="row"><?php echo $lt->sm_subject;?><br><?php echo nl2br($lt->sm_content);?></td>
-					<td scope="row"><img src="<?php echo $lt->sm_imgurl;?>" width="200" height="*"></td>
-					<td scope="row"><?php echo $lt->sm_type;?></td>
-					<td scope="row"><?php echo phone_format($lt->sm_receiver);?></td>
-					<td scope="row"><?php echo phone_format($lt->sm_sender);?></td>
-					<td scope="row" class="mms5"><?php echo $lt->sm_result;?></td>
-					<td scope="row"><?php echo $lt->sm_datetime;?></td>
-					<td scope="row"><?php echo $lt->sm_daily_cnt;?></td>
-					<td scope="row"><?php echo $lt->sm_monthly_cnt;?></td>
-<!-- 					<td scope="row"><?php echo $lt->sm_status;?></td> -->
-<!-- 					<td scope="row"><?php echo $lt->sm_ipaddr;?></td> -->
-				</tr>
+	<tr>
+		<td scope="row"><?php echo $lt->sm_no;?></td>
+		<td scope="row"><?php echo $lt->sm_subject;?><br><?php echo nl2br($lt->sm_content);?></td>
+		<td scope="row"><?php echo $lt->sm_type;?></td>
+		<td scope="row"><?php echo phone_format($lt->sm_receiver);?></td>
+		<td scope="row"><?php echo phone_format($lt->sm_sender);?></td>
+		<td scope="row"><?php echo $lt->sm_result;?></td>
+		<td scope="row"><?php echo $lt->sm_datetime;?></td>
+	</tr>
 <?php
 }
 ?>

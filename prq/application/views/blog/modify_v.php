@@ -33,6 +33,10 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 //print_r($views);
 //print_r($files);
+//print_r($store);
+
+//print_r($member);
+
 $bf_file=$views->bl_file;
 $arr_file=explode("_",$bf_file);
 $d1x=$arr_file[0];
@@ -59,12 +63,17 @@ echo '</div>';
 <input type="hidden" name="mode" id="mode" value="modify">
 <input type="hidden" name="is_join" id="is_join" value="">
 <input type="hidden" name="is_member" id="is_member">
+<input type="hidden" name="chk_seq[]" id="chk_seq" value='<?php echo $views->bl_no;?>' checked>
 <?php if($mb_gcode=="G5"){?>
 <input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $prq_fcode;?>">
 <?php }?>
 <input type="hidden" name="mb_gcode" id="mb_gcode" value="<?php echo $mb_gcode;?>">
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+<!-- 매장사장 전화번호 -->
+<input type="hidden" name="st_hp_1" id="st_hp_1" value="<?php echo $store->st_hp_1;?>">
+<!-- 영업사원 전화번호 -->
+<input type="hidden" name="mb_hp" id="mb_hp" value="<?php echo $member->mb_hp;?>">
 
 <input type="text" name="bl_no" id="bl_no" value="<?php echo $views->bl_no;?>" class="form-control">
 <input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>" class="form-control">
@@ -199,14 +208,32 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
+<div class="form-group"><label class="col-sm-2 control-label">블로그 URL</label>
+<div class="col-sm-10">
+<input type="text" name="bl_url" id="bl_url" class="form-control" value="<?php echo $views->bl_url;?>" placeholder="네이버 블로그에 url을 기재해 주세요. 예) http://blog.naver.com/abc123/123456">
+ - 블로그 URL : 네이버에 기제한 url을 기재해 주세요. <br>
+  예) http://blog.naver.com/abc123/123456<br>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
 <div class="controls">
 
 <p class="help-block"><?php echo validation_errors(); ?></p>
 </div>
 
 <div class="form-group">
-<div class="col-sm-10 col-sm-offset-2">
-<button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn">리뷰 수정하기</button>
+<!-- <div class="col-sm-10 col-sm-offset-2"> -->
+<div class="col-sm-12">
+<button type="button" class="btn btn-info btn-block" onclick="set_ds();set_member()" id="write_btn">리뷰 수정하기</button>
+<button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('ceo_allow');">사장 승인</button>
+<button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('ceo_deny');">사장 거부</button>
+<button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('co_blog_allow');">일반 승인</button>
+<button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('co_blog_deny');">일반 거부</button>
+<button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('po_blog_allow');">배달 포인트 승인</button>
+<button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('po_blog_deny');">배달 포인트 거부</button>
+
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <!-- <button class="btn btn-white" type="reset">취소</button> -->
 <!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->
@@ -496,4 +523,105 @@ function get_store()
 		}
 	});
 }
+
+function set_status(k)
+{
+
+	if(k=="po_blog_allow"){
+		if($("#bl_url").val().trim().length<3){
+			swal("포인트 생성시 블로그 URL이 반드시 필요합니다.!", "포인트 블로그 승인시 해당 url을 \n소비자와 영업사원에게 알립니다. \n반드시 기입해 주세요.", "warning");
+			return;
+		}
+	}
+
+	swal({
+		title: "정말 변경 하시겠습니까?",
+		text: "해당 블로그 리뷰를 \""+get_status(k)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+		html:true,
+		type: "input",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		cancelOnConfirm: false,
+		confirmButtonText: "네, 변경할래요!",
+		cancelButtonText: "아니요, 취소할래요!",
+		animation: "slide-from-top",   showLoaderOnConfirm: true,
+		allowEscapeKey:true,
+		inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
+		if (inputValue === false) return false;
+		if(!inputValue){
+			swal("취소!", "취소 하였습니다.", "error");
+		}
+		if (inputValue.length<3) {
+		  swal.showInputError("3자이상 사유를 적어 주세요.");
+		  return false
+		}
+
+		var param=$("#write_action").serialize();
+		param=param+"&mb_status="+k;
+		console.log(param);
+		/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+		param=param+"&mb_reason="+inputValue;
+		$.ajax({
+		url:"/prq/ajax/chg_status/prq_blog",
+			data:param,
+			dataType:"json",
+			type:"POST",
+			success:function(data){
+				if(data.success){
+					//alert("변경에 성공하였습니다.");
+					swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
+					$.each(data.posts,function(key,val){
+						$("#status_"+val.mb_no).html(val.mb_status);
+					});
+				}
+				console.log(data);
+				console.log(data=="9000");
+				if(data=="9000"){
+					//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+					swal({   
+						title: "로그인!",
+						text: "로그인 되지 않았습니다. 로그인 하시겠습니까?",
+						type: "warning",
+						showCancelButton: true,
+						closeOnConfirm: false,
+						animation: "slide-from-top"
+					}, 
+					function(inputValue)
+					{
+						/*취소를 눌렀을 때*/
+						if (inputValue === false) return false;
+
+						swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+						
+						setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+						;
+					});	
+				}
+
+//						if(!data.success){
+					//alert("변경에 실패하였습니다.");
+//							swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
+//						}
+			}
+		});
+
+		});
+}
+
+function get_status(code)
+{
+	var object=[];
+	object['view']='포스팅';
+	object['review']='포스팅';
+	object['ceo_allow']='사장승인';
+	object['ceo_deny']='사장거절';
+	object['co_blog_allow']='일반 승인';
+	object['co_blog_deny']='일반 거절';
+	object['po_blog_allow']='포인트 승인';
+	object['po_blog_deny']='포인트 거절';
+	return object[code];
+}
 </script>
+<style type="text/css">
+#image_area{display:none}
+</style>
