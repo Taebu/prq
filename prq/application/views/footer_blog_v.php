@@ -7,6 +7,7 @@
             <div>
                 <strong>Write Copyright</strong> Example Company &copy; 2014-2015
             </div>
+
         </div><!-- .footer -->
 
         </div><!-- #page-wrapper -->

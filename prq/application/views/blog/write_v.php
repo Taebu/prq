@@ -100,9 +100,11 @@
 							</div>
 							<div class="col-sm-10" style="width:100%;margin-top:10px;">
 								<!-- #my-awesome-dropzone1 -->
+
 								<div id="my-awesome-dropzone1" class="dropzone">
 									<div class="dz-default dz-message"></div>
 								</div>
+
 								<!-- #my-awesome-dropzone1 -->
 									<!-- <span class="help-block m-b-none">주문하신 음식 사진을 등록해주세요!</span> -->
 								</div><!-- .col-sm-10 -->
@@ -164,7 +166,7 @@
 										onkeyup='chk_byte(2);textAreaAdjust(this)' 
 										onkeydown='chk_byte(2);textAreaAdjust(this)' 
 										onkeypress='chk_byte(2);textAreaAdjust(this)' 
-										placeholder="정성스러운 이용후기가 가게 사장님들께 더 큰 힘이 됩니다!"></textarea><!-- #form_data -->
+										placeholder="정성스러운 후기를 올려 주세요!"></textarea><!-- #form_data -->
 										
 										<div style="">
 											<ul style="padding:0;margin:0;list-style:none;font-size:12px;">
@@ -209,7 +211,7 @@
 										onkeyup='chk_byte(3);textAreaAdjust(this)' 
 										onkeydown='chk_byte(3);textAreaAdjust(this)' 
 										onkeypress='chk_byte(3);textAreaAdjust(this)' 
-										 placeholder="잘찍은 사진 한장! 100댓글이 안부럽다~!"></textarea><!-- #form_data -->
+										 placeholder="후기 사진은 최소 3장씩은 올려 주세요."></textarea><!-- #form_data -->
 
 										<div style="">
 											<ul style="padding:0;margin:0;list-style:none;font-size:12px;">
@@ -258,7 +260,17 @@
 
 								<p class="help-block"><?php echo validation_errors(); ?></p>
 								</div> -->
+			<?php
+			 // Start with post_max_size.
 
+    //$max_size = ini_get('post_max_size');
+	//echo $max_size;
+
+    // If upload_max_size is less, then reduce. Except if upload_max_size is
+    // zero, which indicates no limit.
+    //$upload_max = ini_get('upload_max_filesize');
+	//echo $upload_max;
+	?>
 								<div class="form-group" style="margin-top:-10px;">
 									<div class="col-sm-12 col-sm-offset-2">
 										<button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn" style="background:#10cdf4;border:1px solid #05c2e9;font-size:16px;font-weight:bold;">리뷰 등록</button>
@@ -571,6 +583,19 @@ function get_store()
 			});
 		}
 	});
+}
+var is_sms_browser=navigator.userAgent.indexOf("CrossApp")>-1
+if(is_sms_browser)
+{
+	console.log(is_sms_browser);
+	var is_go=confirm('지원하지 않는 웹브라우저 입니다. 인터넷 브라우저에서 열어 주세요.');
+	//location.href=document.URL;
+	if(is_go){
+		window.open(document.URL,"DescriptiveWindowName","resizable,scrollbars,status");
+	}
+	//self.close();
+}else{
+	console.log(is_sms_browser);
 }
 </script>
 <style type="text/css">
