@@ -51,6 +51,18 @@ class Ajax extends CI_Controller {
 			$join_chk_seq=join(",",$chk_seq);
 			$join_ds_code=join("','",$chk_seq);
 
+			$st_no = $this->input->post("st_no", TRUE);
+			$pv_code = $this->input->post("pv_code", TRUE);
+			$pv_value = $this->input->post("pv_value", TRUE);
+/*
+st_no=60
+chk_seq%5B%5D=60
+prq_fcode=DS0001PT0001FR0001
+mb_status=Y
+mb_reason=test
+pv_value=off
+pv_code=5002
+*/
 //			if ( $comment_contents != '')
 //			{
 				$write_data = array(
@@ -64,7 +76,10 @@ class Ajax extends CI_Controller {
 					'mb_hp'=>$mb_hp,
 					'bl_hp'=>$bl_hp,
 					'join_chk_seq' => $join_chk_seq,
-					'join_ds_code' => $join_ds_code
+					'join_ds_code' => $join_ds_code,
+					'pv_no'=>$st_no,
+					'pv_code'=>$pv_code,
+					'pv_value'=>$pv_value
 				);
 
 //				$result = $this->board_m->insert_comment($write_data);
@@ -74,6 +89,8 @@ class Ajax extends CI_Controller {
 					$result = $this->ajax_m->chg_status($write_data);
 				}else if($table=="prq_blog"){
 					$result = $this->ajax_m->chg_status($write_data);
+				}else if($table=="prq_isblog"){
+					$result = $this->ajax_m->chg_status_blog($write_data);
 				}else if($table!="prq_member"){
 					$result = $this->ajax_m->chg_status_code($write_data);
 				}
@@ -629,6 +646,64 @@ class Ajax extends CI_Controller {
 			'bl_status'=>$bl_status,
 		);
 		$result = $this->ajax_m->set_blog_status($write_data);
+		echo $result;
+	}
+
+	//get_origin
+	function get_origin()
+	{
+		$pv_no=$this->uri->segment(3);
+		$write_data = array(
+			'pv_no'=>$pv_no,
+			'pv_code'=>'5001',
+
+		);
+		$result = $this->ajax_m->get_origin($write_data);
+		echo $result;
+	}
+
+	//set_origin
+	function set_origin()
+	{
+		$pv_no=$this->input->post("pv_no", TRUE);
+		$pv_value=$this->input->post("pv_value", TRUE);
+
+		$write_data = array(
+			'pv_no'=>$pv_no,
+			'pv_code'=>'5001',
+			'pv_value'=>$pv_value,
+		);
+		$result = $this->ajax_m->set_origin($write_data);
+		echo $result;
+	}
+	
+	//get_values
+	function get_values()
+	{
+		$pv_no=$this->input->post("pv_no", TRUE);
+		$pv_code=$this->input->post("pv_code", TRUE);
+		$write_data = array(
+			'pv_no'=>$pv_no,
+			'pv_code'=>$pv_code,
+
+		);
+		$result = $this->ajax_m->get_values($write_data);
+		echo $result;
+	}
+
+	//set_values
+	function set_values()
+	{
+		$pv_no=$this->input->post("pv_no", TRUE);
+		$pv_value=$this->input->post("pv_value", TRUE);
+		$pv_code=$this->input->post("pv_code", TRUE);
+
+		$write_data = array(
+			'pv_no'=>$pv_no,
+			'pv_code'=>$pv_code,
+			'pv_value'=>$pv_value,
+		);
+		$result = $this->ajax_m->set_values($write_data);
 		echo $result;
 	}
 }

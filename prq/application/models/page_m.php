@@ -92,8 +92,6 @@ class Page_m extends CI_Model
     	return $result;
     }
 
-
-
 	/**
 	 * 게시물 입력
 	 * @author Jongwon Byun <advisor@cikorea.net>
@@ -394,6 +392,29 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
+
+	/**
+	 * 원산지 정보 가져오기
+	 *
+@author Taebu <mtaebu@gmail.com>
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_origin($id)
+    {
+
+    	$sql = "SELECT pv_value FROM prq_values WHERE pv_no='".$id."' and pv_code='5001';";
+   		$query = $this->db->query($sql);
+		$cnt=$query->num_rows();
+     	//게시물 내용 반환
+		if($cnt==0){
+		$result = (object)array('pv_value'=>'.');
+		}else{
+	    $result = $query->row();
+		}
+    	return $result;
+    }
+
 }
 
 /* End of file page_m.php */

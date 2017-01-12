@@ -41,12 +41,12 @@ echo $prq_fcode;
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 
-<input type="hidden" name="st_store_paper" id="st_store_paper">
+<input type="hidden" name="st_business_paper" id="st_business_paper">
 <input type="hidden" name="st_thumb_paper" id="st_thumb_paper">
 <input type="hidden" name="st_menu_paper" id="st_menu_paper">
 <input type="hidden" name="st_main_paper" id="st_main_paper">
 
-<input type="hidden" name="st_store_paper_size" id="st_store_paper_size">
+<input type="hidden" name="st_business_paper_size" id="st_business_paper_size">
 <input type="hidden" name="st_thumb_paper_size" id="st_thumb_paper_size">
 <input type="hidden" name="st_menu_paper_size" id="st_menu_paper_size">
 <input type="hidden" name="st_main_paper_size" id="st_main_paper_size">
@@ -54,6 +54,7 @@ echo $prq_fcode;
 <input type="hidden" name="st_imgprefix" id="st_imgprefix" value="<?php echo date("Ym");?>">
 
 <input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
+
 
 <div class="row">
 <div class="col-lg-12">

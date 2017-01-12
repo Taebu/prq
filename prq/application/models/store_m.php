@@ -591,7 +591,7 @@ mysql> select * from prq_member_code;
     {
 
     	$sql = "SELECT * FROM prq_log WHERE prq_table='prq_store' and mb_no='".$array['st_no']."';";
-		echo $sql;
+		//echo $sql;
    		$query = $this->db->query($sql);
 
      	//게시물 내용 반환
@@ -599,8 +599,67 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
-}
+    /**
+	 * 원산지 정보 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param $array['table'] 상점 테이블, 멤버
+	 * @param $array['st_no'] 상점 이름
+	 * @return list
+	 */
+    function get_origin($array)
+    {
+		//$arrays=(array)$array;
+		$arrays=json_decode(json_encode($array), True);
+		//print_r($arrays);
+		
+		$object=array();
+		$object[]=0;
+		foreach($arrays as $key => $value)
+		{
+			$object[]=$value['st_no'];
+			//echo $key." :".$value;
+		}
 
+    	$sql = "SELECT pv_no,pv_value FROM prq_values WHERE pv_code='5001' and pv_no in (".join(",",$object).");";
+   		$query = $this->db->query($sql);
+
+     	//게시물 내용 반환
+	    $result = $query->result();
+
+		return $result;
+    }
+    /**
+	 * 블로그 url 사용 여부 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param $array['table'] 상점 테이블, 멤버
+	 * @param $array['st_no'] 상점 이름
+	 * @return list
+	 */
+    function get_blogurl($array)
+    {
+		//$arrays=(array)$array;
+		$arrays=json_decode(json_encode($array), True);
+		//print_r($arrays);
+		
+		$object=array();
+		$object[]=0;
+		foreach($arrays as $key => $value)
+		{
+			$object[]=$value['st_no'];
+			//echo $key." :".$value;
+		}
+
+    	$sql = "SELECT pv_no,pv_value FROM prq_values WHERE pv_code='5001' and pv_no in (".join(",",$object).");";
+   		$query = $this->db->query($sql);
+
+     	//게시물 내용 반환
+	    $result = $query->result();
+
+		return $result;
+    }
+}
 
 /* End of file store_m.php */
 /* Location: ./prq/application/models/store_m.php */

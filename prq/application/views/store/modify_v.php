@@ -61,7 +61,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <input type="hidden" id="st_no" name="st_no" value="<?php echo $this->uri->segment(5);?>">
 <input type="hidden" id="st_business_paper" name="st_business_paper" value="<?php echo $views->st_business_paper;?>">
 <input type="hidden" id="st_business_paper_size" name="st_business_paper_size" value="<?php echo $views->st_business_paper_size;?>">
-
+<input type="hidden" id="chk_seq" name="chk_seq[]" value='<?php echo $this->uri->segment(5);?>' checked>
 <input type="hidden" id="st_thumb_paper" name="st_thumb_paper" value="<?php echo $views->st_thumb_paper;?>">
 <input type="hidden" id="st_thumb_paper_size" name="st_thumb_paper_size" value="<?php echo $views->st_thumb_paper_size;?>">
 
@@ -271,8 +271,16 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div><!-- .col-md-6 Left Menu-->
 
+
+<div class="form-group"><label class="col-sm-2 control-label">원산지 </label>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_origin" id="st_origin" value="" placeholder="예) 닭고기 (국내산)">
+<span class="help-block m-b-none text-danger font-bold">※ 원산지 미 표기 시 메뉴 내용이 노출 안됩니다, 원산지는 상점과 별도 내용이어서 `적용` 버튼을 누르셔야만 저장 됩니다.</span>
+<button class="btn btn-primary" type="button" onclick="javascript:set_origin()">적용</button>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- .col-md-6 Left Menu-->
 
 <div class="col-md-12">
 <h3>매장 서류</h3>
@@ -419,7 +427,26 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
  <br>중단 문구 수정 원하시는 형태로 수정이 가능합니다..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
+
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">블로그 홍보 사용여부</label>
+<div class="col-sm-10"><div class="switch">
+<div class="onoffswitch">
+	<input type="checkbox" class="onoffswitch-checkbox" id="is_blogurl" name="is_blogurl" onclick='javascript:set_blogurl(this)'>
+	<label class="onoffswitch-label" for="is_blogurl">
+		<span class="onoffswitch-inner"></span>
+		<span class="onoffswitch-switch"></span>
+	</label>
+</div>
+</div>
+<span class="help-block m-b-none">블로그 홍보 문구</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 
 <div class="form-group"><label class="col-sm-2 control-label">하단문구(고정)</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="st_bottom_msg" value="<?php echo $views->st_bottom_msg;?>"> <span class="help-block m-b-none">메모 하실것이나 기타 사항을 기입해 주세요..</span>
@@ -530,29 +557,29 @@ function search_frcode(ds_code)
 		if(prq_fcode==val.fr_code){
 			object.push('<option value='+val.fr_code+' selected>');
 			$("#mb_id").val(fr_mail[val.fr_code]);
-		}else{
+					}else{
 			object.push('<option value='+val.fr_code+'>');
-		}
-		chk_max_ptcode.push(val.fr_code);
-		object.push('['+val.fr_code+']');
-		object.push(val.fr_name);
-		object.push('</option>');
-	});
-
-	var result=object.join("");
-	var chk_gcode=$("#mb_gcode").val();
-	if(chk_gcode=="G5"){
-	$("#fr_code").html(result);
-	}else{
-	$("#prq_fcode").html(result);
-	}
-}
-
-
+					}
+					chk_max_ptcode.push(val.fr_code);
+					object.push('['+val.fr_code+']');
+					object.push(val.fr_name);
+					object.push('</option>');
+				});
+			
+				var result=object.join("");
+				var chk_gcode=$("#mb_gcode").val();
+				if(chk_gcode=="G5"){
+				$("#fr_code").html(result);
+				}else{
+				$("#prq_fcode").html(result);
+				}
+			}
+			
+			
 function get_mb_id(v){
-$("#mb_id").val(fr_mail[v]);
+	$("#mb_id").val(fr_mail[v]);
 }
-
+			
 /* 개선된 FOR문으로 문자열 BYTE 계산 */
 function getstrbyte(string)
 {
@@ -563,8 +590,8 @@ function getstrbyte(string)
 	})(string);
 	return stringByteLength;
 }
-
-
+			
+			
 /* 메세지 길이 */
 function chk_byte(){
 var str=document.getElementById("st_middle_msg").value;
@@ -576,14 +603,210 @@ document.getElementById("bytesize").innerHTML=bytesize;
 
 /* Textarea to resize based on content length */
 function textAreaAdjust(o) {
-    o.style.height = "1px";
-    o.style.height = (25+o.scrollHeight)+"px";
+	o.style.height = "1px";
+	o.style.height = (25+o.scrollHeight)+"px";
 }
-
+			
 /* Textarea to resize based on content length */
 function textAreaAdjustOn() {
-    document.getElementById("st_middle_msg").style.height = "1px";
-    document.getElementById("st_middle_msg").style.height = (25+document.getElementById("st_middle_msg").scrollHeight)+"px";
+	document.getElementById("st_middle_msg").style.height = "1px";
+	document.getElementById("st_middle_msg").style.height = (25+document.getElementById("st_middle_msg").scrollHeight)+"px";
+}
+
+/****************
+* set_blogurl(this)
+* 블로그url 사용/여부를 기록 합니다.
+* 
+****************/
+function set_blogurl(v)
+{
+	console.log($(v).is(':checked'));
+	var is_blogurl=$(v).is(':checked');
+	
+	var is_use_str=is_blogurl?"사용":"미사용";
+	var k=is_use_str?"Y":"N";
+	console.log(k);
+	swal({
+	title: "정말 변경 하시겠습니까?",
+	text: "해당 상점을 블로그 \""+is_use_str+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+	html:true,
+	type: "input",
+	showCancelButton: true,
+	closeOnConfirm: false,
+	cancelOnConfirm: false,
+	confirmButtonText: "네, 변경할래요!",
+	cancelButtonText: "아니요, 취소할래요!",
+	animation: "slide-from-top",   showLoaderOnConfirm: true,
+	allowEscapeKey:true,
+	inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
+		//$(v).prop('checked', !is_blogurl);
+	if (inputValue === false) return false;
+	if(!inputValue){
+		swal("취소!", "취소 하였습니다.", "error");
+		$("#is_blogurl").prop('checked', !is_blogurl);
+	}
+	if (inputValue.length<3) {
+	  swal.showInputError("3자이상 사유를 적어 주세요.");
+	  return false
+	}
+
+	var param=$("#write_action").serialize();
+	var data_url=$("#is_blogurl").is(':checked')?"on":"off";
+	param=param+"&mb_status="+k;
+	/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+	param=param+"&mb_reason="+inputValue;
+	param=param+"&pv_value="+data_url;
+	param=param+"&pv_code=5002";
+	//console.log(param);
+	$.ajax({
+	url:"/prq/ajax/chg_status/prq_isblog",
+		data:param,
+		dataType:"json",
+		type:"POST",
+		success:function(data){
+		console.log(data);
+			if(data.success){
+				//alert("변경에 성공하였습니다.");
+				swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
+				$("#is_blogurl").prop('checked', is_blogurl);
+			}
+			console.log(data);
+			console.log(data=="9000");
+			if(data=="9000"){
+				//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+				swal({   
+					title: "로그인!",
+					text: "로그인 되지 않았습니다. 로그인 하시겠습니까?",
+					type: "warning",
+					showCancelButton: true,
+					closeOnConfirm: false,
+					animation: "slide-from-top"
+				}, 
+				function(inputValue)
+				{
+	
+					/*취소를 눌렀을 때*/
+					if (inputValue === false){
+						$("#is_blogurl").prop('checked', !is_blogurl);
+						return false;
+					} 
+
+					swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+					
+					setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+					;
+				});	
+			}
+
+			if(!data.success)
+			{
+				alert("변경에 실패하였습니다.");
+				swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
+			}
+		}/* success:function(data){...} */
+	});/* $.ajax({...}); */
+	});/* swal({...});*/
+}
+
+/****************
+* set_origin() 
+*  원산지를 기록 합니다.
+* 
+****************/
+function set_origin(){
+	var st_no=$("#st_no").val();
+	var st_origin=$("#st_origin").val();
+	console.log(st_no+" : "+st_origin);
+	var param="pv_no="+st_no+"&pv_value="+st_origin;
+	$.ajax({
+	url:"/prq/ajax/set_origin/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			if(data.success){
+				toastr.success('성공.','원산지 저장.');			
+			}else{
+				toastr.error('실패.','원산지 저장.');
+			}
+			console.log(data);
+		}
+	});
+}
+
+/****************
+* get_origin() 
+*  원산지를 가져옵니다.
+* 
+****************/
+function get_origin(){
+	var st_no=$("#st_no").val();
+	$.ajax({
+	url:"/prq/ajax/get_origin/"+st_no,
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				$("#st_origin").val(val.pv_value);
+			});
+		}
+	});
+}
+
+
+/****************
+* set_blogurl() 
+* 블로그 url 사용여부를 기록 합니다.
+* 
+****************/
+/*
+st_no=63
+chk_seq%5B%5D=63
+is_blogurl=on
+function set_blogurl(){
+	var st_no=$("#st_no").val();
+	var pv_value=$("#is_blogurl").is(':checked')?"on":"off";
+	
+	console.log(st_no+" : "+pv_value);
+	var param="pv_no="+st_no+"&pv_value="+pv_value+"&pv_code=5002";
+	$.ajax({
+	url:"/prq/ajax/set_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			if(data.success){
+				toastr.success('수정성공.','블로그 url사용.');			
+			}else{
+				toastr.error('실패.','블로그 url사용.');
+			}
+			console.log(data);
+		}
+	});
+}
+*/
+/****************
+* get_blogurl() 
+* 블로그 url 사용여부를 가져옵니다.
+* 
+****************/
+function get_blogurl(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5002";
+	var is_blogurl=false;
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				is_blogurl=val.pv_value=="on";
+				$("#is_blogurl").prop('checked', is_blogurl);
+			});
+		}
+	});
 }
 
 window.onload = function() {
@@ -600,6 +823,12 @@ get_frmail();
 chk_byte();
 
 textAreaAdjustOn();
+
+/* 원산지를 가져옵니다.*/
+get_origin();
+
+/* 블로그url 사용여부를 가져옵니다.*/
+get_blogurl();
 };/*window.onload = function() {..}*/
 
 

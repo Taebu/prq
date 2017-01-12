@@ -6,8 +6,10 @@
 * FULL URL : http://prq.co.kr/prq/crontab/view
 * 작성일 : 2016-03-30 (수)
 * 수정일 : 2016-05-19 (목)
-*
+* 자바로 완성 : kr.co.prq.PRQ_CDR
+* 2017-01-11 (수) 16:06:48 
 ********************************************************/
+exit("더이상 지원하지 않습니다. 2017-01-11 (수) 16:06:48  java 로 대체 kr.co.prq.PRQ_CDR");
 $host_name="localhost";
 $db_name="prq";
 $user_name="root";
@@ -283,6 +285,15 @@ foreach($list as $li)
 		}
 		//$mms_title=strlen($st->st_top_msg)>3?$st->st_top_msg:"web";
 		$mms_title=$st->st_top_msg;
+		/* blog on /off 정보 에 따른 블로그 url 첨부*/
+		$is_blogon=$controller->crontab_m->get_blog_yn($st->st_no);
+		
+		if($is_blogon->pv_value=="on")
+		{
+			$msg[]="";
+			$msg[]="리뷰 이벤트 (2,000원 지급)";
+			$msg[]="http://prq.co.kr/prq/blog/write/".$st->st_no;
+		}
 		$msg[]=$st->st_bottom_msg;
 		$msg[]=$st->st_modoo_url;
 		$param=array();

@@ -596,6 +596,41 @@ class Crontab_m extends CI_Model
 		echo json_encode($json);
 	}
 
+	/**
+	 * 블로그 url on/off 사용 여부
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $st_no  상점아이디
+	 * @return array
+	 */
+ 	function get_blog_yn($st_no)
+    {
+
+		$sql=array();
+		$sql[]="select ";
+		$sql[]="pv_value ";
+		$sql[]="from ";
+		$sql[]="prq_values ";
+		$sql[]="where ";
+		$sql[]="pv_code='5002' ";
+		$sql[]="and pv_no='".$st_no."';";
+
+		$str_sql=join("",$sql);
+   		$query = $this->db->query($str_sql);
+
+		if ( $query->num_rows() > 0 )
+		{
+			//맞는 데이터가 있다면 해당 내용 반환
+			$result = $query->row();
+			//$result->cd_date=$result->cd_date;
+     	}else{
+			$arrays=(object)array('pv_value'=>'off');
+			$result = $arrays;
+		}
+
+		//지난 콜로그 반환
+    	return $result;
+    }
 }
 
 /* End of file crontab_m.php */

@@ -233,7 +233,7 @@ class Blog extends CI_Controller {
 				if ( $result['result'] )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/blog/view/'.$result['insert_id']);
+					alert('입력되었습니다.', '/prq/blog/cview/'.$result['insert_id']);
 					exit;
 				}
 				else
@@ -517,6 +517,28 @@ class Blog extends CI_Controller {
         }
         return false;
 	}
+
+	/**
+	 * 게시물 보기
+	 */
+	function cview()
+ 	{
+		$table = "prq_blog";
+//		$board_id = $this->uri->segment(5);
+		$board_id =$this->uri->segment(3);
+		$is_test=$this->uri->segment(3)=="test";
+		$mobile=$this->uri->segment(3)=="mobile";
+
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+ 		$data['views'] = $this->blog_m->get_view($table, $board_id);
+		$array = json_decode(json_encode($data['views']),true);
+		$data['files'] = $this->blog_m->get_files($array);
+		$data['store'] = $this->blog_m->get_store($array);
+		//$isMobile = $this->check_user_agent('mobile');
+
+		$this->load->view('blog/view_custom_v', $data);
+ 	}
+
 }
 
 /* End of file blog.php */

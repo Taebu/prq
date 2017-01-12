@@ -23,6 +23,9 @@
     <!-- Chosen -->
     <script src="/prq/include/js/plugins/chosen/chosen.jquery.js"></script>
 
+	<!-- Sweet alert -->
+    <script src="/prq/include/js/plugins/sweetalert/sweetalert.min.js"></script>
+
    <!-- JSKnob -->
    <script src="/prq/include/js/plugins/jsKnob/jquery.knob.js"></script>
 

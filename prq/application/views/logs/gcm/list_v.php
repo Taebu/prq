@@ -354,6 +354,7 @@ if(count($list)==0){
 <tr><td scope="row" colspan='11' class='text-center'> 조회한 GCM Log가 없습니다.</td></tr>
 <?php
 }
+
 foreach ($list as $lt)
 {
 ?>

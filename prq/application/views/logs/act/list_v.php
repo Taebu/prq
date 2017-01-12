@@ -316,6 +316,8 @@ foreach ($list as $lt){
 	<td scope="row"><?php echo get_status_blog($lt->lo_status);?></td>
 	<?php }else if($lt->prq_table=="prq_store"){?>
 	<td scope="row"><?php echo get_status2($lt->lo_status);?></td>
+	<?php }	else if($lt->prq_table=="prq_isblog"){?>
+	<td scope="row"><?php echo $lt->lo_status;?></td>
 	<?php }else{?>
 	<td scope="row"><?php echo get_status($lt->lo_status);?></td>
 	<?php }?>

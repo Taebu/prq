@@ -117,7 +117,8 @@ map_location();
 					</a>
 					<a href="javascript:;" id="leftNavClose" class="left_nav_close">닫기</a> 
 				</div>
-				<!-- <ul>
+				<!-- 
+				<ul>
 					<li><a href="/member/join.php"><span class="icon_menu imenu01">회원가입아이콘</span>회원가입</a></li>
 				</ul>
 				<ul>
@@ -129,7 +130,8 @@ map_location();
 					<li><a href="/notice/"><span class="icon_menu imenu06">공지사항아이콘</span>공지사항</a>span class="msg_num">3</span></li>
 					<li><a href="/help/"><span class="icon_menu imenu07">도움말아이콘</span>도움말</a><span class="msg_num">1</span></li>
 					<li><a href="/board/inquiry/write.php"><span class="icon_menu imenu08">오류신고/기타문의아이콘</span>오류신고/기타문의</a></li>
-				</ul> -->
+				</ul> 
+				-->
 
 				<ul>
 					<li><a href="#"><span class="icon_menu imenu01">홈</span>홈</a></li>
@@ -393,6 +395,7 @@ parameters['st_tel'] = beautifulPhoneNumber("<?php echo $views->st_tel_1;?>");
 parameters['st_closingdate'] = "<?php echo $views->st_closingdate;?>";
 parameters['st_teltype'] = "<?php echo $views->st_teltype;?>";
 parameters['st_vtel'] = "<?php echo $views->st_vtel;?>";
+parameters['st_origin'] = "<?php echo $origin->pv_value?$origin->pv_value:'';?>";
 
 $.ajax({
 url : '/prq/include/view/info.php',
@@ -417,7 +420,7 @@ parameters['store_no'] = storeNo;
 parameters['member_no'] = memberNo;
 parameters['st_menu_paper'] = "<?php echo $views->st_menu_paper;?>";
 parameters['st_thumb_paper'] = "<?php echo $views->st_thumb_paper;?>";
-
+parameters['st_origin'] = "<?php echo $origin->pv_value?$origin->pv_value:'';?>";
 $.ajax({
 url : '/prq/include/view/menu.php',
 type : 'POST',

@@ -23,6 +23,9 @@
     <!-- Chosen -->
     <script src="/prq/include/js/plugins/chosen/chosen.jquery.js"></script>
 
+	<!-- Sweet alert -->
+    <script src="/prq/include/js/plugins/sweetalert/sweetalert.min.js"></script>
+
    <!-- JSKnob -->
    <script src="/prq/include/js/plugins/jsKnob/jquery.knob.js"></script>
 
@@ -67,7 +70,10 @@
 
     <!-- DROPZONE -->
     <script src="/prq/include/js/plugins/dropzone/dropzone.js"></script>
-    <script>
+
+	<!-- Toastr script -->
+    <script src="/prq/include/js/plugins/toastr/toastr.min.js"></script>
+	<script>
 		function set_dropzone_config(id)
 		{
 			var file_key=[];

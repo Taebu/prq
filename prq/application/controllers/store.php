@@ -162,10 +162,19 @@ class Store extends CI_Controller {
 		$data['fr_names'] = json_decode(json_encode($this->store_m->get_frcode()), True);;
 		$data['pt_names'] = json_decode(json_encode($this->store_m->get_ptcode()), True);;
 		$data['ds_names'] = json_decode(json_encode($this->store_m->get_dscode()), True);;
+
 		/* 싱크 상점 리스트 가져오기 */
 		$data['sync_store'] = json_decode(json_encode($this->store_m->get_syncstore()), True);;
 
-		$this->load->view('store/list_v', $data);
+		/* 원산지 정보 가져오기 */
+		$data['st_origin'] = $this->store_m->get_origin($data['list']);
+
+		if($this->uri->segment(6)=="test"){
+			$this->load->view('store/tlist_v', $data);
+		}else{
+			$this->load->view('store/list_v', $data);
+		}
+		
 	}
 
 	/**

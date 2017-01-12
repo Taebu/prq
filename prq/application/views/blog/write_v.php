@@ -251,7 +251,7 @@
 
 							<div class="form-group" style="margin-top:15px;"><!-- <label class="col-sm-2 control-label">핸드폰(필수)</label> -->
 								<div class="col-sm-10">
-									<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="" placeholder="핸드폰번호를 입력해 주세요.">
+									<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="<?php echo $this->uri->segment(4);?>" placeholder="핸드폰번호를 입력해 주세요.">
 								</div><!-- .col-sm-10 -->
 							</div><!-- .form-group -->
 

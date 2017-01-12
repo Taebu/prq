@@ -149,6 +149,9 @@ class Page extends CI_Controller {
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$data['views'] = $this->page_m->get_view($table, $board_id);
 
+ 		//원산지 정보 가져오기 
+ 		$data['origin'] = $this->page_m->get_origin($board_id);
+		//print_r($data['origin']);
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
  		//$data['comment_list'] = $this->page_m->get_comment($table, $board_id);
 

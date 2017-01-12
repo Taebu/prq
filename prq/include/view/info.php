@@ -125,6 +125,17 @@ extract($_POST);
 					<?php echo $st_intro;?>
 				</li>
 			</ul>
+			
+			<div style="clear:both;"></div>
+			<div style="border:1px solid #ececec;width:98%;margin:15px 0 15px 0;"></div>
+			<div style="clear:both;"></div>
+			
+			<ul>
+				<li style="float:left;color:#808080;">원산지</li>
+				<li style="float:left;margin-left:15px;font-weight:bold;">
+					<?php echo $st_origin;?>
+				</li>
+			</ul>
 		</div>
 	</div>
 

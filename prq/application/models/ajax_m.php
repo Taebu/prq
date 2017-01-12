@@ -3,7 +3,7 @@
 /**
  * 사용자인증 모델
  *
- * @author Jongwon Byun <advisor@cikorea.net>
+ * @author Taebu Moon <mtaebu@gmail.com>
  */
 class Ajax_m extends CI_Model
 {
@@ -21,8 +21,6 @@ class Ajax_m extends CI_Model
 
 	/**
 	 * 아이디, 비밀번호 체크
-	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
 	 * @param array $auth 폼전송 받은 아이디, 비밀번호
 	 * @return array
 	 */
@@ -100,10 +98,15 @@ class Ajax_m extends CI_Model
 			$sql[]=" bl_status='".$array['mb_status']."' ";
 			$sql[]="WHERE ";
 			$sql[]="bl_no in (".$array['join_chk_seq'].");";		
-		}
-		$join_sql=join("",$sql);
-		$query = $this->prq->query($join_sql);
+		}else if($array['prq_table']=="prq_isblog"){
 
+		}
+
+		if($array['prq_table']!="prq_isblog")
+		{
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+		}
 		$json=array();
 		$json['success']=$query;
 		$json['posts']=array();
@@ -215,6 +218,9 @@ class Ajax_m extends CI_Model
 			/* 상  점인 경우 코드 예외 처리 */
 			}else if($array['prq_table']=="prq_store"){
 				$items['mb_status']=$this->get_status_store($array['mb_status']);
+			/* 블로그url 사용인 경우 코드 예외 처리 */
+			}else if($array['prq_table']=="prq_isblog"){
+				$items['mb_status']=$this->get_status_isblog($array['mb_status']);
 			}else{
 				$items['mb_status']=$this->get_status($array['mb_status']);
 			}
@@ -280,8 +286,9 @@ class Ajax_m extends CI_Model
 				$sql[]="ds_code in ('".$an."');";
 				$join_sql=join("",$sql);
 				$query = $this->prq->query($join_sql);
+				$json['success']=$query;
 			}
-			$json['success']=$query;
+
 			$items=array();
 			$items['mb_status']=$array['mb_status'];
 			$items['ds_code']=$an;
@@ -1335,7 +1342,7 @@ class Ajax_m extends CI_Model
 	/**
 	 * 프랜차이즈 정보 코드로 불러오기
 	 *
-	 * @author Taebu Moon <mtaebu@gmail.com>
+
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
@@ -1352,8 +1359,6 @@ class Ajax_m extends CI_Model
   
 	/**
 	 * 보낸 갯수 불러 오기
-	 *
-	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string mb_hp 보낸 번호
 	 * @return json array
 	 */
@@ -1724,8 +1729,6 @@ ERROR:
 
 	/**
 	 * 아이디, 비밀번호 체크
-	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
 	 * @param array $auth 폼전송 받은 아이디, 비밀번호
 	 * @return array
 	 */
@@ -1920,8 +1923,6 @@ ERROR:
 
 	/**
 	 * 상점 정보 가져오기
-	 *
-	 * @author Jongwon Byun <advisor@cikorea.net>
 	 * @param string $table 게시판 테이블
 	 * @param string $id 게시물번호
 	 * @return array
@@ -1936,6 +1937,253 @@ ERROR:
 
     	return $result;
     }
+
+	/**
+	 * 원산지 정보 가져오기
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+	function get_origin($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+	
+
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" pv_value ";
+		$sql[]="FROM ";
+		$sql[]="`prq_values` ";
+		$sql[]="where ";
+		$sql[]="pv_no='".$array['pv_no']."' ";
+		$sql[]="and pv_code='".$array['pv_code']."';";
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+
+		foreach($query->result_array() as $list){
+			array_push($json['posts'],$list);
+		}
+
+		echo json_encode($json);
+	}
+
+
+	/**
+	 * 원산지 정보 할당하기
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+	function set_origin($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_values`  ";
+		$sql[]="where ";
+		$sql[]="pv_no='".$array['pv_no']."' ";
+		$sql[]="and pv_code='".$array['pv_code']."';";
+
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+		
+
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$sql=array();
+			$sql[]="update prq_values set ";
+			$sql[]="pv_value='".addslashes($array['pv_value'])."', ";
+			$sql[]="pv_datetime=now() ";
+			$sql[]=" where ";
+			$sql[]="pv_code='".$array['pv_code']."' and ";
+			$sql[]="pv_no='".$array['pv_no']."';";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);	
+		}else{
+			/* 조회 결과가 없으면 */
+			$sql=array();
+			$sql[]="insert into prq_values set ";
+			$sql[]="pv_code='".$array['pv_code']."',";
+			$sql[]="pv_no='".$array['pv_no']."',";
+			$sql[]="pv_value='".addslashes($array['pv_value'])."',";
+			$sql[]="pv_datetime=now();";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);	
+		}
+		$json['sql']=$join_sql;
+		echo json_encode($json);
+	}
+
+	/**
+	 * code values 정보 가져오기
+	 * @param string $pv_code 코드명
+	 * @param string $pv_no 코드 연동 번호
+	 * @return json_array
+	 */
+	function get_values($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+	
+
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" pv_value ";
+		$sql[]="FROM ";
+		$sql[]="`prq_values` ";
+		$sql[]="where ";
+		$sql[]="pv_no='".$array['pv_no']."' ";
+		$sql[]="and pv_code='".$array['pv_code']."';";
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+
+		foreach($query->result_array() as $list){
+			$list['pv_value']=stripcslashes($list['pv_value']);
+			array_push($json['posts'],$list);
+		}
+
+		echo json_encode($json);
+	}
+
+
+	/**
+	 * code values 할당하기
+	 * @param string $pv_code 코드명
+	 * @param string $pv_no 코드 연동 번호
+	 * @param string $pv_value 코드 값
+	 * @return array
+	 */
+	function set_values($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`prq_values`  ";
+		$sql[]="where ";
+		$sql[]="pv_no='".$array['pv_no']."' ";
+		$sql[]="and pv_code='".$array['pv_code']."';";
+
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+		
+
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$sql=array();
+			$sql[]="update prq_values set ";
+			$sql[]="pv_value='".addslashes($array['pv_value'])."', ";
+			$sql[]="pv_datetime=now() ";
+			$sql[]=" where ";
+			$sql[]="pv_code='".$array['pv_code']."' and ";
+			$sql[]="pv_no='".$array['pv_no']."';";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);	
+			$json['success']=$query;
+		}else{
+			/* 조회 결과가 없으면 */
+			$sql=array();
+			$sql[]="insert into prq_values set ";
+			$sql[]="pv_code='".$array['pv_code']."',";
+			$sql[]="pv_no='".$array['pv_no']."',";
+			$sql[]="pv_value='".addslashes($array['pv_value'])."', ";
+			$sql[]="pv_datetime=now();";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);	
+			$json['success']=$query;
+		}
+		$json['sql']=$join_sql;
+		echo json_encode($json);
+	}
+
+
+	function get_status_isblog($code)
+	{
+		switch ($code) {
+		case "Y":
+			$result='<button type="button" class="btn btn-success btn-xs">사용</button>';
+			break;
+		case "N":
+			$result='<button type="button" class="btn btn-danger btn-xs">미사용</button>';
+			break;
+		}
+		return $result;
+	}	
+
+	
+	/** chg_status_blog */
+	function chg_status_blog($array)
+	{
+
+		$this->set_values($array);
+
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+		
+		$arr_no= explode (",", $array['join_chk_seq']);
+		
+		$ip_addr= $this->input->ip_address();
+		$referrer=$this->agent->referrer();
+		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		$prq_table=$array['prq_table'];
+		
+		/* 블로그 상태 변경시 */
+		$st=$array['mb_status'];
+
+
+
+		foreach($arr_no as $an)
+		{
+			$items=array();
+
+			$items['mb_status']=$this->get_status_isblog($array['mb_status']);
+
+			$items['mb_no']=$an;
+			array_push($json['posts'],$items);
+
+			$sql=array();
+			$sql[]="INSERT INTO `prq_log` SET ";
+			$sql[]=" mb_id='".$mb_id."', ";
+			$sql[]=" lo_ip='".$ip_addr."', ";
+			$sql[]=" mb_no='".$an."', ";
+			$sql[]=" prq_table='".$prq_table."', ";
+			$sql[]=" lo_how='ajax', ";
+			$sql[]=" lo_reason='".$lo_reason."', ";
+			$sql[]=" lo_status='".$array['pv_value']."', ";
+			$sql[]=" lo_datetime=now(); ";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+			$json['success']=$query;
+		}
+		
+		//echo json_encode($json);
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */

@@ -1,4 +1,8 @@
 <?php
+/**
+*2017-01-11 (수) 15:16:17 
+* 부로 중지 java 로 개발 완료 
+*/
 include_once "./db_info.php";
 
 
@@ -37,11 +41,11 @@ $messages = array(
 	"receiver_num" =>$receiver_num,
 	"img_url" =>$img_url
 );
-
+$json=
 /*prq_gcm_log 발생*/
 //echo  $gcm->send_notification($registration_ids, $message);
 $push= json_decode($gcm->send_notification($registration_ids, $messages));
-$p_temp=$push->results[0]->message_id;
+$p_temp=isset($push->results[0]->message_id)?$push->results[0]->message_id:"";
 $result= (strpos($p_temp,"0:")!==false)?true:false;
 $result_msg= ($result)?"전달 성공":"전송 실패";
 $gc_ipaddr='123.142.52.91';
@@ -57,7 +61,13 @@ $sql[]="gc_result='".$result_msg."',";
 $sql[]="gc_ipaddr='".$gc_ipaddr."',";
 $sql[]="gc_stno='".$st_no."',";
 $sql[]="gc_datetime=now();";
-mysql_query(join("",$sql));
+$result=mysql_query(join("",$sql));
+$json=array();
+$json['success']=$result;
+//$json['sql']=join("",$sql);
+
+echo json_encode($json);
+
 }
 /* if($mode=="crontab"){...} */
 
@@ -66,7 +76,8 @@ if($mode=="manual")
 {
 
 if($mno_type=="LG"){
-//	$message=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $message);
+	//$message=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $message);
+	//$message=str_replace(array("\r\n", "\r", "\n"), '<br>', $message);
 	//LG도 아무것도 하지 않는다
 }else if($mno_type=="KT"){
 	$message=str_replace(array("\r\n", "\r", "\n"), '<br>', $message);

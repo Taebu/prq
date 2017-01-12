@@ -14,7 +14,16 @@ $tt_no = array_column($sync_store, 'tt_no');
 $tt_no=array_unique($tt_no);
 
 ?>
-	<script>
+<style type="text/css">
+table tr.green:nth-child(2n+1){
+	background-color: #aed994;
+}
+table tr.green:nth-child(2n){
+	background-color: #4ad994;
+}
+</style>
+
+<script type="text/javascript">
 var tt_nos=[<?php echo join(",",$tt_no);?>];
 //console.log(tt_nos);
 
@@ -319,7 +328,8 @@ $pt_name = array_column($pt_names, 'pt_name');
 //print_r($pt_name);
 
 
-
+$st_origin = json_decode(json_encode($st_origin), True);
+$pv_no = array_column($st_origin, 'pv_no');
 foreach ($list as $lt)
 {
 /*총판 코드 */
@@ -331,10 +341,21 @@ $sub_ds_name=$index>-1?$ds_name[$index]:"미등록코드";
 $sub_ptcode=substr($lt->prq_fcode,0,12);
 $index=array_search($sub_ptcode, $pt_code);
 $sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
+$index=array_search($lt->st_no, $pv_no);
+
 ?>
+<?php if($index>-1&&strlen($st_origin[$index]['pv_value'])>3){?>
 	<tr>
+	<?php }else{?>
+	<tr class="green">
+	<?php }?>
+<!-- .active	Applies the hover color to a particular row or cell
+.success	Indicates a successful or positive action
+.warning	Indicates a warning that might need attention
+.danger	Indicates a dangerous or potentially negative action -->
 		<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->st_no;?>" onclick="chk_btn_status()"></td>
-		<td scope="row"><?php echo $lt->st_no;?></td>
+ 		<td scope="row"><?php echo $lt->st_no;?></td>
+<!--		<td scope="row"><?php echo $index!=""?'e':'u';?></td> -->
 		<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
 		<td><?php echo $lt->st_name;?> 
 		<span id="ttno_<?php echo $lt->st_no;?>"></span></td>

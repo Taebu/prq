@@ -154,13 +154,15 @@
 									<img src="/prq/uploads/MA/<?php echo $views->st_main_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">대표 이미지 입니다.</span></div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-</div>
+							</div>
 
 <div class="row">
-<div class="form-group"><label class="col-sm-2 control-label">CID Type</label>
-<div class="col-sm-10"><?php echo $views->st_cidtype;?> <span class="help-block m-b-none">CID Type</span>
+<div class="col-md-6">
+<div class="form-group"><label class="col-sm-2 control-label">CID</label>
+<div class="col-sm-10"><?php echo $views->st_cidtype;?><!--  <span class="help-block m-b-none">CID Type</span> -->
 </div><!-- .col-sm-8 -->
 </div><!-- .row -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
 <div class="row">
