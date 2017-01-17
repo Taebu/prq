@@ -54,17 +54,18 @@ class Ajax extends CI_Controller {
 			$st_no = $this->input->post("st_no", TRUE);
 			$pv_code = $this->input->post("pv_code", TRUE);
 			$pv_value = $this->input->post("pv_value", TRUE);
-/*
-st_no=60
-chk_seq%5B%5D=60
-prq_fcode=DS0001PT0001FR0001
-mb_status=Y
-mb_reason=test
-pv_value=off
-pv_code=5002
-*/
-//			if ( $comment_contents != '')
-//			{
+
+			/*
+			st_no=60
+			chk_seq%5B%5D=60
+			prq_fcode=DS0001PT0001FR0001
+			mb_status=Y
+			mb_reason=test
+			pv_value=off
+			pv_code=5002
+			*/
+			//if ( $comment_contents != '')
+			//{
 				$write_data = array(
 					'prq_table'=>$table,
 					'mb_status'=>$mb_status,
@@ -82,7 +83,8 @@ pv_code=5002
 					'pv_value'=>$pv_value
 				);
 
-//				$result = $this->board_m->insert_comment($write_data);
+				//				$result = $this->board_m->insert_comment($write_data);
+
 				if($table=="prq_member"){
 					$result = $this->ajax_m->chg_status($write_data);
 				}else if($table=="prq_store"){
@@ -94,6 +96,8 @@ pv_code=5002
 				}else if($table!="prq_member"){
 					$result = $this->ajax_m->chg_status_code($write_data);
 				}
+
+				//echo $result;
 //			else
 //			{
 //				//글 내용이 없을 경우

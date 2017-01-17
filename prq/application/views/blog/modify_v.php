@@ -217,7 +217,15 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-
+<!-- <textarea name="hidden_contents" id="hidden_contents" cols="30" rows="10">
+<?php foreach($files as $fi){
+$img_url="http://prq.co.kr/prq/uploads/".$fi->bf_content."/".$fi->bf_file;
+echo "<img src='".$img_url."'>";
+};?>
+<?php echo $views->bl_content1;?>
+<?php echo $views->bl_content2;?>
+<?php echo $views->bl_content3;?>
+</textarea> -->
 <div class="controls">
 
 <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -234,6 +242,7 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 <button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('po_blog_allow');">배달 포인트 승인</button>
 <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('po_blog_deny');">배달 포인트 거부</button>
 
+<!-- <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_blog();">블로그 등록</button> -->
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <!-- <button class="btn btn-white" type="reset">취소</button> -->
 <!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->
@@ -544,7 +553,8 @@ function set_status(k)
 		cancelOnConfirm: false,
 		confirmButtonText: "네, 변경할래요!",
 		cancelButtonText: "아니요, 취소할래요!",
-		animation: "slide-from-top",   showLoaderOnConfirm: true,
+		animation: "slide-from-top",   
+		showLoaderOnConfirm: true,
 		allowEscapeKey:true,
 		inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
 		if (inputValue === false) return false;
@@ -558,11 +568,11 @@ function set_status(k)
 
 		var param=$("#write_action").serialize();
 		param=param+"&mb_status="+k;
-		console.log(param);
-		/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
 		param=param+"&mb_reason="+inputValue;
+		/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+		console.log(param);
 		$.ajax({
-		url:"/prq/ajax/chg_status/prq_isblog",
+		url:"/prq/ajax/chg_status/prq_blog",
 			data:param,
 			dataType:"json",
 			type:"POST",
@@ -620,6 +630,19 @@ function get_status(code)
 	object['po_blog_allow']='포인트 승인';
 	object['po_blog_deny']='포인트 거절';
 	return object[code];
+}
+
+function set_blog()
+{
+	$.ajax({
+	url:"/prq/blog/write.php",
+	type: "POST",
+	data:"title=모두톡톡 이용자 후기 입니다.&contents"+$("#hidden_contents").val(),
+	dataType:"json",
+	success: function(data) {
+		console.log(data);
+		}
+	});
 }
 </script>
 <style type="text/css">

@@ -1,0 +1,1 @@
+prq.co.kr/prq/application/views/blog/config.php

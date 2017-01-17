@@ -30,7 +30,8 @@ class GCM {
 
         $fields = array(
             'registration_ids' => $registatoin_ids,
-            'data' => $message
+            'data' => $message,
+			'priority'=>'high'
         );
 
         $headers = array(
@@ -51,7 +52,7 @@ class GCM {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-
+ 
         // Execute post
         $result = curl_exec($ch);
         if ($result === FALSE) {

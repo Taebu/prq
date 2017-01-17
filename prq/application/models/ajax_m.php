@@ -80,9 +80,10 @@ class Ajax_m extends CI_Model
 	/**/
 	function chg_status($array)
 	{
+		$json=array();
 
 		$sql=array();
-
+		$json['success']=false;
 		if($array['prq_table']=="prq_member"){
 			$sql[]="update `".$array['prq_table']."` set ";
 			$sql[]=" mb_status='".$array['mb_status']."' ";
@@ -106,9 +107,10 @@ class Ajax_m extends CI_Model
 		{
 			$join_sql=join("",$sql);
 			$query = $this->prq->query($join_sql);
+			$json['success']=$query;
 		}
-		$json=array();
-		$json['success']=$query;
+		
+		
 		$json['posts']=array();
 		
 		$arr_no= explode (",", $array['join_chk_seq']);
@@ -129,7 +131,8 @@ class Ajax_m extends CI_Model
 			$items=array();
 			/* 블로그인 경우 코드 예외 처리 */
 			if($array['prq_table']=="prq_blog"){
-				$items['mb_status']=$this->get_status_blog($array['mb_status']);
+				$json['success']=true;
+				$items['mb_status']=$this->get_status_isblog($array['mb_status']);
 			    
 				/* 일반승인*/
 				if($st=="co_blog_allow"){
@@ -137,7 +140,7 @@ class Ajax_m extends CI_Model
 					$array['content']="일반 승인 되었습니다.\n";
 					$array['content'].=$array['mb_reason'];
 					$array_data=array(
-								'st_no'=>$array['mb_id'],
+								'st_no'=>$array['pv_no'],
 								'mb_hp'=>$array['bl_hp'],
 								'subject'=>'소비자에게 일반승인',
 								'content'=>$array['content'],
@@ -151,7 +154,7 @@ class Ajax_m extends CI_Model
 					$array['content']="일반 거절 되었습니다.\n";
 					$array['content'].=$array['mb_reason'];
 					$array_data=array(
-								'st_no'=>$array['mb_id'],
+								'st_no'=>$array['pv_no'],
 								'mb_hp'=>$array['bl_hp'],
 								'subject'=>'소비자에게 일반거절',
 								'content'=>$array['content'],
@@ -165,7 +168,7 @@ class Ajax_m extends CI_Model
 					$array['content'].=$array['bl_url'];
 
 					$array_data=array(
-								'st_no'=>$array['mb_id'],
+								'st_no'=>$array['pv_no'],
 								'mb_hp'=>$array['bl_hp'],
 								'subject'=>'소비자에게 포인트 승인',
 								'content'=>$array['content'],
@@ -178,7 +181,7 @@ class Ajax_m extends CI_Model
 					$array['content'].=$array['bl_hp']."\n";
 					$array['content'].=$array['bl_url'];
 					$array_data=array(
-								'st_no'=>$array['mb_id'],
+								'st_no'=>$array['pv_no'],
 								'mb_hp'=>$array['st_hp_1'],
 								'subject'=>'사장에게 포인트 승인',
 								'content'=>$array['content'],
@@ -191,14 +194,14 @@ class Ajax_m extends CI_Model
 					$array['content'].=$array['bl_hp']."\n";
 					$array['content'].=$array['bl_url'];
 					$array_data=array(
-								'st_no'=>$array['mb_id'],
+								'st_no'=>$array['pv_no'],
 								'mb_hp'=>$array['mb_hp'],
 								'subject'=>'영업자에게 포인트 승인',
 								'content'=>$array['content'],
 								'prq_table'=>$array['prq_table'],
 								'bl_no'=>$an);
 					$this->set_sms($array_data);				
-					
+
 					// Simple call to remote URL
 					$this->curl->simple_get('http://cashq.co.kr/m/ajax_data/set_reviewpt.php?mb_hp='.$array['bl_hp'].'&bl_no='.$an.'&bl_status=ceo_allow');
 				/* 포인트거절 */
@@ -207,7 +210,7 @@ class Ajax_m extends CI_Model
 					$array['content']="포인트 거절 되었습니다.\n";
 					$array['content'].=$array['mb_reason'];
 					$array_data=array(
-								'st_no'=>$array['mb_id'],
+								'st_no'=>$array['pv_no'],
 								'mb_hp'=>$array['mb_hp'],
 								'subject'=>'소비자에게 포인트 승인',
 								'content'=>$array['content'],
@@ -230,7 +233,7 @@ class Ajax_m extends CI_Model
 
 			$sql=array();
 			$sql[]="INSERT INTO `prq_log` SET ";
-			$sql[]=" mb_id='".$mb_id."', ";
+			$sql[]=" mb_id='".$array['pv_no']."', ";
 			$sql[]=" lo_ip='".$ip_addr."', ";
 			$sql[]=" mb_no='".$an."', ";
 			$sql[]=" prq_table='".$prq_table."', ";
@@ -337,7 +340,7 @@ class Ajax_m extends CI_Model
 		return $result;
 	}
 
-	function get_status_blog($code)
+	function get_status_isblog($code)
 	{
 		switch ($code) {
 		case "view":
@@ -1915,7 +1918,7 @@ ERROR:
 		$sql_array[]="`sm_datetime`=now(),";
 		$sql_array[]="`sm_status`='I',";
 		$sql_array[]="`sm_ipaddr`='".$this->input->ip_address()."',";
-		$sql_array[]="`sm_stno`='".$arrays['st_no']."';";
+		$sql_array[]="`sm_stno`='".$array['st_no']."';";
 
 		$sql=join("",$sql_array);
 		$results = $this->prq->query($sql);
@@ -2005,7 +2008,7 @@ ERROR:
 		{
 			$sql=array();
 			$sql[]="update prq_values set ";
-			$sql[]="pv_value='".addslashes($array['pv_value'])."', ";
+			$sql[]="pv_value='".$array['pv_value']."', ";
 			$sql[]="pv_datetime=now() ";
 			$sql[]=" where ";
 			$sql[]="pv_code='".$array['pv_code']."' and ";
@@ -2018,7 +2021,7 @@ ERROR:
 			$sql[]="insert into prq_values set ";
 			$sql[]="pv_code='".$array['pv_code']."',";
 			$sql[]="pv_no='".$array['pv_no']."',";
-			$sql[]="pv_value='".addslashes($array['pv_value'])."',";
+			$sql[]="pv_value='".$array['pv_value']."',";
 			$sql[]="pv_datetime=now();";
 			$join_sql=join("",$sql);
 			$query = $this->prq->query($join_sql);	
@@ -2096,7 +2099,7 @@ ERROR:
 		{
 			$sql=array();
 			$sql[]="update prq_values set ";
-			$sql[]="pv_value='".addslashes($array['pv_value'])."', ";
+			$sql[]="pv_value='".$array['pv_value']."', ";
 			$sql[]="pv_datetime=now() ";
 			$sql[]=" where ";
 			$sql[]="pv_code='".$array['pv_code']."' and ";
@@ -2110,7 +2113,7 @@ ERROR:
 			$sql[]="insert into prq_values set ";
 			$sql[]="pv_code='".$array['pv_code']."',";
 			$sql[]="pv_no='".$array['pv_no']."',";
-			$sql[]="pv_value='".addslashes($array['pv_value'])."', ";
+			$sql[]="pv_value='".$array['pv_value']."', ";
 			$sql[]="pv_datetime=now();";
 			$join_sql=join("",$sql);
 			$query = $this->prq->query($join_sql);	
@@ -2121,8 +2124,10 @@ ERROR:
 	}
 
 
-	function get_status_isblog($code)
+	function get_status_blogyn($code)
 	{
+		$result='<button type="button" class="btn btn-danger btn-xs">미사용</button>';
+
 		switch ($code) {
 		case "Y":
 			$result='<button type="button" class="btn btn-success btn-xs">사용</button>';
@@ -2133,13 +2138,12 @@ ERROR:
 		}
 		return $result;
 	}	
-
 	
 	/** chg_status_blog */
 	function chg_status_blog($array)
 	{
 
-		$this->set_values($array);
+		//$this->set_values($array);
 
 		$json=array();
 		$json['success']=false;
@@ -2162,7 +2166,8 @@ ERROR:
 		{
 			$items=array();
 
-			$items['mb_status']=$this->get_status_isblog($array['mb_status']);
+			//$items['mb_status']=$this->get_status_isblog($array['mb_status']);
+			$items['mb_status']=$this->get_status_blogyn($array['mb_status']);
 
 			$items['mb_no']=$an;
 			array_push($json['posts'],$items);
@@ -2182,7 +2187,7 @@ ERROR:
 			$json['success']=$query;
 		}
 		
-		//echo json_encode($json);
+		echo json_encode($json);
 	}
 }
 /* End of file ajax_m.php */

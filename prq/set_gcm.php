@@ -41,7 +41,7 @@ $messages = array(
 	"receiver_num" =>$receiver_num,
 	"img_url" =>$img_url
 );
-$json=
+$json=array();
 /*prq_gcm_log 발생*/
 //echo  $gcm->send_notification($registration_ids, $message);
 $push= json_decode($gcm->send_notification($registration_ids, $messages));
