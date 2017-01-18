@@ -2120,7 +2120,7 @@ ERROR:
 			$json['success']=$query;
 		}
 		$json['sql']=$join_sql;
-		echo json_encode($json);
+		return json_encode($json);
 	}
 
 
@@ -2143,7 +2143,7 @@ ERROR:
 	function chg_status_blog($array)
 	{
 
-		//$this->set_values($array);
+		$result=$this->set_values($array);
 
 		$json=array();
 		$json['success']=false;

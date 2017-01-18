@@ -588,11 +588,13 @@ var is_sms_browser=navigator.userAgent.indexOf("CrossApp")>-1
 if(is_sms_browser)
 {
 	console.log(is_sms_browser);
-	var is_go=confirm('지원하지 않는 웹브라우저 입니다. 인터넷 브라우저에서 열어 주세요.');
+
+	//var is_go=confirm('지원하지 않는 웹브라우저 입니다. 인터넷 브라우저에서 열어 주세요.');
+	//var url="http://samsunglinternetforandroid.prq.co.kr/prq/blog/write/60";
 	//location.href=document.URL;
-	if(is_go){
-		window.open(document.URL,"DescriptiveWindowName","resizable,scrollbars,status");
-	}
+	//if(is_go){
+	//	window.open(document.URL,"DescriptiveWindowName","resizable,scrollbars,status");
+	//}
 	//self.close();
 }else{
 	console.log(is_sms_browser);
