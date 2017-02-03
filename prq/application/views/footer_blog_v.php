@@ -301,6 +301,8 @@
 						thisDropzone.options.thumbnail.call(thisDropzone,mockfile,"/prq/uploads/"+$("#bl_imgprefix").val()+"/"+value.name);
 						console.log("success_index : "+success_index);
 					});
+
+					
 					var object=[];
 					for (var i in img_filenames) {
 						object.push('<input type="text" name="img_src[]" id="img_'+i+'" class="form-control" value="'+img_filenames[i]+'">');
@@ -403,38 +405,20 @@
 
 
 
+	var is_blog=false;
 
-	if(application=="blog"&&method=="write"){
-		$("nav").hide();
-		
-		$(".footer").hide();
+	is_blog=application=="blog"&&method=="write";
+	is_blog=is_blog||application=="blog"&&method=="writeone";
+	is_blog=is_blog||application=="blog"&&method=="modify";
+	is_blog=is_blog||application=="blog"&&method=="view";
 
-		$(".theme-config").hide();
+	if(is_blog){
+		$("nav,.footer,.theme-config").hide();
 	}
-
-
-
-	if(application=="blog"&&method=="modify"){
-		$("nav").hide();
-		
-		$(".footer").hide();
-
-		$(".theme-config").hide();
-	}
-
-
-
-	if(application=="blog"&&method=="view"){
-		$("nav").hide();
-		
-		$(".footer").hide();
-
-		$(".theme-config").hide();
-	}
-
-
 
 		});
+
+
 </script>
 
 </body>

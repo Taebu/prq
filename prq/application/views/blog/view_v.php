@@ -7,6 +7,9 @@
 		<ul style="margin:0;padding:10px 0 10px 0;list-style:none;">
 			<li style="font-weight:bold;font-size:27px;"><?php echo $store->st_name;?></li>
 			<li>BLOG Review</li>
+			<li><?php 
+			//print_r($store);
+			echo $store->st_vtel;?></li>
 		</ul>
 		<!-- <ol class="breadcrumb">
 			<li>

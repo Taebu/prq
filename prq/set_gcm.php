@@ -1,7 +1,12 @@
 <?php
 /**
-*2017-01-11 (수) 15:16:17 
+* 2017-01-11 (수) 15:16:17 
 * 부로 중지 java 로 개발 완료 
+* 2017-02-02 (목) 15:01:27 
+* 중지 된 줄 착각, java에서 호출하도록 되어 있다.
+* - PRQ_CDR.src.kr.co.prq.prq_cdr.Prq_cmd_queue.java
+* - 에서 URLConnection POST 방식으로 호출하게 되어 있다.
+* happycall
 */
 include_once "./db_info.php";
 
@@ -31,15 +36,21 @@ $registration_ids[] = $list['token_id'];
 include_once "./GCM.php";
 $gcm = new GCM();
 
-/* 자동 전송 crontab linux scheduler */
+/* 자동 전송 crontab java scheduler -
+PRQ_CDR.src.kr.co.prq.prq_cdr.PRQ_CDR.class */
 if($mode=="crontab")
 {
+$is_happycall=false;
+if($happycall==true){
+$is_happycall=$happycall;
+}
 $messages = array( 
 	"title" =>$title,
 	"message" =>$message,
 	"is_mms" =>$is_mms,
 	"receiver_num" =>$receiver_num,
-	"img_url" =>$img_url
+	"img_url" =>$img_url,
+	"happycall" =>$is_happycall
 );
 $json=array();
 /*prq_gcm_log 발생*/

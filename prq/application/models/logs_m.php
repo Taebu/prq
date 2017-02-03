@@ -55,6 +55,8 @@ class Logs_m extends CI_Model
 			$table='prq_sms_log';
 		}else if($table=="vali"){
 			$table='prq_vali_log';
+		}else if($table=="happy"){
+			$table='prq_happycall_log';
 		}
 
 		//검색어가 있을 경우의 처리
@@ -130,6 +132,8 @@ class Logs_m extends CI_Model
 			$sql[]=" order by sm_no desc ";
 		}else if($table=="prq_vali_log"){
 			$sql[]=" order by va_datetime desc ";
+		}else if($table=="prq_happycall_log"){
+			$sql[]=" order by hc_unixtime desc ";
 		}
 
 		
@@ -185,6 +189,8 @@ class Logs_m extends CI_Model
 		$table='prq_sms_log';
 		}else if($table=="vali"){
 		$table='prq_vali_log';
+		}else if($table=="happy"){
+		$table='prq_happycall_log';
 		}
 
 		if($table=='prq_gcm_log')
@@ -316,6 +322,8 @@ class Logs_m extends CI_Model
 			$sql[]=" order by sm_no desc ";
 		}else if($table=="prq_vali_log"){
 			$sql[]=" order by va_datetime desc ";
+		}else if($table=="prq_happycall_log"){
+			$sql[]=" order by hc_no desc ";
 		}
 
 		

@@ -44,23 +44,24 @@
 	<input type="hidden" name="mb_gcode" id="mb_gcode" value="<?php echo $mb_gcode;?>">
 	<input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 	<input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
+
 	<!---맨위input text-->
-	
-	<input type="hidden" type="text" name="bl_file" id="bl_file" value="0">
+	<input type="hidden" name="bl_file" id="bl_file" value="0">
 	
 	<!-----상점명----->
 	<div style="margin-top:15px;;border:3px solid #676a6c;width:35px;"></div>
 	<!--<input type="text" name="bl_naverid" id="bl_naverid" value="testid" style="width:100%"> -->
 	<div style="padding:3px 0 8px 0;border:0px solid red;font-size:19px;font-weight:bold;" id="display_stname"></div>		
-	<!----상점명---->
 
+	<!----상점명---->
 	<input type="hidden" name="st_no" id="st_no" value="<?php echo $this->uri->segment(3);?>">
 	<input type="hidden" name="st_name" id="st_name">
 	<!---맨위input text-->
 	<input type="hidden" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo date("Ym");?>">
-
 	<input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
-
+	
+	<input type="hidden" name="dropzone_id" id="dropzone_id">
+	<input type="hidden" name="del_id" id="del_id">
 	<div class="row">
 		<div class="col-lg-12">
 			<div id="image_area">#image_area</div>
@@ -138,10 +139,10 @@
 									
 								</div><!-- .col-sm-10 -->
 							</div><!-- .form-group -->
-							<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+							<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
 							<!--------2번째단락 시작------->
-							<div class="form-group">
+							<div class="form-group" id="p_2_1">
 								<div style="text-align:center;color:#676a6c;">
 									<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 시식 사진을 3장이상 등록해주세요!
 								</div>
@@ -154,9 +155,9 @@
 								</div><!-- .col-sm-10 -->
 							</div><!-- .form-group -->
 							
-							<div style="clear:both;height:15px;"></div>
+							<div style="clear:both;height:15px;" id="p_2_2"></div>
 							
-							<div class="form-group">
+							<div class="form-group" id="p_2_3">
 								<div style="text-align:center;color:#676a6c;">
 									<img src="/prq/img/new/icon3.png" style="width:20px;margin-top:-5px;"> 후기를 입력해주세요!
 								</div>
@@ -180,13 +181,13 @@
 											</ul>
 										</div>
 									</div><!-- .col-sm-10 -->
-								</div><!-- .form-group -->
-								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+								</div><!-- #p_2_3 .form-group -->
+								<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 
 								<!--------2번째단락 끝------->
 								
 								<!--------3번째단락 시작------->
-								<div class="form-group">
+								<div class="form-group" id="p_3_1">
 									<div style="text-align:center;color:#676a6c;">
 										<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 먹음직스러운 사진을 3장이상 등록해주세요!
 									</div>
@@ -197,11 +198,11 @@
 										<!-- #my-awesome-dropzone3 -->
 
 									</div><!-- .col-sm-10 -->
-								</div><!-- .form-group -->
+								</div><!-- #p_3_1 .form-group -->
 
-								<div style="clear:both;height:15px;"></div>
+								<div style="clear:both;height:15px;" id="p_3_2"></div>
 
-								<div class="form-group">
+								<div class="form-group" id="p_3_3">
 									<div style="text-align:center;color:#676a6c;">
 										<img src="/prq/img/new/icon3.png" style="width:20px;margin-top:-5px;"> 후기를 입력해주세요!
 									</div>
@@ -226,7 +227,7 @@
 										</div>
 									</div><!-- .col-sm-10 -->
 								</div><!-- .form-group -->
-								<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+								<!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
 								<!--------3번째단락 시작------->
 							</div><!-- .col-md-12 -->
 							
@@ -394,9 +395,9 @@ if(getstrbyte($("#content1").val())<50){
 }
 
 if(getstrbyte($("#content2").val())<50){
-	toastr.error('두 번째 글이 너무 적습니다.','50자이상 작성해주세요.');
+	//toastr.error('두 번째 글이 너무 적습니다.','50자이상 작성해주세요.');
 	//$("#content2").focus();
-	return;
+	//return;
 }
 
 if($("#bl_hp").val().length<10){
@@ -584,6 +585,7 @@ function get_store()
 		}
 	});
 }
+
 var is_sms_browser=navigator.userAgent.indexOf("CrossApp")>-1
 if(is_sms_browser)
 {
@@ -599,7 +601,8 @@ if(is_sms_browser)
 }else{
 	console.log(is_sms_browser);
 }
+
 </script>
 <style type="text/css">
-#image_area{display:none}
+ #image_area{display:none} 
 </style>
