@@ -91,6 +91,17 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">Happycall</label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="happycall" id="happycall_1" value='false' checked><label for="happycall_1">happycall이 아닙니다.</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="happycall" id="happycall_2"  value='true'><label for="happycall_2">happycall로 전송 합니다.</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">받는 사람</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="receiver_num" id="receiver_num">

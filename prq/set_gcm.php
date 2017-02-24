@@ -96,13 +96,17 @@ if($mno_type=="LG"){
 	// SK 는 아무것도 하지 않는다
 }
 /* if($mno_type=="KT"){...} */
-
+$is_happycall=false;
+if($happycall==true){
+$is_happycall=$happycall;
+}
 $messages = array( 
 	"title" =>$title,
 	"message" =>$message,
 	"is_mms" =>$is_mms,
 	"receiver_num" =>$receiver_num,
-	"img_url" =>$img_url
+	"img_url" =>$img_url,
+	"happycall" =>$is_happycall
 );
 
 /*prq_gcm_log 발생*/
@@ -138,5 +142,5 @@ $sql[]="gc_stno='".$st_no."',";
 $sql[]="gc_datetime=now();";
 mysql_query(join("",$sql));
 }
-/* if($mode=="crontab"){...} */
+/* if($mode=="manual"){...} */
 ?>

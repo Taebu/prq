@@ -357,21 +357,18 @@ echo $prq_fcode;
 <textarea  class="form-control" name="st_middle_msg"  id="st_middle_msg" rows="4" cols="50" onkeyup='chk_byte();textAreaAdjust(this)' placeholder="여기에 문자 메세지를 기입해 주세요.">최고의 맛과 서비스로
 보답하겠습니다.
 
-고객님을 위한
-매장 홈페이지를 확인하세요.
+매장 홈페이지
 #{homepage}
 
-매장과의 통화는
-아래 번호를 이용해주세요.
+매장과의 통화
 #{st_tel}
 
-현금주는 배달어플 출시!!
+현금주는 배달어플(대리운전, 퀵서비스) 출시!!
 다운로드 시 무조건 2,000원 적립
 http://bdtalk.co.kr/m/p/
 
 무료수신거부
-080-130-8119
-</textarea><!-- #form_data -->
+080-130-8119</textarea><!-- #form_data -->
 <span class="help-block m-b-none"><span id='bytesize'>0</span> byte <br>
 #{homepage}<br>
  - 기본제공하는 URL을 표시합니다. http://prq.co.kr/prq/page/상점번호<br>

@@ -97,9 +97,9 @@
 
 						<div class="form-group">
 							<div style="text-align:center;color:#676a6c;padding-top:8px;">
-								<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 배달음식 사진을 3장이상 등록해주세요!
+								<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 배달음식 사진을 2장이상 등록해주세요!
 							</div>
-							<div class="col-sm-10" style="width:100%;margin-top:10px;">
+							<div class="col-sm-10" style="width:100%;margin-top:10px;text-align:center;">
 								<!-- #my-awesome-dropzone1 -->
 
 								<div id="my-awesome-dropzone1" class="dropzone">
@@ -381,6 +381,12 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 	toastr.clear();
+
+if($("[id^=img_]").length<2)
+{
+	toastr.error('두장이상 등록 해 주세요. 계속 리뷰 등록 실패시 사진을 다시 업로드해주세요.','리뷰등록 실패');
+	return;
+}
 
 if($.trim($("#st_name").val().length)<2){
 	toastr.error('상점이름이 없습니다. ','올바른 경로로 접근후 다시 작성해주세요.');

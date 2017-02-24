@@ -28,7 +28,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/logs/lists/mms/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/logs/lists/happy/q/'+$("#q").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -53,9 +53,9 @@
 		function search_form(p,type){
 			$("#page").val(p);
 			if(type=="search"){
-			var act = '/prq/logs/lists/mms/q/'+$("#gc_receiver").val()+'/page/'+p;
+			var act = '/prq/logs/lists/happy/q/'+$("#gc_receiver").val()+'/page/'+p;
 			}else{
-			var act = '/prq/logs/lists/mms/page/'+p;
+			var act = '/prq/logs/lists/happy/page/'+p;
 			}
 			$("#bd_search").attr('action', act).submit();
 		}
@@ -287,8 +287,8 @@
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="mm_receiver">수신자(mm_receiver)</label>
-                <input class="form-control" id="mm_receiver" name="mm_receiver" size="30" type="text" value="<?php echo $search['mm_receiver'];?>"/>
+                <label for="mm_receiver">수신자(hc_hp)</label>
+                <input class="form-control" id="hc_hp" name="hc_hp" size="30" type="text" value="<?php echo $search['hc_hp'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
@@ -380,13 +380,18 @@ if($is_list)
 foreach ($list as $lt)
 {
 	$datetime=date("Y-m-d H:i:s",  $lt->hc_unixtime);
+	if($lt->hc_status==0){
+	$result="예약중";
+	}else{
+	$result="전송";
+	}
 ?>
 				<tr>
 					<td scope="row"><?php echo $lt->hc_no;?></td>
 					<td scope="row"><?php echo $lt->hc_unixtime;?></td>
 					<td scope="row"><?php echo $datetime;?></td>
 					<td scope="row"><?php echo $lt->st_no;?></td>
-					<td scope="row"><?php echo $lt->hc_status;?></td>
+					<td scope="row"><?php echo $result;?></td>
 					<td scope="row"><?php echo $lt->hc_hp;?></td>
 				</tr>
 <?php
