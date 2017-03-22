@@ -254,8 +254,11 @@ class Store_m extends CI_Model
 		$sql_array[]="st_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
+		
+		$last_id=$this->db->insert_id();
+		
 		//결과 반환
-		return $result;
+		return $last_id;
  	}
 
 	/**
@@ -658,6 +661,30 @@ mysql> select * from prq_member_code;
 	    $result = $query->result();
 
 		return $result;
+    }
+
+    /**
+	 * 블로그 관련 상세 정보 가져오기
+	 *
+	 * @author Taebu <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_blogapi($arrays)
+    {
+    	//조회수 증가
+//    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
+//   		$this->db->query($sql0);
+
+    	$sql = "SELECT * FROM code_values WHERE pv_code in (5003,5004) ";
+		$sql.= " and ";
+   		$query = $this->db->query($sql);
+
+     	//게시물 내용 반환
+	    $result = $query->row();
+
+    	return $result;
     }
 }
 

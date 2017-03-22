@@ -225,6 +225,13 @@ echo $prq_fcode;
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">원산지 </label>
+<div class="col-sm-10"><input type="text" class="form-control" name="pv_value" id="pv_value" value="" placeholder="예) 닭고기 (국내산)">
+<span class="help-block m-b-none text-danger font-bold"> 최초  등록시 자동 저장 됩니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 </div><!-- .col-md-6 RightMenu-->
 
 
@@ -363,7 +370,7 @@ echo $prq_fcode;
 매장과의 통화
 #{st_tel}
 
-현금주는 배달어플(대리운전, 퀵서비스) 출시!!
+현금주는 배달어플(대리운전) 출시!!
 다운로드 시 무조건 2,000원 적립
 http://bdtalk.co.kr/m/p/
 

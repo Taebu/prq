@@ -207,25 +207,25 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-
-<div class="form-group"><label class="col-sm-2 control-label">블로그 URL</label>
+<div class="form-group"><label class="col-sm-2 control-label">연동된 아이디</label>
 <div class="col-sm-10">
-<input type="text" name="bl_url" id="bl_url" class="form-control" value="<?php echo $views->bl_url;?>" placeholder="네이버 블로그에 url을 기재해 주세요. 예) http://blog.naver.com/abc123/123456">
- - 블로그 URL : 네이버에 기제한 url을 기재해 주세요. <br>
-  예) http://blog.naver.com/abc123/123456<br>
+<input type="text" name="pb_naver_id" id="pb_naver_id" class="form-control" value="erm00">
+ - 연동된 아이디로 블로그에 등록 됩니다. 값이 없으면 수동으로 등록 하셔야 합니다.
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<!-- <textarea name="hidden_contents" id="hidden_contents" cols="30" rows="10">
+<textarea name="hidden_contents" id="hidden_contents" cols="30" rows="10">
 <?php foreach($files as $fi){
 $img_url="http://prq.co.kr/prq/uploads/".$fi->bf_content."/".$fi->bf_file;
 echo "<img src='".$img_url."'>";
 };?>
+
+
 <?php echo $views->bl_content1;?>
 <?php echo $views->bl_content2;?>
 <?php echo $views->bl_content3;?>
-</textarea> -->
+</textarea>
 <div class="controls">
 
 <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -242,7 +242,9 @@ echo "<img src='".$img_url."'>";
 <button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('po_blog_allow');">배달 포인트 승인</button>
 <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('po_blog_deny');">배달 포인트 거부</button>
 
-<!-- <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_blog();">블로그 등록</button> -->
+ <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_blog();">블로그 등록</button>
+  <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_category();">카테고리  갱신</button>
+
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <!-- <button class="btn btn-white" type="reset">취소</button> -->
 <!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->
@@ -536,14 +538,6 @@ function get_store()
 function set_status(k)
 {
 
-	if(k=="po_blog_allow"){
-		if($("#bl_url").val().trim().length<3){
-			swal("포인트 생성시 블로그 URL이 반드시 필요합니다.!", "포인트 블로그 승인시 해당 url을 \n소비자와 영업사원에게 알립니다. \n반드시 기입해 주세요.", "warning");
-			return;
-		}
-	}
-
-
 	swal({
 		title: "정말 변경 하시겠습니까?",
 		text: "해당 블로그 리뷰를 \""+get_status(k)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
@@ -574,7 +568,7 @@ function set_status(k)
 		//console.log(param);
 
 		$.ajax({
-		url:"/prq/ajax/chg_status/prq_blog",
+		url:"/prq/ajax/chg_status_naver/prq_blog",
 			data:param,
 			dataType:"json",
 			type:"POST",
@@ -617,6 +611,7 @@ function set_status(k)
 		});
 }
 
+
 function get_status(code)
 {
 	var object=[];
@@ -631,18 +626,79 @@ function get_status(code)
 	return object[code];
 }
 
+/* 현재 auth_token으로 등록된 아이디 블로그에 등록 합니다.*/
 function set_blog()
 {
+	var param="title="+"업체명";
+	param = param + "&contents="+$("#hidden_contents").val();
+	param = param + "&pb_naver_id="+$("#pb_naver_id").val();
+
 	$.ajax({
-	url:"/prq/blog/write.php",
-	type: "POST",
-	data:"title=모두톡톡 이용자 후기 입니다.&contents"+$("#hidden_contents").val(),
-	dataType:"json",
-	success: function(data) {
-		console.log(data);
+		url:"/prq/ajax/set_blog",
+		type:"POST",
+		data:param,
+		dataType:"json",
+		success: function(data) {
+				
+				/* access_token 만료 */
+				if(data.error_code=="024")
+				{
+					alert("인증에 실패 했습니다. 재시도 해주세요.");
+					
+					/* 갱신 access_token 불러오기 */
+					get_refresh_token();
+				}else if(data.message.result.logNo>0){
+					alert(data.message.result.postUrl+"\n에 등록되었습니다.");
+				}
+			}
+	});
+}
+
+/* 네이버 access_token 이 만료된 경우 refresh_token 으로 갱신하고 
+prq_blogapi access_token 을 갱신합니다.
+.*/
+function get_refresh_token()
+{
+	$.ajax({
+		url:"/prq/ajax/get_refresh_token",
+		type:"POST",
+		data:"naver_id="+$("#pb_naver_id").val(),
+		dataType:"json",
+		success: function(data) {
+				if(data.error_code=="024")
+				{
+					alert("인증에 실패 했습니다. 재시도 해주세요.");
+				}
+			}
+	});
+}
+
+/* 네이버 카테고리를 갱신한다. */
+function set_category()
+{
+	$.ajax({
+		url:"/prq/ajax/set_category",
+		type:"POST",
+		data:"pb_naver_id="+$("#pb_naver_id").val(),
+		dataType:"json",
+		success: function(data) {
+				/* access_token 만료 */
+				if(data.error_code=="024")
+				{
+					alert("인증에 실패 했습니다. 재시도 해주세요.");
+					
+					/* 갱신 access_token 불러오기 */
+					get_refresh_token();
+				}else{
+					if(data.message.result.length>0){
+						alert("카테고리를 불러왔습니다.");
+					}
+				}
+				
 		}
 	});
 }
+
 </script>
 <style type="text/css">
 #image_area{display:none}

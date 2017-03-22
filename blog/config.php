@@ -1,7 +1,12 @@
 <?php
-
+// extract($_GET);
+// if($id=="erm00"){
 $client_id = 'qfvtBcPswnXE4O0veCZU'; // 오픈 API 키 발급받은 client ID
 $client_secret = 'PK6SrAhm8o'; // 오픈 API 키 발급받은 client secrete
+// }else if($id=="mdagency153"){
+//$client_id = '09cotrxd33x9xDQPyCdj'; // 오픈 API 키 발급받은 client ID
+//$client_secret = 'X85fQNN0Mm'; // 오픈 API 키 발급받은 client secrete
+// }
 
 $authorize_url = 'https://nid.naver.com/oauth2.0/authorize';
 $access_token_url = 'https://nid.naver.com/oauth2.0/token';

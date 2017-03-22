@@ -216,7 +216,7 @@ class Ajax_m extends CI_Model
 								'content'=>$array['content'],
 								'prq_table'=>$array['prq_table'],
 								'bl_no'=>$an);
-					$this->set_sms($array_darta);				
+					$this->set_sms($array_data);				
 				}
 			/* 상  점인 경우 코드 예외 처리 */
 			}else if($array['prq_table']=="prq_store"){
@@ -229,7 +229,7 @@ class Ajax_m extends CI_Model
 			}
 
 			$items['mb_no']=$an;
-			array_push($json['posts'],$items);
+			//array_push($json['posts'],$items);
 
 			$sql=array();
 			$sql[]="INSERT INTO `prq_log` SET ";
@@ -245,7 +245,146 @@ class Ajax_m extends CI_Model
 			$query = $this->prq->query($join_sql);
 		}
 
-		echo json_encode($json);
+		//echo json_encode($json);
+		return json_encode($json);
+	}
+
+
+
+	/* 네이버 블로그에 자동등록 합니다.*/
+	function chg_status_naver($array)
+	{
+		$json=array();
+
+		$sql=array();
+		$json['success']=false;
+		if($array['prq_table']=="prq_member"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" mb_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="mb_no in (".$array['join_chk_seq'].");";
+		}else if($array['prq_table']=="prq_store"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" st_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="st_no in (".$array['join_chk_seq'].");";		
+		}else if($array['prq_table']=="prq_blog"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" bl_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="bl_no in (".$array['join_chk_seq'].");";		
+		}else if($array['prq_table']=="prq_isblog"){
+
+		}
+
+		if($array['prq_table']!="prq_isblog")
+		{
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+			$json['success']=$query;
+		}
+		
+		
+		$json['posts']=array();
+		
+		$arr_no= explode (",", $array['join_chk_seq']);
+		
+		$ip_addr= $this->input->ip_address();
+		$referrer=$this->agent->referrer();
+		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		$prq_table=$array['prq_table'];
+		
+		/* 블로그 상태 변경시 */
+		$st=$array['mb_status'];
+
+
+
+		foreach($arr_no as $an)
+		{
+			$items=array();
+			/* 블로그인 경우 코드 예외 처리 */
+			if($array['prq_table']=="prq_blog"){
+				$json['success']=true;
+				$items['mb_status']=$this->get_status_isblog($array['mb_status']);
+			    
+				/* 일반승인*/
+				if($st=="co_blog_allow"){
+					/* 소비자에게 전송 */
+					$array['content']="일반 승인 되었습니다.\n";
+					$array['content'].=$array['mb_reason'];
+					$array_data=array(
+								'st_no'=>$array['pv_no'],
+								'mb_hp'=>$array['bl_hp'],
+								'subject'=>'소비자에게 일반승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);
+				
+				/* 일반거절*/
+				}else if($st=="co_blog_deny"){
+					/* 소비자에게 전송 */
+					$array['content']="일반 거절 되었습니다.\n";
+					$array['content'].=$array['mb_reason'];
+					$array_data=array(
+								'st_no'=>$array['pv_no'],
+								'mb_hp'=>$array['bl_hp'],
+								'subject'=>'소비자에게 일반거절',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+				/* 포인트승인 */
+				}else if($st=="po_blog_allow"){
+					/* 소비자에게 전송 */
+					$array['content']="블로그 이용 후기 완료\n";
+					$array['content'].=$array['bl_url'];
+					$array['naver_id'];
+
+				/* 포인트거절 */
+				}else if($st=="po_blog_deny"){
+					/* 소비자에게 전송 */
+					$array['content']="포인트 거절 되었습니다.\n";
+					$array['content'].=$array['mb_reason'];
+					$array_data=array(
+								'st_no'=>$array['pv_no'],
+								'mb_hp'=>$array['mb_hp'],
+								'subject'=>'소비자에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+				}
+			/* 상  점인 경우 코드 예외 처리 */
+			}else if($array['prq_table']=="prq_store"){
+				$items['mb_status']=$this->get_status_store($array['mb_status']);
+			/* 블로그url 사용인 경우 코드 예외 처리 */
+			}else if($array['prq_table']=="prq_isblog"){
+				$items['mb_status']=$this->get_status_isblog($array['mb_status']);
+			}else{
+				$items['mb_status']=$this->get_status($array['mb_status']);
+			}
+
+			$items['mb_no']=$an;
+			//array_push($json['posts'],$items);
+
+			$sql=array();
+			$sql[]="INSERT INTO `prq_log` SET ";
+			$sql[]=" mb_id='".$array['pv_no']."', ";
+			$sql[]=" lo_ip='".$ip_addr."', ";
+			$sql[]=" mb_no='".$an."', ";
+			$sql[]=" prq_table='".$prq_table."', ";
+			$sql[]=" lo_how='ajax', ";
+			$sql[]=" lo_reason='".$lo_reason."', ";
+			$sql[]=" lo_status='".$array['mb_status']."', ";
+			$sql[]=" lo_datetime=now(); ";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+		}
+
+		//echo json_encode($json);
+		return json_encode($json);
 	}
 
 	/**/

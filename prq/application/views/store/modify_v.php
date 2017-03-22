@@ -670,8 +670,6 @@ function set_blogurl(v)
 				swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
 				$("#is_blogurl").prop('checked', is_blogurl);
 			}
-			console.log(data);
-			console.log(data=="9000");
 			if(data=="9000"){
 				//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
 				swal({   

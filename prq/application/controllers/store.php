@@ -273,6 +273,17 @@ class Store extends CI_Controller {
 					'st_status' => $this->input->post('st_status', TRUE)
 				);
 				$result = $this->store_m->insert_store($write_data);
+				
+				$this->load->model('ajax_m');
+				
+
+				
+				$write_data = array(
+					'pv_no' =>$result,
+					'pv_code' =>'5001',
+					'pv_value' => $this->input->post('pv_value', TRUE)
+				);
+				$this->ajax_m->set_origin($write_data);				
 
 				if ( $result )
 				{
@@ -433,7 +444,9 @@ class Store extends CI_Controller {
 			{
 				//게시물 내용 가져오기
 				$data['views'] = $this->store_m->get_view($this->uri->segment(3), $this->uri->segment(5));
-
+				
+				// 블로그api 정보 가져오기 
+				$data['blogapis'] = $this->store_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 				//쓰기폼 view 호출
 				$this->load->view('store/modify_v', $data);
 			}

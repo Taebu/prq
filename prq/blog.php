@@ -1,15 +1,12 @@
-<?php session_start();?>
+// 네이버 블로그 Open API 예제 - 글쓰기
 <?php
-  $token = $_SESSION['access_token']; // 네이버 로그인 API호출로 받은 접근 토큰값
-  
-  $header = array('Authorization: Bearer '.$token);
+	//09cotrxd33x9xDQPyCdj	
+	//X85fQNN0Mm
+  $token = "09cotrxd33x9xDQPyCdj"; // 네이버 로그인 API호출로 받은 접근 토큰값
   $header = "Bearer ".$token; // Bearer 다음에 공백 추가
-  //echo $header;
-
+  $url = "https://openapi.naver.com/blog/writePost.json";
   $title = urlencode("네이버 블로그 api Test php");
-  $title = $_POST['title'];
   $contents = urlencode("네이버 블로그 api로 글을 블로그에 올려봅니다.");
-  $contents = $_POST['contents'];
   $postvars = "title=".$title."&contents=".$contents;
   $is_post = true;
   $ch = curl_init();
@@ -21,7 +18,8 @@
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
   $response = curl_exec ($ch);
   $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//  echo "status_code:".$status_code."";
+  echo "status_code:".$status_code."
+";
   curl_close ($ch);
   if($status_code == 200) {
     echo $response;

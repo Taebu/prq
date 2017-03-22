@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <!-- <form name="postWriteFrm" id="postWriteFrm" method="POST" action="writePostWithImage.php" target="writeFrmGen" enctype="multipart/form-data"> -->
 <form name="postWriteFrm" id="postWriteFrm" method="POST" action="write.php" target="writeFrmGen" enctype="multipart/form-data">
 <input type="submit" value="submit"/><br/>
-
+<?php echo $_SESSION['access_token'];?>
 <div data-role="fieldcontain">
 <label>blogId </label>
 <input type="text" name="blogId" value="erm00" />
@@ -37,7 +38,7 @@ Suscipit tristique senectus elit nisi magna feugiat nibh class bibendum volutpat
 <p>Metus, risus pulvinar ante erat maecenas nec mauris. Conubia senectus parturient placerat imperdiet himenaeos. Curae; nulla aliquet sit pharetra sociis lorem nisi neque. Ante sagittis quam habitant erat lacinia praesent dictum.
 Himenaeos leo egestas dictumst sociis, aenean primis malesuada. Tristique, laoreet integer senectus consectetur. Purus dis gravida est per quisque fames tortor accumsan netus orci. Nam curabitur volutpat egestas ad!
 Fermentum magnis quisque sociosqu elementum mauris per pretium. Elit platea ac eget natoque dolor vivamus malesuada convallis phasellus venenatis platea. Dictum quis magna imperdiet ante ad class nascetur class.</p>
-<img src="#1" />
+<img src="http://img.naver.net/static/www/mobile/edit/2017/0303/mobile_104916519803.jpg" />
 <p>Interdum nisi, proin pellentesque egestas congue rutrum. Rutrum magna auctor venenatis sit nascetur! Tristique ultricies rutrum dolor semper sapien proin penatibus auctor sodales ac scelerisque ullamcorper. Lorem orci mi potenti,
 litora dictumst inceptos vitae augue scelerisque odio. Tincidunt libero fermentum lacus tristique fusce fermentum penatibus. Inceptos ultricies at pharetra consequat! Suscipit taciti tempus class vehicula sapien nullam! Turpis elementum eget vel commodo.
 Donec dignissim bibendum ipsum. Consectetur adipiscing eros est dui dis nam interdum lacus gravida mattis dictum. Porta.</p>

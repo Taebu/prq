@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPAT	H')) exit('No direct script access allowed');
 /**
  * 블로그 메인 모바일 뷰 controller.
  * 생성 : 2016-11-14 (월)
@@ -420,6 +420,148 @@ class Blog extends CI_Controller {
  	}
 
 	/**
+	 * 게시물 수정
+	 */
+	function modify2()
+ 	{
+		//경고창 헬퍼 로딩
+	 	$this->load->helper('alert');
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
+		//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+		$uri_array = $this->segment_explode($this->uri->uri_string());
+
+		if( in_array('page', $uri_array) )
+		{
+			$pages = urldecode($this->url_explode($uri_array, 'page'));
+		}
+		else
+		{
+			$pages = 1;
+		}
+
+		if( @$this->session->userdata('logged_in') == TRUE )
+		{
+			//수정하려는 글의 작성자가 본인인지 검증
+			//$writer_id = $this->blog_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+/*
+			if( $writer_id->user_id != $this->session->userdata('username') )
+			{
+				alert('본인이 작성한 글이 아닙니다.', '/prq/store/view/'.$this->uri->segment(3).'/blog_id/'.$this->uri->segment(5).'/page/'.$pages);
+				exit;
+			}
+*/
+			//폼 검증 라이브러리 로드
+			$this->load->library('form_validation');
+
+			//폼 검증할 필드와 규칙 사전 정의
+			$this->form_validation->set_rules('st_no', 'st_no', 'required');
+			//$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
+
+			if ( $this->form_validation->run() == TRUE )
+			{
+//				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
+				if ( !$this->input->post('st_no', TRUE))
+				{
+					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
+					alert('비정상적인 접근입니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					exit;
+				}
+
+
+				$this->load->model('blog_m');
+				//주소중에서 blog 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+				$uri_array = $this->segment_explode($this->uri->uri_string());
+
+				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
+
+				$img_src=$this->input->post('img_src', TRUE);
+
+				//$this->input->post(NULL, TRUE); 
+				$array_content=$this->input->post('content', TRUE);
+				
+				$write_data = array(
+					'table' => "prq_blog",
+					'st_no' => $this->input->post('st_no', TRUE),
+					'bl_no' => $this->input->post('bl_no', TRUE),
+					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
+					'bl_file' => $this->input->post('bl_file', TRUE),
+					'bl_name' => $this->input->post('bl_name', TRUE),
+					'bl_hp' => $this->input->post('bl_hp', TRUE),
+					'content1' => $array_content[0],
+					'content2' => $array_content[1],
+					'content3' => $array_content[2],
+					'post_data' => $this->input->post(null, TRUE),
+				);
+				$result = $this->blog_m->modify_blog($write_data);
+				$result2 = $this->blog_m->delete_file($write_data);
+				
+				for($i=0;$i<count($img_src);$i++)
+				{
+					//echo $is;
+					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
+					$files=getimagesize($filelocation);
+
+					$write_data = array(
+						'pr_table' => "review",
+						'bl_no' => $this->input->post('bl_no', TRUE),
+						'bf_no' => $i,
+						'bf_source' => $img_src[$i],
+						'bf_file' => $img_src[$i],
+						'bf_download' => "0",
+						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
+						'bf_filesize' => filesize($filelocation),
+						'bf_width' => $files[0],
+						'bf_height' => $files[1],
+						'bf_type' => $files[2],
+					);
+					//print_r($write_data);
+					$result3 = $this->blog_m->insert_file($write_data);
+					echo $result3;
+				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
+
+				if ( $result3 )
+				{
+					//글 작성 성공시 게시판 목록으로
+					alert('수정되었습니다.', '/prq/blog/view/'.$this->input->post('bl_no', TRUE).'/page/'.$pages);
+					exit;
+				}
+				else
+				{
+					//글 수정 실패시 글 내용으로
+					alert('다시 수정해 주세요.', '/prq/blog/modify/'.$this->input->post('bl_no', TRUE).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					exit;
+				}
+
+			}
+			else
+			{
+				//게시물 내용 가져오기
+				$data['views'] = $this->blog_m->get_view("prq_blog", $this->uri->segment(3));
+				$array = json_decode(json_encode($data['views']),true);
+				//파일 정보 가져오기
+				$data['files'] = $this->blog_m->get_files($array);
+
+
+				//member 정보 가져오기
+				$data['store'] = $this->blog_m->get_store($array);
+				$arrays = json_decode(json_encode($data['store']),true);
+				
+				//member 정보 가져오기
+				$data['member'] = $this->blog_m->get_member($arrays);
+
+
+				//쓰기폼 view 호출
+				$this->load->view('blog/modify2_v', $data);
+			}
+		}
+		else
+		{
+			alert('로그인후 수정하세요', '/prq/auth/login/');
+			exit;
+		}
+ 	}
+	/**
 	 * 게시물 삭제
 	 */
 	function delete()
@@ -560,7 +702,7 @@ class Blog extends CI_Controller {
 
 
 
- 	/**
+	/**
 	 * 게시물 하나만 쓰기
 	 */
 	function writeone()
@@ -658,6 +800,30 @@ class Blog extends CI_Controller {
 			//exit;
 		}
  	}
+
+	/**
+	 * curl refresh token
+	 */
+	function get_curl($param)
+	{
+		// Get cURL resource
+		$curl = curl_init();
+		$url = "https://nid.naver.com/oauth2.0/token?".$param;
+		// Set some options - we are passing in a useragent too here
+		curl_setopt_array($curl, array(
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_URL => $url,
+			CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+		));
+		// Send the request & save response to $resp
+		$resp = curl_exec($curl);
+		
+		// Close request to clear up some resources
+		curl_close($curl);
+
+		return json_decode($resp, true);
+	}
+
 }
 
 /* End of file blog.php */

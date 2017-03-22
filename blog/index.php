@@ -9,7 +9,8 @@ header("Content-Type: text/html; charset=UTF-8");
 
 
 // CSRF 방지를 위해 state token을 생성합니다.
-function generate_state() {
+function generate_state() 
+{
 $mt = microtime();
 $rand = mt_rand();
 

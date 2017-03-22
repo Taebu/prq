@@ -110,6 +110,79 @@ class Ajax extends CI_Controller {
 		}
 	}
 
+	public function chg_status_naver()
+	{
+			if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
+		{
+
+			
+			$table=$this->uri->segment(3);
+
+			$chk_seq = $this->input->post("chk_seq", TRUE);
+			$mb_status = $this->input->post("mb_status", TRUE);
+			$ds_name = $this->input->post("ds_name", TRUE);
+
+			$mb_reason = $this->input->post("mb_reason", TRUE);
+			$bl_url = $this->input->post("bl_url", TRUE);
+			$st_hp_1 = $this->input->post("st_hp_1", TRUE);
+			$mb_hp = $this->input->post("mb_hp", TRUE);
+			$bl_hp = $this->input->post("bl_hp", TRUE);
+			$mb_id = $this->input->cookie('name', TRUE);
+			$join_chk_seq=join(",",$chk_seq);
+			$join_ds_code=join("','",$chk_seq);
+
+			$st_no = $this->input->post("st_no", TRUE);
+			$pv_code = $this->input->post("pv_code", TRUE);
+			$pv_value = $this->input->post("pv_value", TRUE);
+			$naver_id = $this->input->post("pb_naver_id", TRUE);
+
+			//if ( $comment_contents != '')
+			//{
+				$write_data = array(
+					'prq_table'=>$table,
+					'mb_status'=>$mb_status,
+					'ds_name'=>$ds_name,
+					'mb_id'=>$mb_id,
+					'mb_reason'=>$mb_reason,
+					'bl_url'=>$bl_url,
+					'st_hp_1'=>$st_hp_1,
+					'mb_hp'=>$mb_hp,
+					'bl_hp'=>$bl_hp,
+					'join_chk_seq' => $join_chk_seq,
+					'join_ds_code' => $join_ds_code,
+					'pv_no'=>$st_no,
+					'pv_code'=>$pv_code,
+					'pv_value'=>$pv_value,
+					'naver_id'=>$naver_id
+				);
+
+				//				$result = $this->board_m->insert_comment($write_data);
+
+				if($table=="prq_member"){
+					$result = $this->ajax_m->chg_status($write_data);
+				}else if($table=="prq_store"){
+					$result = $this->ajax_m->chg_status($write_data);
+				}else if($table=="prq_blog"){
+					$result = $this->ajax_m->chg_status_naver($write_data);
+				}else if($table=="prq_isblog"){
+					$result = $this->ajax_m->chg_status_blog($write_data);
+				}else if($table!="prq_member"){
+					$result = $this->ajax_m->chg_status_code($write_data);
+				}
+
+				//echo $result;
+//			else
+//			{
+//				//글 내용이 없을 경우
+//				echo "1000";
+//			}
+		}
+		else
+		{
+			echo "9000"; //로그인 필요 에러
+		}
+	}
+
 	public function ajax_comment_delete()
 	{
 		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
@@ -664,7 +737,7 @@ class Ajax extends CI_Controller {
 		);
 		$result = $this->ajax_m->get_origin($write_data);
 		echo $result;
-	}
+ 	}
 
 	//set_origin
 	function set_origin()
@@ -710,7 +783,148 @@ class Ajax extends CI_Controller {
 		$result = $this->ajax_m->set_values($write_data);
 		echo $result;
 	}
-}
 
+	/**
+	 * curl refresh token
+	 */
+	function get_curl()
+	{
+		// Get cURL resource
+		$curl = curl_init();
+		$param="grant_type=refresh_token";
+		$param.="&client_id=qfvtBcPswnXE4O0veCZU";
+		$param.="&client_secret=PK6SrAhm8o";
+		$param.="&refresh_token=giippIgHGQ7pZuisXnY7zbn5GffmhiiL5ip1YWMQmEiilYYiiSCuZip1QO6jxEiswVD6ip7CXpgDXMGWm1xHzx47ipOUkkbk768AkVlKHLL9fyXUKiiQVkie";
+
+		$url = "https://nid.naver.com/oauth2.0/token?".$param;
+		// Set some options - we are passing in a useragent too here
+		curl_setopt_array($curl, array(
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_URL => $url,
+			CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+		));
+		// Send the request & save response to $resp
+		$resp = curl_exec($curl);
+		
+		// Close request to clear up some resources
+		curl_close($curl);
+
+		return json_decode($resp, true);
+	}
+
+	function set_blog()
+	{
+	  $this->load->model('blog_m');		
+	  $naver_id=$this->input->post("pb_naver_id", TRUE);
+	  $token=$this->blog_m->get_access_token($naver_id);
+	  $access_token=$token->access_token;
+	  
+	  $header = array('Authorization: Bearer '.$access_token);
+	  $header = "Bearer ".$access_token; // Bearer 다음에 공백 추가
+	  //echo $header;
+	  
+	  //$title = urlencode("네이버 블로그 api Test php---------");
+	  //$contents = urlencode("네이버 블로그 api로 글을 블로그에 올려봅니다.");
+
+	  $title=$this->input->post("title", TRUE);
+	  $contents=$this->input->post("contents", TRUE);
+	  $contents=$this->input->post("contents", TRUE);
+
+	  $postvars = "title=".$title."&contents=".$contents;
+	  $postvars.= "&cate".$contents;
+	  $is_post = true;
+	  $ch = curl_init();
+	  curl_setopt($ch, CURLOPT_URL, "https://openapi.naver.com/blog/writePost.json");
+	  curl_setopt($ch, CURLOPT_POST, $is_post);
+	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	  curl_setopt($ch,CURLOPT_POSTFIELDS, $postvars);
+	  $headers[] = "Authorization: ".$header;
+	  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	  $response = curl_exec ($ch);
+	  $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	//  echo "status_code:".$status_code."";
+	  curl_close ($ch);
+	  if($status_code == 200) {
+		echo $response;
+	  } else {
+		echo "Error 내용:".$response;
+	  }
+	}
+
+
+	function get_refresh_token()
+	{
+	  $refresh_token="";
+	  $this->load->model('blog_m');
+	  $naver_id=$this->input->post("naver_id", TRUE);
+	  $token=$this->blog_m->get_refresh_token($naver_id);
+	  $refresh_token=$token->refresh_token;
+	 
+	  // Get cURL resource
+	  $curl = curl_init();
+	  $param="grant_type=refresh_token";
+	  $param.="&client_id=qfvtBcPswnXE4O0veCZU";
+	  $param.="&client_secret=PK6SrAhm8o";
+	  $param.="&refresh_token=".$refresh_token;
+	  
+	  $url = "https://nid.naver.com/oauth2.0/token?".$param;
+	  // Set some options - we are passing in a useragent too here
+	  curl_setopt_array($curl, array(
+	  	CURLOPT_RETURNTRANSFER => true,
+	  	CURLOPT_URL => $url,
+	  	CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+	  ));
+	  // Send the request & save response to $resp
+	  $resp = curl_exec($curl);
+	  
+	  // Close request to clear up some resources
+	  curl_close($curl);
+	  
+	  $array=json_decode($resp, true);
+	  $write_data = array(
+	  	'naver_id'=>$naver_id,
+	  	'access_token'=>$array['access_token']
+	  );
+	  $result = $this->blog_m->set_access_token($write_data);
+	}
+	
+	/* set_category 
+	네이버에서 불러온 카테고리 정보를 네이버  blogapi에 갱신한다.
+
+	*/
+	function set_category()
+	{
+	  $this->load->model('blog_m');		
+	  $naver_id=$this->input->post("pb_naver_id", TRUE);
+	  $token=$this->blog_m->get_access_token($naver_id);
+	  $access_token=$token->access_token;
+	  $header = "Bearer ".$access_token; // Bearer 다음에 공백 추가
+	  $blogId =$naver_id;// 회원프로필 조회에서 얻은 네이버 ID값
+	  $url = "https://openapi.naver.com/blog/listCategory.json?blogId=".$blogId;
+	  $is_post = false;
+	  $ch = curl_init();
+	  curl_setopt($ch, CURLOPT_URL, $url);
+	  curl_setopt($ch, CURLOPT_POST, $is_post);
+	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	  $headers = array();
+	  $headers[] = "Authorization: ".$header;
+	  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	  $response = curl_exec ($ch);
+	  $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	  //echo "status_code:".$status_code."";
+
+	  curl_close ($ch);
+	  if($status_code == 200) {
+		  $write_data = array(
+			'naver_id'=>$naver_id,
+			'pb_category'=>$response
+		  );
+		  $result = $this->blog_m->set_category($write_data);
+	  } else {
+
+	  }
+		echo $response;
+	}
+}
 /* End of file ajax_board.php */
 /* Location: ./bbs/application/controllers/ajax_board.php */

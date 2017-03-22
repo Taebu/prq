@@ -57,6 +57,7 @@
 		}
 		?>
 </table>
+<div class="row">
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">포스팅</button>
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">사장승인</button>
 <button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">사장거부</button>
@@ -66,8 +67,10 @@
 
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('ad');">포인트 승인</button>
 <button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">포인트 거부</button>
-<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination -->
 
+<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination -->
+<div style="margin:20px;padding:30px"></div>
+</div>
 <?php
 function get_blog_status($key){
 	$code['view']='포스팅';

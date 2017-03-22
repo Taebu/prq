@@ -578,7 +578,7 @@ class Blog_m extends CI_Model
  	}
 
     /**
-	 * 대리점점 정보 가져오기
+	 * 대리점 정보 가져오기
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @param string $table 게시판 테이블
@@ -599,6 +599,89 @@ class Blog_m extends CI_Model
     	return $result;
     }
 
+
+    /**
+	 * get_access_token
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $naver_id 네이버 아이디
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_access_token($naver_id)
+    {
+    	$sql = "select access_token from prq_blogapi ";
+		$sql.=" where pb_naver_id='{$naver_id}';";
+   		$query = $this->prq->query($sql);
+
+     	//access_token 반환
+	    $result = $query->row();
+
+    	return $result;
+    }
+
+	 /**
+	 * blog refresh_token 
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_refresh_token($naver_id)
+    {
+    	$sql = "select refresh_token from prq_blogapi ";
+		$sql.=" where pb_naver_id='{$naver_id}';";
+   		$query = $this->prq->query($sql);
+
+     	//refresh_token 반환
+	    $result = $query->row();
+
+    	return $result;
+    }
+
+    /**
+	 * blog refresh_token 
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function set_access_token($arrays)
+    {
+		$sql_array=array();
+		$sql_array[]="UPDATE prq_blogapi SET ";
+		$sql_array[]="access_token='".$arrays['access_token']."',";
+		$sql_array[]="pb_datetime=now() ";
+		$sql_array[]="WHERE  pb_naver_id='".$arrays['naver_id']."';";
+		$sql=join("",$sql_array);
+		$result = $this->prq->query($sql);
+		//결과 반환
+		return $result;
+    }
+
+
+    /**
+	 * set_category 
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param naver_id
+	 * @param pb_category 네이버 블로그에 등록된 카테고리 json 정보 
+	 * @return array
+	 */
+    function set_category($arrays)
+    {
+		$sql_array=array();
+		$sql_array[]="UPDATE prq_blogapi SET ";
+		$sql_array[]="pb_category='".$arrays['pb_category']."',";
+		$sql_array[]="pb_datetime=now() ";
+		$sql_array[]="WHERE  pb_naver_id='".$arrays['naver_id']."';";
+		$sql=join("",$sql_array);
+		$result = $this->prq->query($sql);
+		//결과 반환
+		return $result;
+    }
 }
 
 /* End of file member_m.php */
