@@ -1,17 +1,23 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
 /**
  * 공통 멤버 총판에서 가맹점 모델 (이미지 포함)
  * 작성 : 2015-12-16 (수)
- * 수정 : 2016-07-05 (화)
+ * 수정 : 2017-03-22 (수) 10:42:32 
  * 
  * 총판	Distributors	DS
  * 대리점	Partner	PT
  * 가맹점	Franchise	FR
  *
  * 1.1
- * 1.2 2016-07-05 (화) 가맹점, 총판에 따른 구분 
+ * 1.2. 2016-07-05 (화) 가맹점, 총판에 따른 구분 
+ * 1.3. 2017-03-22 (수) 10:42:46 상점에 테스트 수정 추가
+ *   - 블로그 등록할 네이버 아이디 select option 처리 - 사용 가능 할 때 보이도록 할 것
+ *   - 블로그 등록할 카테고리 제이슨 정보로 가져오기
+ *       SELECT pb_category FROM prq.prq_blogapi where pb_naver_id='erm00';
  *
+ *   - 블로그 자동 등록 사용 여부 
+ *       5005 블로그 자동 포스팅 활성화 (활성화 되지 않은 상점은 기본적으로 블로그 포스팅 승인시 자동 등록 포스팅을 넣지 않는다. 
+
  * @author Taebu, Moon <mtaebu@gmail.com>
  * @version 1.2
  */

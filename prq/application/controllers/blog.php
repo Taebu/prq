@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPAT	H')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * 블로그 메인 모바일 뷰 controller.
  * 생성 : 2016-11-14 (월)

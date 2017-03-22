@@ -31,7 +31,7 @@ class Store extends CI_Controller {
 	public function _remap($method)
  	{
 
-		if($method=="write"||$method=="modify")
+		if($method=="write"||$method=="modify"||$method=="modify2")
 		{
 			//헤더 include
 			$this->load->view('header_write_v');
@@ -449,6 +449,154 @@ class Store extends CI_Controller {
 				$data['blogapis'] = $this->store_m->get_view($this->uri->segment(3), $this->uri->segment(5));
 				//쓰기폼 view 호출
 				$this->load->view('store/modify_v', $data);
+			}
+		}
+		else
+		{
+			alert('로그인후 수정하세요', '/prq/auth/login/');
+			exit;
+		}
+ 	}
+
+
+	/**
+	 * 상점 수정2
+	 * 2017-03-22 (수) 15:24:49  
+	 * - 네이버 블로그 api 관련 추가 폼 구성
+	 */
+	function modify2()
+ 	{
+		//경고창 헬퍼 로딩
+	 	$this->load->helper('alert');
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
+		//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+		$uri_array = $this->segment_explode($this->uri->uri_string());
+
+		if( in_array('page', $uri_array) )
+		{
+			$pages = urldecode($this->url_explode($uri_array, 'page'));
+		}
+		else
+		{
+			$pages = 1;
+		}
+
+		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE )
+		{
+			//수정하려는 글의 작성자가 본인인지 검증
+			$writer_id = $this->store_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+/*
+			if( $writer_id->user_id != $this->session->userdata('username') )
+			{
+				alert('본인이 작성한 글이 아닙니다.', '/prq/store/view/'.$this->uri->segment(3).'/store_id/'.$this->uri->segment(5).'/page/'.$pages);
+				exit;
+			}
+*/
+			//폼 검증 라이브러리 로드
+			$this->load->library('form_validation');
+
+			//폼 검증할 필드와 규칙 사전 정의
+			$this->form_validation->set_rules('st_name', 'st_name', 'required');
+			//$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
+
+			if ( $this->form_validation->run() == TRUE )
+			{
+//				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
+				if ( !$this->input->post('st_name', TRUE))
+				{
+					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
+					alert('비정상적인 접근입니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					exit;
+				}
+
+				//var_dump($_POST);
+				/*
+				$modify_data = array(
+					'table' => $this->uri->segment(3), //게시판 테이블명
+					'distributors_id' => $this->uri->segment(5), //게시물번호
+					'subject' => $this->input->post('subject', TRUE),
+					'contents' => $this->input->post('contents', TRUE)
+				);
+
+				$result = $this->store_m->modify_distributors($modify_data);
+*/
+				$modify_data = array(
+					'table' => $this->uri->segment(3), //게시판 테이블명
+					'st_no' => $this->uri->segment(5), //게시판 번호
+					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
+					'st_category' => $this->input->post('st_category', TRUE),
+					'st_name' => $this->input->post('st_name', TRUE),
+					'mb_id' => $this->input->post('mb_id', TRUE),
+					'st_tel' => $this->input->post('st_tel', TRUE),
+					'st_teltype' => $this->input->post('st_teltype', TRUE),
+					'st_vtel' => $this->input->post('st_vtel', TRUE),
+					'st_open' => $this->input->post('st_open', TRUE),
+					'st_closed' => $this->input->post('st_closed', TRUE),
+					'st_alltime' => $this->input->post('st_alltime', TRUE),
+					'st_mno' => $this->input->post('st_mno', TRUE),
+					'st_closingdate' => join(",",$this->input->post('st_closingdate', TRUE)),
+					'st_destination' => $this->input->post('st_destination', TRUE),
+					'st_intro' => $this->input->post('st_intro', TRUE),
+					'st_password' => $this->input->post('st_password', TRUE),
+					'st_nick' => $this->input->post('st_nick', TRUE),
+					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
+					'st_email' => $this->input->post('st_email', TRUE),
+					'st_homepage' => $this->input->post('st_homepage', TRUE),
+					'st_business_name' => $this->input->post('st_business_name', TRUE),
+					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
+					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
+					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
+					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
+					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
+					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
+					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
+					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
+					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
+					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
+					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
+					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
+					'st_business_num' => $this->input->post('st_business_num', TRUE),
+					'st_datetime' => $this->input->post('st_datetime', TRUE),
+					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
+					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
+					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
+					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
+					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
+					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
+					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
+					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
+					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
+					'st_theme' => $this->input->post('st_theme', TRUE),
+					'st_status' => $this->input->post('st_status', TRUE)
+				);
+//				$result = $this->distributors_m->insert_distributors($write_data);
+
+				$result = $this->store_m->modify_store($modify_data);
+
+				if ( $result )
+				{
+					//글 작성 성공시 게시판 목록으로
+					alert('수정되었습니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					exit;
+				}
+				else
+				{
+					//글 수정 실패시 글 내용으로
+					alert('다시 수정해 주세요.', '/prq/store/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					exit;
+				}
+
+			}
+			else
+			{
+				//게시물 내용 가져오기
+				$data['views'] = $this->store_m->get_view($this->uri->segment(3), $this->uri->segment(5));
+				
+				// 블로그api 정보 가져오기 
+				$data['blogapis'] = $this->store_m->get_view($this->uri->segment(3), $this->uri->segment(5));
+				//쓰기폼 view 호출
+				$this->load->view('store/modify2_v', $data);
 			}
 		}
 		else
