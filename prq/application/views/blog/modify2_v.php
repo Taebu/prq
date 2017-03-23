@@ -207,25 +207,76 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">연동된 아이디</label>
+<div class="naver_blogapi" style='display:none'>
+<div class="form-group"><label class="col-sm-2 control-label">블로그 등록된 아이디</label>
 <div class="col-sm-10">
-<input type="text" name="pb_naver_id" id="pb_naver_id" class="form-control" value="erm00">
+<input type="text" name="pb_naver_id" id="pb_naver_id" class="form-control" value="">
  - 연동된 아이디로 블로그에 등록 됩니다. 값이 없으면 수동으로 등록 하셔야 합니다.
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<textarea name="hidden_contents" id="hidden_contents" cols="30" rows="10">
+
+<div class="form-group"><label class="col-sm-2 control-label">블로그 카테고리</label>
+<div class="col-sm-10">
+<div id="naver_category">
+<select name="pb_category" id="pb_category" class="form-control">
+	<option value="">선택하세요.</option>
+	<option value="1">맛집</option>
+	<option value="2">게시판</option>
+</select></div><!-- #naver_category -->
+<span class="help-block m-b-none">등록될 네이버 블로그 카테고리를 선택해주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
+<input type="text" name="pb_title" id="pb_title"  class="form-control" value="<?php echo $store->st_name;?>"/>
+<textarea name="hidden_contents" id="hidden_contents" cols="30" rows="10" style="width:100%;"  class="form-control" onclick="javascript:textAreaAdjust(this)"
+ onkeyup="javascript:textAreaAdjust(this)"
+ onkeydown="javascript:textAreaAdjust(this)"
+ onkeypress="javascript:textAreaAdjust(this)"
+>
+<center>
 <?php foreach($files as $fi){
 $img_url="http://prq.co.kr/prq/uploads/".$fi->bf_content."/".$fi->bf_file;
-echo "<img src='".$img_url."'>";
+echo "<img src='".$img_url."'>\n\n";
 };?>
+
 
 
 <?php echo $views->bl_content1;?>
 <?php echo $views->bl_content2;?>
 <?php echo $views->bl_content3;?>
+
+
+
+고객님이 작성한 리뷰입니다.
+
+'<?php echo $store->st_name;?>'에 대한 고객님의 점수는.(5/5점)
+
+<img src='http://prq.co.kr/prq/uploads/blog/star_five.png'>
+
+.....	지도 등록...
+
+<a href='http://prq.co.kr/prq/page/<?php echo $store->st_no;?>'>http://prq.co.kr/prq/page/<?php echo $store->st_no;?></a>
+
+
+배달시간 :  <?php echo $store->st_open;?> ~ <?php echo $store->st_closed;?>
+
+배달가능금액 : 
+
+배달지역 : <?php echo $store->st_destination;?>
+
+적립되는 전화 번호 : <?php echo $store->st_vtel;?>
+
+일반번호 : <?php echo $store->st_tel;?>
+
+
+<img src='http://prq.co.kr/prq/uploads/blog/talktalk_review.jpg'>
+</center>
 </textarea>
+</div><!-- .naver_blogapi -->
 <div class="controls">
 
 <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -241,9 +292,10 @@ echo "<img src='".$img_url."'>";
 <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('co_blog_deny');">일반 거부</button>
 <button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('po_blog_allow');">배달 포인트 승인</button>
 <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('po_blog_deny');">배달 포인트 거부</button>
-
+<div class="naver_blogapi" style='display:none'>
  <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_blog();">블로그 등록</button>
   <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_category();">카테고리  갱신</button>
+</div><!-- #naver_blogapi -->
 
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <!-- <button class="btn btn-white" type="reset">취소</button> -->
@@ -630,8 +682,10 @@ function get_status(code)
 function set_blog()
 {
 	var param="title="+"업체명";
+	param = param + "&pb_title="+$("#pb_title").val();
 	param = param + "&contents="+$("#hidden_contents").val();
 	param = param + "&pb_naver_id="+$("#pb_naver_id").val();
+	param = param + "&pb_category="+$("#pb_category").val();
 
 	$.ajax({
 		url:"/prq/ajax/set_blog",
@@ -699,6 +753,149 @@ function set_category()
 	});
 }
 
+var is_blogauto=false;
+/****************
+* get_blogauto() 
+* 블로그 자동 사용여부를 가져옵니다.
+* 
+****************/
+function get_blogauto(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5003";
+	
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				is_blogauto=val.pv_value=="on";
+				console.log(is_blogauto);
+				showhide(is_blogauto);
+				textAreaAdjustOn();
+			});
+		}
+	});
+}
+
+function showhide(v)
+{
+	if(v)
+	{
+		$(".naver_blogapi").show();
+	}else{
+		$(".naver_blogapi").hide();
+	}
+}
+
+
+/****************
+* get_naver_id() 
+* 네이버 블로그 아이디를  가져옵니다.
+* 
+****************/
+function get_naver_id()
+{
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5004";
+	var is_blogurl=false;
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				$("#pb_naver_id").val(val.pv_value);
+				chg_id(val.pv_value);
+				//get_naver_category();
+				setTimeout(get_naver_category, 5000);
+			});
+			
+		}
+	});
+}
+
+
+
+/* 네이버 아이디로 카테고리 조회 */
+function chg_id(v)
+{
+
+	
+	if(v=="")
+	{
+		$("#auto_cat_area").hide();
+		return;
+	}
+		$("#auto_cat_area").show();
+	var param="pb_naver_id="+v;
+	var list="";
+	var object=[];
+	$.ajax({
+	url:"/prq/ajax/get_naver_cat/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			list=data.message.result;
+			object.push('<select name="pb_category" id="pb_category" class="form-control"  onchange="javascript:set_values(this.value,\'5005\');">');
+			object.push('<option value="">선택하세요.</option>');
+			$.each(list,function(key,val){
+				object.push('<option value="'+val.categoryNo+'">'+val.name+'</option>');
+			});
+			object.push('</select>');
+
+			$("#naver_category").html(object.join(""));
+		}
+	});
+}
+
+/****************
+* get_naver_category() 
+* 네이버 블로그 카테고리 인덴스사용여부를 가져옵니다.
+* 
+****************/
+function get_naver_category(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5005";
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+			$("#pb_category").val(val.pv_value).attr("selected", "selected");
+			});
+		}
+	});
+}
+/* 홈페이지 로드시 */
+
+window.onload = function() {
+	get_blogauto();
+	
+    console.log( "ready!" );
+	/* 등록된 네이버 아이디를 불러 옵니다.*/
+	get_naver_id();
+
+	/* 네이버 블로그 카테고리를 불러 옵니다 5초뒤에 */
+	 // 5000ms(5초)가 경과하면 이 함수가 실행됩니다.
+	 textAreaAdjustOn();
+};
+
+/* Textarea to resize based on content length */
+function textAreaAdjustOn() {
+	document.getElementById("hidden_contents").style.height = "1px";
+	document.getElementById("hidden_contents").style.height = (25+document.getElementById("hidden_contents").scrollHeight)+"px";
+}
+
+/* Textarea to resize based on content length */
+function textAreaAdjust(o) {
+	o.style.height = "1px";
+	o.style.height = (25+o.scrollHeight)+"px";
+}
 </script>
 <style type="text/css">
 #image_area{display:none}

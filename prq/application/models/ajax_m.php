@@ -2328,6 +2328,60 @@ ERROR:
 		
 		echo json_encode($json);
 	}
+
+	/**
+	 * get_naver_cat 정보 가져오기
+	 * @param string $pb_naver_id 코드명
+	 * @return json_array
+	 */
+	function get_naver_cat($array)
+	{
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+	
+		/* select pb_category from prq_blogapi where pb_naver_id='erm00'; */
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" pb_category ";
+		$sql[]="FROM ";
+		$sql[]="`prq_blogapi` ";
+		$sql[]="where ";
+		$sql[]="pb_naver_id='".$array['pb_naver_id']."';";
+
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+		
+		$result=$query->row();
+
+		echo $result->pb_category;
+	}
+
+	/**
+	 * get_naver_cat 정보 가져오기
+	 * @param string $pb_naver_id 코드명
+	 * @return json_array
+	 */
+	function get_naverapi_id()
+	{
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+	
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" pb_naver_id ";
+		$sql[]="FROM ";
+		$sql[]="`prq_blogapi` ";
+
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+
+		foreach($query->result_array() as $list){
+			array_push($json['posts'],$list);
+		}
+		return json_encode($json);
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */
