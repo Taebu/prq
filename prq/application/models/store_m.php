@@ -573,6 +573,21 @@ mysql> select * from prq_member_code;
     }
 
 	/**
+	 * 그룹별 상점갯수
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @return array
+	 */
+    function get_groupcnt()
+    {
+    	$sql = "select st_status,count(*) cnt from prq_store group by st_status;";
+   		$query = $this->db->query($sql);
+
+		$result = $query->result();
+
+    	return $result;
+    }
+
+	/**
 	 * 싱크 상점 리스트 가져오기
 	 *
 	 * @author Taebu Moon <mtaebu@gmail.com>

@@ -283,6 +283,22 @@ class Logs_m extends CI_Model
 				$sword .= ' and hc_hp like "%'.$search_array['hc_hp'].'%" ';
 			}
 		}
+
+		if($table=='prq_post_log')
+		{
+			if ( $search_array['po_subject'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and po_subject like "%'.$search_array['po_subject'].'%" ';
+			}
+
+			if ( $search_array['bl_naver_id'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and bl_naver_id like "%'.$search_array['bl_naver_id'].'%" ';
+			}
+		}
+
 		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
 		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
 		if( strlen($prq_fcode)>2){
@@ -340,6 +356,13 @@ class Logs_m extends CI_Model
 			$sql[]=$sword;
 			}
 			$sql[]=" order by hc_no desc ";
+		}else if($table=="prq_post_log"){
+			$sql[]=" where 1=1 ";
+			if ( $search_array != '' )
+     		{
+			$sql[]=$sword;
+			}
+			$sql[]=" order by po_no desc ";
 		}
 
 		

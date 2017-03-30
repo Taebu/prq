@@ -287,39 +287,18 @@
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
-                <label for="mm_receiver">수신자(mm_receiver)</label>
-                <input class="form-control" id="mm_receiver" name="mm_receiver" size="30" type="text" value="<?php echo $search['mm_receiver'];?>"/>
+                <label for="po_subject">제목</label>
+                <input class="form-control" id="po_subject" name="po_subject" size="30" type="text" value="<?php echo $search['po_subject'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="mm_sender">발신자(mm_sender)</label>
-                <input class="form-control" id="mm_sender" name="mm_sender" size="30" type="text" value="<?php echo $search['mm_sender'];?>"/>
+                <label for="bl_naver_id">네이버 아이디</label>
+                <input class="form-control" id="bl_naver_id" name="bl_naver_id" size="30" type="text" value="<?php echo $search['bl_naver_id'];?>"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->
-    <div class='row'>
-        <div class='col-sm-6'>    
-            <div class='form-group'>
-                <label for="mm_content">내용</label>
-                <input class="form-control" id="mm_content" name="mm_content" size="30" type="text" value="<?php echo $search['mm_content'];?>"/>
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
-        <div class='col-sm-6'>
-            <div class='form-group'>
-                <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" />
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
-    </div><!-- .row -->
-    <div class='row'>
-        <div class='col-sm-12'>
-            <div class='form-group'>
-                <label for="user_email"><span class="mb_gname">총판</span> 목록</label>
-                <input class="form-control required email" id="user_email" name="user[email]" required="true" size="30" type="text" />
-            </div>
-        </div>
-    </div><!-- .row -->
+
     <div class='row'>
 	<div class='col-sm-12 right'>
             <div class='form-group'><input type="button" value="검색" id="search_btn" class="btn btn-primary" /> </div>

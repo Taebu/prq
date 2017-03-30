@@ -583,9 +583,14 @@ function get_cidinfo(){
 
 function get_mnoinfo(){
 //	var param=$("#write_action").serialize();
+	if($.trim($("#mb_hp").val())=="")
+	{
+		$("#mno_info").html('휴대폰 번호가 저장 되지 않았습니다.');
+		console.log("mb_hp none");
+		return;
+	}
 
     $.ajax({
-//		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
 		url:"/prq/ajax/get_mnoinfo2/"+$("#mb_hp").val(),
 		type: "POST",
         data:"",

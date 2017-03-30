@@ -182,6 +182,9 @@ if (!function_exists('get_status2')) {
 		case "ca":
 			$result='<button type="button" class="btn btn-warning btn-xs">설치실패</button>';
 			break;
+		case "fr":
+			$result='<button type="button" class="btn btn-free btn-xs">무료</button>';
+			break;
 		case "delete":
 			$result='<button type="button" class="btn btn-danger btn-xs">삭제</button>';
 			break;

@@ -593,10 +593,14 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .btn-danger.btn-outline {
   color: #ed5565;
 }
+.btn-free.btn-outline {
+  color: #3a3a3a;
+}
 .btn-primary.btn-outline:hover,
 .btn-success.btn-outline:hover,
 .btn-info.btn-outline:hover,
 .btn-warning.btn-outline:hover,
+.btn-free.btn-outline:hover,
 .btn-danger.btn-outline:hover {
   color: #fff;
 }
@@ -810,6 +814,12 @@ fieldset[disabled] .btn-warning.active {
   border-color: #ed5565;
   color: #FFFFFF;
 }
+
+.btn-free {
+  background-color: #3a3a3a;
+  border-color: #3a3a3a;
+  color: #FFFFFF;
+}
 .btn-danger:hover,
 .btn-danger:focus,
 .btn-danger:active,
@@ -845,6 +855,43 @@ fieldset[disabled] .btn-danger:active,
 fieldset[disabled] .btn-danger.active {
   background-color: #ef6776;
   border-color: #ef6776;
+}
+
+.btn-free:hover,
+.btn-free:focus,
+.btn-free:active,
+.btn-free.active,
+.open .dropdown-toggle.btn-free,
+.btn-free:active:focus,
+.btn-free:active:hover,
+.btn-free.active:hover,
+.btn-free.active:focus {
+  background-color: #3a4758;
+  border-color: #3a4758;
+  color: #FFFFFF;
+}
+.btn-free:active,
+.btn-free.active,
+.open .dropdown-toggle.btn-free {
+  background-image: none;
+}
+.btn-free.disabled,
+.btn-free.disabled:hover,
+.btn-free.disabled:focus,
+.btn-free.disabled:active,
+.btn-free.disabled.active,
+.btn-free[disabled],
+.btn-free[disabled]:hover,
+.btn-free[disabled]:focus,
+.btn-free[disabled]:active,
+.btn-free.active[disabled],
+fieldset[disabled] .btn-free,
+fieldset[disabled] .btn-free:hover,
+fieldset[disabled] .btn-free:focus,
+fieldset[disabled] .btn-free:active,
+fieldset[disabled] .btn-free.active {
+  background-color: #3a3a3a;
+  border-color: #3a3a3a;
 }
 .btn-link {
   color: inherit;
@@ -1003,6 +1050,13 @@ button.btn-danger.dim {
 }
 button.btn-danger.dim:active {
   box-shadow: inset 0px 0px 0px #ea394c, 0px 2px 0px 0px #ea394c, 0px 5px 3px #999999;
+}
+
+button.btn-free.dim {
+  box-shadow: inset 0px 0px 0px #3a3a3a, 0px 5px 0px 0px #3a3a3a, 0px 10px 5px #999999;
+}
+button.btn-free.dim:active {
+  box-shadow: inset 0px 0px 0px #3a3a3a, 0px 2px 0px 0px #3a3a3a, 0px 5px 3px #999999;
 }
 button.dim:before {
   font-size: 50px;
@@ -6864,6 +6918,7 @@ body.landing-page {
 .landing-page .btn-success.btn-outline:hover,
 .landing-page .btn-info.btn-outline:hover,
 .landing-page .btn-warning.btn-outline:hover,
+.landing-page .btn-free.btn-outline:hover,
 .landing-page .btn-danger.btn-outline:hover {
   color: #fff;
 }

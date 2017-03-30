@@ -101,6 +101,8 @@ class Logs extends CI_Controller {
 			'cd_callerid'=>$this->input->post('cd_callerid', TRUE),
 			'mm_subject'=>$this->input->post('mm_subject', TRUE),
 			'mm_content'=>$this->input->post('mm_content', TRUE),
+			'po_subject'=>$this->input->post('po_subject', TRUE),
+			'bl_naver_id'=>$this->input->post('bl_naver_id', TRUE),
 		);
 
 		if($this->uri->segment(3)=="cid"){

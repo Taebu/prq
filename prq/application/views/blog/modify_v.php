@@ -254,7 +254,7 @@ echo "<img src='".$img_url."'>\n\n";
 };?>
 
 
-
+<span style="font-size:25pt">
 <?php echo $views->bl_content1;?>
 <?php echo $views->bl_content2;?>
 <?php echo $views->bl_content3;?>
@@ -269,19 +269,21 @@ echo "<img src='".$img_url."'>\n\n";
 
 .....	지도 등록...
 
+매장 홈페이지 주소 : 
 <a href='http://prq.co.kr/prq/page/<?php echo $store->st_no;?>'>http://prq.co.kr/prq/page/<?php echo $store->st_no;?></a>
 
-
+<?php
+if($store->st_alltime=="on"){
+echo "배달시간 : 24시간\n";
+}else{?>
 배달시간 :  <?php echo $store->st_open;?> ~ <?php echo $store->st_closed;?>
-
-배달가능금액 : 
-
+<?php }?>
 배달지역 : <?php echo $store->st_destination;?>
 
 적립되는 전화 번호 : <?php echo $store->st_vtel;?>
 
 일반번호 : <?php echo $store->st_tel;?>
-
+</span>
 
 <img src='http://prq.co.kr/prq/uploads/blog/talktalk_review.jpg'>
 </center>
@@ -642,10 +644,17 @@ function set_status(k)
 				if(data.success){
 					//alert("변경에 성공하였습니다.");
 					swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
+					
 					$.each(data.posts,function(key,val){
 						$("#status_"+val.mb_no).html(val.mb_status);
 					});
+
+					setTimeout(function(){
+						console.log('setTimeout');
+						$(location).attr('href', "/prq/blog/");
+					},2000);
 				}
+
 				console.log(data);
 				console.log(data=="9000");
 				if(data=="9000"){
@@ -670,6 +679,8 @@ function set_status(k)
 					});	
 				}
 
+			},always:function(){
+					//setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/blog/");}, 2000);
 			}
 		});
 
@@ -702,6 +713,7 @@ function set_blog()
 	param = param + "&pb_category="+$("#pb_category").val();
 */
 	/* 포스팅 여부 가져오기 */
+	get_posting();
 
 	if($("#posting_cnt").val()>0)
 	{
@@ -723,12 +735,11 @@ function set_blog()
 					
 					/* 갱신 access_token 불러오기 */
 					get_refresh_token();
-				}else if(data.error_code=="999")
-				{
+				}else if(data.error_code=="999"){
 					alert("블로그 API 아이디가 등록되지 않았습니다. \n관리자 에게 등록을 요청하세요.");
-
 				}else if(data.message.result.logNo>0){
 					$("#bl_url").val(data.message.result.postUrl);
+					$("#posting_cnt").val("1");
 					alert(data.message.result.postUrl+"\n에 등록되었습니다.");
 				}
 			}

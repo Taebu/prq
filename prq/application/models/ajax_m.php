@@ -92,7 +92,7 @@ class Ajax_m extends CI_Model
 		}else if($array['prq_table']=="prq_store"){
 			$sql[]="update `".$array['prq_table']."` set ";
 			$sql[]=" st_status='".$array['mb_status']."' ";
-			$sql[]="WHERE ";
+			$sql[]="WHERE "; 
 			$sql[]="st_no in (".$array['join_chk_seq'].");";		
 		}else if($array['prq_table']=="prq_blog"){
 			$sql[]="update `".$array['prq_table']."` set ";
@@ -246,7 +246,14 @@ class Ajax_m extends CI_Model
 		}
 
 		//echo json_encode($json);
-		return json_encode($json);
+		/* 2017-03-30 (목) 14:29:19  
+			상점인 경우 반응 없음 수정
+		*/
+		if($array['prq_table']=="prq_store"){
+			echo json_encode($json);
+		}else{
+			return json_encode($json);
+		}
 	}
 
 
@@ -255,7 +262,7 @@ class Ajax_m extends CI_Model
 	function chg_status_naver($array)
 	{
 		$json=array();
-
+		$json['is_foreach']=false;
 		$sql=array();
 		$json['success']=false;
 		if($array['prq_table']=="prq_member"){
@@ -298,10 +305,9 @@ class Ajax_m extends CI_Model
 		/* 블로그 상태 변경시 */
 		$st=$array['mb_status'];
 
-
-
 		foreach($arr_no as $an)
 		{
+			$json['is_foreach']=true;
 			$items=array();
 			/* 블로그인 경우 코드 예외 처리 */
 			if($array['prq_table']=="prq_blog"){
@@ -381,10 +387,14 @@ class Ajax_m extends CI_Model
 			$sql[]=" lo_datetime=now(); ";
 			$join_sql=join("",$sql);
 			$query = $this->prq->query($join_sql);
-		}
+		} /*  foreach($arr_no as $an){...} */
+		
+		if($array['prq_table']=="prq_blog"&&$st=="po_blog_allow"){
 
-		//echo json_encode($json);
+		echo json_encode($json);
+		}else{
 		return json_encode($json);
+		}
 	}
 
 	/**/
@@ -528,6 +538,9 @@ class Ajax_m extends CI_Model
 			break;
 		case "ca":
 			$result='<button type="button" class="btn btn-warning btn-xs">설치실패</button>';
+			break;
+		case "fr":
+			$result='<button type="button" class="btn btn-free btn-xs">무료</button>';
 			break;
 		case "delete":
 			$result='<button type="button" class="btn btn-danger btn-xs">삭제</button>';
