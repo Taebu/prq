@@ -682,6 +682,32 @@ class Blog_m extends CI_Model
 		//결과 반환
 		return $result;
     }
+	
+	/**
+	* set_post_log
+	* 포스팅한 로그를 기록 합니다. 실제 포스팅 기록이며 중복 포스팅에 대한 방지와 에러상태를 알기위해 기록합니다.
+	*/
+	function set_post_log($arrays)
+	{
+		$sql_array=array();
+		$sql_array[]="INSERT INTO prq_post_log SET ";
+		$sql_array[]="`po_subject`='".$arrays['po_subject']."',";
+		$sql_array[]="`po_content`='".addslashes($arrays['po_content'])."',";
+		$sql_array[]="`po_status`='".$arrays['po_status']."',";
+		$sql_array[]="`na_code`='".$arrays['na_code']."',";
+		$sql_array[]="`na_http`='".$arrays['na_http']."',";
+		$sql_array[]="`na_message`='".$arrays['na_message']."',";
+		$sql_array[]="`bl_url`='".$arrays['bl_url']."',";
+		$sql_array[]="`bl_naver_id`='".$arrays['bl_naver_id']."',";
+		$sql_array[]="`bl_category`='".$arrays['bl_category']."',";
+		$sql_array[]="`st_no`='".$arrays['st_no']."',";
+		$sql_array[]="`bl_no`='".$arrays['bl_no']."',";
+		$sql_array[]="`po_datetime`=now();";
+		$sql=join("",$sql_array);
+		$results = $this->prq->query($sql);
+	}
+
+
 }
 
 /* End of file member_m.php */

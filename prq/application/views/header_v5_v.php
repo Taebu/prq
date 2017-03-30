@@ -230,6 +230,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST</a></li>
                             <?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
                             <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST<span class="label label-warning pull-right">NEW</span></a></li>
 							</ul>
                     </li>
 

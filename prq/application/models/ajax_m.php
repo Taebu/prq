@@ -1604,6 +1604,7 @@ ERROR:
 		$sql[]=" UserID='".$array['UserID']."', ";
 		$sql[]=" port='".$array['port']."', ";
 		$sql[]=" callerid='".$array['callerid']."', ";
+		$sql[]=" comname='".$array['comname']."', ";
 		$sql[]=" calledid='".$array['calledid']."'; ";
 
 
@@ -2381,6 +2382,18 @@ ERROR:
 			array_push($json['posts'],$list);
 		}
 		return json_encode($json);
+	}
+	
+	function is_posting($arrays)
+	{
+    	$sql ="select count(*) cnt from prq_post_log ";
+		$sql.="where po_status='s' ";
+		$sql.="and bl_no='".$arrays['bl_no']."';";
+   		$query = $this->prq->query($sql);
+
+     	//블로그 등록 갯수 반환
+		$result = $query->result();
+    	return $result;
 	}
 }
 /* End of file ajax_m.php */

@@ -95,42 +95,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="ibox-content">
 <div class="row">
 <div class="col-md-6">
-<!--
-stdClass Object
-(
-    [st_no] => 2
-    [prq_fcode] => DS0003PT0001FR0003
-    [st_category] => W01
-    [st_name] => 성준치킨
-    [st_tel] => 031-909-5242
-    [st_open] => 
-    [st_closed] => 
-    [st_alltime] => on
-    [st_closingdate] => 
-    [st_destination] => 
-    [st_intro] => 소개
-    [st_password] => 
-    [st_nick] => 
-    [st_nick_date] => 0000-00-00
-    [st_email] => 
-    [st_homepage] => 
-    [st_business_name] => 
-    [st_business_paper] => 
-    [st_business_paper_size] => 0
-    [st_thumb_paper] => store_1453960198.jpg
-    [st_thumb_paper_size] => 5326
-    [st_menu_paper] => 
-    [st_menu_paper_size] => 0
-    [st_main_paper] => 
-    [st_main_paper_size] => 0
-    [st_business_num] => 
-    [st_datetime] => 2016-01-28 14:53:14
-    [st_status] => wa
-)
--->
 <div class="form-group"><label class="col-sm-2 control-label">가맹점선택 </label>
 <div class="col-sm-10">
-
 <?php if($mb_gcode=="G5"){?>
 <select name="fr_code" id="fr_code" class="form-control" >
 	<option value="FR0001">네네치킨(FR0001)</option>
@@ -247,7 +213,7 @@ stdClass Object
 //print_r($arr_closingdate);
 $arr_week=array("일요일","월요일","화요일","수요일","목요일","금요일","토요일");
 ?>
- <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4"  id="st_closingdate" name="st_closingdate[]">
+ <select data-placeholder="휴무하는 날을 선택해 주세요." class="chosen-select" multiple style="width:350px;" tabindex="4"  id="st_closingdate" name="st_closingdate[]">
 <?php
 foreach($arr_week as $aw){
 $sel_aw=in_array($aw, $arr_closingdate)?" selected":"";
@@ -442,10 +408,11 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 	</label>
 </div>
 </div>
-<span class="help-block m-b-none">블로그 홍보 문구</span>
+<span class="help-block m-b-none">블로그 홍보 문구를 사용한다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 
 
 <div class="form-group"><label class="col-sm-2 control-label">하단문구(고정)</label>
@@ -459,6 +426,62 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">블로그 자동<br>등록 여부</label>
+<div class="col-sm-10"><div class="switch">
+<div class="onoffswitch">
+	<input type="checkbox" class="onoffswitch-checkbox" id="is_blogauto" name="is_blogauto" onclick='javascript:set_blogauto(this);' >
+	<label class="onoffswitch-label" for="is_blogauto">
+		<span class="onoffswitch-inner"></span>
+		<span class="onoffswitch-switch"></span>
+	</label>
+</div>
+</div>
+<span class="help-block m-b-none">네이버 블로그 자동으로 등록하려 할 때 여부를 활성화 시킵니다. <br>
+"on"시 blogapi 에 등록된 해당 네이버블로그에 등록된다.<br>
+등록된 아이디에 access token 이 필요하며 refresh token으로 재요청시 <br>3600초의 유효시간을 지닌다. 블로그 등록, 카테고리 조회에 필요.
+</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div id="naver_blogapi">
+<!-- code 5004 -->
+<div class="form-group"><label class="col-sm-2 control-label">블로그 등록 아이디</label>
+<div class="col-sm-10">
+<div id="naver_id">
+<select name="pb_naver_id" id="pb_naver_id" class="form-control" onchange="javascript:chg_id(this.value);set_values(this.value,'5004');">
+	<option value="">선택하세요.</option>
+	<option value="erm00">erm00</option>
+	<option value="mdagency153">mdagency153</option>
+	<option value="kd0848">kd0848</option>
+	<option value="cp0055">cp0055</option>
+</select></div><!-- #naver_id -->
+
+<span class="help-block m-b-none">블로그에 등록될 네이버 아이디를 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div id="auto_cat_area">
+<div class="form-group"><label class="col-sm-2 control-label">블로그 카테고리</label>
+<div class="col-sm-10">
+<div id="naver_category">
+<select name="pb_category" id="pb_category" class="form-control" onchange="javascript:set_values(this.value,'5005');">
+	<option value="">선택하세요.</option>
+	<option value="1">맛집</option>
+	<option value="2">게시판</option>
+</select></div><!-- #naver_category -->
+<span class="help-block m-b-none">등록될 네이버 블로그 카테고리를 선택해주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div><!-- #auto_cat_area -->
+</div><!-- #naver_blogapi -->
 
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -620,8 +643,8 @@ function textAreaAdjustOn() {
 ****************/
 function set_blogurl(v)
 {
-	console.log($(v).is(':checked'));
-	var is_blogurl=$(v).is(':checked');
+	console.log($("#is_blogurl").is(':checked'));
+	var is_blogurl=$("#is_blogurl").is(':checked');
 	
 	var is_use_str=is_blogurl?"사용":"미사용";
 	var k=is_use_str?"Y":"N";
@@ -640,10 +663,12 @@ function set_blogurl(v)
 	allowEscapeKey:true,
 	inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
 		//$(v).prop('checked', !is_blogurl);
-	if (inputValue === false) return false;
-	if(!inputValue){
-		swal("취소!", "취소 하였습니다.", "error");
+	//if (inputValue === false) return false;
+	if(inputValue === false){
 		$("#is_blogurl").prop('checked', !is_blogurl);
+		swal("취소!", "취소 하였습니다.", "error");
+		// return false;
+		return;
 	}
 	if (inputValue.length<3) {
 	  swal.showInputError("3자이상 사유를 적어 주세요.");
@@ -685,8 +710,106 @@ function set_blogurl(v)
 	
 					/*취소를 눌렀을 때*/
 					if (inputValue === false){
-						$("#is_blogurl").prop('checked', !is_blogurl);
-						return false;
+						//$("#is_blogurl").prop('checked', !is_blogurl);
+						//return false;
+					} 
+
+					swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+					
+					setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+					;
+				});	
+			}
+
+			if(!data.success)
+			{
+				alert("변경에 실패하였습니다.");
+				swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
+			}
+		}/* success:function(data){...} */
+	});/* $.ajax({...}); */
+	});/* swal({...});*/
+}
+
+
+/****************
+* set_blogauto(this)
+* 블로그auto 사용/여부를 기록 합니다.
+* 
+****************/
+function set_blogauto(v)
+{
+	console.log($("#is_blogauto").is(':checked'));
+	var is_blogauto=$("#is_blogauto").is(':checked');
+	
+	var is_use_str=is_blogauto?"사용":"미사용";
+	var k=is_use_str?"Y":"N";
+	console.log(k);
+	swal({
+	title: "정말 변경 하시겠습니까?",
+	text: "해당 상점을 블로그 \""+is_use_str+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+	html:true,
+	type: "input",
+	showCancelButton: true,
+	closeOnConfirm: false,
+	cancelOnConfirm: false,
+	confirmButtonText: "네, 변경할래요!",
+	cancelButtonText: "아니요, 취소할래요!",
+	animation: "slide-from-top",   showLoaderOnConfirm: true,
+	allowEscapeKey:true,
+	inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
+		//$(v).prop('checked', !is_blogauto);
+	//if (inputValue === false) return false;
+	if(inputValue === false){
+		swal("취소!", "취소 하였습니다.", "error");
+		$("#is_blogauto").prop('checked', !is_blogauto);
+		return;
+	}
+	if (inputValue.length<3) {
+	  swal.showInputError("3자이상 사유를 적어 주세요.");
+	  return false;
+	}
+
+	var param=$("#write_action").serialize();
+	var data_url=$("#is_blogauto").is(':checked')?"on":"off";
+	param=param+"&mb_status="+k;
+	/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+	param=param+"&mb_reason="+inputValue;
+	param=param+"&pv_value="+data_url;
+	param=param+"&pv_code=5003";
+	//console.log(param);
+	$.ajax({
+	url:"/prq/ajax/chg_status/prq_isblogauto",
+		data:param,
+		dataType:"json",
+		type:"POST",
+		success:function(data){
+		
+		chk_blogauto();
+
+		console.log(data);
+			if(data.success){
+				//alert("변경에 성공하였습니다.");
+				swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
+				//$("#is_blogauto").prop('checked', is_blogauto);
+			}
+			if(data=="9000"){
+				//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+				swal({   
+					title: "로그인!",
+					text: "로그인 되지 않았습니다. 로그인 하시겠습니까?",
+					type: "warning",
+					showCancelButton: true,
+					closeOnConfirm: false,
+					animation: "slide-from-top"
+				}, 
+				function(inputValue)
+				{
+	
+					/*취소를 눌렀을 때*/
+					if (inputValue === false){
+						//$("#is_blogauto").prop('checked', !is_blogauto);
+						//return false;
 					} 
 
 					swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
@@ -807,6 +930,178 @@ function get_blogurl(){
 	});
 }
 
+
+/****************
+* get_blogauto() 
+* 블로그 자동 사용여부를 가져옵니다.
+* 
+****************/
+function get_blogauto(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5003";
+	var is_blogauto=false;
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				is_blogauto=val.pv_value=="on";
+				$("#is_blogauto").prop('checked', is_blogauto);
+				chk_blogauto();
+			});
+		}
+	});
+}
+
+/****************
+* set_values(v,code)
+* 코드 밸류 값을 갱신 합니다. 
+* @param v 코드에 대한 값
+* @param code 코드에 대한 키
+* @return 등록 여부
+****************/
+function set_values(v,code){
+	var st_no=$("#st_no").val();
+	var pv_value=v;
+	
+	console.log(st_no+" : "+pv_value);
+	var param="pv_no="+st_no+"&pv_value="+pv_value+"&pv_code="+code;
+	$.ajax({
+	url:"/prq/ajax/set_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			if(data.success){
+				toastr.success('수정성공.','코드를 수정 하였습니다.');
+			}else{
+				toastr.error('실패.','코드 수정에 실패 하였습니다.');
+			}
+			console.log(data);
+		}
+	});
+}
+
+
+/****************
+* get_naver_id() 
+* 네이버 블로그 아이디를  가져옵니다.
+* 
+****************/
+function get_naver_id()
+{
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5004";
+	var is_blogurl=false;
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				$("#pb_naver_id").val(val.pv_value).attr("selected", "selected");
+				chg_id(val.pv_value);
+				get_naver_category();
+			});
+			
+		}
+	});
+}
+
+/****************
+* get_naver_category() 
+* 네이버 블로그 카테고리 인덴스사용여부를 가져옵니다.
+* 
+****************/
+function get_naver_category(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5005";
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+			$("#pb_category").val(val.pv_value).attr("selected", "selected");
+			});
+		}
+	});
+}
+
+
+/* 등록된 블로그API 네이버 아이디 가져오기 */
+function get_naverapi_id()
+{
+	var object=[];
+	$.ajax({
+	url:"/prq/ajax/get_naverapi_id/",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			console.log(data);
+			object.push('<select name="pb_naver_id" id="pb_naver_id" class="form-control" onchange="javascript:chg_id(this.value);set_values(this.value,\'5004\');">');
+			object.push('<option value="">선택하세요.</option>');
+			$.each(data.posts,function(key,val){
+				object.push('<option value="'+val.pb_naver_id+'">'+val.pb_naver_id+'</option>');
+			});
+			object.push('</select>');
+
+			$("#naver_id").html(object.join(""));
+			
+			get_naver_id();
+		}
+	});
+}
+
+/* 네이버 아이디로 카테고리 조회 */
+function chg_id(v)
+{
+
+	
+	if(v=="")
+	{
+		$("#auto_cat_area").hide();
+		return;
+	}
+		$("#auto_cat_area").show();
+	var param="pb_naver_id="+v;
+	var list="";
+	var object=[];
+	$.ajax({
+	url:"/prq/ajax/get_naver_cat/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			list=data.message.result;
+			object.push('<select name="pb_category" id="pb_category" class="form-control"  onchange="javascript:set_values(this.value,\'5005\');">');
+			object.push('<option value="">선택하세요.</option>');
+			$.each(list,function(key,val){
+				object.push('<option value="'+val.categoryNo+'">'+val.name+'</option>');
+			});
+			object.push('</select>');
+
+			$("#naver_category").html(object.join(""));
+		}
+	});
+}
+
+function chk_blogauto()
+{
+	var blogauto=$("#is_blogauto").is(':checked');
+	if(blogauto)
+	{
+		$("#naver_blogapi").show();
+	}else{
+		$("#naver_blogapi").hide();
+	}
+}
+/* 홈페이지 로드시 */
 window.onload = function() {
 /*24시간인지 체크*/
 chk_btn_status();
@@ -822,11 +1117,35 @@ chk_byte();
 
 textAreaAdjustOn();
 
-/* 원산지를 가져옵니다.*/
+/* 원산지를 가져옵니다.
+ code 5001
+*/
 get_origin();
 
-/* 블로그url 사용여부를 가져옵니다.*/
+/* 블로그url 사용여부를 가져옵니다.
+ code 5002
+*/
 get_blogurl();
+
+chk_blogauto();
+
+/* 블로그 자동시사용 여부를 불러 옵니다.
+ code 5003
+*/
+get_blogauto();
+
+/*네이버 자동에 사용할 아이디를 불러 옵니다.*/
+
+
+
+/* 블로그url 사용여부를 가져옵니다.
+ code 5004
+*/
+/* 등록된 블로그API 네이버 아이디 가져오기 */
+get_naverapi_id();
+
+/* 네이버 블로그 카테고리를 불러 옵니다 5초뒤에 */
+setTimeout(get_naver_category, 5000); // 5000ms(5초)가 경과하면 이 함수가 실행됩니다.
 };/*window.onload = function() {..}*/
 
 

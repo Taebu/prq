@@ -84,10 +84,11 @@ echo '</div>';
 <input type="text" name="d3x_size" id="d3x_size" value="<?php echo $d3x;?>" class="form-control">
 
 
+
 <input type="text" name="bl_imgprefix" id="bl_imgprefix" value="<?php echo $views->bl_imgprefix;?>" class="form-control">
 
 <input type="hidden" name="ds_code" id="ds_code" value="<?php echo @$this->input->cookie('prq_fcode',TRUE);?>">
-
+<input type="hidden" name="posting_cnt" id="posting_cnt" value="0">
 <div class="row">
 <div class="col-lg-12">
 <div id="image_area">#image_area</div>
@@ -207,11 +208,20 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<div class="form-group"><label class="col-sm-2 control-label">블로그 URL</label>
+<div class="col-sm-10">
+<input type="text" name="bl_url" id="bl_url" class="form-control" value="<?php echo $views->bl_url;?>" placeholder="네이버 블로그에 url을 기재해 주세요. 예) http://blog.naver.com/abc123/123456">
+ - 블로그 URL : 네이버에 기제한 url을 기재해 주세요. <br>
+  예) http://blog.naver.com/abc123/123456<br>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="naver_blogapi" style='display:none'>
 <div class="form-group"><label class="col-sm-2 control-label">블로그 등록된 아이디</label>
 <div class="col-sm-10">
 <input type="text" name="pb_naver_id" id="pb_naver_id" class="form-control" value="">
- - 연동된 아이디로 블로그에 등록 됩니다. 값이 없으면 수동으로 등록 하셔야 합니다.
+ - 연동된 아이디로 블로그에 등록 됩니다. 값이 없으면 수 동으로 등록 하셔야 합니다.
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -322,7 +332,8 @@ echo "<img src='".$img_url."'>\n\n";
 </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
 var image_file_count=0;
-
+/* 포스팅 된 갯수*/
+var posting_cnt=0;
 
 /*
 server에 <span class="mb_gname">총판</span>을 등록 합니다.
@@ -564,6 +575,8 @@ window.onload = function() {
         if (checkload == true) return "레알 나감????????????";
     });
   //출처 ㅡ 「페이지 벗어날때 확인창 띄우기 - 따블류 랩」 https://lab.hv-l.net/?document_srl=172498
+ /**/
+  get_posting();
 };/*window.onload = function() {..}*/
 
 
@@ -681,12 +694,21 @@ function get_status(code)
 /* 현재 auth_token으로 등록된 아이디 블로그에 등록 합니다.*/
 function set_blog()
 {
+/*
 	var param="title="+"업체명";
 	param = param + "&pb_title="+$("#pb_title").val();
 	param = param + "&contents="+$("#hidden_contents").val();
 	param = param + "&pb_naver_id="+$("#pb_naver_id").val();
 	param = param + "&pb_category="+$("#pb_category").val();
+*/
+	/* 포스팅 여부 가져오기 */
 
+	if($("#posting_cnt").val()>0)
+	{
+		alert("이미 등록한 블로그 입니다.");
+		return;
+	}
+	var param=$("#write_action").serialize();
 	$.ajax({
 		url:"/prq/ajax/set_blog",
 		type:"POST",
@@ -701,7 +723,12 @@ function set_blog()
 					
 					/* 갱신 access_token 불러오기 */
 					get_refresh_token();
+				}else if(data.error_code=="999")
+				{
+					alert("블로그 API 아이디가 등록되지 않았습니다. \n관리자 에게 등록을 요청하세요.");
+
 				}else if(data.message.result.logNo>0){
+					$("#bl_url").val(data.message.result.postUrl);
 					alert(data.message.result.postUrl+"\n에 등록되었습니다.");
 				}
 			}
@@ -851,6 +878,7 @@ function chg_id(v)
 	});
 }
 
+
 /****************
 * get_naver_category() 
 * 네이버 블로그 카테고리 인덴스사용여부를 가져옵니다.
@@ -883,6 +911,8 @@ window.onload = function() {
 	/* 네이버 블로그 카테고리를 불러 옵니다 5초뒤에 */
 	 // 5000ms(5초)가 경과하면 이 함수가 실행됩니다.
 	 textAreaAdjustOn();
+
+	 get_posting();
 };
 
 /* Textarea to resize based on content length */
@@ -895,6 +925,26 @@ function textAreaAdjustOn() {
 function textAreaAdjust(o) {
 	o.style.height = "1px";
 	o.style.height = (25+o.scrollHeight)+"px";
+}
+
+/* 포스팅 여부와 더불어 갯수를 가져온다. */
+function get_posting()
+{
+	var bl_no=$("#bl_no").val();
+	var ret_val=0;
+	$.ajax({
+		url:"/prq/ajax/is_posting/"+bl_no,
+		type:"POST",
+		dataType:"html",
+		data:"",
+		success:function(data){
+			console.log(data);
+			$("#posting_cnt").val(data);
+			ret_val=data;
+		}
+	});
+//	return ret_val;
+
 }
 </script>
 <style type="text/css">

@@ -57,6 +57,8 @@ class Logs_m extends CI_Model
 			$table='prq_vali_log';
 		}else if($table=="happy"){
 			$table='prq_happycall_log';
+		}else if($table=="post"){
+			$table='prq_post_log';
 		}
 
 		//검색어가 있을 경우의 처리
@@ -191,6 +193,8 @@ class Logs_m extends CI_Model
 		$table='prq_vali_log';
 		}else if($table=="happy"){
 		$table='prq_happycall_log';
+		}else if($table=="post"){
+		$table='prq_post_log';
 		}
 
 		if($table=='prq_gcm_log')

@@ -206,6 +206,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                             <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST</a></li>
                             <?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
                             <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST<span class="label label-warning pull-right">NEW</span></a></li>
 						</ul>
                     </li>
 				</ul>
@@ -496,7 +497,7 @@ if($mb_gcode=='G5'){
                         <ul class="nav nav-second-level">
                             <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
-                    </li>
+    `                </li>
 					<?php 
 					 echo $this->uri->segment(1)=="partner"?'<li class="active">':'<li>';?>
                         <a href="#">

@@ -823,7 +823,7 @@ class Blog extends CI_Controller {
 
 		return json_decode($resp, true);
 	}
-
+	
 }
 
 /* End of file blog.php */

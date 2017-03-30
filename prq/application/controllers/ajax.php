@@ -583,17 +583,25 @@ class Ajax extends CI_Controller {
 	public function set_cdr()
 	{
 		$json['success']=false;
-
+		/* http://prq.co.kr/prq/ajax/set_cdr/?
+		port=1&
+		callerid=01050421183&
+		userid=0319044084@naver.com&
+		calledid=01020135535&
+		comname=COM3
+		*/
 		$UserID= $this->input->post("userid", TRUE);
 		$port= $this->input->post("port", TRUE);
 		$callerid= $this->input->post("callerid", TRUE);
 		$calledid = $this->input->post("calledid", TRUE);
+		$comname = $this->input->post("comname", TRUE);
 
 		$write_data = array(
 			'UserID'=>$UserID,
 			'port'=>$port,
 			'callerid'=>$callerid,
-			'calledid'=>$calledid
+			'calledid'=>$calledid,
+			'comname'=>$comname
 		);
 		$result = $this->ajax_m->set_cdr($write_data);
 		echo $result;
@@ -751,7 +759,6 @@ class Ajax extends CI_Controller {
 		$write_data = array(
 			'pv_no'=>$pv_no,
 			'pv_code'=>$pv_code,
-
 		);
 		$result = $this->ajax_m->get_values($write_data);
 		echo $result;
@@ -808,18 +815,25 @@ class Ajax extends CI_Controller {
 	  $pb_category=$this->input->post("pb_category", TRUE);
 
 	  $token=$this->blog_m->get_access_token($naver_id);
+	  if(count($token)==0)
+	  {
+		  $json=array();
+		  $json['error_code']="999";
+		  $json['message']="블로그API 회원정보가 없습니다.";
+		$response=json_encode($json);
+		echo $response;
+	  }else{
 	  $access_token=$token->access_token;
 	  
 	  $header = array('Authorization: Bearer '.$access_token);
 	  $header = "Bearer ".$access_token; // Bearer 다음에 공백 추가
-	  //echo $header;
-	  
-	  //$title = urlencode("네이버 블로그 api Test php---------");
-	  //$contents = urlencode("네이버 블로그 api로 글을 블로그에 올려봅니다.");
 
 	  $title=$this->input->post("pb_title", TRUE);
-	  $contents=$this->input->post("contents", TRUE);
+	  $contents=$this->input->post("hidden_contents", TRUE);
+	  $pb_naver_id=$this->input->post("pb_naver_id", TRUE);
 	  $pb_category=$this->input->post("pb_category", TRUE);
+	  $st_no=$this->input->post("st_no", TRUE);
+	  $bl_no=$this->input->post("bl_no", TRUE);
 
 	  $postvars = "title=".$title."&contents=".$contents;
 	  $postvars.= "&categoryNo=".$pb_category;
@@ -839,6 +853,76 @@ class Ajax extends CI_Controller {
 		echo $response;
 	  } else {
 		echo "Error 내용:".$response;
+	  }
+
+	$de_response=json_decode($response);
+
+/*
+실패
+
+{"message":"Authentication failed. (인증에 실패했습니다.)","error_code":"024"}
+*/
+//echo "de_response->message->result->logNo : (".intval($de_response->message->result->logNo).")";
+//echo "<br>";
+/* 실패 */
+if(isset($de_response->error_code)&&$de_response->error_code=="024")
+{
+	$po_subject=$title;
+	$po_content=$contents;
+	$po_status="f";
+	$na_code="";
+	$na_http=$de_response->error_code;
+	$na_message=$de_response->message;
+	$bl_url="";
+	$bl_naver_id=$pb_naver_id;
+	$bl_category=$pb_category;
+	$st_no=$st_no;
+	$bl_no=$bl_no;
+}else if(intval($de_response->message->result->logNo)>0){
+/*
+성공 : 실패
+{"message":
+	{ 
+		"@type":"response", 
+		"@service":"korea.naverkoreaservice.community.blog", 
+		"@version":"1.0.0", 
+		"result" : 
+		{
+			"blogId":"erm00",
+			"logNo":220970797583,
+			"postUrl":"http://erm00.blog.me/220970797583"
+		} 
+	}
+}
+*/
+	$po_subject=$title;
+	$po_content=$contents;
+	$po_status="s";
+	$na_code="";
+	$na_http="200";
+	$na_message="등록 되었습니다.";
+	$bl_url=$de_response->message->result->postUrl;
+	$bl_naver_id=$pb_naver_id;
+	$bl_category=$pb_category;
+	$st_no=$st_no;
+	$bl_no=$bl_no;
+}
+
+
+	$write_data = array(
+		'po_subject'=>$po_subject,
+		'po_content'=>$po_content,
+		'po_status'=>$po_status,
+		'na_code'=>$na_code,
+		'na_http'=>$na_http,
+		'na_message'=>$na_message,
+		'bl_url'=>$bl_url,
+		'bl_naver_id'=>$bl_naver_id,
+		'bl_category'=>$bl_category,
+		'st_no'=>$st_no,
+		'bl_no'=>$bl_no,
+	);
+	  $this->blog_m->set_post_log($write_data);
 	  }
 	}
 
@@ -936,7 +1020,18 @@ class Ajax extends CI_Controller {
 		$result = $this->ajax_m->get_naverapi_id();
 		echo $result;
 	}
-	
+
+		function is_posting()
+	{
+		$bl_no=$this->uri->segment(3);
+		$write_array=array(
+			'bl_no'=>$bl_no
+		);
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+ 		$return=$this->ajax_m->is_posting($write_array);
+		echo $return[0]->cnt;
+	}
+
 }
 /* End of file ajax_board.php */
 /* Location: ./bbs/application/controllers/ajax_board.php */
