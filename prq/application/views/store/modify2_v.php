@@ -1071,6 +1071,7 @@ function chg_id(v)
 		$("#auto_cat_area").show();
 	var param="pb_naver_id="+v;
 	var list="";
+	var sval="";
 	var object=[];
 	$.ajax({
 	url:"/prq/ajax/get_naver_cat/",
@@ -1082,7 +1083,12 @@ function chg_id(v)
 			object.push('<select name="pb_category" id="pb_category" class="form-control"  onchange="javascript:set_values(this.value,\'5005\');">');
 			object.push('<option value="">선택하세요.</option>');
 			$.each(list,function(key,val){
+				console.log(list);
+
 				object.push('<option value="'+val.categoryNo+'">'+val.name+'</option>');
+				$.each(val.subCategories,function(key2,val2){
+					object.push('<option value="'+val2.categoryNo+'">'+val2.name+'</option>');
+				});
 			});
 			object.push('</select>');
 

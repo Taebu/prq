@@ -1021,7 +1021,7 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		echo $result;
 	}
 
-		function is_posting()
+	function is_posting()
 	{
 		$bl_no=$this->uri->segment(3);
 		$write_array=array(
@@ -1030,6 +1030,11 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$return=$this->ajax_m->is_posting($write_array);
 		echo $return[0]->cnt;
+	}
+
+	function set_blogurl()
+	{
+	
 	}
 
 }

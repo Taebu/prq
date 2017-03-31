@@ -881,6 +881,9 @@ function chg_id(v)
 			object.push('<option value="">선택하세요.</option>');
 			$.each(list,function(key,val){
 				object.push('<option value="'+val.categoryNo+'">'+val.name+'</option>');
+				$.each(val.subCategories,function(key2,val2){
+					object.push('<option value="'+val2.categoryNo+'">'+val2.name+'</option>');
+				});
 			});
 			object.push('</select>');
 
