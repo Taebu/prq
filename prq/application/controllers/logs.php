@@ -105,7 +105,7 @@ class Logs extends CI_Controller {
 			'bl_naver_id'=>$this->input->post('bl_naver_id', TRUE),
 		);
 
-		if($this->uri->segment(3)=="cid"){
+		if($this->uri->segment(3)=="cid"||$this->uri->segment(3)=="ocid"){
 //		$base_url='javascript:search_form(';
 		$base_url='/prq/logs/lists/'.$this->uri->segment(3).$page_url.'/page/';
 		}else{

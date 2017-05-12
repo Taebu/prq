@@ -19,6 +19,10 @@
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
+ function remove_minus($num){
+ 	return preg_replace("/\-/","",$num);
+ }
+
 $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
@@ -71,9 +75,9 @@ echo '</div>';
 <input type="hidden" name="mb_code" id="mb_code" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <input type="hidden" name="mb_pcode" id="mb_pcode" value="<?php echo $this->input->post('mb_code',TRUE);?>">
 <!-- 매장사장 전화번호 -->
-<input type="text" name="st_hp_1" id="st_hp_1" value="<?php echo $store->st_hp_1;?>" class="form-control">
+<input type="text" name="st_hp_1" id="st_hp_1" value="<?php echo remove_minus($store->st_hp_1);?>" class="form-control">
 <!-- 영업사원 전화번호 -->
-<input type="text" name="mb_hp" id="mb_hp" value="<?php echo $member->mb_hp;?>" class="form-control">
+<input type="text" name="mb_hp" id="mb_hp" value="<?php echo remove_minus($member->mb_hp);?>" class="form-control">
 
 <input type="text" name="bl_no" id="bl_no" value="<?php echo $views->bl_no;?>" class="form-control">
 <input type="text" name="bl_file" id="bl_file" value="<?php echo $views->bl_file;?>" class="form-control">
@@ -202,7 +206,7 @@ onkeypress='chk_byte(3);textAreaAdjust(this)'
 
 <div class="form-group"><label class="col-sm-2 control-label">핸드폰</label>
 <div class="col-sm-10">
-<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="<?php echo $views->bl_hp;?>" placeholder="고객님 핸드폰을 기재해 주세요.">
+<input type="text" name="bl_hp" id="bl_hp" class="form-control" value="<?php echo remove_minus($views->bl_hp);?>" placeholder="고객님 핸드폰을 기재해 주세요.">
  - 고객님 핸드폰을 기재해 주세요.<br>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->

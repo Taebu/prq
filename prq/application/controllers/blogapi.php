@@ -160,6 +160,7 @@ class Blogapi extends CI_Controller {
 		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		//print_r($this->input->post());
 
 		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
@@ -167,8 +168,12 @@ class Blogapi extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('mb_id', '아이디', 'required');
-			$this->form_validation->set_rules('mb_password', '비밀번호', 'required');
+			$this->form_validation->set_rules('pb_company_name', '회사명', 'required');
+			$this->form_validation->set_rules('pb_app_name', '앱이름', 'required');
+			$this->form_validation->set_rules('pb_naver_id', '네이버아이디', 'required');
+			$this->form_validation->set_rules('pb_naver_pw', '네이버비밀번호', 'required');
+			$this->form_validation->set_rules('access_token', 'access_token', 'required');
+			$this->form_validation->set_rules('pb_hp', 'pb_hp', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -179,33 +184,14 @@ class Blogapi extends CI_Controller {
 				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
 
 				$write_data = array(
-					'table' => 'prq_member', 
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'mb_name' => $this->input->post('mb_name', TRUE),
-					'mb_gcode' => $this->input->post('mb_gcode', TRUE),
-					'mb_gtype' => $this->input->post('mb_gtype', TRUE),
-					'mb_gname_eng' => $this->input->post('mb_gname_eng', TRUE),
-					'mb_gname_kor' => $this->input->post('mb_gname_kor', TRUE),
-					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
-					'mb_email' => $this->input->post('mb_email', TRUE),
-					'mb_imgprefix' => $this->input->post('mb_imgprefix', TRUE),
-					'mb_addr1' => $this->input->post('mb_addr1', TRUE),
-					'mb_addr2' => $this->input->post('mb_addr2', TRUE),
-					'mb_addr3' => $this->input->post('mb_addr3', TRUE),
-					'mb_password' => $this->input->post('mb_password', TRUE),
-					'mb_hp' => $this->input->post('mb_hp', TRUE),
-					'mb_ceoname' => $this->input->post('mb_ceoname', TRUE),
-					'mb_business_num' => $this->input->post('mb_business_num', TRUE),
-					'mb_exactcaculation_ratio' => $this->input->post('mb_exactcaculation_ratio', TRUE),
-					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
-					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
-					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
-					'mb_bigo' => $this->input->post('mb_bigo', TRUE),
-					'mb_business_paper' => $this->input->post('mb_business_paper', TRUE),
-					'mb_blogapi_paper' => $this->input->post('mb_blogapi_paper', TRUE),
-					'mb_bank_paper' => $this->input->post('mb_bank_paper', TRUE),
-					'mb_business_paper_size' => $this->input->post('mb_business_paper_size', TRUE),
-					'mb_blogapi_paper_size' => $this->input->post('mb_blogapi_paper_size', TRUE)
+					'table' => "prq_blogapi",
+					'pb_company_name' => $this->input->post('pb_company_name', TRUE),
+					'pb_app_name' => $this->input->post('pb_app_name', TRUE),
+					'pb_naver_id' => $this->input->post('pb_naver_id', TRUE),
+					'pb_naver_pw' => $this->input->post('pb_naver_pw', TRUE),
+					'access_token' => $this->input->post('access_token', TRUE),
+					'refresh_token' => $this->input->post('refresh_token', TRUE),
+					'pb_hp' => $this->input->post('pb_hp', TRUE)
 					);
 
 				$result = $this->blogapi_m->insert_blogapi($write_data);

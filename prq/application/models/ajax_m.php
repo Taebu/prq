@@ -304,7 +304,6 @@ class Ajax_m extends CI_Model
 		
 		/* 블로그 상태 변경시 */
 		$st=$array['mb_status'];
-
 		foreach($arr_no as $an)
 		{
 			$json['is_foreach']=true;
@@ -346,8 +345,44 @@ class Ajax_m extends CI_Model
 					/* 소비자에게 전송 */
 					$array['content']="블로그 이용 후기 완료\n";
 					$array['content'].=$array['bl_url'];
-					$array['naver_id'];
-
+					$array_data=array(
+								'st_no'=>$array['pv_no'],
+								'mb_hp'=>$array['bl_hp'],
+								'subject'=>'소비자에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+					/* 사장에게 전송 */
+					$array['content']="블로그 리뷰 등록확인\n";
+					$array['content'].=$array['bl_hp']."\n";
+					$array['content'].=$array['bl_url'];
+					$array_data=array(
+								'st_no'=>$array['pv_no'],
+								'mb_hp'=>$array['st_hp_1'],
+								'subject'=>'사장에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+					
+					/* 영업자에게 전송 */
+					$array['content']="블로그 리뷰 등록확인\n";
+					$array['content'].=$array['bl_hp']."\n";
+					$array['content'].=$array['bl_url'];
+					$array_data=array(
+								'st_no'=>$array['pv_no'],
+								'mb_hp'=>$array['mb_hp'],
+								'subject'=>'영업자에게 포인트 승인',
+								'content'=>$array['content'],
+								'prq_table'=>$array['prq_table'],
+								'bl_no'=>$an);
+					$this->set_sms($array_data);				
+					// Simple call to remote URL
+					$review_url="http://cashq.co.kr/m/ajax_data/set_reviewpt.php";
+					$point_url=sprintf("%s?mb_hp=%s&bl_no=%s&bl_status=ceo_allow",$review_url,$array['bl_hp'],$an);
+					//$this->set_curl($point_url);
+					$this->curl->simple_get($point_url);
 				/* 포인트거절 */
 				}else if($st=="po_blog_deny"){
 					/* 소비자에게 전송 */
@@ -1611,6 +1646,11 @@ ERROR:
 
 
 */
+	/* 2017-04-07 (금) 15:06:09 
+		최초 설치시 특정 아이디 차단
+	*/
+/*	if($array['UserID']!="0226789282@naver.com")
+	{*/
 		$sql=array();
 		$sql[]="INSERT INTO  `callerid`.`cdr` SET ";
 		$sql[]=" date=now(), ";
@@ -1624,6 +1664,7 @@ ERROR:
 		$join_sql=join("",$sql);
 
 		$query = $this->prq->query($join_sql);
+	/*}*/
 		if($query)
 		{
 			$json['result']="성공.";
@@ -2407,6 +2448,69 @@ ERROR:
      	//블로그 등록 갯수 반환
 		$result = $query->result();
     	return $result;
+	}
+
+	/*
+	select * from naver_auth where date(na_datetime)=date("2017-03-31");
+	당일 생성한 네이버 토큰 존재 여부 
+	*/
+	function get_auth()
+	{
+		$json=array();
+		$json['success']=false;
+		$sql=array();
+		$sql[]="SELECT ";
+		$sql[]=" * ";
+		$sql[]="FROM ";
+		$sql[]="`naver_auth` ";
+		$sql[]=" where  date(na_datetime)=date(now()) ";
+		$sql[]=" order by na_datetime desc;";
+
+
+		$join_sql=join("",$sql);
+		$query = $this->prq->query($join_sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		
+		/* 조회 결과가 성공 이라면 */
+		if($json['success'])
+		{
+			$json['posts']=array();
+			foreach($query->result_array() as $list){
+				array_push($json['posts'],$list);
+			}
+		}
+		return json_encode($json);
+	}
+
+	/* simple_curl 때문에 반응 없음 개선 코드 
+	2017-04-06 (목) 15:38:33  */
+	function set_curl($url)
+	{
+	  // Get cURL resource
+	  $curl = curl_init();
+	  
+	  // Set some options - we are passing in a useragent too here
+	  curl_setopt_array($curl, array(
+	  	CURLOPT_RETURNTRANSFER => true,
+	  	CURLOPT_URL => $url,
+	  	CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+	  ));
+	  // Send the request & save response to $resp
+	  $resp = curl_exec($curl);
+	  
+	  // Close request to clear up some resources
+	  curl_close($curl);
+	  
+	  $array=json_decode($resp, true);
+	  /*
+	  $write_data = array(
+	  	'naver_id'=>$naver_id,
+	  	'access_token'=>$array['access_token']
+	  );
+	  $result = $this->blog_m->set_access_token($write_data);
+	  */	
 	}
 }
 /* End of file ajax_m.php */

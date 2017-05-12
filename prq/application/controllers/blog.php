@@ -101,7 +101,12 @@ class Blog extends CI_Controller {
 			$page_url = '/q/'.$search_word;
 			$uri_segment = 7;
 		}
-
+		
+		
+		if(strlen($this->input->get('q'))>0)
+		{
+			$search_word = urldecode($this->input->get('q'));
+		}
 		//페이지네이션 라이브러리 로딩 추가
 		$this->load->library('pagination');
 

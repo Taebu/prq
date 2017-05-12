@@ -101,7 +101,7 @@ class Ajax extends CI_Controller {
 
 	public function chg_status_naver()
 	{
-			if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 
 			
@@ -1037,6 +1037,45 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 	
 	}
 
+	/* get_auth */
+	public function get_auth()
+	{
+		$result = $this->ajax_m->get_auth();
+		echo $result;
+	}
+
+	public function get_latlng()
+	{
+		// 네이버 지도 Open API 예제 - 주소좌표변환
+		$client_id = "aWWbsFdRSNQZL6Df5ATr";
+		$client_secret = "Xa48I3ttVp";
+		//echo $this->uri->segment(3);
+		$encText = urlencode($this->uri->segment(3));
+		$encText = $this->uri->segment(3);
+		$url = "https://openapi.naver.com/v1/map/geocode?query=".$encText; // json
+		// $url = "https://openapi.naver.com/v1/map/geocode.xml?query=".$encText; // xml
+
+		$is_post = false;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, $is_post);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$headers = array();
+		$headers[] = "X-Naver-Client-Id: ".$client_id;
+		$headers[] = "X-Naver-Client-Secret: ".$client_secret;
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec ($ch);
+		$status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		//echo "status_code:".$status_code."<br>";
+		curl_close ($ch);
+		if($status_code == 200) {
+		echo $response;
+		} else {
+		//echo "Error 내용:".$response;
+		echo $response;
+		}
+
+	}
 }
 /* End of file ajax_board.php */
 /* Location: ./bbs/application/controllers/ajax_board.php */

@@ -1,7 +1,7 @@
 <?php
  /***********************************
  *
- * /prq/application/views/logs/cid/list_v.php
+ * /prq/application/views/logs/ocid/list_v.php
  * 
  ***********************************
   * string_format
@@ -33,7 +33,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/logs/lists/cid/q/'+$("#gc_receiver").val()+'/page/1';
+					var act = '/prq/logs/lists/ocid/q/'+$("#gc_receiver").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -55,13 +55,13 @@
 			  });  
 		});
 		
-		/*cid를 검색합니다.*/
+		/*ocid를 검색합니다.*/
 		function search_form(p,type){
 			$("#page").val(p);
 			if(type=="search"){
-			var act = '/prq/logs/lists/cid/q/'+$("#gc_receiver").val()+'/page/'+p;
+			var act = '/prq/logs/lists/ocid/q/'+$("#gc_receiver").val()+'/page/'+p;
 			}else{
-			var act = '/prq/logs/lists/cid/page/'+p;
+			var act = '/prq/logs/lists/ocid/page/'+p;
 			}
 			$("#bd_search").attr('action', act).submit();
 		}
@@ -258,7 +258,7 @@
 					?>
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>CID LOG 현황 입니다. <small>콜 정보를 조회해 주세요.</small></h5>
+                            <h5>OCID LOG 현황 입니다. <small>콜 정보를 조회해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>

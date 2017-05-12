@@ -8,7 +8,8 @@ $url=$_SERVER['PATH_INFO'];
 
  //phone regex http://blog.acronym.co.kr/243
  function phone_format($num){
- 	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
+	$key=strlen($num)==12?"4":"3";
+	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{".$key."})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
  }
 ?>
 <!doctype html>

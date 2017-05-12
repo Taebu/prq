@@ -72,6 +72,10 @@ map_location();
 });
 }
 }
+
+
+
+
 /*End 구글 지도 */
 </script>
 
@@ -463,13 +467,13 @@ complete : function() {
 });
 */
 /* 오시는 길 (장소)*/
-function map_location(){
+function map_location(x,y){
 var parameters = {};
 parameters['store_no'] = storeNo;
 parameters['store_name'] = $("#header_title").val();
 parameters['member_no'] = memberNo;
-parameters['latitude'] = $("#latitude").val();
-parameters['longitude'] = $("#longitude").val();
+parameters['latitude'] = x;
+parameters['longitude'] = y;
 parameters['width'] = $(window).width()-5;
 parameters['height'] = parseInt(parameters['width']/5*3);
 parameters['address_area'] = $("#address_area").html();
@@ -493,6 +497,32 @@ complete : function() {
 }
 });
 }
+/*네이버 지도 불러 오기*/
+function get_latlng(v){
+$.ajax({
+url : '/prq/ajax/get_latlng/'+v,
+//url : '/prq/map.php',
+type : 'POST',
+async : false,
+dataType:"json",
+beforeSend: function(jqXHR) {
+//
+},
+success : function(data, textStatus, jqXHR) {
+//console.log(data.result.items[0].point.y);
+//console.log(data.result.items[0].point.x);
+
+map_location(data.result.items[0].point.y,data.result.items[0].point.x);
+},
+error : function(jqXHR, textStatus, errorThrown) {
+},
+complete : function() {
+
+}
+});
+
+}
+
 /* 쿠폰 정보
 var parameters = {};
 parameters['store_no'] = storeNo;
@@ -562,7 +592,9 @@ object.push(data.mb_addr3);
 $("#address_area").html(object.join(" "));
 
 /*지도 위도 경도 구글 API 로 불러오기*/
-setMarkerByGeocoding1(object.join(" "));
+//setMarkerByGeocoding1(object.join(" "));
+/*네이버 지도 경도 구글 API 로 불러오기*/
+get_latlng(object.join(" "));
 $("#mb_business_num").html(data.mb_business_num);
 
 },

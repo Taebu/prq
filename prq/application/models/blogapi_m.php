@@ -110,40 +110,17 @@ class Blogapi_m extends CI_Model
 	 */
 	function insert_blogapi($arrays)
  	{
-		$sql_array = array(
-			'mb_pcode' => $arrays['mb_pcode']
-		);
 
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
-		$sql_array[]="mb_id='".$arrays['mb_id']."',";
-		$sql_array[]="mb_name='".$arrays['mb_name']."',";
-		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
-		$sql_array[]="mb_gtype='".$arrays['mb_gtype']."',";
-		$sql_array[]="mb_gcode='".$arrays['mb_gcode']."',";
-		$sql_array[]="mb_gname_eng='".$arrays['mb_gname_eng']."',";
-		$sql_array[]="mb_gname_kor='".$arrays['mb_gname_kor']."',";
-		$sql_array[]="mb_email ='".$arrays['mb_email']."',";
-		$sql_array[]="mb_addr1 ='".$arrays['mb_addr1']."',";
-		$sql_array[]="mb_addr2 ='".$arrays['mb_addr2']."',";
-		$sql_array[]="mb_addr3 ='".$arrays['mb_addr3']."',";
-		$sql_array[]="mb_ceoname ='".$arrays['mb_ceoname']."',";
-		$sql_array[]="mb_password=password('".$arrays['mb_password']."'),";
-		$sql_array[]="mb_hp ='".$arrays['mb_hp']."',";
-		$sql_array[]="mb_business_num ='".$arrays['mb_business_num']."',";
-		$sql_array[]="mb_exactcaculation_ratio ='".$arrays['mb_exactcaculation_ratio']."',";
-		$sql_array[]="mb_bankname ='".$arrays['mb_bankname']."',";
-		$sql_array[]="mb_banknum ='".$arrays['mb_banknum']."',";
-		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
-		$sql_array[]="mb_bigo='".$arrays['mb_bigo']."',";
-		$sql_array[]="mb_business_paper='".$arrays['mb_business_paper']."',";
-		$sql_array[]="mb_blogapi_paper ='".$arrays['mb_blogapi_paper']."',";
-		$sql_array[]="mb_bank_paper ='".$arrays['mb_bank_paper']."',";
-		$sql_array[]="mb_business_paper_size='".$arrays['mb_business_paper_size']."',";
-		$sql_array[]="mb_blogapi_paper_size ='".$arrays['mb_blogapi_paper_size']."',";
-		$sql_array[]="mb_bank_paper_size ='".$arrays['mb_bank_paper_size']."',";
-		$sql_array[]="mb_imgprefix='".$arrays['mb_imgprefix']."',";
-		$sql_array[]="mb_datetime=now();";
+		$sql_array[]="pb_company_name='".$arrays['pb_company_name']."',";
+		$sql_array[]="pb_app_name='".$arrays['pb_app_name']."',";
+		$sql_array[]="pb_naver_id='".$arrays['pb_naver_id']."',";
+		$sql_array[]="pb_naver_pw='".$arrays['pb_naver_pw']."',";
+		$sql_array[]="access_token='".$arrays['access_token']."',";
+		$sql_array[]="refresh_token='".$arrays['refresh_token']."',";
+		$sql_array[]="pb_hp='".$arrays['pb_hp']."',";
+		$sql_array[]="pb_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		//결과 반환

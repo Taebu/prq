@@ -30,7 +30,7 @@
 		}
 
 		function set_write(){
-		$('#bd_search').attr('action', "/prq/distributors/write/prq_member/page/1");
+		$('#bd_search').attr('action', "/prq/blogapi/write/");
           $("#bd_search").submit();
 		
 		}
@@ -416,6 +416,8 @@ $attributes = array('class' => 'form-horizontal','name' => 'write_action','id' =
 echo form_open('board/write/ci_board', $attributes);
 ?>
 <div class='col-sm-12'>
+<p>1. 새로운 아이디를 등록시 <a href="/blog/">blog</a> 에 아이디로 로그인 한다.</p>
+<p>2. </p>
 <?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 if($mb_gcode=="G1"||$mb_gcode=="G2")
 {?>
@@ -450,7 +452,7 @@ echo "<tr><td colspan='12' style='text-align:center'>등록된 `총판`이 없�
 }
 
 $array_fr = array_column($count, 'mb_pcode');
-print_r($count);
+//print_r($count);
 $fr_cnt = array_column($count, 'cnt');
 
 foreach ($list as $lt)

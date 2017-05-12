@@ -150,6 +150,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                     </li>
 					<?php 
 					 echo $this->uri->segment(1)=="franchise"?'<li class="active">':'<li>';
+
 					 ?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -166,13 +167,15 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                         </ul>
                     </li>
 					<?php 
-					echo $this->uri->segment(1)=="blog"?'<li class="active">':'<li>';
+//					echo $this->uri->segment(1)=="blog"?'<li class="active">':'<li>';
+					echo $this->uri->segment(1)=="blog"||$this->uri->segment(1)=="blogapi"?'<li class="active">':'<li>';
 					 ?>
                         <a href="#">
 						<i class="fa fa-pie-chart"></i><span class="nav-label">블로그</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li class="active"><a href="/prq/blog/">리뷰 목록</a></li>
-                        </ul>
+                            <?php echo $this->uri->segment(1)=="blog"?'<li class="active">':'<li>';?><a href="/prq/blog/">리뷰 목록</a></li>
+                            <?php echo $this->uri->segment(1)=="blogapi"?'<li class="active">':'<li>';?><a href="/prq/blogapi/">API 목록</a></li>
+						</ul>
                     </li>
 					<?php 
 					echo $this->uri->segment(1)=="board"||$this->uri->segment(1)=="ata"?'<li class="active">':'<li>';
@@ -198,6 +201,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 						<i class="fa fa-files-o"></i><span class="nav-label">LOGS</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <?php echo $this->uri->segment(3)=="cid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/cid">CID</a></li>
+                            <?php echo $this->uri->segment(3)=="ocid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ocid">OCID</a></li>
                             <?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
                             <?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
 							<?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>

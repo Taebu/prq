@@ -41,7 +41,9 @@ class Blog_m extends CI_Model
 		if ( $search_word != '' )
      	{
      		//검색어가 있을 경우의 처리
-     		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+//     		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+			$sword .= ' and bl_hp like "%'.$search_word.'%" ';
+			$sword .= ' or st_name like "%'.$search_word.'%" ';
      	}
 		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
 		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);

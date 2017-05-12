@@ -28,7 +28,7 @@
 					alert('검색어를 입력해주세요.');
 					return false;
 				} else {
-					var act = '/prq/logs/lists/mms/q/'+$("#q").val()+'/page/1';
+					var act = '/prq/logs/lists/sms/q/'+$("#q").val()+'/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -53,9 +53,9 @@
 		function search_form(p,type){
 			$("#page").val(p);
 			if(type=="search"){
-			var act = '/prq/logs/lists/mms/q/'+$("#gc_receiver").val()+'/page/'+p;
+			var act = '/prq/logs/lists/sms/q/'+$("#gc_receiver").val()+'/page/'+p;
 			}else{
-			var act = '/prq/logs/lists/mms/page/'+p;
+			var act = '/prq/logs/lists/sms/page/'+p;
 			}
 			$("#bd_search").attr('action', act).submit();
 		}

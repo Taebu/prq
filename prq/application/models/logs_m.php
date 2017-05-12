@@ -47,6 +47,8 @@ class Logs_m extends CI_Model
 			$table='prq_log';
 		}else 	if($table=="cid"){
 			$table='prq_cdr';
+		}else 	if($table=="ocid"){
+			$table='prq_cdr_tmp';
 		}else if($table=="ata"){
 			$table='prq_ata';
 		}else if($table=="blog"){
@@ -93,7 +95,7 @@ class Logs_m extends CI_Model
 				$sword .= ' and mm_sender like "%'.$mm_sender.'%" or mm_receiver like "%'.$mm_receiver.'%" ';
 			}else 	if($table=="act"){
 				$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
-			}else 	if($table=="cid"){
+			}else 	if($table=="cid"||$table=="ocid"){
 				$sword .= ' and gc_sender like "%'.$search_word.'%" or gc_receiver like "%'.$search_word.'%" ';
 			}
 
@@ -127,6 +129,8 @@ class Logs_m extends CI_Model
 		}else if($table=="prq_mms_log"){
 			$sql[]=" order by mm_no desc ";
 		}else if($table=="prq_cdr"){
+			$sql[]=" order by cd_date desc ";
+		}else if($table=="prq_cdr_tmp"){
 			$sql[]=" order by cd_date desc ";
 		}else if($table=="prq_log"){
 			$sql[]=" order by lo_datetime desc ";
@@ -183,6 +187,8 @@ class Logs_m extends CI_Model
 		$table='prq_log';
 		}else 	if($table=="cid"){
 		$table='prq_cdr';
+		}else 	if($table=="ocid"){
+		$table='prq_cdr_tmp';
 		}else 	if($table=="ata"){
 		$table='prq_ata_log';
 		}else 	if($table=="first"){
@@ -228,6 +234,29 @@ class Logs_m extends CI_Model
 			1 row in set (0.00 sec)
 		*/
 		if($table=='prq_cdr')
+		{
+			if ( $search_array['cd_id'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and cd_id like "%'.$search_array['cd_id'].'%" ';
+			}
+			
+			if ( $search_array['cd_name'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and cd_name like "%'.$search_array['cd_name'].'%" ';
+			}
+
+			if ( $search_array['cd_callerid'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and cd_callerid like "%'.$search_array['cd_callerid'].'%" ';
+			}
+		}
+
+
+
+		if($table=='prq_cdr_tmp')
 		{
 			if ( $search_array['cd_id'] != '' )
 			{
@@ -332,7 +361,7 @@ class Logs_m extends CI_Model
 			$sql[]=$sword;
 			}
 			$sql[]=" order by mm_no desc ";
-		}else if($table=="prq_cdr"){
+		}else if($table=="prq_cdr"||$table=="prq_cdr_tmp"){
 			$sql[]=" where 1=1 ";
 			if ( $search_array != '' )
      		{

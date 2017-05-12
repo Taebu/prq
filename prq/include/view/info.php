@@ -1,5 +1,9 @@
 <?php
 extract($_POST);
+ function phone_format($num){
+	$key=strlen($num)==12?"4":"3";
+	return preg_replace("/(^02.{0}|^01.{1}|[0-9]{".$key."})([0-9]+)([0-9]{4})/","$1-$2-$3",$num);
+ }
 
 
 ?>
@@ -52,9 +56,9 @@ extract($_POST);
 				<li style="float:left;margin-left:15px;font-weight:bold;">
 					<?php 
 					if($st_teltype=="cashq"){
-						echo $st_vtel==""?" - ":$st_vtel;
+						echo $st_vtel==""?" - ":phone_format($st_vtel);
 					}else{
-						echo $st_tel==""?" - ":$st_tel;
+						echo $st_tel==""?" - ":phone_format($st_tel);
 					}
 					?>
 				</li>
