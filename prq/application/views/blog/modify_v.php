@@ -288,8 +288,9 @@ echo "배달시간 : 24시간\n";
 
 일반번호 : <?php echo $store->st_tel;?>
 </span>
-
+<a href="tel:1599-7571">
 <img src='http://prq.co.kr/prq/uploads/blog/talktalk_review.jpg'>
+</a>
 </center>
 </textarea>
 </div><!-- .naver_blogapi -->

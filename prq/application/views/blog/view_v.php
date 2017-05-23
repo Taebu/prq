@@ -5,11 +5,18 @@
 	</div>
 	<div class="col-lg-10" style="text-align:center;">
 		<ul style="margin:0;padding:10px 0 10px 0;list-style:none;">
+			<!-- <li><?php echo $friends->pt_name." (".$friends->pt_code.")";?></li> -->
+			<li><?php echo $friends->pt_name;?></li>
 			<li style="font-weight:bold;font-size:27px;"><?php echo $store->st_name;?></li>
 			<li>BLOG Review</li>
-			<li><?php 
+			<li style="border:1px solid #bbb;width:210px;margin:0 auto;"></li>
+			<li style="margin:15px 0 2px 0;">일반번호 : <?php echo $store->st_tel;?></li>
+			<li>050번호 : <?php 
 			//print_r($store);
-			echo $store->st_vtel;?></li>
+			echo $store->st_vtel;?>
+			</li>
+			
+			<li style="margin:2px 0 2px 0;">http://prq.co.kr/prq/page/<?php echo $store->st_no;?></li>
 		</ul>
 		<!-- <ol class="breadcrumb">
 			<li>

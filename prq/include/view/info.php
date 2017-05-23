@@ -149,7 +149,7 @@ extract($_POST);
   	<!-- review -->
   	<div id="review_area">
 	  	<!-- 후기 header -->
-    	<div class="review_top">
+    	<!-- <div class="review_top">
 	    						<span class="star star_inert"> 평점 비활성아이콘 </span>
 								<span class="star star_inert"> 평점 비활성아이콘 </span>
 								<span class="star star_inert"> 평점 비활성아이콘 </span>
@@ -159,8 +159,7 @@ extract($_POST);
 			<span class="btn_area"> <a href="/review/write.php" class="btn gray_btn_b"><span>후기작성</span></a> </span> 
 		</div>
 		
-		<div id="box_reviews">
-			    </div>
+		<div id="box_reviews"></div> -->
 	    
 		    	
 	<!-- //review -->

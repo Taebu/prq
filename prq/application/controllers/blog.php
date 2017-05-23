@@ -177,7 +177,8 @@ class Blog extends CI_Controller {
 		$data['files'] = $this->blog_m->get_files($array);
 		$data['store'] = $this->blog_m->get_store($array);
 		//$isMobile = $this->check_user_agent('mobile');
-
+		$array = json_decode(json_encode($data['store']),true);
+		$data['friends'] = $this->blog_m->get_friends($array);
 		$this->load->view('blog/view_v', $data);
  	}
 

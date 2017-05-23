@@ -560,6 +560,27 @@ class Blog_m extends CI_Model
     	return $result;
     }
 
+
+    /**
+	 * PT코드 정보 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $prq_fcode pt_code
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_friends($arrays)
+    {
+
+    	$sql = "SELECT * FROM prq.prq_ptcode ";
+		$sql.= "WHERE pt_code=substr('".$arrays['prq_fcode']."',1,12);";
+   		$query = $this->prq->query($sql);
+
+     	//댓글 리스트 반환
+	    $result = $query->row();
+
+    	return $result;
+    }
 	/**
 	 * 파일 삭제
 	 * @author Taebu Moon <mtaebu@gmail.com>
