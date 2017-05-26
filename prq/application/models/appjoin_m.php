@@ -187,7 +187,8 @@ class Appjoin_m extends CI_Model
 //    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
 //   		$this->db->query($sql0);
 
-    	$sql = "SELECT * FROM ".$table." WHERE st_no='".$id."'";
+    	$sql = "SELECT * FROM ".$table." WHERE ma_no='".$id."'";
+		echo $sql;
    		$query = $this->db->query($sql);
 
      	//게시물 내용 반환
@@ -204,47 +205,51 @@ class Appjoin_m extends CI_Model
 	 * @param array $arrays 테이블명, 게시물제목, 게시물내용, 아이디 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function insert_store($arrays)
+	function insert_appjoin($arrays)
  	{
 		$sql_array=array();
 		$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
-		$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
-		$sql_array[]="st_category='".$arrays['st_category']."',";
+		$sql_array[]="ma_isbdtt='".$arrays['ma_isbdtt']."',";
+		$sql_array[]="ma_isttmsg='".$arrays['ma_isttmsg']."',";
+		$sql_array[]="ma_isnavermap='".$arrays['ma_isnavermap']."',";
+		$sql_array[]="ma_isblogreview='".$arrays['ma_isblogreview']."',";
 		$sql_array[]="st_name='".$arrays['st_name']."',";
-		$sql_array[]="mb_id='".$arrays['mb_id']."',";
-		$sql_array[]="st_tel_1='".$arrays['st_tel_1']."',";
-		$sql_array[]="st_hp_1='".$arrays['st_hp_1']."',";
-		$sql_array[]="st_tel='".$arrays['st_tel']."',";
-		$sql_array[]="st_vtel='".$arrays['st_vtel']."',";
-		$sql_array[]="st_teltype='".$arrays['st_teltype']."',";
+		$sql_array[]="st_minpay='".$arrays['st_minpay']."',";
+		$sql_array[]="st_delivery='".$arrays['st_delivery']."',";
+		$sql_array[]="st_address='".$arrays['st_address']."',";
+		$sql_array[]="st_category='".$arrays['st_category']."',";
+		$sql_array[]="st_origin='".$arrays['st_origin']."',";
+		$sql_array[]="st_closingdate='".$arrays['st_closingdate']."',";
 		$sql_array[]="st_open='".$arrays['st_open']."',";
 		$sql_array[]="st_closed='".$arrays['st_closed']."',";
 		$sql_array[]="st_alltime='".$arrays['st_alltime']."',";
+		$sql_array[]="st_bizno='".$arrays['st_bizno']."',";
+		$sql_array[]="st_bizname='".$arrays['st_bizname']."',";
+		$sql_array[]="st_ceoname='".$arrays['st_ceoname']."',";
+		$sql_array[]="st_bizaddress='".$arrays['st_bizaddress']."',";
+		$sql_array[]="st_taxemail='".$arrays['st_taxemail']."',";
+		$sql_array[]="st_bizhp='".$arrays['st_bizhp']."',";
+		$sql_array[]="st_bdtthp='".$arrays['st_bdtthp']."',";
 		$sql_array[]="st_mno='".$arrays['st_mno']."',";
-		$sql_array[]="st_closingdate='".$arrays['st_closingdate']."',";
-		$sql_array[]="st_destination='".$arrays['st_destination']."',";
-		$sql_array[]="st_intro='".$arrays['st_intro']."',";
-		$sql_array[]="st_password='".$arrays['st_password']."',";
-		$sql_array[]="st_nick='".$arrays['st_nick']."',";
-		$sql_array[]="st_nick_date='".$arrays['st_nick_date']."',";
-		$sql_array[]="st_email='".$arrays['st_email']."',";
-		$sql_array[]="st_homepage='".$arrays['st_homepage']."',";
-		$sql_array[]="st_business_name='".$arrays['st_business_name']."',";
-		$sql_array[]="st_business_paper='".$arrays['st_business_paper']."',";
-		$sql_array[]="st_business_paper_size='".$arrays['st_business_paper_size']."',";
-		$sql_array[]="st_thumb_paper='".$arrays['st_thumb_paper']."',";
-		$sql_array[]="st_thumb_paper_size='".$arrays['st_thumb_paper_size']."',";
-		$sql_array[]="st_menu_paper='".$arrays['st_menu_paper']."',";
-		$sql_array[]="st_menu_paper_size='".$arrays['st_menu_paper_size']."',";
-		$sql_array[]="st_main_paper='".$arrays['st_main_paper']."',";
-		$sql_array[]="st_main_paper_size='".$arrays['st_main_paper_size']."',";
-		$sql_array[]="st_modoo_url='".$arrays['st_modoo_url']."',";
-		$sql_array[]="st_theme='".$arrays['st_theme']."',";
-		$sql_array[]="st_top_msg='".$arrays['st_top_msg']."',";
-		$sql_array[]="st_middle_msg='".$arrays['st_middle_msg']."',";
-		$sql_array[]="st_bottom_msg='".$arrays['st_bottom_msg']."',";
-		$sql_array[]="st_business_num='".$arrays['st_business_num']."',";
-		$sql_array[]="st_datetime=now();";
+		$sql_array[]="st_info='".$arrays['st_info']."',";
+		$sql_array[]="ma_blogprice='".$arrays['ma_blogprice']."',";
+		$sql_array[]="ma_ispost='".$arrays['ma_ispost']."',";
+		$sql_array[]="ma_ispoint='".$arrays['ma_ispoint']."',";
+		$sql_array[]="ma_naverid='".$arrays['ma_naverid']."',";
+		$sql_array[]="ma_naverpwd='".$arrays['ma_naverpwd']."',";
+		$sql_array[]="ma_isnaver='".$arrays['ma_isnaver']."',";
+		$sql_array[]="ma_name='".$arrays['ma_name']."',";
+		$sql_array[]="ma_adminname='".$arrays['ma_adminname']."',";
+		$sql_array[]="ma_adminhp='".$arrays['ma_adminhp']."',";
+		$sql_array[]="ma_cmsprice='".$arrays['ma_cmsprice']."',";
+		$sql_array[]="mb_birth='".$arrays['mb_birth']."',";
+		$sql_array[]="mb_bankname='".$arrays['mb_bankname']."',";
+		$sql_array[]="mb_banknum='".$arrays['mb_banknum']."',";
+		$sql_array[]="ma_dateofpayment='".$arrays['ma_dateofpayment']."',";
+		$sql_array[]="mb_bankholder='".$arrays['mb_bankholder']."',";
+		$sql_array[]="mb_email='".$arrays['mb_email']."',";
+		$sql_array[]="ma_signaturepad='".$arrays['ma_signaturepad']."',";
+		$sql_array[]="ma_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->db->query($sql);
 		
@@ -501,7 +506,7 @@ mysql> select * from prq_member_code;
 	 */
     function get_comment($table, $id)
     {
-    	$sql = "SELECT * FROM ".$table." WHERE st_no='".$id."' ORDER BY st_no DESC";
+    	$sql = "SELECT * FROM ".$table." WHERE ma_no='".$id."' ORDER BY ma_no DESC";
    		$query = $this->db->query($sql);
 
      	//댓글 리스트 반환

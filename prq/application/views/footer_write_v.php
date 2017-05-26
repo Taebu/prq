@@ -516,6 +516,8 @@ if($("#logged_in").val()==""){
 	setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
 
 }
+
+console.log("footer_write_v.php");
 </script>
 
 </body>

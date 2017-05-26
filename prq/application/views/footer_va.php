@@ -7,6 +7,8 @@
 	</footer>
 
 </div>
-
+<script type="text/javascript">
+console.log("footer_va.php");
+</script>
 </body>
 </html>

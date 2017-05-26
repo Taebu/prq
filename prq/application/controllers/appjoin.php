@@ -190,7 +190,7 @@ class Appjoin extends CI_Controller {
  		$data['views'] = $this->appjoin_m->get_view($table, $board_id);
 		$array=json_decode(json_encode($data['views']), True);
 
-		$data['logs'] = $this->appjoin_m->get_logs($array);
+//		$data['logs'] = $this->appjoin_m->get_logs($array);
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
  		$data['comment_list'] = $this->appjoin_m->get_comment($table, $board_id);
 
@@ -207,14 +207,15 @@ class Appjoin extends CI_Controller {
 		$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE )
+//		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE )
+		if(TRUE )
 		{
 			//폼 검증 라이브러리 로드
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
 			$this->form_validation->set_rules('st_name', '상점 이름', 'required');
-			$this->form_validation->set_rules('st_tel', '상점 전화번호', 'required');
+			$this->form_validation->set_rules('st_minpay', '상점 최소금액', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -225,67 +226,62 @@ class Appjoin extends CI_Controller {
 				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
 
 				$write_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
-					'st_category' => $this->input->post('st_category', TRUE),
+					'table' => 'modu_agreement', //게시판 테이블명
+
+					'ma_isbdtt' => $this->input->post('ma_isbdtt', TRUE)=="on"?"on":"off",
+					'ma_isttmsg' => $this->input->post('ma_isttmsg', TRUE)=="on"?"on":"off",
+					'ma_isnavermap' => $this->input->post('ma_isnavermap', TRUE)=="on"?"on":"off",
+					'ma_isblogreview' => $this->input->post('ma_isblogreview', TRUE)=="on"?"on":"off",
 					'st_name' => $this->input->post('st_name', TRUE),
-					'st_tel' => $this->input->post('st_tel', TRUE),
-					'st_teltype' => $this->input->post('st_teltype', TRUE),
-					'st_vtel' => $this->input->post('st_vtel', TRUE),
-					'mb_id' => $this->input->post('mb_id', TRUE),
+					'st_minpay' => $this->input->post('st_minpay', TRUE),
+					'st_delivery' => $this->input->post('st_delivery', TRUE),
+					'st_address' => $this->input->post('st_address', TRUE),
+					'st_category' => $this->input->post('st_category', TRUE),
+					'st_origin' => $this->input->post('st_origin', TRUE),
+					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
 					'st_open' => $this->input->post('st_open', TRUE),
 					'st_closed' => $this->input->post('st_closed', TRUE),
-					'st_alltime' => $this->input->post('st_alltime', TRUE),
+					'st_alltime' => $this->input->post('st_alltime', TRUE)=="on"?"on":"off",
+					'st_bizno' => $this->input->post('st_bizno', TRUE),
+					'st_bizname' => $this->input->post('st_bizname', TRUE),
+					'st_ceoname' => $this->input->post('st_ceoname', TRUE),
+					'st_bizaddress' => $this->input->post('st_bizaddress', TRUE),
+					'st_taxemail' => $this->input->post('st_taxemail', TRUE),
+					'st_bizhp' => $this->input->post('st_bizhp', TRUE),
+					'st_bdtthp' => $this->input->post('st_bdtthp', TRUE),
 					'st_mno' => $this->input->post('st_mno', TRUE),
-//					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
-					'st_closingdate' => join(",",$this->input->post('st_closingdate', TRUE)),
-					'st_destination' => $this->input->post('st_destination', TRUE),
-					'st_intro' => $this->input->post('st_intro', TRUE),
-					'st_password' => $this->input->post('st_password', TRUE),
-					'st_nick' => $this->input->post('st_nick', TRUE),
-					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
-					'st_email' => $this->input->post('st_email', TRUE),
-					'st_homepage' => $this->input->post('st_homepage', TRUE),
-					'st_business_name' => $this->input->post('st_business_name', TRUE),
-					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
-					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
-					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
-					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
-					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
-					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
-					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
-					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
-					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
-					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
-					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
-					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
-					'st_business_num' => $this->input->post('st_business_num', TRUE),
-					'st_datetime' => $this->input->post('st_datetime', TRUE),
-					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
-					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
-					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
-					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
-					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
-					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
-					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
-					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
-					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
-					'st_theme' => $this->input->post('st_theme', TRUE),
-					'st_status' => $this->input->post('st_status', TRUE)
+					'st_info' => join("&",$this->input->post('st_info', TRUE)),
+					'ma_blogprice' => $this->input->post('ma_blogprice', TRUE),
+					'ma_ispost' => $this->input->post('ma_ispost', TRUE)=="on"?"on":"off",
+					'ma_ispoint' => $this->input->post('ma_ispoint', TRUE)=="on"?"on":"off",
+					'ma_naverid' => $this->input->post('ma_naverid', TRUE),
+					'ma_naverpwd' => $this->input->post('ma_naverpwd', TRUE),
+					'ma_isnaver' => $this->input->post('ma_isnaver', TRUE)=="on"?"on":"off",
+					'ma_name' => $this->input->post('ma_name', TRUE),
+					'ma_adminname' => $this->input->post('ma_adminname', TRUE),
+					'ma_adminhp' => $this->input->post('ma_adminhp', TRUE),
+					'ma_cmsprice' => $this->input->post('ma_cmsprice', TRUE),
+					'mb_birth' => $this->input->post('mb_birth', TRUE),
+					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
+					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
+					'ma_dateofpayment' => $this->input->post('ma_dateofpayment', TRUE),
+					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
+					'mb_email' => $this->input->post('mb_email', TRUE),
+					'ma_signaturepad' => $this->input->post('signature_content', TRUE)
 				);
 				$result = $this->appjoin_m->insert_appjoin($write_data);
 				
 				$this->load->model('ajax_m');
 				
 
-				
+				/*
 				$write_data = array(
 					'pv_no' =>$result,
 					'pv_code' =>'5001',
 					'pv_value' => $this->input->post('pv_value', TRUE)
 				);
 				$this->ajax_m->set_origin($write_data);				
-
+				*/
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
@@ -308,8 +304,12 @@ class Appjoin extends CI_Controller {
 		}
 		else
 		{
-			alert('로그인후 작성하세요', '/prq/auth/login/');
-			exit;
+//			alert('로그인후 작성하세요', '/prq/auth/login/');
+//			exit;
+			/* 비 로그인시도 작성 토록 write view 호출*/
+			//쓰기폼 view 호출
+			$this->load->view('appjoin/write_v');	
+
 		}
  	}
 

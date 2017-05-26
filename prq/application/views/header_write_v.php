@@ -51,11 +51,14 @@
 	<!-- form_file_upload.html dropzone-->
 	<link href="/prq/include/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/prq/include/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+
+    <!-- signature pad -->
+    <link href="/prq/include/css/plugins/signature_pad/signature-pad.css" rel="stylesheet">
 <script type="text/javascript">
 
 	var application="<?php echo $this->uri->segment(1);?>";
 	var method="<?php echo $this->uri->segment(2);?>";
-
+//console.log("header_write_v.php");
 
 </script>
 </head>

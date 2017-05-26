@@ -19,6 +19,8 @@
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
+print_r($views);
+
 $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
@@ -44,28 +46,28 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="col-sm-3 text-center">
 <label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" /></label>
 <div class="checkbox checkbox-info">
-<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
+<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox"  <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
 <label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt="" /></label>
 <div class="checkbox checkbox-danger">
-<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
+<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox"  <?php echo $views->ma_isttmsg=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
 <label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt="" /></label>
 <div class="checkbox checkbox-primary">
-<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
+<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox"  <?php echo $views->ma_isnavermap=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
 <label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt="" /></label>
 <div class="checkbox checkbox-success">
-<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
+<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox"  <?php echo $views->ma_isblogreview=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
 </div>
 
 
@@ -94,13 +96,13 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group ">
 
 <label class="col-sm-2 control-label">가맹점명 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name" > <span class="help-block m-b-none">가맹점명을 기재해 주세요.</span>
+<div class="col-sm-10"><?php echo $views->st_name;?> <span class="help-block m-b-none">가맹점명을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">최소주문금액 *</label>
-<div class="col-sm-10"><input type="number" class="form-control" id="st_minpay" name="st_minpay" step="1000" min="12000"> <span class="help-block m-b-none">예) 15,000원 이상</span>
+<div class="col-sm-10"><?php echo $views->st_minpay;?> <span class="help-block m-b-none">예) 15,000원 이상</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -109,24 +111,23 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="col-md-6">
 <div class="form-group"><label class="col-sm-2 control-label">휴무일 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_closingdate" name="st_closingdate">
+<div class="col-sm-10"><?php echo $views->st_closingdate;?>
 <span class="help-block m-b-none">휴무일을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">영업시간 *</label>
-<div class="col-sm-4">
-<input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled value="12:00">
+<div class="col-sm-4"> <?php echo $views->st_open;?>
 <span class="help-block m-b-none">시작 09:00</span>
 </div><!-- .col-sm-5 -->
-<div class="col-sm-4">
-<input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled value="01:00"> 
+<div class="col-sm-4"> <?php echo $views->st_closed;?>
 <span class="help-block m-b-none">종료 19:00</span>
 </div><!-- .col-sm-5 -->
 
+
 <div class="checkbox checkbox-primary col-sm-2">
-<input id="st_alltime"  name="st_alltime" type="checkbox" checked="" onclick="javascript:chk_btn_status();">
+<input id="st_alltime"  name="st_alltime" type="checkbox" <?php echo $views->st_alltime=="on"?"checked":"";?>>
 <label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
 
 </div><!-- .form-group -->
@@ -137,40 +138,47 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="row">
 <div class="col-md-12">
 <div class="form-group"><label class="col-sm-2 control-label">배달 가능지역 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_delivery" name="st_delivery" > <span class="help-block m-b-none">배달가능 지역을 등록 합니다. </span>
+<div class="col-sm-10"> <?php echo $views->st_delivery;?> <span class="help-block m-b-none">배달가능 지역을 등록 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">매장 주소 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_address" id="st_address"> <span class="help-block m-b-none">상세 주소까지 모두 기입해 주세요.</span>
+<div class="col-sm-10"> <?php echo $views->st_address;?> <span class="help-block m-b-none">상세 주소까지 모두 기입해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">업종 카테고리 *</label>
 <div class="col-sm-10">
-<select name="st_category" id="st_category" class="form-control" >
-<option value="" >업종을 선택하세요.</option>
-<option value="P01">치킨</option>
-<option value="P02">중식</option>
-<option value="P03">피자/햄버거</option>
-<option value="P04">족발/보쌈</option>
-<option value="P05">찜/탕</option>
-<option value="P06">한식</option>
-<option value="P07">분식/도시락</option>
-<option value="P08">야식</option>
-<option value="P09">일식/돈가스</option>
-</select><span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
-
+<?php 
+$cate_arre['P01']="치킨";
+$cate_arre['P02']="중식";
+$cate_arre['P03']="피자/햄버거";
+$cate_arre['P04']="족발/보쌈";
+$cate_arre['P05']="찜/탕";
+$cate_arre['P06']="한식";
+$cate_arre['P07']="분식/도시락";
+$cate_arre['P08']="야식";
+$cate_arre['P09']="일식/돈가스";
+?>
+<?php
+$st_category=$views->st_category;
+foreach($cate_arre as $key => $value){
+if($key==$st_category){
+echo $value;
+}
+}
+?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">원산지 </label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_origin" id="st_origin" value="" placeholder="예) 닭고기 (국내산)">
+
+<div class="col-sm-10"> <?php echo $views->st_origin;?>
 <span class="help-block m-b-none text-danger font-bold"> 최초  등록시 자동 저장 됩니다.</span>
 </div><!-- .col-sm-10 1-->
 </div><!-- .form-group 2-->
@@ -199,8 +207,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="col-md-12">
 <div class="form-group">
 <label class="col-sm-2 control-label">사업자등록번호</label>
-<div class="col-sm-10">
-<input type="text" class="form-control"  data-mask="999-99-99999" name="st_bizno" id="st_bizno">
+<div class="col-sm-10"> <?php echo $views->st_bizno;?>
 <span class="help-block">999-99-99999</span>
 </div>
 </div>
@@ -208,35 +215,33 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="form-group">
 <label class="col-sm-2 control-label">사업자 상호</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="st_bizname" name="st_bizname"> 
+<div class="col-sm-10"> <?php echo $views->st_bizname;?>
 <span class="help-block m-b-none">사업자 상호</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자 성명
 </label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="st_ceoname" name="st_ceoname"> 
+<div class="col-sm-10"> <?php echo $views->st_ceoname;?>
 <!-- <select name="type" style="width: 228px; height: 38px; "> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자 주소</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_bizaddress" name="st_bizaddress"> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
+<div class="col-sm-10"> <?php echo $views->st_bizaddress;?> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">세금계산서 이메일</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_taxemail" id="st_taxemail"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10"> <?php echo $views->st_taxemail;?> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자 핸드폰</label>
-<div class="col-sm-10"><input type="text" class="form-control"  data-mask="019-9999-9999"  name="st_bizhp" id="st_bizhp"> <span class="help-block m-b-none">사업자 핸드폰을 기재해 주세요.</span>
+<div class="col-sm-10"> <?php echo $views->st_bizhp;?> <span class="help-block m-b-none">사업자 핸드폰을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -269,29 +274,14 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="form-group">
 <label class="col-sm-2 control-label">배달톡톡핸드폰 번호</label>
-<div class="col-sm-10">
-<input type="text" class="form-control" data-mask="019-9999-9999" name="st_bdtthp" id="st_bdtthp">
+<div class="col-sm-10"> <?php echo $views->st_bdtthp;?>
 <span class="help-block">019-9999-9999</span>
 </div>
 </div>
 
 
 <div class="form-group"><label class="col-sm-2 control-label">통신사(MNO)</label>
-<div class="col-sm-10 ">
-<div class="radio radio-danger radio-inline">
-<input type="radio" name="st_mno" id="st_mno_1" value='SK' checked><label for="st_mno_1">SK</label>
-</div><!-- .radio .radio-info .radio-inline -->
-<div class="radio radio-info radio-inline">
-<input type="radio" name="st_mno" id="st_mno_3"  value='KT'><label for="st_mno_3">KT</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-<div class="radio radio-warning radio-inline">
-<input type="radio" name="st_mno" id="st_mno_2"  value='LGU+'><label for="st_mno_2">LGU+</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-<div class="radio radio-primary radio-inline">
-<input type="radio" name="st_mno" id="st_mno_4"  value='알뜰폰'><label for="st_mno_4">알뜰폰</label>
-</div><!-- .radio .radio-info .radio-inline -->
+<div class="col-sm-10 "> <?php echo $views->st_mno;?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -306,69 +296,38 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
-<div class="form-group"><label class="col-sm-2 control-label">상점명 1<span style="color:#">★</span> </label>
+
+
+ <?php $st_info=explode("&",$views->st_info);
+$st_info=array_filter($st_info);
+foreach($st_info as $k){
+$store=explode("|",$k);
+$st_ispay=explode("=",$store[0]);
+$st_names=explode("=",$store[1]);
+$st_tel=explode("=",$store[2]);
+?>
+ <div class="form-group"><label class="col-sm-2 control-label">상점명 1<span style="color:#">★</span> </label>
 <div class="col-sm-10">
 <div class="row">
 <div class="col-md-2">
 <div class="checkbox checkbox-primary">
-<input id="st_ispay1"  name="st_ispay1" type="checkbox" value="" onclick="javascript:set_storeinfo(1)">
+<input id="st_ispay1"  name="st_ispay1" type="checkbox" <?php echo $st_ispay[1]=="on"?"checked":"";?>>
 <label for="st_ispay1">과금</label></div><!-- checkbox-primary -->
 </div>
-<div class="col-md-5"><input type="text" name="st_names1" id="st_names1" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(1)"></div>
-<div class="col-md-5"><input type="text" name="st_tel1" id="st_tel1" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(1)"></div>
-<input type="text" name="st_info[]" id="st_info1" value="" class="form-control"/>
+<div class="col-md-5"><input type="text" name="st_names1" id="st_names1" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(1)" 
+value="<?php echo $st_names[1]?>"></div>
+<div class="col-md-5"><input type="text" name="st_tel1" id="st_tel1" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(1)" 
+value="<?php echo $st_tel[1]?>"></div>
 </div>
 
 <!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-<div class="form-group"><label class="col-sm-2 control-label">상점명 2<span style="color:#">★</span> </label>
-<div class="col-sm-10">
-<div class="row">
-<div class="col-md-2">
-<div class="checkbox checkbox-primary">
-<input id="st_ispay2"  name="st_ispay2" type="checkbox" value="" onclick="javascript:set_storeinfo(2)">
-<label for="st_ispay2">과금</label></div><!-- checkbox-primary -->
-</div>
-<div class="col-md-5"><input type="text" name="st_names2" id="st_names2" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(2)"></div>
-<div class="col-md-5"><input type="text" name="st_tel2" id="st_tel2" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(2)"></div>
-<input type="text" name="st_info[]" id="st_info2" value="" class="form-control"/>
-</div>
+<?php
+ 
+ }
+?>
 
-<!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-
-<div class="form-group"><label class="col-sm-2 control-label">상점명 3<span style="color:#">★</span> </label>
-<div class="col-sm-10">
-<div class="row">
-<div class="col-md-2"><div class="checkbox checkbox-primary">
-<input id="st_ispay3"  name="st_ispay3" type="checkbox" value="" onclick="javascript:set_storeinfo(3)">
-<label for="st_ispay3">과금</label></div><!-- checkbox-primary -->
-</div>
-<div class="col-md-5"><input type="text" name="st_names3" id="st_names3" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(3)"></div>
-<div class="col-md-5"><input type="text" name="st_tel3" id="st_tel3" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(3)"></div>
-<input type="text" name="st_info[]" id="st_info3" value="" class="form-control"/>
-</div>
-
-<!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
-<div class="form-group"><label class="col-sm-2 control-label">상점명 4<span style="color:#">★</span> </label>
-<div class="col-sm-10">
-<div class="row">
-<div class="col-md-2"><div class="checkbox checkbox-primary">
-<input id="st_ispay4"  name="st_ispay4" type="checkbox" value="" onclick="javascript:set_storeinfo(4)">
-<label for="st_ispay4">과금</label></div><!-- checkbox-primary -->
-</div>
-<div class="col-md-5"><input type="text" name="st_names4" id="st_names4" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(4)"></div>
-<div class="col-md-5"><input type="text" name="st_tel4" id="st_tel4" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(4)"></div>
-<input type="text" name="st_info[]" id="st_info4" value="" class="form-control"/>
-</div>
-
-<!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
-</div><!-- .col-sm-10 -->
-</div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
@@ -412,52 +371,41 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="form-group">
 <label class="col-sm-2 control-label">금액</label>
-<div class="col-sm-10">
-<input type="number" class="form-control" id="ma_cmsprice" name="ma_cmsprice" step="1000">
+<div class="col-sm-10"><?php echo number_format($views->ma_cmsprice);?>원
 <span class="help-block m-b-none">금액 매월 0,000원(vat 별도)</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-
 <div class="form-group"><label class="col-sm-2 control-label">예금주
 </label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="mb_bankholder" name="mb_bankholder">
+<div class="col-sm-10"> <?php echo $views->mb_bankholder;?>
 <!-- <select name="type" style="width: 228px; height: 38px; "> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">생년월일(또는 사업자번호)</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_birth" name="mb_birth"> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
+<div class="col-sm-10">
+<?php echo $views->mb_birth;?> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankname" id="mb_bankname"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10">
+<?php echo $views->mb_bankname;?> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">계좌번호</label>
-<div class="col-sm-10"><input type="text" class="form-control"  name="mb_banknum" id="mb_banknum"> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
+<div class="col-sm-10">
+<?php echo $views->mb_banknum;?> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
 <div class="form-group"><label class="col-sm-2 control-label">출금일</label>
 <div class="col-sm-10 ">
-<div class="radio radio-danger radio-inline">
-<input type="radio" name="ma_dateofpayment" id="ma_dateofpayment_1" value='5' checked><label for="ma_dateofpayment_1">5일</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-
-<div class="radio radio-warning radio-inline">
-<input type="radio" name="ma_dateofpayment" id="ma_dateofpayment_2"  value='15'><label for="ma_dateofpayment_2">15일</label>
-</div><!-- .radio .radio-info .radio-inline -->
-
-<div class="radio radio-info radio-inline">
-<input type="radio" name="ma_dateofpayment" id="ma_dateofpayment_3"  value='25'><label for="ma_dateofpayment_3">25일</label>
-</div><!-- .radio .radio-info .radio-inline -->
+<?php echo $views->ma_dateofpayment;?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -497,7 +445,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group">
 <label class="col-sm-2 control-label">금액</label>
 <div class="col-sm-10">
-<input type="number" class="form-control" id="ma_blogprice" name="ma_blogprice">
+<?php echo number_format($views->ma_blogprice);?>원
 <span class="help-block m-b-none">금액 매월 0,000원(vat 별도)</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -518,7 +466,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group"><label class="col-sm-2 control-label">리뷰 혜택 포인트 적립</label>
 <div class="col-sm-10">
 <div class="checkbox checkbox-primary">
-<input id="ma_ispoint"  name="ma_ispoint" type="checkbox">
+ 
+<input id="ma_ispoint"  name="ma_ispoint" type="checkbox" <?php echo $views->ma_ispoint=="on"?"checked":"";?>>
 <label for="ma_ispoint">배달톡톡 블로그 포인트 2,000원</label></div><!-- checkbox-primary -->
 
 </div><!-- .col-sm-10 -->
@@ -528,14 +477,12 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 
 <div class="form-group"><label class="col-sm-2 control-label">네이버 아이디</label>
-<div class="col-sm-10">
-<input type="text" placeholder="아이디" class="form-control" name="ma_naverid" id="ma_naverid">
+<div class="col-sm-10"> <?php echo $views->ma_naverid;?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group-->
 
 <div class="form-group"><label class="col-sm-2 control-label">네이버 비밀번호</label>
-<div class="col-sm-10">
-<input type="text" placeholder="비밀번호" class="form-control" name="ma_naverpwd" id="ma_naverpwd">
+<div class="col-sm-10"> <?php echo $views->ma_naverpwd;?>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group-->
 
@@ -635,28 +582,20 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="col-md-7  col-sm-6  col-xs-4">
 <div class="form-group"><label class="col-sm-2 control-label">관리자 성명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="ma_adminname" id="ma_adminname"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10"><?php echo $views->ma_adminname;?> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">관리자 핸드폰</label>
-<div class="col-sm-10"><input type="text" class="form-control"  name="ma_adminhp" id="ma_adminhp"> <span class="help-block m-b-none">관리자 핸드폰을 기입해 주세요..</span>
+<div class="col-sm-10"><?php echo $views->ma_adminhp;?> <span class="help-block m-b-none">관리자 핸드폰을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
-<canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
-<div>
-  <button class="btn btn-primary" id="save" type="button" onclick="javascript:set_signature()">사인저장</button>
-  <button class="btn btn-warning" id="clear" type="button" onclick="javascript:clear_signature()">사인다시하기</button>
-</div>
-
-<div id="signature_area">#signature_area</div><!-- #signature_area -->
-<textarea name="signature_content" id="signature_content" cols="30" rows="10"></textarea>
-<!-- <button class="btn btn-info" type="button" onclick="javascript:set_sign('signature-pad')">사인</button> -->
+<img src="<?php echo $views->ma_signaturepad;?>" alt="" width="50px" height="30px"/ >
 
 </div><!-- .col-md-4 -->
 
@@ -1007,6 +946,8 @@ function set_storeinfo(v)
 	console.log(param);
 	$("#st_info"+v).val(param);
 }
+
+$(".help-block").remove();
 </script>
 <style type="text/css">
 .signature-pad {

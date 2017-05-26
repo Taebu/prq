@@ -6,17 +6,15 @@
 	<div class="col-lg-10" style="text-align:center;">
 		<ul style="margin:0;padding:10px 0 10px 0;list-style:none;">
 			<!-- <li><?php echo $friends->pt_name." (".$friends->pt_code.")";?></li> -->
-			<li><?php echo $friends->pt_name;?></li>
-			<li style="font-weight:bold;font-size:27px;"><?php echo $store->st_name;?></li>
+			<li> <input type="text" style="text-align:center;width:100%;border:0px;" name="" id="" value="<?php echo $friends->pt_name;?> "/></li>
+			<li style="font-weight:bold;font-size:27px;"><input type="text" style="text-align:center;width:100%;border:0px;" name="" id="" value="<?php echo $store->st_name;?>"/></li>
 			<li>BLOG Review</li>
 			<li style="border:1px solid #bbb;width:210px;margin:0 auto;"></li>
-			<li style="margin:15px 0 2px 0;">일반번호 : <?php echo $store->st_tel;?></li>
-			<li>050번호 : <?php 
-			//print_r($store);
-			echo $store->st_vtel;?>
+			<li style="margin:15px 0 2px 0;">일반번호 : <input type="text" style="border:0px;" name="" id="" value="<?php echo $store->st_tel;?>"/></li>
+			<li>050 번호 : <input type="text" style="border:0px;" name="" id="" value="<?php echo $store->st_vtel;?>"/>
 			</li>
 			
-			<li style="margin:2px 0 2px 0;">http://prq.co.kr/prq/page/<?php echo $store->st_no;?></li>
+			<li style="margin:2px 0 2px 0;"><input type="text" style="margin-left:-20px;text-align:center;width:100%;border:0px;font-size:15px;" name="" id="" value="http://prq.co.kr/prq/page/<?php echo $store->st_no;?>"/></li>
 		</ul>
 		<!-- <ol class="breadcrumb">
 			<li>
@@ -355,7 +353,7 @@ echo $bl_content3;?><!-- #form_data -->
 </div><!-- .col-lg-12 -->
 </div><!-- .row -->
 
-</div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
+<!-- </div> --><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
 var image_file_count=0;
 
@@ -529,11 +527,11 @@ function textAreaAdjust(o) {
 
 
 window.onload = function() {
-	chk_byte(1);
+/*	chk_byte(1);
 	chk_byte(2);
 	chk_byte(3);
     var checkload = true;
- 
+
     $("#write_btn").click(function () {
         checkload = false;
     });
@@ -542,6 +540,7 @@ window.onload = function() {
         if (checkload == true) return "레알 나감????????????";
     });
   //출처 ㅡ 「페이지 벗어날때 확인창 띄우기 - 따블류 랩」 https://lab.hv-l.net/?document_srl=172498
+ */
 };/*window.onload = function() {..}*/
 
 

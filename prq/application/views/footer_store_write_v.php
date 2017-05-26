@@ -73,6 +73,10 @@
 
 	<!-- Toastr script -->
     <script src="/prq/include/js/plugins/toastr/toastr.min.js"></script>
+
+    <!-- Signature_pad -->
+    <script src="/prq/include/js/plugins/signature_pad/signature_pad.js"></script>
+    <script src="/prq/include/js/plugins/signature_pad/app.js"></script>
 	<script>
 		function set_dropzone_config(id)
 		{
@@ -251,7 +255,7 @@
         });
 		
 		/*End $(function(){});*/
-
+console.log("footer_store_write.php");
 </script>
 
 </body>
