@@ -19,7 +19,7 @@
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
-print_r($views);
+
 
 $attributes = array(
 'class' => 'form-horizontal', 
@@ -300,13 +300,15 @@ echo $value;
 
  <?php $st_info=explode("&",$views->st_info);
 $st_info=array_filter($st_info);
+$i=0;
 foreach($st_info as $k){
+	$i++;
 $store=explode("|",$k);
 $st_ispay=explode("=",$store[0]);
 $st_names=explode("=",$store[1]);
 $st_tel=explode("=",$store[2]);
 ?>
- <div class="form-group"><label class="col-sm-2 control-label">상점명 1<span style="color:#">★</span> </label>
+ <div class="form-group"><label class="col-sm-2 control-label">상점명 <?php echo $i;?><span style="color:#">★</span> </label>
 <div class="col-sm-10">
 <div class="row">
 <div class="col-md-2">
@@ -337,8 +339,8 @@ value="<?php echo $st_tel[1]?>"></div>
 (월 4,400원)
 </label>
 <div class="col-sm-10">
-<div class="col-md-6"><input type="text" placeholder="명의자" class="form-control"></div>
-<div class="col-md-6"><input type="text" placeholder="생년월일" class="form-control"></div>
+<div class="col-md-6"><input type="text" placeholder="명의자" class="form-control" value="<?php echo $views->ma_ktuser;?>"></div>
+<div class="col-md-6"><input type="text" placeholder="생년월일" class="form-control" value="<?php echo $views->ma_ktbirth;?>"></div>
 
 </div><!-- .col-sm-10 -->
 <span class="help-block m-b-none">CID 없는 경우 KT 통화매니저 가입 필요</span>

@@ -235,6 +235,14 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
 							</ul>
                     </li>
 
+					<?php echo $this->uri->segment(1)=="appjoin"?'<li class="active">':'<li>';?>
+                        <a href="#">
+						<i class="fa fa-files-o"></i><span class="nav-label">Appjoin</span><span class="fa arrow"></span>
+						</a>
+                        <ul class="nav nav-second-level collapse">
+                            <?php echo $this->uri->segment(3)=="modu_agreement"?'<li class="active">':'<li>';?><a href="/prq/appjoin/lists/modu_agreement">modu_agreement</a></li>
+							</ul>
+                    </li>
 				</ul>
             </div>
         </nav>

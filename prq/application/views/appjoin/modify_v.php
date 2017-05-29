@@ -24,7 +24,7 @@ $attributes = array(
 'id' => 'write_action'
 );
 
-
+print_r($views);
 
 
 
@@ -94,13 +94,13 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group ">
 
 <label class="col-sm-2 control-label">가맹점명 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name" > <span class="help-block m-b-none">가맹점명을 기재해 주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name" value="<?php echo $views->st_name;?>"> <span class="help-block m-b-none">가맹점명을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">최소주문금액 *</label>
-<div class="col-sm-10"><input type="number" class="form-control" id="st_minpay" name="st_minpay" step="1000" min="12000"> <span class="help-block m-b-none">예) 15,000원 이상</span>
+<div class="col-sm-10"><input type="number" class="form-control" id="st_minpay" name="st_minpay" step="1000" min="12000"  value="<?php echo $views->st_minpay;?>"> <span class="help-block m-b-none">예) 15,000원 이상</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -109,7 +109,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="col-md-6">
 <div class="form-group"><label class="col-sm-2 control-label">휴무일 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_closingdate" name="st_closingdate">
+<div class="col-sm-10"><input type="text" class="form-control" id="st_closingdate" name="st_closingdate" value="<?php echo $views->st_closingdate;?>">
 <span class="help-block m-b-none">휴무일을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -117,11 +117,24 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="form-group"><label class="col-sm-2 control-label">영업시간 *</label>
 <div class="col-sm-4">
-<input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled value="12:00">
+<?php if($views->st_alltime=="off"){?>
+<input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" value="<?php echo $views->st_open;?>">
 <span class="help-block m-b-none">시작 09:00</span>
 </div><!-- .col-sm-5 -->
 <div class="col-sm-4">
-<input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled value="01:00"> 
+<input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" value="<?php echo $views->st_closed;?>">
+<span class="help-block m-b-none">종료 19:00</span>
+</div><!-- .col-sm-5 -->
+
+<div class="checkbox checkbox-primary col-sm-2">
+<input id="st_alltime"  name="st_alltime" type="checkbox" onclick="javascript:chk_btn_status();">
+<label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
+<?php }else{?>
+<input type="text" class="form-control" id="st_open" name="st_open" data-mask="99:99" disabled value="00:00">
+<span class="help-block m-b-none">시작 09:00</span>
+</div><!-- .col-sm-5 -->
+<div class="col-sm-4">
+<input type="text" class="form-control" id="st_closed" name="st_closed" data-mask="99:99" disabled value="24:00"> 
 <span class="help-block m-b-none">종료 19:00</span>
 </div><!-- .col-sm-5 -->
 
@@ -129,6 +142,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <input id="st_alltime"  name="st_alltime" type="checkbox" checked="" onclick="javascript:chk_btn_status();">
 <label for="st_alltime">24시간</label></div><!-- checkbox-primary -->
 
+<?php }?>
 </div><!-- .form-group -->
 </div>
 </div><!-- .row -->
@@ -137,14 +151,14 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="row">
 <div class="col-md-12">
 <div class="form-group"><label class="col-sm-2 control-label">배달 가능지역 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_delivery" name="st_delivery" > <span class="help-block m-b-none">배달가능 지역을 등록 합니다. </span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_delivery" name="st_delivery"  value="<?php echo $views->st_delivery;?>"> <span class="help-block m-b-none">배달가능 지역을 등록 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">매장 주소 *</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_address" id="st_address"> <span class="help-block m-b-none">상세 주소까지 모두 기입해 주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_address" id="st_address" value="<?php echo $views->st_address;?>"> <span class="help-block m-b-none">상세 주소까지 모두 기입해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -170,7 +184,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 
 <div class="form-group"><label class="col-sm-2 control-label">원산지 </label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_origin" id="st_origin" value="" placeholder="예) 닭고기 (국내산)">
+<div class="col-sm-10"><input type="text" class="form-control" name="st_origin" id="st_origin"  value="<?php echo $views->st_origin;?>" placeholder="예) 닭고기 (국내산)">
 <span class="help-block m-b-none text-danger font-bold"> 최초  등록시 자동 저장 됩니다.</span>
 </div><!-- .col-sm-10 1-->
 </div><!-- .form-group 2-->
@@ -200,7 +214,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group">
 <label class="col-sm-2 control-label">사업자등록번호</label>
 <div class="col-sm-10">
-<input type="text" class="form-control"  data-mask="999-99-99999" name="st_bizno" id="st_bizno">
+<input type="text" class="form-control"  data-mask="999-99-99999" name="st_bizno" id="st_bizno" value="<?php echo $views->st_bizno;?>"> 
 <span class="help-block">999-99-99999</span>
 </div>
 </div>
@@ -209,7 +223,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group">
 <label class="col-sm-2 control-label">사업자 상호</label>
 <div class="col-sm-10">
-<input type="text" class="form-control" id="st_bizname" name="st_bizname"> 
+<input type="text" class="form-control" id="st_bizname" name="st_bizname" value="<?php echo $views->st_bizname;?>"> 
 <span class="help-block m-b-none">사업자 상호</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -217,26 +231,26 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group"><label class="col-sm-2 control-label">사업자 성명
 </label>
 <div class="col-sm-10">
-<input type="text" class="form-control" id="st_ceoname" name="st_ceoname"> 
+<input type="text" class="form-control" id="st_ceoname" name="st_ceoname" value="<?php echo $views->st_ceoname;?>"> 
 <!-- <select name="type" style="width: 228px; height: 38px; "> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자 주소</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="st_bizaddress" name="st_bizaddress"> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
+<div class="col-sm-10"><input type="text" class="form-control" id="st_bizaddress" name="st_bizaddress" value="<?php echo $views->st_bizaddress;?>"> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">세금계산서 이메일</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_taxemail" id="st_taxemail"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="st_taxemail" id="st_taxemail" value="<?php echo $views->st_taxemail;?>"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">사업자 핸드폰</label>
-<div class="col-sm-10"><input type="text" class="form-control"  data-mask="019-9999-9999"  name="st_bizhp" id="st_bizhp"> <span class="help-block m-b-none">사업자 핸드폰을 기재해 주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control"  data-mask="019-9999-9999"  name="st_bizhp" id="st_bizhp" value="<?php echo $views->st_bizhp;?>"><span class="help-block m-b-none">사업자 핸드폰을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -669,7 +683,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="col-md-12">
 <textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
 </div>
-<button class="btn btn-primary" type="button" onclick="set_appjoin()">저장</button>
+<button class="btn btn-primary" type="button" onclick="set_appjoin()">수정</button>
 </div><!-- .row raw-layout-->
 
 </div><!-- .ibox-content -->

@@ -42,6 +42,11 @@ class Appjoin extends CI_Controller {
 
 			//푸터 include		
 			$this->load->view('footer_store_write_v');
+		}else if($method=="pview"){
+			if( method_exists($this, $method) )
+			{
+				$this->{"{$method}"}();
+			}
 		}else{
 			//헤더 include
 			$this->load->view('header_v5_v');
@@ -164,11 +169,11 @@ class Appjoin extends CI_Controller {
 		$data['ds_names'] = json_decode(json_encode($this->appjoin_m->get_dscode()), True);;
 
 		/* 싱크 상점 리스트 가져오기 */
-		$data['sync_appjoin'] = json_decode(json_encode($this->appjoin_m->get_syncappjoin()), True);;
+//		$data['sync_appjoin'] = json_decode(json_encode($this->appjoin_m->get_syncappjoin()), True);;
 
 		/* 원산지 정보 가져오기 */
-		$data['st_origin'] = $this->appjoin_m->get_origin($data['list']);
-		$data['group_cnt'] =  json_decode(json_encode($this->appjoin_m->get_groupcnt()), True);
+		//$data['st_origin'] = $this->appjoin_m->get_origin($data['list']);
+		//$data['group_cnt'] =  json_decode(json_encode($this->appjoin_m->get_groupcnt()), True);
 
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('appjoin/tlist_v', $data);
@@ -256,6 +261,8 @@ class Appjoin extends CI_Controller {
 					'ma_ispoint' => $this->input->post('ma_ispoint', TRUE)=="on"?"on":"off",
 					'ma_naverid' => $this->input->post('ma_naverid', TRUE),
 					'ma_naverpwd' => $this->input->post('ma_naverpwd', TRUE),
+					'ma_ktuser' => $this->input->post('ma_user', TRUE),
+					'ma_ktbirth' => $this->input->post('ma_ktbirth', TRUE),
 					'ma_isnaver' => $this->input->post('ma_isnaver', TRUE)=="on"?"on":"off",
 					'ma_name' => $this->input->post('ma_name', TRUE),
 					'ma_adminname' => $this->input->post('ma_adminname', TRUE),
@@ -375,53 +382,49 @@ class Appjoin extends CI_Controller {
 				$result = $this->appjoin_m->modify_distributors($modify_data);
 */
 				$modify_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'st_no' => $this->uri->segment(5), //게시판 번호
-					'prq_fcode' => $this->input->post('prq_fcode', TRUE),
-					'st_category' => $this->input->post('st_category', TRUE),
+					'table' => 'modu_agreement', //게시판 테이블명
+					'ma_isbdtt' => $this->input->post('ma_isbdtt', TRUE)=="on"?"on":"off",
+					'ma_isttmsg' => $this->input->post('ma_isttmsg', TRUE)=="on"?"on":"off",
+					'ma_isnavermap' => $this->input->post('ma_isnavermap', TRUE)=="on"?"on":"off",
+					'ma_isblogreview' => $this->input->post('ma_isblogreview', TRUE)=="on"?"on":"off",
 					'st_name' => $this->input->post('st_name', TRUE),
-					'mb_id' => $this->input->post('mb_id', TRUE),
-					'st_tel' => $this->input->post('st_tel', TRUE),
-					'st_teltype' => $this->input->post('st_teltype', TRUE),
-					'st_vtel' => $this->input->post('st_vtel', TRUE),
+					'st_minpay' => $this->input->post('st_minpay', TRUE),
+					'st_delivery' => $this->input->post('st_delivery', TRUE),
+					'st_address' => $this->input->post('st_address', TRUE),
+					'st_category' => $this->input->post('st_category', TRUE),
+					'st_origin' => $this->input->post('st_origin', TRUE),
+					'st_closingdate' => $this->input->post('st_closingdate', TRUE),
 					'st_open' => $this->input->post('st_open', TRUE),
 					'st_closed' => $this->input->post('st_closed', TRUE),
-					'st_alltime' => $this->input->post('st_alltime', TRUE),
+					'st_alltime' => $this->input->post('st_alltime', TRUE)=="on"?"on":"off",
+					'st_bizno' => $this->input->post('st_bizno', TRUE),
+					'st_bizname' => $this->input->post('st_bizname', TRUE),
+					'st_ceoname' => $this->input->post('st_ceoname', TRUE),
+					'st_bizaddress' => $this->input->post('st_bizaddress', TRUE),
+					'st_taxemail' => $this->input->post('st_taxemail', TRUE),
+					'st_bizhp' => $this->input->post('st_bizhp', TRUE),
+					'st_bdtthp' => $this->input->post('st_bdtthp', TRUE),
 					'st_mno' => $this->input->post('st_mno', TRUE),
-					'st_closingdate' => join(",",$this->input->post('st_closingdate', TRUE)),
-					'st_destination' => $this->input->post('st_destination', TRUE),
-					'st_intro' => $this->input->post('st_intro', TRUE),
-					'st_password' => $this->input->post('st_password', TRUE),
-					'st_nick' => $this->input->post('st_nick', TRUE),
-					'st_nick_date' => $this->input->post('st_nick_date', TRUE),
-					'st_email' => $this->input->post('st_email', TRUE),
-					'st_homepage' => $this->input->post('st_homepage', TRUE),
-					'st_business_name' => $this->input->post('st_business_name', TRUE),
-					'st_business_paper' => $this->input->post('st_business_paper', TRUE),
-					'st_business_paper_size' => $this->input->post('st_business_paper_size', TRUE),
-					'st_thumb_paper' => $this->input->post('st_thumb_paper', TRUE),
-					'st_thumb_paper_size' => $this->input->post('st_thumb_paper_size', TRUE),
-					'st_menu_paper' => $this->input->post('st_menu_paper', TRUE),
-					'st_menu_paper_size' => $this->input->post('st_menu_paper_size', TRUE),
-					'st_main_paper' => $this->input->post('st_main_paper', TRUE),
-					'st_main_paper_size' => $this->input->post('st_main_paper_size', TRUE),
-					'st_modoo_url' => $this->input->post('st_modoo_url', TRUE),
-					'st_top_msg' => $this->input->post('st_top_msg', TRUE),
-					'st_middle_msg' => $this->input->post('st_middle_msg', TRUE),
-					'st_bottom_msg' => $this->input->post('st_bottom_msg', TRUE),
-					'st_business_num' => $this->input->post('st_business_num', TRUE),
-					'st_datetime' => $this->input->post('st_datetime', TRUE),
-					'st_cidtype' => $this->input->post('st_cidtype', TRUE),
-					'st_tel_1' => $this->input->post('st_tel_1', TRUE),
-					'st_tel_2' => $this->input->post('st_tel_2', TRUE),
-					'st_tel_3' => $this->input->post('st_tel_3', TRUE),
-					'st_tel_4' => $this->input->post('st_tel_4', TRUE),
-					'st_hp_1' => $this->input->post('st_hp_1', TRUE),
-					'st_hp_2' => $this->input->post('st_hp_2', TRUE),
-					'st_hp_3' => $this->input->post('st_hp_3', TRUE),
-					'st_hp_4' => $this->input->post('st_hp_4', TRUE),
-					'st_theme' => $this->input->post('st_theme', TRUE),
-					'st_status' => $this->input->post('st_status', TRUE)
+					'st_info' => join("&",$this->input->post('st_info', TRUE)),
+					'ma_blogprice' => $this->input->post('ma_blogprice', TRUE),
+					'ma_ispost' => $this->input->post('ma_ispost', TRUE)=="on"?"on":"off",
+					'ma_ispoint' => $this->input->post('ma_ispoint', TRUE)=="on"?"on":"off",
+					'ma_naverid' => $this->input->post('ma_naverid', TRUE),
+					'ma_naverpwd' => $this->input->post('ma_naverpwd', TRUE),
+					'ma_ktuser' => $this->input->post('ma_user', TRUE),
+					'ma_ktbirth' => $this->input->post('ma_ktbirth', TRUE),
+					'ma_isnaver' => $this->input->post('ma_isnaver', TRUE)=="on"?"on":"off",
+					'ma_name' => $this->input->post('ma_name', TRUE),
+					'ma_adminname' => $this->input->post('ma_adminname', TRUE),
+					'ma_adminhp' => $this->input->post('ma_adminhp', TRUE),
+					'ma_cmsprice' => $this->input->post('ma_cmsprice', TRUE),
+					'mb_birth' => $this->input->post('mb_birth', TRUE),
+					'mb_bankname' => $this->input->post('mb_bankname', TRUE),
+					'mb_banknum' => $this->input->post('mb_banknum', TRUE),
+					'ma_dateofpayment' => $this->input->post('ma_dateofpayment', TRUE),
+					'mb_bankholder' => $this->input->post('mb_bankholder', TRUE),
+					'mb_email' => $this->input->post('mb_email', TRUE),
+					'ma_signaturepad' => $this->input->post('signature_content', TRUE)
 				);
 //				$result = $this->distributors_m->insert_distributors($write_data);
 
@@ -694,6 +697,27 @@ class Appjoin extends CI_Controller {
 		$seg_exp = explode("/", $seg);
 		return $seg_exp;
 	}
+
+
+	/**
+	 * 프린트 할 수 있는 계약서 폼 보기
+	 */
+	function pview()
+ 	{
+		$table = $this->uri->segment(3);
+		$board_id = $this->uri->segment(5);
+
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+ 		$data['views'] = $this->appjoin_m->get_view($table, $board_id);
+		$array=json_decode(json_encode($data['views']), True);
+
+//		$data['logs'] = $this->appjoin_m->get_logs($array);
+		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
+ 		$data['comment_list'] = $this->appjoin_m->get_comment($table, $board_id);
+
+ 		//view 호출
+ 		$this->load->view('appjoin/pview_v', $data);
+ 	}
 }
 
 /* End of file appjoin.php */

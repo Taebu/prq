@@ -65,6 +65,7 @@ class Appjoin_m extends CI_Model
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY st_no DESC".$limit_query;
+		
    		$query = $this->db->query($sql);
 
 		if ( $type == 'count' )
@@ -99,7 +100,8 @@ class Appjoin_m extends CI_Model
     {
 		$sword= ' WHERE 1=1 ';
 		if($table==""){
-		$table='prq_store';
+		$table='modu_agreement';
+		/* select * from modu_agreement; */
 		}
 		if (empty($search_array))
      	{
@@ -154,9 +156,9 @@ class Appjoin_m extends CI_Model
 		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY st_no DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY ma_no DESC".$limit_query;
    		$query = $this->db->query($sql);
-		//echo $sql;
+		//.	echo $sql;
 		if ( $type == 'count' )
      	{
      		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
@@ -188,7 +190,7 @@ class Appjoin_m extends CI_Model
 //   		$this->db->query($sql0);
 
     	$sql = "SELECT * FROM ".$table." WHERE ma_no='".$id."'";
-		echo $sql;
+
    		$query = $this->db->query($sql);
 
      	//게시물 내용 반환
@@ -238,6 +240,8 @@ class Appjoin_m extends CI_Model
 		$sql_array[]="ma_naverid='".$arrays['ma_naverid']."',";
 		$sql_array[]="ma_naverpwd='".$arrays['ma_naverpwd']."',";
 		$sql_array[]="ma_isnaver='".$arrays['ma_isnaver']."',";
+		$sql_array[]="ma_ktuser='".$arrays['ma_ktuser']."',";
+		$sql_array[]="ma_ktbirth='".$arrays['ma_ktbirth']."',";
 		$sql_array[]="ma_name='".$arrays['ma_name']."',";
 		$sql_array[]="ma_adminname='".$arrays['ma_adminname']."',";
 		$sql_array[]="ma_adminhp='".$arrays['ma_adminhp']."',";
@@ -463,7 +467,7 @@ mysql> select * from prq_member_code;
 	 */
 	function writer_check($table, $board_id)
 	{
-		$sql = "SELECT st_no FROM ".$table." WHERE st_no = '".$board_id."'";
+		$sql = "SELECT ma_no FROM ".$table." WHERE ma_no = '".$board_id."'";
 
 		$query = $this->db->query($sql);
 
