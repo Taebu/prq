@@ -19,6 +19,16 @@
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
+
+function isdata($v)
+{
+	$retVal="";
+	if(isset($v)){
+	$retVal=$v;
+	}
+
+	return $retVal;
+}
 $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
@@ -28,7 +38,7 @@ print_r($views);
 
 
 
-echo form_open('/appjoin/write/', $attributes);
+echo form_open('/appjoin/modify/', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
@@ -44,28 +54,28 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="col-sm-3 text-center">
 <label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" /></label>
 <div class="checkbox checkbox-info">
-<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
+<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
 <label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt="" /></label>
 <div class="checkbox checkbox-danger">
-<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
+<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox"  <?php echo $views->ma_isttmsg=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
 <label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt="" /></label>
 <div class="checkbox checkbox-primary">
-<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
+<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox"  <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
 <label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt="" /></label>
 <div class="checkbox checkbox-success">
-<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
+<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox"  <?php echo $views->ma_isblogreview=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
 </div>
 
 
@@ -92,7 +102,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="col-md-6">
 
 <div class="form-group ">
-
+<input type="hidden" name="ma_no" id="ma_no" value="<?php echo $views->ma_no;?>" />
 <label class="col-sm-2 control-label">가맹점명 *</label>
 <div class="col-sm-10"><input type="text" class="form-control" id="st_name" name="st_name" value="<?php echo $views->st_name;?>"> <span class="help-block m-b-none">가맹점명을 기재해 주세요.</span>
 </div><!-- .col-sm-10 -->
@@ -177,14 +187,13 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <option value="P08">야식</option>
 <option value="P09">일식/돈가스</option>
 </select><span class="help-block m-b-none">카테고리를을 선택해 주세요.</span>
-
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">원산지 </label>
-<div class="col-sm-10"><input type="text" class="form-control" name="st_origin" id="st_origin"  value="<?php echo $views->st_origin;?>" placeholder="예) 닭고기 (국내산)">
+<div class="col-sm-10"><input type="text" class="form-control" name="st_origin" id="st_origin" id="st_origin" value="<?php echo $views->st_origin;?>" placeholder="예) 닭고기 (국내산)">
 <span class="help-block m-b-none text-danger font-bold"> 최초  등록시 자동 저장 됩니다.</span>
 </div><!-- .col-sm-10 1-->
 </div><!-- .form-group 2-->
@@ -284,7 +293,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group">
 <label class="col-sm-2 control-label">배달톡톡핸드폰 번호</label>
 <div class="col-sm-10">
-<input type="text" class="form-control" data-mask="019-9999-9999" name="st_bdtthp" id="st_bdtthp">
+<input type="text" class="form-control" data-mask="019-9999-9999" name="st_bdtthp" id="st_bdtthp" value="<?php echo $views->st_bdtthp;?>">
 <span class="help-block">019-9999-9999</span>
 </div>
 </div>
@@ -300,7 +309,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 </div><!-- .radio .radio-info .radio-inline -->
 
 <div class="radio radio-warning radio-inline">
-<input type="radio" name="st_mno" id="st_mno_2"  value='LGU+'><label for="st_mno_2">LGU+</label>
+<input type="radio" name="st_mno" id="st_mno_2"  value='LG'><label for="st_mno_2">LG</label>
 </div><!-- .radio .radio-info .radio-inline -->
 
 <div class="radio radio-primary radio-inline">
@@ -318,19 +327,51 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<?php 
+$st_info=explode("&",$views->st_info);
+//$st_info=array_filter($st_info);
+$i=0;
 
+$array['posts']=array();
+foreach($st_info as $k)
+{
+	$product=array();
+	$i++;
+	$store=explode("|",$k);
+	if(count($store)==3)
+	{
+	$st_ispay=explode("=",$store[0]);
+	$st_names=explode("=",$store[1]);
+	$st_tel=explode("=",$store[2]);
+
+	$product['st_info']=$k;
+	$product['st_ispay']=$st_ispay[1];
+	$product['st_names']=$st_names[1];
+	$product['st_tel']=$st_tel[1];
+
+	array_push($array['posts'],$product);
+	}else{
+	$product['st_info']="";
+	$product['st_ispay']="";
+	$product['st_names']="";
+	$product['st_tel']="";
+
+	array_push($array['posts'],$product);
+	}
+}
+?>
 
 <div class="form-group"><label class="col-sm-2 control-label">상점명 1<span style="color:#">★</span> </label>
 <div class="col-sm-10">
 <div class="row">
 <div class="col-md-2">
 <div class="checkbox checkbox-primary">
-<input id="st_ispay1"  name="st_ispay1" type="checkbox" value="" onclick="javascript:set_storeinfo(1)">
+<input id="st_ispay1"  name="st_ispay1" type="checkbox" value="" onclick="javascript:set_storeinfo(1)"  <?php echo isdata($array['posts'][0]['st_ispay'])=="on"?"checked":"";?>>
 <label for="st_ispay1">과금</label></div><!-- checkbox-primary -->
 </div>
-<div class="col-md-5"><input type="text" name="st_names1" id="st_names1" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(1)"></div>
-<div class="col-md-5"><input type="text" name="st_tel1" id="st_tel1" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(1)"></div>
-<input type="hidden" name="st_info[]" id="st_info1" value="" class="form-control"/>
+<div class="col-md-5"><input type="text" name="st_names1" id="st_names1" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(1)" value="<?php echo isdata($array['posts'][0]['st_names']);?>"></div>
+<div class="col-md-5"><input type="text" name="st_tel1" id="st_tel1" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(1)"  value="<?php echo isdata($array['posts'][0]['st_tel']);?>"></div>
+<input type="text" name="st_info[]" id="st_info1" class="form-control" value="<?php echo $array['posts'][0]['st_info'];?>"/>
 </div>
 
 <!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
@@ -341,43 +382,43 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="row">
 <div class="col-md-2">
 <div class="checkbox checkbox-primary">
-<input id="st_ispay2"  name="st_ispay2" type="checkbox" value="" onclick="javascript:set_storeinfo(2)">
+<input id="st_ispay2"  name="st_ispay2" type="checkbox" value="" onclick="javascript:set_storeinfo(2)"  <?php echo isdata($array['posts'][1]['st_ispay'])=="on"?"checked":"";?>>
 <label for="st_ispay2">과금</label></div><!-- checkbox-primary -->
 </div>
-<div class="col-md-5"><input type="text" name="st_names2" id="st_names2" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(2)"></div>
-<div class="col-md-5"><input type="text" name="st_tel2" id="st_tel2" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(2)"></div>
-<input type="hidden" name="st_info[]" id="st_info2" value="" class="form-control"/>
+<div class="col-md-5"><input type="text" name="st_names2" id="st_names2" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(2)" value="<?php echo isdata($array['posts'][1]['st_names']);?>"></div>
+<div class="col-md-5"><input type="text" name="st_tel2" id="st_tel2" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(2)" value="<?php echo isdata($array['posts'][1]['st_tel']);?>"></div>
+<input type="text" name="st_info[]" id="st_info2" class="form-control" value="<?php echo $array['posts'][1]['st_info'];?>"/>
 </div>
 
 <!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-
 <div class="form-group"><label class="col-sm-2 control-label">상점명 3<span style="color:#">★</span> </label>
 <div class="col-sm-10">
 <div class="row">
-<div class="col-md-2"><div class="checkbox checkbox-primary">
-<input id="st_ispay3"  name="st_ispay3" type="checkbox" value="" onclick="javascript:set_storeinfo(3)">
+<div class="col-md-2">
+<div class="checkbox checkbox-primary">
+<input id="st_ispay3"  name="st_ispay3" type="checkbox" onclick="javascript:set_storeinfo(3)"  <?php echo isdata($array['posts'][2]['st_ispay'])=="on"?"checked":"";?>>
 <label for="st_ispay3">과금</label></div><!-- checkbox-primary -->
 </div>
-<div class="col-md-5"><input type="text" name="st_names3" id="st_names3" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(3)"></div>
-<div class="col-md-5"><input type="text" name="st_tel3" id="st_tel3" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(3)"></div>
-<input type="hidden" name="st_info[]" id="st_info3" value="" class="form-control"/>
+<div class="col-md-5"><input type="text" name="st_names3" id="st_names3" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(3)" value="<?php echo isdata($array['posts'][2]['st_names']);?>"></div>
+<div class="col-md-5"><input type="text" name="st_tel3" id="st_tel3" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(3)" value="<?php echo isdata($array['posts'][2]['st_tel']);?>"></div>
+<input type="text" name="st_info[]" id="st_info3" class="form-control" value="<?php echo $array['posts'][2]['st_info'];?>"/>
 </div>
-
 <!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="form-group"><label class="col-sm-2 control-label">상점명 4<span style="color:#">★</span> </label>
 <div class="col-sm-10">
 <div class="row">
-<div class="col-md-2"><div class="checkbox checkbox-primary">
-<input id="st_ispay4"  name="st_ispay4" type="checkbox" value="" onclick="javascript:set_storeinfo(4)">
+<div class="col-md-2">
+<div class="checkbox checkbox-primary">
+<input id="st_ispay4"  name="st_ispay4" type="checkbox" value="" onclick="javascript:set_storeinfo(4)"  <?php echo isdata($array['posts'][3]['st_ispay'])=="on"?"checked":"";?>>
 <label for="st_ispay4">과금</label></div><!-- checkbox-primary -->
 </div>
-<div class="col-md-5"><input type="text" name="st_names4" id="st_names4" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(4)"></div>
-<div class="col-md-5"><input type="text" name="st_tel4" id="st_tel4" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(4)"></div>
-<input type="hidden" name="st_info[]" id="st_info4" value="" class="form-control"/>
+<div class="col-md-5"><input type="text" name="st_names4" id="st_names4" placeholder="업체명" class="form-control" onkeyup="javascript:set_storeinfo(4)" value="<?php echo isdata($array['posts'][3]['st_names']);?>"></div>
+<div class="col-md-5"><input type="text" name="st_tel4" id="st_tel4" placeholder="전화번호" class="form-control" onkeyup="javascript:set_storeinfo(4)" value="<?php echo isdata($array['posts'][3]['st_tel']);?>"></div>
+<input type="text" name="st_info[]" id="st_info4" class="form-control" value="<?php echo $array['posts'][3]['st_info'];?>"/>
 </div>
 
 <!-- <span class="help-block m-b-none">무제한 문자요금제 확인 [문의 114]</span> -->
@@ -392,8 +433,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 (월 4,400원)
 </label>
 <div class="col-sm-10">
-<div class="col-md-6"><input type="text" placeholder="명의자" class="form-control" name="ma_ktuser"></div>
-<div class="col-md-6"><input type="text" placeholder="생년월일" class="form-control" name="ma_ktbirth"></div>
+<div class="col-md-6"><input type="text" placeholder="명의자" class="form-control" name="ma_ktuser" value="<?php echo $views->ma_ktuser;?>"></div>
+<div class="col-md-6"><input type="text" placeholder="생년월일" class="form-control" name="ma_ktbirth" value="<?php echo $views->ma_ktbirth;?>"></div>
 
 </div><!-- .col-sm-10 -->
 <span class="help-block m-b-none">CID 없는 경우 KT 통화매니저 가입 필요</span>
@@ -427,7 +468,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group">
 <label class="col-sm-2 control-label">금액</label>
 <div class="col-sm-10">
-<input type="number" class="form-control" id="ma_cmsprice" name="ma_cmsprice" step="1000">
+<input type="number" class="form-control" id="ma_cmsprice" name="ma_cmsprice" step="1000" value="<?php echo $views->ma_cmsprice;?>">
 <span class="help-block m-b-none">금액 매월 0,000원(vat 별도)</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -435,26 +476,26 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group"><label class="col-sm-2 control-label">예금주
 </label>
 <div class="col-sm-10">
-<input type="text" class="form-control" id="mb_bankholder" name="mb_bankholder">
+<input type="text" class="form-control" id="mb_bankholder" name="mb_bankholder" value="<?php echo $views->mb_bankholder;?>">
 <!-- <select name="type" style="width: 228px; height: 38px; "> -->
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">생년월일(또는 사업자번호)</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="mb_birth" name="mb_birth"> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
+<div class="col-sm-10"><input type="text" class="form-control" id="mb_birth" name="mb_birth" value="<?php echo $views->mb_birth;?>"> <span class="help-block m-b-none">사업자 등록본호 상에 주소를 기입해야 합니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">은행명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankname" id="mb_bankname"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_bankname" id="mb_bankname" value="<?php echo $views->mb_bankname;?>"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">계좌번호</label>
-<div class="col-sm-10"><input type="text" class="form-control"  name="mb_banknum" id="mb_banknum"> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control"  name="mb_banknum" id="mb_banknum" value="<?php echo $views->mb_banknum;?>"><span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -511,7 +552,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group">
 <label class="col-sm-2 control-label">금액</label>
 <div class="col-sm-10">
-<input type="number" class="form-control" id="ma_blogprice" name="ma_blogprice">
+<input type="number" class="form-control" id="ma_blogprice" name="ma_blogprice" value="<?php echo $views->ma_blogprice;?>">
 <span class="help-block m-b-none">금액 매월 0,000원(vat 별도)</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
@@ -521,7 +562,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group"><label class="col-sm-2 control-label">블로그 포스팅 선택</label>
 <div class="col-sm-10">
 <div class="checkbox checkbox-primary col-sm-3">
-<input id="ma_ispost"  name="ma_ispost" type="checkbox">
+<input id="ma_ispost"  name="ma_ispost" type="checkbox"  <?php echo $views->ma_ispost=="on"?"checked":"";?>>
 <label for="ma_ispost">지역블로그</label></div><!-- checkbox-primary -->
 
 </div><!-- .col-sm-10 -->
@@ -532,7 +573,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group"><label class="col-sm-2 control-label">리뷰 혜택 포인트 적립</label>
 <div class="col-sm-10">
 <div class="checkbox checkbox-primary">
-<input id="ma_ispoint"  name="ma_ispoint" type="checkbox">
+<input id="ma_ispoint"  name="ma_ispoint" type="checkbox"  <?php echo $views->ma_ispoint=="on"?"checked":"";?>>
 <label for="ma_ispoint">배달톡톡 블로그 포인트 2,000원</label></div><!-- checkbox-primary -->
 
 </div><!-- .col-sm-10 -->
@@ -543,13 +584,13 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="form-group"><label class="col-sm-2 control-label">네이버 아이디</label>
 <div class="col-sm-10">
-<input type="text" placeholder="아이디" class="form-control" name="ma_naverid" id="ma_naverid">
+<input type="text" placeholder="아이디" class="form-control" name="ma_naverid" id="ma_naverid" value="<?php echo $views->ma_naverid;?>">
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group-->
 
 <div class="form-group"><label class="col-sm-2 control-label">네이버 비밀번호</label>
 <div class="col-sm-10">
-<input type="text" placeholder="비밀번호" class="form-control" name="ma_naverpwd" id="ma_naverpwd">
+<input type="text" placeholder="비밀번호" class="form-control" name="ma_naverpwd" id="ma_naverpwd" value="<?php echo $views->ma_naverpwd;?>">
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group-->
 
@@ -557,7 +598,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="form-group"><label class="col-sm-2 control-label">네이버지도 관리서비스</label>
 <div class="col-sm-10">
 <div class="checkbox checkbox-primary">
-<input id="ma_isnaver"  name="ma_isnaver" type="checkbox">
+<input id="ma_isnaver"  name="ma_isnaver" type="checkbox" 
+ <?php echo isdata($views->ma_isnaver)=="on"?"checked":"";?>>
 <label for="ma_isnaver"> 네이버 상점 지도 관리위임에 동입니다.  </label></div><!-- checkbox-primary -->
 <span>네이버 지도 관련 정보 수집, 네이버지도 관리 대행, 업체정보 수정 등 에이엔피알 에게 관리 권한 위임합니다.</span>
 </div><!-- .col-sm-10 -->
@@ -649,13 +691,13 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <div class="col-md-7  col-sm-6  col-xs-4">
 <div class="form-group"><label class="col-sm-2 control-label">관리자 성명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="ma_adminname" id="ma_adminname"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="ma_adminname" id="ma_adminname" value="<?php echo $views->ma_adminname;?>"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">관리자 핸드폰</label>
-<div class="col-sm-10"><input type="text" class="form-control"  name="ma_adminhp" id="ma_adminhp"> <span class="help-block m-b-none">관리자 핸드폰을 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control"  name="ma_adminhp" id="ma_adminhp" value="<?php echo $views->ma_adminhp;?>"> <span class="help-block m-b-none">관리자 핸드폰을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -668,8 +710,8 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
   <button class="btn btn-warning" id="clear" type="button" onclick="javascript:clear_signature()">사인다시하기</button>
 </div>
 
-<div id="signature_area">#signature_area</div><!-- #signature_area -->
-<textarea name="signature_content" id="signature_content" cols="30" rows="10"></textarea>
+<div id="signature_area"><img src="<?php echo $views->ma_signaturepad;?>" alt="" /></div><!-- #signature_area -->
+<textarea name="signature_content" id="signature_content" cols="30" rows="10"><?php echo $views->ma_signaturepad;?></textarea>
 <!-- <button class="btn btn-info" type="button" onclick="javascript:set_sign('signature-pad')">사인</button> -->
 
 </div><!-- .col-md-4 -->
@@ -772,14 +814,26 @@ if($("#signature_content").val()=="")
 	return;
 }
 
+if(!$("#ma_isnaver").is(":checked"))
+{
+	swal("지도권한","지도권한 미동의 시 계약이 성사되지 않습니다!!! 지도권한을 체크해주세요.","error");
+	$("#ma_isnaver").focus();
+	console.log("not pass");
+	return;
+}
+console.log("pass");
 $("#form_data").html(param);
 $.ajax({
-url:"/prq/appjoin/write",
+url:"/prq/appjoin/modify",
 type: "POST",
 data:param,
 dataType:"json",
 success: function(data) {
-	console.log(data);
+	if(data.success){
+		swal("수정완료","수정완료 되었습니다.","success");
+	}else{
+		swal("수정실패","통신이 원할하지 않거나 알수 없는 문제로 실패하였습니다.","error");
+	}
 
 	}
 });
@@ -970,6 +1024,7 @@ chk_vali_id();
 .blur(function() {
 blur++;
 chk_vali_id();
+
 });
 /*mb_code로 등록 정보 변경*/
 //chg_gname();
@@ -981,7 +1036,17 @@ var code=$("#prq_fcode").val();
 get_frcode(code);
 get_frmail();
 
+$(".ibox-tools").hide();
 //chk_byte();
+
+/* 초기값 세팅 */
+/* 통신사 */
+$('input:radio[name=st_mno]:input[value=<?php echo $views->st_mno;?>]').attr("checked", true);
+/* 출금일 */
+$('input:radio[name=ma_dateofpayment]:input[value=<?php echo $views->ma_dateofpayment;?>]').attr("checked", true);
+
+/* 매장 카테고리 */
+$('#st_category option[value=<?php echo $views->st_category;?>]').attr('selected', 'selected');
 };/*window.onload = function() {..}*/
 
 

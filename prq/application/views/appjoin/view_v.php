@@ -492,7 +492,7 @@ value="<?php echo $st_tel[1]?>"></div>
 <div class="form-group"><label class="col-sm-2 control-label">네이버지도 관리서비스</label>
 <div class="col-sm-10">
 <div class="checkbox checkbox-primary">
-<input id="ma_isnaver"  name="ma_isnaver" type="checkbox">
+<input id="ma_isnaver"  name="ma_isnaver" type="checkbox" <?php echo $views->ma_isnaver=="on"?"checked":"";?>>
 <label for="ma_isnaver"> 네이버 상점 지도 관리위임에 동입니다.  </label></div><!-- checkbox-primary -->
 <span>네이버 지도 관련 정보 수집, 네이버지도 관리 대행, 업체정보 수정 등 에이엔피알 에게 관리 권한 위임합니다.</span>
 </div><!-- .col-sm-10 -->
@@ -606,11 +606,15 @@ value="<?php echo $st_tel[1]?>"></div>
 
 <div class="row">
 
-
+<?php 
+$page=$this->uri->segment(7);
+$modify_link="/prq/appjoin/modify/modu_agreement/board_id/".$views->ma_no."/page/".$page;
+?>
 <div class="col-md-12">
 <textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
 </div>
 <button class="btn btn-primary" type="button" onclick="set_appjoin()">저장</button>
+<button class="btn btn-warning" type="button" onclick="location.href='<?php echo $modify_link;?>';">수정</button>
 </div><!-- .row raw-layout-->
 
 </div><!-- .ibox-content -->

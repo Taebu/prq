@@ -210,7 +210,7 @@ class Appjoin extends CI_Controller {
  	{
 		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
-		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+//		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 //		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE )
 		if(TRUE )
@@ -261,7 +261,7 @@ class Appjoin extends CI_Controller {
 					'ma_ispoint' => $this->input->post('ma_ispoint', TRUE)=="on"?"on":"off",
 					'ma_naverid' => $this->input->post('ma_naverid', TRUE),
 					'ma_naverpwd' => $this->input->post('ma_naverpwd', TRUE),
-					'ma_ktuser' => $this->input->post('ma_user', TRUE),
+					'ma_ktuser' => $this->input->post('ma_ktuser', TRUE),
 					'ma_ktbirth' => $this->input->post('ma_ktbirth', TRUE),
 					'ma_isnaver' => $this->input->post('ma_isnaver', TRUE)=="on"?"on":"off",
 					'ma_name' => $this->input->post('ma_name', TRUE),
@@ -327,7 +327,7 @@ class Appjoin extends CI_Controller {
  	{
 		//경고창 헬퍼 로딩
 	 	$this->load->helper('alert');
-		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+//		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
 		//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 		$uri_array = $this->segment_explode($this->uri->uri_string());
@@ -345,7 +345,7 @@ class Appjoin extends CI_Controller {
 		if( @$this->session->userdata('logged_in') == TRUE ||@$this->input->cookie('logged_in', TRUE) == TRUE )
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
-			$writer_id = $this->appjoin_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+			//$writer_id = $this->appjoin_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
@@ -383,6 +383,7 @@ class Appjoin extends CI_Controller {
 */
 				$modify_data = array(
 					'table' => 'modu_agreement', //게시판 테이블명
+					'ma_no' => $this->input->post('ma_no', TRUE),
 					'ma_isbdtt' => $this->input->post('ma_isbdtt', TRUE)=="on"?"on":"off",
 					'ma_isttmsg' => $this->input->post('ma_isttmsg', TRUE)=="on"?"on":"off",
 					'ma_isnavermap' => $this->input->post('ma_isnavermap', TRUE)=="on"?"on":"off",
@@ -411,7 +412,7 @@ class Appjoin extends CI_Controller {
 					'ma_ispoint' => $this->input->post('ma_ispoint', TRUE)=="on"?"on":"off",
 					'ma_naverid' => $this->input->post('ma_naverid', TRUE),
 					'ma_naverpwd' => $this->input->post('ma_naverpwd', TRUE),
-					'ma_ktuser' => $this->input->post('ma_user', TRUE),
+					'ma_ktuser' => $this->input->post('ma_ktuser', TRUE),
 					'ma_ktbirth' => $this->input->post('ma_ktbirth', TRUE),
 					'ma_isnaver' => $this->input->post('ma_isnaver', TRUE)=="on"?"on":"off",
 					'ma_name' => $this->input->post('ma_name', TRUE),
@@ -433,13 +434,17 @@ class Appjoin extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/appjoin/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					//alert('수정되었습니다.', '/prq/appjoin/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					$json['success']=true;
+					echo json_encode($json);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/appjoin/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					//alert('다시 수정해 주세요.', '/prq/appjoin/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					$json['success']=false;
+					echo json_encode($json);
 					exit;
 				}
 

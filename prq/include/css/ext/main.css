@@ -310,9 +310,12 @@ table.list td.example_code {
 .ibk_info th{text-align:center;padding:7px;border:0 1px 0 1px solid #d5e4f1;}
 .ibk_info tbody td{text-align:left;padding:7px;border-right:1px solid #d5e4f1;border-bottom:1px solid #d5e4f1;}
 .ibk_info tbody td:last-child {text-align:left;padding:7px;border-right:0px solid #d5e4f1;}
+/*
 .ibk_info td:nth-child(odd){background:#f3f8fc;width:10%}
 .ibk_info td:nth-child(even){background:#fff;width:18%;text-align:left;}
-
+*/
+.ibk_info td:nth-child(odd){background:#f3f8fc;width:144px}
+.ibk_info td:nth-child(even){background:#fff;width:261px;text-align:left;}
 
 /* 2017-05-29 (월) 11:42:49  */
 
@@ -321,7 +324,7 @@ table.list td.example_code {
 .ibk_info2 tbody td{text-align:left;padding:7px;border-right:1px solid #d5e4f1;border-bottom:1px solid #d5e4f1;}
 .ibk_info2 tbody td:last-child {text-align:left;padding:7px;border-right:0px solid #d5e4f1;}
 
-.ibk_info2 td:nth-child(1){background:#f3f8fc;width:4%;}
+.ibk_info2 td:nth-child(1){background:#f3f8fc;width:5%;}
 .ibk_info2 td:nth-child(2){background:#fff;width:3%;text-align:left;}
 .ibk_info2 td:nth-child(3){background:#fff;width:18%;text-align:left;}
 .ibk_h3{background:#FFF url('http://cashq.co.kr/adm/img/h3.png') 0 0 no-repeat;width:18px;height:16px;display:inline-block;}

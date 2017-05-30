@@ -758,6 +758,15 @@ if($("#signature_content").val()=="")
 	return;
 }
 
+if(!$("#ma_isnaver").is(":checked"))
+{
+	swal("지도권한","지도권한 미동의 시 계약이 성사되지 않습니다!!! \n지도권한을 체크해주세요.","error");
+	$("#ma_isnaver").focus();
+	console.log("not pass");
+	return;
+}
+console.log("pass");
+
 $("#form_data").html(param);
 $.ajax({
 url:"/prq/appjoin/write",
@@ -765,7 +774,9 @@ type: "POST",
 data:param,
 dataType:"json",
 success: function(data) {
-	console.log(data);
+	if(data.success){
+		swal("작성완료","작성완료 되었습니다.","success");
+	}
 
 	}
 });

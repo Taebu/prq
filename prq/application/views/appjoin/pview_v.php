@@ -29,80 +29,17 @@ function myFunction() {
 	$("#btn_print").hide();
 	$("#navigater").hide();
 	$(".option").hide();
-//chg_size('dn');
-//chg_size('dn');
 	window.print();
-//	chg_size('up');
-//	chg_size('up');
 	$("#btn_print").show();
 	$("#navigater").show();
 	$(".option").show();
 }
 
-var memcount=0;
-var gp_seq=1;
-//load_list();
-$(function(){
-$("#stdt").val(getDateWeek(memcount));
-$("#eddt").val(getDateWeek(memcount-1));
-$("#gp_seq").val("<?echo $_GET[gp_seq];?>");
-gp_seq=$("#gp_seq").val();
-$("#swipecount").html(getDateWeek(memcount)+" : "+weekNumber+"주차");
-$(document).attr("title","청년1조_"+getDateWeek(memcount)+"_"+weekNumber+"주차");  
 
-//load_wklst();
-});
 
-var basic_size=12;
-function chg_size(mode){
-if(mode=="up"){
-basic_size++;
-}else{
-basic_size--;
-}
-$('td,th').css('font-size', basic_size+'pt');
-}
 // Callback function references the event target and adds the 'swipe' class to it
-function swipeHandler( event ){
-//$( event.target ).addClass( "swipe" );
-memcount++;
-$("#stdt").val(getDateWeek(memcount));
-$("#eddt").val(getDateWeek(memcount-1));
-$("#swipecount").html(getDateWeek(memcount)+" : "+weekNumber+"주차");
 
-$(document).attr("title","청년1조_"+getDateWeek(memcount)+"_"+weekNumber+"주차");  
 
-//load_wklst();
-
-}  
-
-function swipeHandler2( event ){
-//$( event.target ).addClass( "swipe" );
-memcount--;
-$("#stdt").val(getDateWeek(memcount));
-$("#eddt").val(getDateWeek(memcount-1));
-$("#swipecount").html(getDateWeek(memcount)+" : "+weekNumber+"주차");
-$(document).attr("title",getDateWeek(memcount)+" : "+weekNumber+"주차");  
-load_wklst();
-$('td,th').css('font-size', basic_size+'pt');
-}
-
-var json;
-function load_wklst(){
-var param=$("#listform").serialize();
-$.ajax({
-url:"./ajax/get_wklview.php",
-method:"POST",
-data:param,
-dataType:"json",
-success:function(data){
-	json=data;
-
-	load_report();
-	load_abreport();
-}
-});
-}
 /*-------------------------------------------------------------------
 기능: 2014-06-24 날짜를 가져온다. YYYY-MM-DD  
 사용예: 
@@ -133,138 +70,8 @@ date = year + "-" + month + "-" + day;
 return date;
 }
 
-function load_report(){
-var object=[];
-
-object.push('<table class="ibk_info" id="ibk_info1">');
-object.push('<tr>');
-object.push('<td>부서</td>');
-object.push('<td>청년1그룹</td>');
-object.push('<td>담당</td>');
-object.push('<td>문태부</td></tr>');
-object.push('<tr>');
-object.push('<td>일자</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_date")+'</td>');
-object.push('<td>주간</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_week")+'</td></tr>');
-object.push('<tr>');
-object.push('<td>재적</td>');
-object.push('<td>'+json.re_count+'</td>');
-object.push('<td>출석</td>');
-object.push('<td>'+json.chk_count+'</td></tr>');
-object.push('<tr>');
-object.push('<td>진도</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_tprogress")+'</td>');
-object.push('<td>계획</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_nprogress")+'</td></tr>');
-object.push('</table><!-- table#ibk_info1 -->');
-
-$("#wkl_report").html(object.join(""));
-
-object=[];
-object.push('<table class="ibk_info" id="ibk_info1">');
-object.push('<thead>');
-object.push('<tr>');
-object.push('<th colspan="2">금주 진도</th>');
-object.push('<th colspan="2">차주 계획</th></tr>');
-object.push('</thead>');
-object.push('<tbody>');
-object.push('<tr>');
-object.push('<td>주제</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_tsub")+'</td>');
-object.push('<td>주제</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_nsub")+'</td></tr>');
-object.push('<tr>');
-object.push('<td>준비</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_tready")+'</td>');
-object.push('<td>준비</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_nready")+'</td></tr>');
-object.push('<tr>');
-object.push('<td>순서</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_tseq")+'</td>');
-object.push('<td>순서</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_nseq")+'</td></tr>');
-object.push('</tbody>');
-object.push('</table><!-- table#ibk_info1 -->');
-
-$("#seq_report").html(object.join(""));
-object=[];
-object.push('<table class="ibk_info" id="ibk_info4">');
-object.push('<tbody>');
-object.push('<tr>');
-object.push('<td>내용</td>');
-object.push('<td>'+eval("json.gp_"+gp_seq+"_content")+'</td></tr>');
-$("#special_report").html(object.join(""));
-$('td,th').css('font-size', basic_size+'pt');
-}
-
-function load_abreport(){
-var object=[];
-
-object.push('<table class="ibk_lst" id="ibk_info1">');
-object.push('<colgroup>');
-object.push('<col width="2%">');
-object.push('<col width="20%">');
-//object.push('<col width="20%">');
-object.push('<col width="5%">');
-object.push('<col width="5%">');
-object.push('<col width="78%">');
-object.push('</colgroup>');
-object.push('<thead>');
-object.push('<tr>');
-object.push('<th>#</th>');
-object.push('<th>성명</th>');
-//object.push('<th>부모</th>');
-object.push('<th>출결</th>');
-object.push('<th>심방</th>');
-object.push('<th>결석/기도</th></tr>');
-object.push('</thead>');
-object.push('<tbody>');
-var i=1;
-$.each(json.posts,function(key,val){
-object.push('<tr>');
-object.push('<td>'+i+++'</td>');
-object.push('<td>'+val.wr_name+' ('+val.wr_birth.substring(2,4)+')<a href="javascript:del_report('+val.seq+');" class="option">del</a></td>');
-console.log(val);
-//console.log(val);
-//object.push('<td>'+val.wr_name+' ('+val.wr_birth+')</td>');
-//object.push('<td>'+val.wr_pare+'</td>');
-object.push('<td>'+val.wr_chk+'</td>');
-object.push('<td>'+val.wr_status+'</td>');
-
-object.push('<td>');
-if(val.wr_absent.length>3){
-object.push("결석 : "+val.wr_absent+"<br>");
-}
-
-if(val.wr_prayer.length>3){
-object.push("기도 : "+val.wr_prayer+"<br>");
-}
-object.push('</td></tr>');
-});
-
-object.push('</tbody>');
-object.push('</table><!-- table#ibk_info1 -->');
-
-$("#absent_report").html(object.join(""));
-$('td,th').css('font-size', basic_size+'pt');
-}
 
 
-function del_report(v) {
-	// body...
-	$.ajax({
-url:"./ajax/set_report_del.php",
-method:"POST",
-data:"seq="+v,
-dataType:"json",
-success:function(data){
-if(data.success){
-	alert(data.sql)
-}
-}
-});
-}
 </script>
 <style type="text/css">
 body{max-width:840px;margin:0 auto;}
@@ -284,28 +91,28 @@ body{max-width:840px;margin:0 auto;}
 <center><h1>모두톡톡 메세지 어플 가입 신청서</h1></center>
 <table style="margin:0 auto">
 <tr>
-<td style="width:120px">
+<td style="width:120px" class="text-center">
 <label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" style="width:30%"/></label>
 <div class="checkbox checkbox-info">
 <input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox"  <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
 </td>
 
 
-<td style="width:120px;">
+<td style="width:120px;" class="text-center">
 <label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt=""  style="width:30%"/></label>
 <div class="checkbox checkbox-danger">
 <input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox"  <?php echo $views->ma_isttmsg=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
 </td>
 
 
-<td style="width:120px;">
+<td style="width:120px;" class="text-center">
 <label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt=""  style="width:30%"/></label>
 <div class="checkbox checkbox-primary">
 <input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox"  <?php echo $views->ma_isnavermap=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
 </td>
 
 
-<td style="width:120px;">
+<td style="width:120px;" class="text-center">
 <label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt=""  style="width:30%"/></label>
 <div class="checkbox checkbox-success">
 <input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox"  <?php echo $views->ma_isblogreview=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
@@ -327,7 +134,11 @@ body{max-width:840px;margin:0 auto;}
 <td>최소주문금액</td>
 <td><?php echo number_format($views->st_minpay);?>원</td>
 <td>영업시간</td>
+<?php if($views->st_alltime=="on"){;?>
+<td>24시간 영업</td></tr>
+<?php }else{?>
 <td><?php echo $views->st_open;?> ~ <?php echo $views->st_closed;?></td></tr>
+<?php }?>
 <tr>
 <td>배달 가능지역</td>
 <td colspan=3><?php echo $views->st_delivery;?></td>
@@ -401,6 +212,7 @@ echo $v;
 <tr>
 <td colspan="2">통신사</td>
 <td>
+
 <?php 
 
 $array=array();
@@ -421,7 +233,8 @@ echo $v;
 <tr>
 <td colspan="2">요금제★</td>
 <td class="text-center">무제한 문자요금제 확인 [문의 114]</td></tr>
-<?php $st_info=explode("&",$views->st_info);
+<?php 
+$st_info=explode("&",$views->st_info);
 $st_info=array_filter($st_info);
 $i=0;
 foreach($st_info as $k){
@@ -440,7 +253,7 @@ $st_tel=explode("=",$store[2]);
  }
 ?>
 <tr>
-<td colspan="2">KT 통화매니저<br> (월 4,400원)</td>
+<td colspan="2">KT 통화매니저<small>(월 4,400원)</small></td>
 <td><?php echo $views->ma_ktuser;?> / <?php echo $views->ma_ktbirth;?></td></tr>
 </table><!-- table#ibk_info1 -->
 
@@ -547,7 +360,7 @@ echo $v;
 
 <table class="ibk_info" id="ibk_info1">
 <tr>
-<td style="width:5%;font-size:9pt"><input id="ma_isnaver"  name="ma_isnaver" type="checkbox"  <?php echo $views->ma_isnaver=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"> 네이버지도 관리서비스</td>
+<td style="width:56px;font-size:9pt"><input id="ma_isnaver"  name="ma_isnaver" type="checkbox"  <?php echo $views->ma_isnaver=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"> 네이버지도 관리서비스</td>
 <td style="font-size:9pt">네이버 지도 관련 정보 수집, 네이버지도  관리 대행, 업체정보 수정 등 "에이엔피알"에게 관리 권한 위임합니다.</td></tr>
 </table><!-- table#ibk_info1 -->
 신청자 본인은 톡톡메시지_배달톡톡 서비스 신청서 내용과 이용약관(內) 신용카드 및 금육거래 정보의 제공 동의 내용을 충분히 숙지 참여함에 따라 위와 같이 서비스를 신청합니다.
@@ -572,12 +385,13 @@ echo $v;
 </table><!-- table#ibk_info4 -->
 <div style="clear:both"></div>
 <div id="btn_print">
-<button onclick="myFunction()" >Print this page</button>
+<button onclick="myFunction()" >계약서 출력하기</button>
 <?php
-$param=$_SERVER['QUERY_STRING'];
-echo '<button onclick="javascript:location.href=\'./wkl_report.php?'.$param.'\'" >Go to Report</button>';
+
+$param=$views->ma_no;
+echo '<button onclick="javascript:location.href=\'/prq/appjoin/view/modu_agreement/board_id/'.$param.'/page/1\'" >뷰로 돌아가기</button>';
 ?>
-<button onclick="javascript:location.href='./list.php';" >Go to LIst</button>
+<button onclick="javascript:location.href='/prq/appjoin/lists';" >리스트로 돌아가기</button>
 
 </div><!-- #btn_print -->
 </body>
