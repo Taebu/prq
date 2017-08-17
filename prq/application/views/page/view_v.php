@@ -169,12 +169,12 @@ map_location();
 			<div class="gnb_wrp">
 				<h1><a href="javascript:;"><span class="gnb_tl"><?php echo $views->st_name;?></span></a></h1>
 				<!-- top_btn -->
-				<a href="javascript:;" class="btn_top_openleft _leftMenu gnb list" id="btnTopHome">
+				<!--<a href="javascript:;" class="btn_top_openleft _leftMenu gnb list" id="btnTopHome">
 					<span class="btn_top openleft">확장영역 열기</span>
-				<!--
+				
 				<span class="btn_top_openleft_num">N</span>
-				-->
-				</a>
+				
+				</a>-->
 				<?php 
 					$st_tel='';
 					if($views->st_teltype=="cashq"){

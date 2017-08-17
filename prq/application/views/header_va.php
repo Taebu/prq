@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="/include/css/bootstrap.min.css">
     <script src="/include/js/jquery.min.js"></script>
   <script src="/include/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	console.log("header_va.php");
+</script>
 </head>
 <body>
 <div id="main">

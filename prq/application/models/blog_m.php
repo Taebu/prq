@@ -81,6 +81,90 @@ class Blog_m extends CI_Model
     	return $result;
     }
 
+	/**
+	 * 게시물 목록 가져오기 2
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $type 총 게시물 수 또는 게시물 배열을 반환할 지를 결정하는 구분자
+	 * @param string $offset 게시물 가져올 순서
+	 * @param string $limit 한 화면에 표시할 게시물 갯수
+	 * @param array $search_array 검색어
+	 * @return array
+	 */
+    function get_list2($table='prq_member', $type='', $offset='', $limit='', $search_array=array())
+    {
+		$sword= ' WHERE 1=1 ';
+		if($table==""){
+		$table='prq_member';
+		}
+		/*
+		if ( $search_word != '' )
+     	{
+     		//검색어가 있을 경우의 처리
+//     		$sword .= ' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+			$sword .= ' and bl_hp like "%'.$search_word.'%" ';
+			$sword .= ' or st_name like "%'.$search_word.'%" ';
+     	}
+		*/
+
+		if ( $search_array['mb_hp'] != '' )
+		{
+			//검색어가 있을 경우의 처리
+			// - 기호 제거 - 있는 경우 검색 되지 않음.!!!
+			$search_array['bl_hp']=str_replace("-", "", $search_array['mb_hp']);
+			$sword .= ' and bl_hp like "%'.$search_array['mb_hp'].'%" ';
+		}
+
+
+		if ( $search_array['st_name'] != '' )
+		{
+			$sword .= ' and st_name like "%'.$search_array['st_name'].'%" ';
+		}
+
+
+		if ( $search_array['st_no'] != '' )
+		{
+			$sword .= ' and st_no like "%'.$search_array['st_no'].'%" ';
+		}
+
+		if($this->input->cookie('mb_gcode', TRUE)!="G1"){
+		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+		if( strlen($prq_fcode)>2){
+			$sword .= ' and prq_fcode= "'.$prq_fcode.'" ';
+		}
+		}
+    	$limit_query = '';
+
+    	if ( $limit != '' OR $offset != '' )
+     	{
+     		//페이징이 있을 경우의 처리
+     		$limit_query = ' LIMIT '.$offset.', '.$limit;
+     	}else{
+		
+		}
+//		$table="ci_board";
+    	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table.$sword."  ORDER BY bl_no DESC".$limit_query;
+		//echo $sql;
+   		$query = $this->prq->query($sql);
+
+		if ( $type == 'count' )
+     	{
+     		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
+	    	$result = $query->num_rows();
+
+	    	//$this->prq->count_all($table);
+     	}
+     	else
+     	{
+     		//게시물 리스트 반환
+	    	$result = $query->result();
+     	}
+
+    	return $result;
+    }
+
     /**
 	 * 게시물 상세보기 가져오기
 	 *

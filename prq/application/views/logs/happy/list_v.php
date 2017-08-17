@@ -382,7 +382,9 @@ foreach ($list as $lt)
 	$datetime=date("Y-m-d H:i:s",  $lt->hc_unixtime);
 	if($lt->hc_status==0){
 	$result="예약중";
-	}else{
+	}else if($lt->hc_status==2){
+	$result="초과";
+	}if($lt->hc_status==1){
 	$result="전송";
 	}
 ?>

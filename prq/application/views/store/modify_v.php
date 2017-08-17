@@ -211,7 +211,11 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="col-sm-5">
 <?php $arr_closingdate= explode(",",$views->st_closingdate);
 //print_r($arr_closingdate);
-$arr_week=array("일요일","월요일","화요일","수요일","목요일","금요일","토요일");
+$arr_week=array("일요일","월요일","화요일","수요일","목요일","금요일","토요일",
+"첫째주 월요일","첫째주 화요일","첫째주 수요일","첫째주 목요일","첫째주 금요일","첫째주 토요일","첫째주 일요일",
+"둘째주 월요일","둘째주 화요일","둘째주 수요일","둘째주 목요일","둘째주 금요일","둘째주 토요일","둘째주 일요일",
+"셋째주 월요일","셋째주 화요일","셋째주 수요일","셋째주 목요일","셋째주 금요일","셋째주 토요일","셋째주 일요일",
+"넷째주 월요일","넷째주 화요일","넷째주 수요일","넷째주 목요일","넷째주 금요일","넷째주 토요일","넷째주 일요일");
 ?>
  <select data-placeholder="휴무하는 날을 선택해 주세요." class="chosen-select" multiple style="width:350px;" tabindex="4"  id="st_closingdate" name="st_closingdate[]">
 <?php
@@ -394,6 +398,24 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">이벤트 사용여부</label>
+<div class="col-sm-10"><div class="switch">
+<div class="onoffswitch">
+	<input type="checkbox" class="onoffswitch-checkbox" id="is_event" name="is_event" onclick='javascript:set_event(this)'>
+	<label class="onoffswitch-label" for="is_event">
+		<span class="onoffswitch-inner"></span>
+		<span class="onoffswitch-switch"></span>
+	</label>
+</div>
+</div>
+<span class="help-block m-b-none">이벤트 이미지 추가 및 혜택 선택 버튼을 활성화한다. </span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="row">
@@ -1104,6 +1126,103 @@ function chk_blogauto()
 		$("#naver_blogapi").hide();
 	}
 }
+
+
+/****************
+* set_event(this)
+* 블로그url 사용/여부를 기록 합니다.
+* 
+****************/
+function set_event(v)
+{
+	console.log($("#is_blogurl").is(':checked'));
+	var is_blogurl=$("#is_blogurl").is(':checked');
+	
+	var is_use_str=is_blogurl?"사용":"미사용";
+	var k=is_use_str?"Y":"N";
+	console.log(k);
+	swal({
+	title: "정말 변경 하시겠습니까?",
+	text: "해당 상점을 블로그 \""+is_use_str+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+	html:true,
+	type: "input",
+	showCancelButton: true,
+	closeOnConfirm: false,
+	cancelOnConfirm: false,
+	confirmButtonText: "네, 변경할래요!",
+	cancelButtonText: "아니요, 취소할래요!",
+	animation: "slide-from-top",   showLoaderOnConfirm: true,
+	allowEscapeKey:true,
+	inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
+		//$(v).prop('checked', !is_blogurl);
+	//if (inputValue === false) return false;
+	if(inputValue === false){
+		$("#is_blogurl").prop('checked', !is_blogurl);
+		swal("취소!", "취소 하였습니다.", "error");
+		// return false;
+		return;
+	}
+	if (inputValue.length<3) {
+	  swal.showInputError("3자이상 사유를 적어 주세요.");
+	  return false
+	}
+
+	var param=$("#write_action").serialize();
+	var data_url=$("#is_blogurl").is(':checked')?"on":"off";
+	param=param+"&mb_status="+k;
+	/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
+	param=param+"&mb_reason="+inputValue;
+	param=param+"&pv_value="+data_url;
+	param=param+"&pv_code=5002";
+	//console.log(param);
+	$.ajax({
+	url:"/prq/ajax/chg_status/prq_isblog",
+		data:param,
+		dataType:"json",
+		type:"POST",
+		success:function(data){
+		console.log(data);
+			if(data.success){
+				//alert("변경에 성공하였습니다.");
+				swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
+				$("#is_blogurl").prop('checked', is_blogurl);
+			}
+			if(data=="9000"){
+				//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
+				swal({   
+					title: "로그인!",
+					text: "로그인 되지 않았습니다. 로그인 하시겠습니까?",
+					type: "warning",
+					showCancelButton: true,
+					closeOnConfirm: false,
+					animation: "slide-from-top"
+				}, 
+				function(inputValue)
+				{
+	
+					/*취소를 눌렀을 때*/
+					if (inputValue === false){
+						//$("#is_blogurl").prop('checked', !is_blogurl);
+						//return false;
+					} 
+
+					swal("Nice!", "2초 뒤 로그인 페이지로 이동 합니다. ", "success");
+					
+					setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
+					;
+				});	
+			}
+
+			if(!data.success)
+			{
+				alert("변경에 실패하였습니다.");
+				swal("변경!", "변경에 실패하였습니다. 변경 사유 : "+inputValue, "warning");
+			}
+		}/* success:function(data){...} */
+	});/* $.ajax({...}); */
+	});/* swal({...});*/
+}
+
 /* 홈페이지 로드시 */
 window.onload = function() {
 /*24시간인지 체크*/

@@ -1,33 +1,14 @@
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
-<h2>모두톡톡 메세지 어플 가입 신청서</h2>
-<ol class="breadcrumb">
-<li>
-<a href="index.html">Home</a>
-</li>
-<li>
-<a>모두톡톡 메세지 어플 </a>
-</li>
-<li class="active">
-<strong>가입 신청서</strong>
-</li>
-</ol>
-</div>
-<div class="col-lg-2">
-
-</div>
+	<h2>모두톡톡 메세지 어플 가입 신청서</h2>
+	<ol class="breadcrumb">
+	<li><a href="index.html">Home</a></li>
+	<li><a>모두톡톡 메세지 어플 </a></li>
+	<li class="active"><strong>가입 신청서</strong></li></ol></div>
+	<div class="col-lg-2"></div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-<?php 
-$attributes = array(
-'class' => 'form-horizontal', 
-'id' => 'write_action'
-);
-
-
-
-
-
+<?php $attributes = array('class' => 'form-horizontal', 'id' => 'write_action');
 echo form_open('/appjoin/write/', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
@@ -41,31 +22,31 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 
 
-<div class="col-sm-3 text-center">
-<label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" /></label>
+<div class="col-sm-3 text-center col-xs-6">
+<label for="ma_isbdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" id="img_ma_isbdtt"  class="image-responsive"/></label>
 <div class="checkbox checkbox-info">
-<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
+<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" checked="" onclick="javascript:switch_img(this.id);"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
 </div>
 
 
-<div class="col-sm-3 text-center">
-<label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt="" /></label>
+<div class="col-sm-3 text-center col-xs-6">
+<label for="ma_isttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt="" id="img_ma_isttmsg"  class="image-responsive"/></label>
 <div class="checkbox checkbox-danger">
-<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
+<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox" checked="" onclick="javascript:switch_img(this.id);"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
 </div>
 
 
-<div class="col-sm-3 text-center">
-<label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt="" /></label>
+<div class="col-sm-3 text-center col-xs-6">
+<label for="ma_isnavermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt="" id="img_ma_isnavermap"  class="image-responsive"/></label>
 <div class="checkbox checkbox-primary">
-<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
+<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox" checked="" onclick="javascript:switch_img(this.id);"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
 </div>
 
 
-<div class="col-sm-3 text-center">
-<label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt="" /></label>
+<div class="col-sm-3 text-center col-xs-6">
+<label for="ma_isblogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt="" id="img_ma_isblogreview"  class="image-responsive"/></label>
 <div class="checkbox checkbox-success">
-<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox" checked="" onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
+<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox" checked="" onclick="javascript:switch_img(this.id);"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
 </div>
 
 
@@ -77,7 +58,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="ibox float-e-margins">
 <div class="ibox-title">
 	<h5>광고정보 배달톡톡 앱광고 <small>(신규매장) *은 필수 표기 입니다.</small></h5>
-	<div class="ibox-tools">
+	<div class="ibox-tools">ibox-tools
 	<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-wrench"></i></a>
 	<ul class="dropdown-menu dropdown-user">
@@ -440,7 +421,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">계좌번호</label>
-<div class="col-sm-10"><input type="text" class="form-control"  name="mb_banknum" id="mb_banknum"> <span class="help-block m-b-none">계좌번호를 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control"  name="mb_banknum" id="mb_banknum"> <span class="help-block m-b-none">계좌번호를 기입해 주세요. 핸드폰 번호계좌는 CMS등록이 되지 않습니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 
@@ -622,40 +603,39 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 <div class="ibox-content">
 <div class="row">
 <p>신청자 본인은 톡톡메세지_배달톡톡 서비스 신청서 내용과 이용 약관 (內) 신용카드 및 금융거래정보의 제공 동의 내용을 충분히 숙지함에 따라 위와 같이 서비스를 신청합니다.</p>
-<div class="col-md-4 col-sm-4 col-xs-8">
+<div class="col-lg-3 col-sm-4 col-xs-12">
 <img src="/prq/img/agreement/anpr_logo.jpeg" alt="anpr_logo.jpeg" />
-<p>대표이사 : 김옥란  /  사업자번호 : 476-11-00222 </p>
+<p>대이표사 : 김옥란  /  사업자번호 : 476-11-00222 </p>
 <p>사무실 : 경기도 고양시 일산동구 백석동 1176-1</p>
 <p>고객센터 : 1599 - 7571  /  팩스 : 0505-300-9495</p>
 </div><!-- .col-md-4 -->
 
-<div class="col-md-1  col-sm-2  col-xs-12">
+<div class="col-lg-1  col-sm-2  col-xs-12">
 <img src="/prq/img/agreement/anpr_sign.jpeg" alt="anpr_sign.jpeg" />
 </div><!-- .col-md-4 -->
 
-<div class="col-md-7  col-sm-6  col-xs-4">
+<div class="col-lg-4 col-sm-4 col-xs-12">
 <div class="form-group"><label class="col-sm-2 control-label">관리자 성명</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="ma_adminname" id="ma_adminname"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="ma_adminname" id="ma_adminname"> <span class="help-block m-b-none">영업 관리자 이름을 기입해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
 <div class="form-group"><label class="col-sm-2 control-label">관리자 핸드폰</label>
-<div class="col-sm-10"><input type="text" class="form-control"  name="ma_adminhp" id="ma_adminhp"> <span class="help-block m-b-none">관리자 핸드폰을 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control"  name="ma_adminhp" id="ma_adminhp"> <span class="help-block m-b-none">영업 관리자 핸드폰을 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
+</div><!-- .col-md-3 col-sm-4 col-xs-12 -->
 
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
-
-
+<div class="col-lg-3  col-sm-6  col-xs-12">
 <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+<div id="signature_area"></div><!-- #signature_area -->
 <div>
-  <button class="btn btn-primary" id="save" type="button" onclick="javascript:set_signature()">사인저장</button>
-  <button class="btn btn-warning" id="clear" type="button" onclick="javascript:clear_signature()">사인다시하기</button>
+<button class="btn btn-primary" id="btn_save" type="button" onclick="javascript:set_signature()">사인저장</button>
+<button class="btn btn-warning" id="btn_clear" type="button" onclick="javascript:clear_signature()" style="display:none">사인다시하기</button>
 </div>
 
-<div id="signature_area">#signature_area</div><!-- #signature_area -->
-<textarea name="signature_content" id="signature_content" cols="30" rows="10"></textarea>
+
+<textarea name="signature_content" id="signature_content" cols="30" rows="10" style="display:none"></textarea>
 <!-- <button class="btn btn-info" type="button" onclick="javascript:set_sign('signature-pad')">사인</button> -->
 
 </div><!-- .col-md-4 -->
@@ -667,7 +647,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 
 <div class="col-md-12">
-<textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
+<textarea id="form_data"  class="form-control" rows="4" cols="50" style="display:none">#form_data</textarea><!-- #form_data -->
 </div>
 <button class="btn btn-primary" type="button" onclick="set_appjoin()">저장</button>
 </div><!-- .row raw-layout-->
@@ -704,19 +684,20 @@ var vali_names= [
         { "name":"st_bizname", "hname":"사업자상호" },
         { "name":"st_ceoname", "hname":"사업자성명" },
         { "name":"st_bizaddress", "hname":"사업자주소" },
-        { "name":"st_taxemail", "hname":"세금계산서 email" },
+//        { "name":"st_taxemail", "hname":"세금계산서 email" },
         { "name":"st_bizhp", "hname":"사업자핸드폰" },
         { "name":"st_bdtthp", "hname":"톡톡연동핸드폰" },
         { "name":"st_names1", "hname":"상점이름" },
         { "name":"st_tel1", "hname":"상점전화" },
-        { "name":"ma_blogprice", "hname":"블로그 금액" },
-        { "name":"ma_ispost", "hname":"블로그 포스팅 선택" },
-        { "name":"ma_ispoint", "hname":"리뷰혜택 포인트 적립" },
-        { "name":"ma_naverid", "hname":"네이버 아이디" },
-        { "name":"ma_naverpwd", "hname":"네이버 비밀번호" },
-        { "name":"ma_isnaver", "hname":"네이버 관리 서비스" },
-        { "name":"ma_adminname", "hname":"관리자 성명" },
-        { "name":"ma_adminhp", "hname":"관리자 핸드폰" },
+//        { "name":"ma_blogprice", "hname":"블로그 금액" },
+//        { "name":"ma_ispost", "hname":"블로그 포스팅 선택" },
+//        { "name":"ma_ispoint", "hname":"리뷰혜택 포인트 적립" },
+//        { "name":"ma_naverid", "hname":"네이버 아이디" },
+//        { "name":"ma_naverpwd", "hname":"네이버 비밀번호" },
+ 
+		{ "name":"ma_isnaver", "hname":"네이버 관리 서비스" },
+//        { "name":"ma_adminname", "hname":"관리자 성명" },
+//        { "name":"ma_adminhp", "hname":"관리자 핸드폰" },
         { "name":"mb_birth", "hname":"생년월일" },
         { "name":"mb_bankname", "hname":"은행명" },
         { "name":"mb_banknum", "hname":"계좌번호" },
@@ -767,6 +748,11 @@ if(!$("#ma_isnaver").is(":checked"))
 }
 console.log("pass");
 
+if(is_hp($("#mb_banknum").val())){
+	swal("계좌번호에러","핸드폰 번호로는 CMS 등록이 되지 않습니다. 원래 계좌번호를 등록해주세요.","error");
+	$("#mb_banknum").focus();
+	return;
+}
 $("#form_data").html(param);
 $.ajax({
 url:"/prq/appjoin/write",
@@ -775,10 +761,21 @@ data:param,
 dataType:"json",
 success: function(data) {
 	if(data.success){
-		swal("작성완료","작성완료 되었습니다.","success");
+		swal("작성완료","작성완료 되었습니다. 5초 뒤 전자계약서로 이동합니다.","success");
+		/* */
+		setTimeout(function(){
+			console.log('setTimeout');
+			$(location).attr('href', "/prq/appjoin/pview/modu_agreement/board_id/"+data.last_id+"/page/1");}
+		, 5000);
+		
+
+	}else if(data.success==false){
+		swal("작성실패","작성에 실패 했습니다.","error");
+	}else{
+		swal("오류","알수 없는 오류가 있습니다..","error");
 	}
 
-	}
+}	
 });
 
 /*
@@ -972,6 +969,7 @@ chk_vali_id();
 //chg_gname();
 /*24시간인지 체크*/
 chk_btn_status();
+$(".ibox-tools").hide();
 /*멀티 셀렉트 구현 chosen-select */
 $(".chosen-select").chosen();
 var code=$("#prq_fcode").val();
@@ -995,10 +993,16 @@ function set_sign(id){
 
 function set_signature()
 {
+
 	let sign_data=signaturePad.toDataURL();
 	$("#signature_content").html(sign_data);
 	sign_data="<img src='"+sign_data+"'>";
 	$("#signature_area").html(sign_data);
+	//set
+	$("#signature_area").show();  //img
+	$("#signature-pad").hide();   //canvas
+	$("#btn_save").hide();
+	$("#btn_clear").show();   //canvas
 }
 
 function clear_signature()
@@ -1006,6 +1010,10 @@ function clear_signature()
 	$("#signature_content").html("");
 	$("#signature_area").html("");
 	signaturePad.clear();
+	//clear
+	$("#signature_area").hide();  //img
+	$("#signature-pad").show();   //canvas
+	$("#btn_save").show();   //canvas
 }
 
 function set_storeinfo(v)
@@ -1018,9 +1026,40 @@ function set_storeinfo(v)
 	console.log(param);
 	$("#st_info"+v).val(param);
 }
+
+/* 이미지를 클릭시 스위치 처럼 온/오프 효과를 냅니다. */
+function switch_img(id)
+{
+	var is_btn=$("#"+id).is(":checked");
+	if(is_btn){
+		$("#img_"+id).removeClass('img_gray');
+	}else{
+		$("#img_"+id).addClass('img_gray');
+	}
+
+}
+
+/* 핸드폰 인지 정규식 체크 */
+function is_hp(str)
+{
+	var regTel = /^(01[016789]{1}|070|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+	return regTel.test(str);
+}
+
 </script>
 <style type="text/css">
 .signature-pad {
   border:1px solid #000;
 }
+.img_gray{filter:grayscale(100%);}
+.blur {-webkit-filter: blur(4px);filter: blur(4px);}
+.brightness {-webkit-filter: brightness(0.30);filter: brightness(0.30);}
+.contrast {-webkit-filter: contrast(180%);filter: contrast(180%);}
+.grayscale {-webkit-filter: grayscale(100%);filter: grayscale(100%);}
+.huerotate {-webkit-filter: hue-rotate(180deg);filter: hue-rotate(180deg);}
+.invert {-webkit-filter: invert(100%);filter: invert(100%);}
+.opacity {-webkit-filter: opacity(50%);filter: opacity(50%);}
+.saturate {-webkit-filter: saturate(7); filter: saturate(7);}
+.sepia {-webkit-filter: sepia(100%);filter: sepia(100%);}
+.shadow {-webkit-filter: drop-shadow(8px 8px 10px green);filter: drop-shadow(8px 8px 10px green);}
 </style>

@@ -41,7 +41,7 @@ class Blog extends CI_Controller {
 			}
 			//푸터 include		
 			$this->load->view('footer_blog_v');
-		}else if($method=="write")
+		}else if($method=="write"||$method=="event")
 		{
 			//헤더 include
 			$this->load->view('header_write_v');
@@ -109,12 +109,23 @@ class Blog extends CI_Controller {
 		}
 		//페이지네이션 라이브러리 로딩 추가
 		$this->load->library('pagination');
-
+		$search_array = array(
+			'mb_name'=>$this->input->post('mb_name', TRUE),
+			'st_name'=>$this->input->post('st_name', TRUE),
+			'st_no'=>$this->input->post('st_no', TRUE),
+			'mb_id'=>$this->input->post('mb_id', TRUE),
+			'mb_email'=>$this->input->post('mb_email', TRUE),
+			'bl_datetime'=>$this->input->post('bl_datetime', TRUE),
+			'mb_hp'=>$this->input->post('mb_hp', TRUE)
+		);
 
 		$config = array(
 		//페이지네이션 기본 설정
 		'base_url'=> '/prq/blog/lists/prq_store'.$page_url.'/page/',
-		'total_rows' => $this->blog_m->get_list("prq_blog", 'count', '', '', $search_word),
+//		'total_rows' => $this->blog_m->get_list("prq_blog", 'count', '', '', $search_word),
+//		'total_rows' => $this->logs_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
+		'total_rows' => $this->blog_m->get_list2("prq_blog", 'count', '', '', $search_array),
+
 		'per_page' => 15,
 		'uri_segment' => $uri_segment,
 
@@ -132,7 +143,7 @@ class Blog extends CI_Controller {
 		'prev_tag_open'	=> '<li>',
 		'prev_tag_close'	=> '</li>',
 //		'cur_tag_open'	=> '<li class="disabled"><a href="#">',
-		'cur_tag_open'	=> '<li class="active"><a href="#">',
+		'cur_tag_open'	=> '<li class="active"><a>',
 		'cur_tag_close'	=> '</a></li>',
 		'num_tag_open'	=> '<li>',
 		'num_tag_close'	=> '</li>',
@@ -145,6 +156,9 @@ class Blog extends CI_Controller {
 		//게시판 목록을 불러오기 위한 offset, limit 값 가져오기
 		$data['page'] = $page = $this->uri->segment($uri_segment, 1);
 
+		/* 검색한 값들 상세 검색 배열*/
+		$data['search']=$search_array;
+		
 		if ( $page > 1 )
 		{
 			$start = (($page/$config['per_page'])) * $config['per_page'];
@@ -156,7 +170,9 @@ class Blog extends CI_Controller {
 
 		$limit = $config['per_page'];
 
-		$data['list'] = $this->blog_m->get_list("prq_blog", '', $start, $limit, $search_word);
+		//$data['list'] = $this->blog_m->get_list("prq_blog", '', $start, $limit, $search_word);
+		$data['list'] = $this->blog_m->get_list2("prq_blog", '', $start, $limit, $search_array);
+
 		$this->load->view('blog/list_v', $data);
 	}
 
@@ -830,6 +846,105 @@ class Blog extends CI_Controller {
 		return json_decode($resp, true);
 	}
 	
+ 	/**
+	 * 게시물 event 쓰기
+	 */
+	function event()
+ 	{
+		//경고창 헬퍼 로딩
+		$this->load->helper('alert');
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
+		//if( @$this->session->userdata('logged_in') == TRUE )
+		if(TRUE)
+		{
+			//폼 검증 라이브러리 로드
+			$this->load->library('form_validation');
+
+			//폼 검증할 필드와 규칙 사전 정의
+			$this->form_validation->set_rules('st_name', '상점이름', 'required');
+			$this->form_validation->set_rules('st_no', '상점번호', 'required');
+
+			if ( $this->form_validation->run() == TRUE )
+			{
+				$this->load->model('blog_m');
+				//주소중에서 blog 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+				$uri_array = $this->segment_explode($this->uri->uri_string());
+
+				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
+
+				$img_src=$this->input->post('img_src', TRUE);
+
+				//$this->input->post(NULL, TRUE); 
+				$array_content=$this->input->post('content', TRUE);
+				
+				$write_data = array(
+					'st_no' => $this->input->post('st_no', TRUE),
+					'st_name' => $this->input->post('st_name', TRUE),
+					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
+					'bl_file' => $this->input->post('bl_file', TRUE),
+					'bl_name' => $this->input->post('bl_name', TRUE),
+					'bl_hp' => $this->input->post('bl_hp', TRUE),
+					'content1' => $array_content[0],
+					'content2' => $array_content[1],
+					'content3' => $array_content[2],
+					'post_data' => $this->input->post(null, TRUE),
+				);
+				$result = $this->blog_m->insert_blog($write_data);
+				//print_r($result);
+				
+				
+				for($i=0;$i<count($img_src);$i++)
+				{
+					//echo $is;
+					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
+					$files=getimagesize($filelocation);
+
+					$write_data = array(
+						'pr_table' => "review",
+						'bl_no' => $result['insert_id'],
+						'bf_no' => $i,
+						'bf_source' => $img_src[$i],
+						'bf_file' => $img_src[$i],
+						'bf_download' => "0",
+						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
+						'bf_filesize' => filesize($filelocation),
+						'bf_width' => $files[0],
+						'bf_height' => $files[1],
+						'bf_type' => $files[2],
+					);
+					//print_r($write_data);
+					$result2 = $this->blog_m->insert_file($write_data);
+					//echo $result2;
+				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
+
+				if ( $result['result'] )
+				{
+					//글 작성 성공시 게시판 목록으로
+					alert('입력되었습니다.', '/prq/blog/cview/'.$result['insert_id']);
+					exit;
+				}
+				else
+				{
+					//글 실패시 게시판 목록으로
+					alert('다시 입력해 주세요.', '/prq/blog/event/'.$this->uri->segment(3));
+					exit;
+				}
+
+			}
+			else
+			{
+				//쓰기폼 view 호출
+				//$this->load->view('blog/write_v');	
+				$this->load->view('blog/event_v');	
+			}
+		}
+		else
+		{
+			//alert('로그인후 작성하세요', '/prq/auth/login/');
+			//exit;
+		}
+ 	}
 }
 
 /* End of file blog.php */

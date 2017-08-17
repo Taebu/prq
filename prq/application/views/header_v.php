@@ -20,7 +20,13 @@
 
     <link href="/prq/include/css/animate.css" rel="stylesheet">
     <link href="/prq/include/css/style.css" rel="stylesheet">
+<script type="text/javascript">
+var application="<?php echo $this->uri->segment(1);?>";
+var method="<?php echo $this->uri->segment(2);?>";
 
+	var pdata={application:application,method:method};
+	console.log(pdata);
+</script>
 </head>
 
 <body class="skin-3">

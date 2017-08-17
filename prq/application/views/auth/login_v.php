@@ -27,7 +27,7 @@ echo form_open('/auth/login', $attributes);
             <div>
 
                 <!-- <h1 class="logo-name">PRQ</h1> -->
-                <img src="/prq/img/logo.png" width="80%">
+                <img src="/prq/img/logo.png" width="60%">
 
             </div>
             <h3>톡톡메시지 방문을 환영합니다!</h3>
@@ -48,6 +48,9 @@ echo form_open('/auth/login', $attributes);
 				
 				<div style="clear:both;"></div>
 				
+				<div style="background:#2d5cab;padding:10px 0 10px 0;font-weight:bold;font-size:14px;">
+					<a href="http://prq.co.kr/prq/appjoin/write" target="_blank" style="color:#fff;"><img src="/prq/img/write.png" width="15px">&nbsp; 모두톡톡 가입신청서 <span style="font-weight:lighter">작성 바로가기 ></span></a>
+				</div>
 				
 			</form>
 			<!-- <div class="controls">

@@ -58,8 +58,9 @@
 
 	var application="<?php echo $this->uri->segment(1);?>";
 	var method="<?php echo $this->uri->segment(2);?>";
-//console.log("header_write_v.php");
-
+	var pdata={application:application,method:method};
+	console.log("header_write_v.php");
+	console.log(pdata);
 </script>
 </head>
 <body class="skin-3">
@@ -215,6 +216,14 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                             <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-warning pull-right">NEW</span></a></li>
                             <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST<span class="label label-warning pull-right">NEW</span></a></li>
 						</ul>
+                    </li>
+					<?php echo $this->uri->segment(1)=="appjoin"?'<li class="active">':'<li>';?>
+                        <a href="#">
+						<i class="fa fa-files-o"></i><span class="nav-label">Appjoin</span><span class="fa arrow"></span>
+						</a>
+                        <ul class="nav nav-second-level collapse">
+                            <?php echo $this->uri->segment(3)=="modu_agreement"?'<li class="active">':'<li>';?><a href="/prq/appjoin/lists/modu_agreement">모두톡톡 계약서</a></li>
+							</ul>
                     </li>
 				</ul>
             </div>

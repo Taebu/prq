@@ -4,7 +4,7 @@
                 <!-- 10GB of <strong>250GB</strong> Free. -->
             </div>
             <div>
-                <strong>Copyright</strong> ANP Company &copy; 2014-2015
+                <strong>Copyright</strong> ANPR Company &copy; 2014-2015
             </div>
         </div><!-- .footer -->
         </div>
@@ -517,6 +517,7 @@ if($("#logged_in").val()==""){
 setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
 
 }
-	</script>
+console.log("footer_v.5php");
+</script>
 </body>
 </html>

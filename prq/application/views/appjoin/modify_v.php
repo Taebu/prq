@@ -34,10 +34,6 @@ $attributes = array(
 'id' => 'write_action'
 );
 
-print_r($views);
-
-
-
 echo form_open('/appjoin/modify/', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
@@ -52,30 +48,30 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 
 <div class="col-sm-3 text-center">
-<label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" /></label>
+<label for="ma_isbdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" id="img_ma_isbdtt"  <?php echo $views->ma_isbdtt=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-info">
-<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
+<input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox" <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:switch_img(this.id);"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
-<label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt="" /></label>
+<label for="ma_isttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt="" id="img_ma_isttmsg"  <?php echo $views->ma_isttmsg=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-danger">
-<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox"  <?php echo $views->ma_isttmsg=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
+<input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox"  <?php echo $views->ma_isttmsg=="on"?"checked":"";?> onclick="javascript:switch_img(this.id);"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
-<label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt="" /></label>
+<label for="ma_isnavermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt="" id="img_ma_isnavermap"  <?php echo $views->ma_isnavermap=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-primary">
-<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox"  <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
+<input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox"  <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:switch_img(this.id);"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
 </div>
 
 
 <div class="col-sm-3 text-center">
-<label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt="" /></label>
+<label for="ma_isblogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt="" id="img_ma_isblogreview"  <?php echo $views->ma_isblogreview=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-success">
-<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox"  <?php echo $views->ma_isblogreview=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
+<input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox"  <?php echo $views->ma_isblogreview=="on"?"checked":"";?> onclick="javascript:switch_img(this.id);"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
 </div>
 
 
@@ -600,7 +596,7 @@ foreach($st_info as $k)
 <div class="checkbox checkbox-primary">
 <input id="ma_isnaver"  name="ma_isnaver" type="checkbox" 
  <?php echo isdata($views->ma_isnaver)=="on"?"checked":"";?>>
-<label for="ma_isnaver"> 네이버 상점 지도 관리위임에 동입니다.  </label></div><!-- checkbox-primary -->
+<label for="ma_isnaver"> 네이버 상점 지도 관리위임에 동의 합니다.  </label></div><!-- checkbox-primary -->
 <span>네이버 지도 관련 정보 수집, 네이버지도 관리 대행, 업체정보 수정 등 에이엔피알 에게 관리 권한 위임합니다.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group-->
@@ -678,7 +674,7 @@ foreach($st_info as $k)
 <div class="ibox-content">
 <div class="row">
 <p>신청자 본인은 톡톡메세지_배달톡톡 서비스 신청서 내용과 이용 약관 (內) 신용카드 및 금융거래정보의 제공 동의 내용을 충분히 숙지함에 따라 위와 같이 서비스를 신청합니다.</p>
-<div class="col-md-4 col-sm-4 col-xs-8">
+<div class="col-md-4 col-sm-4 col-xs-12">
 <img src="/prq/img/agreement/anpr_logo.jpeg" alt="anpr_logo.jpeg" />
 <p>대표이사 : 김옥란  /  사업자번호 : 476-11-00222 </p>
 <p>사무실 : 경기도 고양시 일산동구 백석동 1176-1</p>
@@ -689,7 +685,7 @@ foreach($st_info as $k)
 <img src="/prq/img/agreement/anpr_sign.jpeg" alt="anpr_sign.jpeg" />
 </div><!-- .col-md-4 -->
 
-<div class="col-md-7  col-sm-6  col-xs-4">
+<div class="col-md-7  col-sm-6  col-xs-12">
 <div class="form-group"><label class="col-sm-2 control-label">관리자 성명</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="ma_adminname" id="ma_adminname" value="<?php echo $views->ma_adminname;?>"> <span class="help-block m-b-none">세금계산서를 발행할 이메일을 기입해  주세요.</span>
 </div><!-- .col-sm-10 -->
@@ -703,16 +699,16 @@ foreach($st_info as $k)
 
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+<canvas id="signature-pad" class="signature-pad responsive" width=400 height=200 style="display:none"></canvas>
+<div id="signature_area"><img src="<?php echo $views->ma_signaturepad;?>" alt="" class="image-responsive"/></div><!-- #signature_area -->
+<div id="btn_signpad">
+  <button class="btn btn-primary" id="btn_save" type="button" onclick="javascript:set_signature()" style="display:none">사인저장</button>
+  <button class="btn btn-warning" id="btn_clear" type="button" onclick="javascript:clear_signature()">사인다시하기</button>
+</div><!-- #btn_signpad -->
 
-<canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
-<div>
-  <button class="btn btn-primary" id="save" type="button" onclick="javascript:set_signature()">사인저장</button>
-  <button class="btn btn-warning" id="clear" type="button" onclick="javascript:clear_signature()">사인다시하기</button>
-</div>
 
-<div id="signature_area"><img src="<?php echo $views->ma_signaturepad;?>" alt="" /></div><!-- #signature_area -->
-<textarea name="signature_content" id="signature_content" cols="30" rows="10"><?php echo $views->ma_signaturepad;?></textarea>
-<!-- <button class="btn btn-info" type="button" onclick="javascript:set_sign('signature-pad')">사인</button> -->
+<textarea name="signature_content" id="signature_content" cols="30" rows="10" style="display:none"><?php echo $views->ma_signaturepad;?></textarea>
+
 
 </div><!-- .col-md-4 -->
 
@@ -723,7 +719,7 @@ foreach($st_info as $k)
 
 
 <div class="col-md-12">
-<textarea id="form_data"  class="form-control" rows="4" cols="50">#form_data</textarea><!-- #form_data -->
+<textarea id="form_data"  class="form-control" rows="4" cols="50"  style="display:none">#form_data</textarea><!-- #form_data -->
 </div>
 <button class="btn btn-primary" type="button" onclick="set_appjoin()">수정</button>
 </div><!-- .row raw-layout-->
@@ -852,7 +848,7 @@ $("#form_data").html("<span  class=\"text-danger\">가입불</span>");
 }
 
 /**
-chk_duplicate_id(mb_id)
+	chk_duplicate_id(mb_id)
 */
 function chk_duplicate_id(mb_id)
 {
@@ -923,6 +919,18 @@ function chk_btn_status()
 		$("#st_closed").removeClass("disabled").prop('disabled', false); 
 	}
 	
+}
+
+/* 이미지를 클릭시 스위치 처럼 온/오프 효과를 냅니다. */
+function switch_img(id)
+{
+	var is_btn=$("#"+id).is(":checked");
+	if(is_btn){
+		$("#img_"+id).removeClass('img_gray');
+	}else{
+		$("#img_"+id).addClass('img_gray');
+	}
+
 }
 /*가맴점 코드를 불러 옵니다.*/
 var pt_code="";
@@ -1067,6 +1075,10 @@ function set_signature()
 	$("#signature_content").html(sign_data);
 	sign_data="<img src='"+sign_data+"'>";
 	$("#signature_area").html(sign_data);
+	//set
+	$("#signature_area").show();  //img
+	$("#signature-pad").hide();   //canvas
+	$("#btn_save").hide();
 }
 
 function clear_signature()
@@ -1074,6 +1086,10 @@ function clear_signature()
 	$("#signature_content").html("");
 	$("#signature_area").html("");
 	signaturePad.clear();
+	//clear
+	$("#signature_area").hide();  //img
+	$("#signature-pad").show();   //canvas
+	$("#btn_save").show();   //canvas
 }
 
 function set_storeinfo(v)
@@ -1091,4 +1107,5 @@ function set_storeinfo(v)
 .signature-pad {
   border:1px solid #000;
 }
+.img_gray{filter:grayscale(100%);}
 </style>

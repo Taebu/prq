@@ -82,8 +82,8 @@ echo json_encode($json);
 }
 /* if($mode=="crontab"){...} */
 
-/* 수동 전송 */
-if($mode=="manual")
+/* 수동 단일 전송 */
+if($mode=="manual"&&!$spim_yn=="on")
 {
 
 if($mno_type=="LG"){
@@ -100,6 +100,7 @@ $is_happycall=false;
 if($happycall==true){
 $is_happycall=$happycall;
 }
+
 $messages = array( 
 	"title" =>$title,
 	"message" =>$message,
@@ -143,4 +144,82 @@ $sql[]="gc_datetime=now();";
 mysql_query(join("",$sql));
 }
 /* if($mode=="manual"){...} */
+
+/* 수동 대량 전송 */
+if($mode=="manual"&&$spim_yn=="on")
+{
+$success_cnt=0;
+$false_cnt=0;
+if($mno_type=="LG"){
+	//$message=str_replace(array("\r\n", "\r",'<br />','<br>'), '\n', $message);
+	//$message=str_replace(array("\r\n", "\r", "\n"), '<br>', $message);
+	//LG도 아무것도 하지 않는다
+}else if($mno_type=="KT"){
+	$message=str_replace(array("\r\n", "\r", "\n"), '<br>', $message);
+}else if($mno_type=="SK"){
+	// SK 는 아무것도 하지 않는다
+}
+/* if($mno_type=="KT"){...} */
+$is_happycall=false;
+if($happycall==true){
+$is_happycall=$happycall;
+}
+
+
+$mh=explode("\r\n",$many_hp);
+foreach($mh as $m){
+
+$messages = array( 
+	"title" =>$title,
+	"message" =>$message,
+	"is_mms" =>$is_mms,
+	"receiver_num" =>$m,
+	"img_url" =>$img_url,
+	"happycall" =>$is_happycall
+);
+$push= json_decode($gcm->send_notification($registration_ids, $messages));
+if(isset($push->results[0]->message_id)){
+$p_temp=$push->results[0]->message_id;
+$result= (strpos($p_temp,"0:")!==false)?true:false;
+	if($result)
+	{
+		$success_cnt++;
+	}else{
+		$false_cnt++;
+	}
+}else{
+$result=false;
+$false_cnt++;
+}
+
+$result_msg= ($result)?"전달 성공":"전송 실패";
+$gc_ipaddr='123.142.52.91';
+$sql=array();
+$sql[]="INSERT INTO `prq_gcm_log` SET ";
+$sql[]="gc_subject='".$title."',";
+$sql[]="gc_content='".$message."',";
+$sql[]="gc_ismms='".$is_mms."',";
+$sql[]="gc_receiver='".$m."',";
+$sql[]="gc_sender='".$phone."',";
+$sql[]="gc_imgurl='".$img_url."',";
+$sql[]="gc_result='".$result_msg."',";
+$sql[]="gc_ipaddr='".$gc_ipaddr."',";
+$sql[]="gc_stno='".$st_no."',";
+$sql[]="gc_datetime=now();";
+mysql_query(join("",$sql));
+
+} /* foreach 갯수 만큼 */
+
+$json['success']=$result;
+
+$json['success_cnt']=$success_cnt;
+$json['false_cnt']=$false_cnt;
+
+$json['push']=$push;
+$json['sql']=$sql;
+
+echo json_encode($json);
+
+}
+/* if($mode=="manual"&&$spim_yn=="on"){...} */
 ?>

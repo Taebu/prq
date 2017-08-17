@@ -6,7 +6,7 @@
                 <!-- 10GB of <strong>250GB</strong> Free. -->
             </div>
             <div>
-                <strong>Write Copyright</strong> Example Company &copy; 2014-2015
+                <strong>Write Copyright</strong> ANPR Company &copy; 2014-2015
             </div>
 
         </div><!-- .footer -->
@@ -771,6 +771,7 @@
 	var is_blog=false;
 
 	is_blog=is_blog||application=="blog"&&method=="write";
+	is_blog=is_blog||application=="blog"&&method=="event";
 	is_blog=is_blog||application=="blog"&&method=="writeone";
 	is_blog=is_blog||application=="blog"&&method=="modify";
 	is_blog=is_blog||application=="blog"&&method=="view";
@@ -782,6 +783,7 @@
 	var is_blogone=false;
 //	is_blogone=is_blogone||application=="blog"&&method=="writeone";
 	is_blogone=is_blogone||application=="blog"&&method=="write";
+	is_blogone=is_blogone||application=="blog"&&method=="event";
 
 	if(is_blogone){
 		$("#p_2_1").hide();
@@ -865,7 +867,7 @@ $(document).ready(function(){
 
 //출처: http://ddo-o.tistory.com/91 [공순이의 블로그]
 });
-
+console.log("footer_blogone_v.php");
 </script>
 <style type="text/css">
 #my-awesome-dropzone1{

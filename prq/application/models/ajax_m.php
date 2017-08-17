@@ -160,7 +160,7 @@ class Ajax_m extends CI_Model
 								'content'=>$array['content'],
 								'prq_table'=>$array['prq_table'],
 								'bl_no'=>$an);
-					$this->set_sms($array_data);				
+					//$this->set_sms($array_data);				
 				/* 포인트승인 */
 				}else if($st=="po_blog_allow"){
 					/* 소비자에게 전송 */
@@ -216,7 +216,7 @@ class Ajax_m extends CI_Model
 								'content'=>$array['content'],
 								'prq_table'=>$array['prq_table'],
 								'bl_no'=>$an);
-					$this->set_sms($array_data);				
+					//$this->set_sms($array_data);				
 				}
 			/* 상  점인 경우 코드 예외 처리 */
 			}else if($array['prq_table']=="prq_store"){
@@ -1114,9 +1114,9 @@ class Ajax_m extends CI_Model
 		/* 조회 결과가 성공 이라면 */
 		if($query->num_rows() > 0){
 			$row = $query->row();
-			$mb_hp=$row->mb_hp;
+			$mb_id=$row->mb_id;
 			echo $json['success']?"TRUE":"FALSE";
-			echo ",".$mb_hp;
+			echo ",".$mb_id;
 			//echo ",".$join_sql;
 			//echo $this->input->ip_address();
 		}else{
@@ -1408,7 +1408,7 @@ class Ajax_m extends CI_Model
 			$sql[]="UPDATE `prq_mno` SET ";
 			$sql[]=" mn_id='".$array['mn_id']."', ";
 			$sql[]=" mn_email='".$array['mn_email']."', ";
-			$sql[]=" mn_hp='".$array['mn_hp']."', ";
+			$sql[]=" mn_hp=IF(LEFT(".$array['mn_hp'].",1)='+',replace(".$array['mn_hp'].",'+','0'),".$array['mn_hp']."), ";
 			$sql[]=" mn_operator='".$array['mn_operator']."', ";
 			$sql[]=" mn_model='".$array['mn_model']."', ";
 			$sql[]=" mn_version='".$array['mn_version']."', ";
@@ -1421,13 +1421,17 @@ class Ajax_m extends CI_Model
 			$sql[]="INSERT INTO  `prq_mno` SET ";
 			$sql[]=" mn_id='".$array['mn_id']."', ";
 			$sql[]=" mn_email='".$array['mn_email']."', ";
-			$sql[]=" mn_hp='".$array['mn_hp']."', ";
+			$sql[]=" mn_hp=IF(LEFT(".$array['mn_hp'].",1)='+',replace(".$array['mn_hp'].",'+','0'),".$array['mn_hp']."), ";
 			$sql[]=" mn_operator='".$array['mn_operator']."', ";
 			$sql[]=" mn_model='".$array['mn_model']."', ";
 			$sql[]=" mn_version='".$array['mn_version']."', ";
 			$sql[]=" mn_appvcode='".$array['mn_appvcode']."', ";
 			$sql[]=" mn_appvname='".$array['mn_appvname']."', ";
-			$sql[]=" mn_mms_limit='".$array['mn_dup_limit']."', ";
+			/* 
+			2017-07-14 (금) 18:18:35 
+			150건 기본값으로 설정
+			*/
+			$sql[]=" mn_mms_limit='150', ";
 			$sql[]=" mn_datetime=now();";
 		}
 		$join_sql=join("",$sql);
@@ -1648,6 +1652,10 @@ ERROR:
 */
 	/* 2017-04-07 (금) 15:06:09 
 		최초 설치시 특정 아이디 차단
+	*/
+	/* 
+	2017-07-13 (목) 15:43:57 
+	이전 데이터 등록시 cd_unixtime
 	*/
 /*	if($array['UserID']!="0226789282@naver.com")
 	{*/

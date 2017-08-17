@@ -124,7 +124,7 @@ function get_mnoinfo(){
 
     $.ajax({
 //		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
-		url:"/prq/ajax/get_mnoinfo2/"+$("[name=mb_hp]").val(),
+		url:"/prq/ajax/get_mnoinfo2/"+$("[name=mb_hp]").val().replace(/-/gi, ""),
 		type: "POST",
         data:"",
         cache: false,

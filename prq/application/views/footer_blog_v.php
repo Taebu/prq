@@ -5,7 +5,7 @@
                 <!-- 10GB of <strong>250GB</strong> Free. -->
             </div>
             <div>
-                <strong>Write Copyright</strong> Example Company &copy; 2014-2015
+                <strong>Write Copyright</strong> ANPR Company &copy; 2014-2015
             </div>
 
         </div><!-- .footer -->
@@ -418,7 +418,7 @@
 
 		});
 
-
+console.log("footer_blog_v.php");
 </script>
 
 </body>

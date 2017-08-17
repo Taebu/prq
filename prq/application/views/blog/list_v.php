@@ -1,3 +1,52 @@
+<?php
+/*
+블로그 리뷰 리스트 목록 
+2017-07-07 (금) 14:41:54  
+조회 리스트 페이지 기능 개선
+
+*/
+?>
+<script type="text/javascript" src="http://prq.co.kr/prq/include/js/jquery-2.1.1.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$("#search_btn").click(function(){
+				var act = '/prq/blog/lists/cid/q/'+$("#st_name").val()+'/page/1';
+					$("#bd_search").attr('action', act).submit();
+			});
+
+
+		  $("ul.pagination a").click(function() {
+			var kk=$(this).attr('href').split("/");
+
+			var search_key=6;
+			if(kk.length == 7){
+			search_form(kk[6],'page');
+			}else{
+			search_form(kk[8],'search');
+			}
+			
+
+			return false;
+		  });  
+		});
+
+		/*blog를 검색합니다.*/
+		function search_form(p,type){
+			$("#page").val(p);
+			if(type=="search"){
+				//prq/franchise/lists/prq_member/page/1
+			var act = '/prq/blog/lists/prq_member/q/'+$("#gc_receiver").val()+'/page/'+p;
+			}else{
+			var act = '/prq/blog/lists/prq_member/page/'+p;
+			}
+			$("#bd_search").attr('action', act).submit();
+		}
+		
+		function board_search_enter(form) {
+			var keycode = window.event.keyCode;
+			if(keycode == 13) $("#search_btn").click();
+		}
+</script>
 <style type="text/css">
 	.black {
 		color:#676a6c;
@@ -6,7 +55,89 @@
 		color:#10cdf4;
 	}
 </style>
-
+<div class="board_area">
+    <div class='row'>
+	<?php
+	echo form_open('blog/lists/prq_member/', array('id'=>'bd_search', 'class'=>'well form-search'));
+?>
+<input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
+<input type="hidden" name="mb_code" id="mb_code" value="FR">
+<input type="hidden" name="table" id="table" value="prq_member">
+		<!-- id="my-awesome-dropzone" class="" -->
+        <div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>상점 리뷰(블로그) 리스트 입니다. <small>
+													<?php 
+													//$search=array("mb_id" => 'one',"mb_name"=>"","mb_email"=>"","mb_hp"=>"");
+						$my_search = array_filter($search);
+						$count_search= count($my_search);
+						/*  */
+						if($count_search>0){
+						echo "검색한 값 \"".join("\",\"",$my_search)."\" 결과 입니다.";
+						}else{
+						echo "가맹점의 정보 및 계약서를 작성해 주세요.";
+						}?>
+							</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div><!-- .ibox-title -->
+                        <div class="ibox-content">
+						<?php ?>
+    <div class='row'>
+        <div class='col-sm-6'>    
+            <div class='form-group'>
+                <label for="user_title">상점이름(st_name)</label>
+                <input class="form-control" id="st_name" name="st_name" size="30" type="text" value="<?php echo $search['st_name'];?>" OnKeyDown="javascript:board_search_enter();"/>
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+        <div class='col-sm-6'>
+            <div class='form-group'>
+                <label for="mb_name">상점번호(st_no)</label>
+                <input class="form-control" id="st_no" name="st_no" required="true" size="30" type="text"  value="<?php echo $search['st_no'];?>" OnKeyDown="javascript:board_search_enter();"/>
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+    </div><!-- .row -->
+    <div class='row'>
+        <div class='col-sm-6'>    
+            <div class='form-group'>
+                
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+        <div class='col-sm-6'>
+            <div class='form-group'>
+                <label for="mb_hp">휴대폰(bl_hp)</label>
+                <input class="form-control" id="mb_hp" name="mb_hp" required="true" size="30" type="text"  value="<?php echo $search['mb_hp'];?>" OnKeyDown="javascript:board_search_enter();"/>
+            </div><!-- .form-group -->
+        </div><!-- .col-sm-6 -->
+    </div><!-- .row -->
+    <div class='row'>
+	<div class='col-sm-12 right'>
+            <div class='form-group'><input type="button" value="검색" id="search_btn" class="btn btn-primary" /> </div>
+        </div>
+    </div>
+			</form><!-- #bd_search -->
+</div>
+	</div>
+	</div><!-- .row -->
+</div><!-- .board_area -->
 <div class="row wrapper border-bottom white-bg page-heading">
 <!-- 	<div style="border:0px solid red;text-align:center;">
 		<img src="/prq/img/new/view_top.png" width="100%">

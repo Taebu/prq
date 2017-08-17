@@ -16,13 +16,13 @@ $store_name=isset($store_name)?$store_name:"여긴 어디? 동해?!!!!<br>이용
   <meta name="Description" content="">
   <title>Document</title>
  </head>
- <body style="margin:0;padding:0">
+ <body style="margin:0;padding:0;">
 <input type="hidden" name="store_name"  id="store_name" value="<?php echo $store_name;?>">
 <input type="hidden" name="defaultLevel"  id="defaultLevel" value="<?php echo $defaultLevel;?>">
 <script src="/prq/include/js/jquery-2.1.1.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v2/maps.js?clientId=aWWbsFdRSNQZL6Df5ATr"></script>
-<div id="map" style="border:1px solid #000;"></div>
+<div id="map" style="border:0px solid #000;"></div>
 <script type="text/javascript">
 /*구글 지도 */
 var geocoder = new google.maps.Geocoder();
@@ -50,7 +50,7 @@ alert(address + " 주소를 찾을 수 없습니다.");
 /* 네이버 지도 */
 var map_width=$(window).width();
 console.log(map_width);
-var map_heigth=parseInt(map_width*3/5);
+var map_heigth=parseInt(map_width*4/5);
 console.log(map_heigth);
 var latitude=<?php echo $latitude;?>;
 var longitude=<?php echo $longitude;?>;

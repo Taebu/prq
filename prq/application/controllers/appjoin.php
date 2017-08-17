@@ -114,7 +114,7 @@ class Appjoin extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/appjoin/lists/prq_appjoin'.$page_url.'/page/',
+		'base_url'=> '/prq/appjoin/lists/modu_agreement'.$page_url.'/page/',
 		//'total_rows' => $this->appjoin_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'total_rows' => $this->appjoin_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 25,
@@ -134,7 +134,7 @@ class Appjoin extends CI_Controller {
 		'prev_tag_open'	=> '<li>',
 		'prev_tag_close'	=> '</li>',
 //		'cur_tag_open'	=> '<li class="disabled"><a href="#">',
-		'cur_tag_open'	=> '<li class="active"><a href="#">',
+		'cur_tag_open'	=> '<li class="active"><a>',
 		'cur_tag_close'	=> '</a></li>',
 		'num_tag_open'	=> '<li>',
 		'num_tag_close'	=> '</li>',
@@ -292,13 +292,20 @@ class Appjoin extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/appjoin/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					//alert('입력되었습니다.', '/prq/appjoin/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					//exit;
+					$json['success']=true;
+					$json['last_id']=$result;
+					echo json_encode($json);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/appjoin/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					//alert('다시 입력해 주세요.', '/prq/appjoin/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					//exit;
+					$json['success']=false;
+					echo json_encode($json);
 					exit;
 				}
 

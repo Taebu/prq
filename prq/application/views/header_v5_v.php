@@ -27,7 +27,8 @@
 <script type="text/javascript">
 var application="<?php echo $this->uri->segment(1);?>";
 var method="<?php echo $this->uri->segment(2);?>";
-
+	var pdata={application:application,method:method};
+	console.log(pdata);
 function set_menu_write(id)
 {
 //	var chk_code=$("#mb_code").val();
@@ -240,7 +241,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
 						<i class="fa fa-files-o"></i><span class="nav-label">Appjoin</span><span class="fa arrow"></span>
 						</a>
                         <ul class="nav nav-second-level collapse">
-                            <?php echo $this->uri->segment(3)=="modu_agreement"?'<li class="active">':'<li>';?><a href="/prq/appjoin/lists/modu_agreement">modu_agreement</a></li>
+                            <?php echo $this->uri->segment(3)=="modu_agreement"?'<li class="active">':'<li>';?><a href="/prq/appjoin/lists/modu_agreement">모두톡톡 계약서</a></li>
 							</ul>
                     </li>
 				</ul>

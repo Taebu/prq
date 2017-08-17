@@ -335,7 +335,14 @@
 		<?php 
 			function get_state($v)
 			{
-				$str=array("미발신","발신","일반번호","알수 없음","업소누락","전송제한");
+				$str[0]="미발신";
+				$str[1]="발신";
+				$str[2]="일반번호";
+				$str[3]="수신거부";
+				$str[4]="150건초과";
+				$str[5]="업소누락";
+				$str[6]="정보부족";
+				$str[7]="중복전송제한";
 				return $str[$v];
 			}
 			
@@ -348,8 +355,18 @@
 
 		?>
 	<div class='col-sm-12'>
-	<p>* 상태 : (0이면 미발신, 1이면 상대방의 핸드폰 번호로 MMS 발송 요청, 2이면 일반번호 이므로 발송요청에서 캔슬)</p>
-	<p>* 발송량 : 오늘 보낸 갯수 / 모바일에서 보낸 문자 갯수 / 일 발송 제한량</p>
+	<pre>
+		* 상태 : (0이면 미발신, 1이면 상대방의 핸드폰 번호로 MMS 발송 요청, 2이면 일반번호 이므로 발송요청에서 캔슬)
+		0 미발신
+		1 발신
+		2 일반번호
+		3 수신거부
+		4 150건초과
+		5 업소누락
+		6 정보부족
+		7 중복전송제한 (!!! 앱에서 처리하기 때문에 처리하지 않습니다.)
+	</pre>
+	<p>* 발송량 : 오늘 보낸 갯수 / 모바일에서 보낸 문자 갯수 / 일 발송 제한량(기본값 150건, '0' 이면 무제한 전송)</p>
 	<p>* KT CID 장비(Windows 용 프로그램)의 경우, 일발송 제한의 사유로 동일한 번호 전송은 차단 되도록 설계 되어 있습니다.</p>
 	<p>* 2017-01-11 (수) 16:29:44  kr.co.prq.PRQ_CDR 로 자바로 대체 crontab -e 는 주석 처리</p>
 <?php $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
@@ -402,7 +419,7 @@ foreach ($list as $lt)
 <td scope="row"><?php echo $lt->cd_name;?></td>
 <td scope="row"><?php echo phone_format($lt->cd_tel);?></td>
 <td scope="row"><?php echo phone_format($lt->cd_hp);?></td>
-<td scope="row"><?php echo $lt->cd_day_cnt;?>+<?php echo $lt->cd_device_day_cnt;?>/<?php echo $lt->cd_day_limit;?></td>
+<td scope="row"><?php echo $lt->cd_day_cnt;?>+<?php echo $lt->cd_device_day_cnt;?>/<?php echo $lt->cd_day_limit==0?"무제한":$lt->cd_day_limit;?></td>
 </tr>
 <?php
 }

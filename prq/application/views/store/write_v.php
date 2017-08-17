@@ -206,6 +206,38 @@ echo $prq_fcode;
                 <option value="목요일">목요일</option>
                 <option value="금요일">금요일</option>
                 <option value="토요일">토요일</option>
+
+                <option value="첫째주 월요일">첫째주 월요일</option>                
+                <option value="첫째주 화요일">첫째주 화요일</option>                
+                <option value="첫째주 수요일">첫째주 수요일</option>                
+                <option value="첫째주 목요일">첫째주 목요일</option>                
+                <option value="첫째주 금요일">첫째주 금요일</option>                
+                <option value="첫째주 토요일">첫째주 토요일</option>                
+                <option value="첫째주 일요일">첫째주 일요일</option>                
+                
+				<option value="둘째주 월요일">둘째주 월요일</option>                
+                <option value="둘째주 화요일">둘째주 화요일</option>                
+                <option value="둘째주 수요일">둘째주 수요일</option>                
+                <option value="둘째주 목요일">둘째주 목요일</option>                
+                <option value="둘째주 금요일">둘째주 금요일</option>                
+                <option value="둘째주 토요일">둘째주 토요일</option>                
+                <option value="둘째주 일요일">둘째주 일요일</option>
+				
+				<option value="셋째주 월요일">셋째주 월요일</option>                
+                <option value="셋째주 화요일">셋째주 화요일</option>                
+                <option value="셋째주 수요일">셋째주 수요일</option>                
+                <option value="셋째주 목요일">셋째주 목요일</option>                
+                <option value="셋째주 금요일">셋째주 금요일</option>                
+                <option value="셋째주 토요일">셋째주 토요일</option>                
+                <option value="셋째주 일요일">셋째주 일요일</option>
+
+				<option value="넷째주 월요일">넷째주 월요일</option>                
+                <option value="넷째주 화요일">넷째주 화요일</option>                
+                <option value="넷째주 수요일">넷째주 수요일</option>                
+                <option value="넷째주 목요일">넷째주 목요일</option>                
+                <option value="넷째주 금요일">넷째주 금요일</option>                
+                <option value="넷째주 토요일">넷째주 토요일</option>                
+                <option value="넷째주 일요일">넷째주 일요일</option>
 				</select>
 <span class="help-block m-b-none">휴무일을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
@@ -267,14 +299,14 @@ echo $prq_fcode;
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">대표 이미지</label>
+<div class="form-group"><label class="col-sm-2 control-label">이벤트 이미지</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone4" class="dropzone">
 
 <div class="dz-default dz-message"></div>
 </div><!-- #my-awesome-dropzone4 -->
 
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"대표 이미지"을 드래그 하거나 선택해 주세요.</span>
+<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"이벤트 이미지"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

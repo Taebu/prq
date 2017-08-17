@@ -23,6 +23,9 @@
 <link rel="stylesheet" type="text/css" href="/prq/include/css/ext/stdtheme.css" media="all" />
 <link rel="stylesheet" type="text/css" href="/prq/include/css/ext/main.css" media="all" />
 <link rel="stylesheet" type="text/css" href="/prq/include/css/ext/nuli_btn.css" media="all" />
+<style type="text/css">
+h1{padding-top:5px;}
+</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript">
 function myFunction() {
@@ -92,28 +95,28 @@ body{max-width:840px;margin:0 auto;}
 <table style="margin:0 auto">
 <tr>
 <td style="width:120px" class="text-center">
-<label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" style="width:30%"/></label>
+<label for="is_bdtt" style="cursor:pointer"><img src="/prq/img/agreement/btn_bdtt.png" alt="" style="width:30%"  <?php echo $views->ma_isbdtt=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-info">
 <input id="ma_isbdtt"  name="ma_isbdtt" type="checkbox"  <?php echo $views->ma_isbdtt=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isbdtt">배달톡톡</label></div><!-- checkbox-primary -->
 </td>
 
 
 <td style="width:120px;" class="text-center">
-<label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt=""  style="width:30%"/></label>
+<label for="is_ttmsg" style="cursor:pointer"><img src="/prq/img/agreement/btn_msg.png" alt=""  style="width:30%" <?php echo $views->ma_isttmsg=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-danger">
 <input id="ma_isttmsg"  name="ma_isttmsg" type="checkbox"  <?php echo $views->ma_isttmsg=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isttmsg">톡톡메시지</label></div><!-- checkbox-primary -->
 </td>
 
 
 <td style="width:120px;" class="text-center">
-<label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt=""  style="width:30%"/></label>
+<label for="is_navermap" style="cursor:pointer"><img src="/prq/img/agreement/btn_map.png" alt=""  style="width:30%" <?php echo $views->ma_isnavermap=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-primary">
 <input id="ma_isnavermap"  name="ma_isnavermap" type="checkbox"  <?php echo $views->ma_isnavermap=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isnavermap">지도등록/관리</label></div><!-- checkbox-primary -->
 </td>
 
 
 <td style="width:120px;" class="text-center">
-<label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt=""  style="width:30%"/></label>
+<label for="is_blogreview" style="cursor:pointer"><img src="/prq/img/agreement/btn_blog.png" alt=""  style="width:30%" <?php echo $views->ma_isblogreview=="on"?"":"class=\"img_gray\"";?>/></label>
 <div class="checkbox checkbox-success">
 <input id="ma_isblogreview"  name="ma_isblogreview" type="checkbox"  <?php echo $views->ma_isblogreview=="on"?"checked":"";?> onclick="javascript:chk_btn_status();"><label for="ma_isblogreview">블로그 리뷰</label></div><!-- checkbox-primary -->
 </td>
@@ -373,14 +376,17 @@ echo $v;
 <p>고객센터 : 1599 - 7571  /  팩스 : 0505-300-9495</p>
 
 </div>
-<div style="width:17%;float:left">
+<div style="width:13%;float:left">
 <img src="/prq/img/agreement/anpr_sign.jpeg" alt="anpr_sign.jpeg"></div>
-<div style="width:45%;float:left">
+<div style="width:20%;float:left">
 <h3><?php echo date("Y년 m월 d일",strtotime($views->ma_datetime));?></h3>
-<h3>가맹점주 성명 : <u><?php echo $views->st_ceoname;?></u> 서명 : <img src="<?php echo $views->ma_signaturepad;?>" alt=""  width="40px" height="30px"/></h3>
-<div>관리담당자 성명 : <u><?php echo $views->ma_adminname;?></u> 연락처 : <u><?php echo $views->ma_adminhp;?></u></div>
+<h3>가맹점주 성명 : <u><?php echo $views->st_ceoname;?></u></h3>
+<div>관리담당자 성명 : <u><?php echo $views->ma_adminname;?></u> <p>연락처 : <u><?php echo $views->ma_adminhp;?></u></p></div><!-- <div style="width:8%;float:left"> -->
+</div><!-- .<div style="width:20%;float:left"> -->
 
-</div><!-- .<div style="width:45%;float:left"> -->
+<div style="width:8%;float:left">서명 : 
+<p><img src="<?php echo $views->ma_signaturepad;?>" alt=""  width="200px" height="100px"/></p>
+</div><!-- <div style="width:8%;float:left"> -->
 </tbody>
 </table><!-- table#ibk_info4 -->
 <div style="clear:both"></div>

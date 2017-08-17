@@ -30,17 +30,20 @@ table tr.green:nth-child(2n){
 					return false;
 				} else {
 //					var act = '/prq/store/lists/ci_board/q/'+$("#q").val()+'/page/1';
-					var act = '/prq/store/lists/prq_store/page/1';
+//					var act = '/prq/store/lists/prq_store/page/1';
+					var act = '/prq/appjoin/lists/modu_agreement/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
 
 			/*버튼 비활성화.*/
 			chk_btn_status();
+			/*
 			for(var i in tt_nos){
 				//console.log(tt_nos[i]);
 				$("#ttno_"+tt_nos[i]).html('<i class="fa fa-refresh  text-success"></i>');
 			}
+			*/
 		});
 
 		function board_search_enter(form) {
@@ -200,7 +203,7 @@ table tr.green:nth-child(2n){
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><span class="mb_gname">상점</span>  리스트 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5>모두톡톡계약서 리스트 정보 입니다. <small>모두 톡톡 계약서 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -221,33 +224,33 @@ table tr.green:nth-child(2n){
                         </div><!-- .ibox-title -->
                         <div class="ibox-content">
     <div class='row'>
-        <div class='col-sm-6'>    
+        <div class='col-sm-12'>    
 			<div class='form-group'>
                 <label for="st_name">상점명</label>
                 <input class="form-control" id="st_name" name="st_name" size="30" type="text" value="<?php echo $search['st_name'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
-        <div class='col-sm-6'>
-            <div class='form-group'>
+        <!-- <div class='col-sm-6'> -->
+            <!-- <div class='form-group'>
                 <label for="mb_id">아이디</label>
                 <input class="form-control" id="mb_id" name="mb_id" required="true" size="30" type="text" value="<?php echo $search['mb_id'];?>" OnKeyDown="javascript:board_search_enter();"/>
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
+            </div> --><!-- .form-group -->
+        <!-- </div> --><!-- .col-sm-6 -->
     </div><!-- .row -->
-    <div class='row'>
+    <!-- <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
                 <label for="prq_fcode">풀코드</label>
                 <input class="form-control" id="prq_fcode" name="prq_fcode" size="30" type="text" value="<?php echo $search['prq_fcode'];?>" OnKeyDown="javascript:board_search_enter();"/>
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
-        <!--<div class='col-sm-6'>
+            </div>.form-group
+        </div>.col-sm-6
+        <div class='col-sm-6'>
             <div class='form-group'>
                 <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
                 <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" OnKeyDown="javascript:board_search_enter();"/>
-            </div><!-- .form-group -->
-        <!--</div><!-- .col-sm-6 -->
-    </div><!-- .row -->
+            </div>.form-group
+        </div>.col-sm-6
+    </div> --><!-- .row -->
 
     <div class='row'>
 	<div class='col-sm-12 right'>

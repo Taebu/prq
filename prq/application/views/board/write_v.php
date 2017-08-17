@@ -1,3 +1,6 @@
+<style>
+.spim{display:none}
+</style>
 <div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
 <h2>GCM Send</h2>
@@ -103,11 +106,38 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">받는 사람</label>
+
+
+<div class="form-group"><label class="col-sm-2 control-label">단일 발송, 대량 발송
+</label>
+<div class="col-sm-10">
+<div class="checkbox checkbox-primary">
+<input id="spim_yn" name="spim_yn" type="checkbox" onclick="javascript:chk_on();">
+<label for="spim_yn">대량 발송 on</label></div><!-- checkbox-primary -->
+</div>
+</div>
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group spim"><label class="col-sm-2 control-label">대량발송 받는 사람들</label>
+<div class="col-sm-10"><textarea class="form-control" name="many_hp" id="many_hp" value="" placeholder="예) 작성예시
+01012341234
+010-1234-1234
+
+이외 형식은 발송이 실패 할수 있습니다.
+" onkeyup="javascript:chk_hp_cnt();"></textarea>
+<span class="help-block m-b-none text-danger font-bold"> 리스트 만큼 발송 됩니다..</span>
+<span id="hp_cnt">0</span> 명
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed spim"></div><!-- .hr-line-dashed -->
+
+
+
+<div class="form-group one_hp"><label class="col-sm-2 control-label">받는 사람</label>
 <div class="col-sm-10"><input type="text" class="form-control" name="receiver_num" id="receiver_num">
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
-<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="hr-line-dashed one_hp"></div><!-- .hr-line-dashed -->
 
 
 <div class="form-group"><label class="col-sm-2 control-label">img_url</label>
@@ -338,15 +368,17 @@ type: "POST",
 data:param,
 dataType:"json",
 success: function(data) {
-	if(data.success){
-
-	var string="전송 성공  \n";
-
-	alert (string);	
+	var is_spim=$('#spim_yn').is(":checked");
+	if(is_spim){
+		alert ("전송 성공 : "+data.success_cnt+",전송 실패 : "+data.false_cnt);
 	}else{
-	alert("전송실패");
+		if(data.success){
+			var string="전송 성공  \n";
+			alert (string);	
+		}else{
+			alert("전송실패");
+		}
 	}
-
 	}
 });
 
@@ -409,5 +441,21 @@ chk_byte();
 
 
 
+function chk_on()
+{
+	var is_spim=$('#spim_yn').is(":checked");
 
+	if(is_spim){
+		$(".spim").show();
+		$(".one_hp").hide();
+	}else{
+		$(".one_hp").show();
+		$(".spim").hide();	
+	}
+}
+
+function chk_hp_cnt()
+{
+	$("#hp_cnt").html($("#many_hp").val().split(/\n/).length);
+}
 </script>

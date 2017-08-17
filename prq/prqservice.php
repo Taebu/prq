@@ -10,7 +10,13 @@
 	</head>
 	 
 	<body style="margin:0px;background:#f5f5f5;">
-	
+		
+		<div style="background:#e84031;height:26px;padding:12px 0 10px 12px;width:100%;">
+			<a href="javascript:history.back(-1);" style="text-decoration:none;color:#fff;">
+			<img src="/prq/img/new/arrow.png" width="7%">
+			</a>
+		</div>
+
 		<div style="text-align:center;width:100%;">
 			<img src="/prq/img/new/prqservice.png" width="100%">
 		</div>

@@ -357,3 +357,4 @@ h3{font-weight:900;}
 .join_comment .red{color:red;}
 
 li{font-size:6pt;line-height:.5em;}
+.img_gray{filter:grayscale(100%);}

@@ -9,6 +9,7 @@
 * @Copyright (c) 2016, 태부
 */
 ?>
+<script type="text/javascript" src="http://prq.co.kr/prq/include/js/jquery-2.1.1.js"></script>
 <script>
 		$(document).ready(function(){
 			$("#search_btn").click(function(){
@@ -25,7 +26,34 @@
 			});
 			/*버튼 비활성화.*/
 			chk_btn_status();
+
+			  $("ul.pagination a").click(function() {
+				var kk=$(this).attr('href').split("/");
+
+				var search_key=6;
+				if(kk.length == 7){
+				search_form(kk[6],'page');
+				}else{
+				search_form(kk[8],'search');
+				}
+				
+
+				return false;
+			  });  
 		});
+
+
+		/*franchise를 검색합니다.*/
+		function search_form(p,type){
+			$("#page").val(p);
+			if(type=="search"){
+				//prq/franchise/lists/prq_member/page/1
+			var act = '/prq/franchise/lists/prq_member/q/'+$("#gc_receiver").val()+'/page/'+p;
+			}else{
+			var act = '/prq/franchise/lists/prq_member/page/'+p;
+			}
+			$("#bd_search").attr('action', act).submit();
+		}
 
 		function board_search_enter(form) {
 			var keycode = window.event.keyCode;
@@ -179,7 +207,7 @@
 
     <div class='row'>
 	<?php
-	echo form_open('franchise/lists/prq_member/', array('id'=>'bd_search', 'class'=>'well form-search'));
+	echo form_open('blog/lists/prq_member/', array('id'=>'bd_search', 'class'=>'well form-search'));
 ?>
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
 <input type="hidden" name="mb_code" id="mb_code" value="FR">
@@ -190,7 +218,16 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><span class="mb_gname">가맹점</span> 등록 정보 입니다. <small><span class="mb_gname">가맹점</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5><span class="mb_gname">가맹점</span> 등록 정보 입니다. <small>
+													<?php 
+						$my_search = array_filter($search);$count_search= count($my_search);
+						/*  */
+						if($count_search>0){
+						echo "검색한 값 ".join("\",\"",$my_search)." 결과 입니다.";
+						}else{
+						echo "가맹점의 정보 및 계약서를 작성해 주세요.";
+						}?>
+							</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -210,13 +247,6 @@
                             </div>
                         </div><!-- .ibox-title -->
                         <div class="ibox-content">
-						<?php 
-						$my_search = array_filter($search);$count_search= count($my_search);
-						/*  */
-						if($count_search>0){?>
-						<div class="row">
-						검색한 값 "<?php echo join("\",\"",$my_search);?>" 결과 입니다.</div>
-						<?php }?>
     <div class='row'>
         <div class='col-sm-6'>    
             <div class='form-group'>
@@ -241,7 +271,7 @@
         <div class='col-sm-6'>
             <div class='form-group'>
                 <label for="mb_hp">휴대폰</label>
-                <input class="form-control" id="mb_hp" name="mb_hp" required="true" size="30" type="text"  value="<?php echo $search['mb_hp'];?>" OnKeyDown="javascript:board_search_enter();"/>
+                <input class="form-control" id="mb_hp" name="mb_hp" required="true" size="30" type="text"  value="<?php echo $search['mb_hp'];?>" OnKeyDown="javascript:board_search_enter(this);"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
     </div><!-- .row -->
