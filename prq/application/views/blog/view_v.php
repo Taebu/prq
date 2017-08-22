@@ -301,6 +301,14 @@ echo $bl_content3;?><!-- #form_data -->
 	<label class="col-sm-2 control-label">이름</label> <div class="col-sm-10"><?php echo $views->bl_name;?></div> 
 </div> --><!-- .form-group -->
 <!-- <div class="hr-line-dashed"></div> --><!-- .hr-line-dashed -->
+<div class="form-group" style="text-align:center;font-size:17px;">
+	<label class="col-sm-2 control-label">이벤트 혜택 선택</label>
+	<div class="col-sm-10" style="">
+	<?php echo $views->bl_gifticon_type=="cu_2000"?"CU 상품권 2,000원":"";?>
+	<?php echo $views->bl_gifticon_type=="cash_2000"?"현금 2,000원":"";?>
+	
+	</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
 
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 <div class="form-group" style="text-align:center;font-size:17px;">

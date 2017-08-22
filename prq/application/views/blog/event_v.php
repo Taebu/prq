@@ -2,6 +2,9 @@
 	<div style="background:#2d5baa;color:#fff;width:100%;text-align:center;">
 		<img src="/prq/img/new/head.png" width="85%">
 	</div>
+	<div style="background:#2d5baa;color:#fff;width:100%;text-align:center;position:relative;">
+		<img width="100%" id="event_url">
+	</div>
 	
 	<!-- <div class="col-lg-10">
 		<h2>블로그 등록</h2>
@@ -27,7 +30,7 @@
 	'class' => 'form-horizontal', 
 	'id' => 'write_action'
 	);
-	echo form_open('/blog/write/prq_store/board_id/', $attributes);
+	echo form_open('/blog/event/prq_store/board_id/', $attributes);
 	//echo form_open_multipart('/dropzone/upload', $attributes);
 	$mb_code=$this->input->post('mb_code',TRUE);
 	$prq_fcode=$this->input->cookie('prq_fcode',TRUE);
@@ -238,10 +241,10 @@
 									</div>
 									<div class="col-sm-12" style="text-align:center">
 <div class="radio radio-info radio-inline">
-<input type="radio" name="st_teltype" id="st_teltype_1" value='prq'  checked><label for="st_teltype_1">CU 상품권 2,000원</label>
+<input type="radio" name="bl_gifticon_type" id="bl_gifticon_type_1" value='cu_2000'  checked><label for="bl_gifticon_type_1">CU 상품권 2,000원</label>
 </div><!-- .radio .radio-info .radio-inline -->
 <div class="radio radio-info radio-inline">
-<input type="radio" name="st_teltype" id="st_teltype_2"  value='cashq' ><label for="st_teltype_2">현금포인트 2,000원</label>
+<input type="radio" name="bl_gifticon_type" id="bl_gifticon_type_2"  value='cash_2000' ><label for="bl_gifticon_type_2">현금포인트 2,000원</label>
 </div><!-- .radio .radio-info .radio-inline -->
 
 									</div><!-- .col-sm-10 -->
@@ -268,24 +271,6 @@
 							<div class="form-group" style="margin-top:-10px;">
 								<div class="col-sm-12 col-sm-offset-2">
 								<button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn" style="background:#2d5baa;border:1px solid #21447e;font-size:16px;font-weight:bold;">리뷰 등록</button>
-										<!-- <button type="button" class="btn btn-primary btn-block" onclick="set_ds();set_member()" id="write_btn" style="background:#10cdf4;border:1px solid #05c2e9;font-size:16px;font-weight:bold;">리뷰 등록</button> -->
-										<!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
-										<!-- <button class="btn btn-white" type="reset">취소</button> -->
-										<!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->
-										<!--
-										<div class="form-actions">
-										<button type="submit" class="btn btn-primary" id="write_btn">작성</button>
-										<button class="btn" onclick="document.location.reload()">취소</button>
-										</div> 
-
-										<!-- .form-group -->
-
-										<!-- <div class="row">
-											<div class="col-md-12">
-												<textarea id="form_data" class="form-control" rows="4" cols="50">#form_data</textarea>
-											</div>
-										</div> -->
-										
 									</div><!-- .col-md-6 Right Menu-->
 								<!-- <button class="btn btn-primary" type="button" onclick="set_ds()">저장</button> -->
 								</div><!-- .row -->
@@ -547,6 +532,8 @@ window.onload = function() {
 			success:function(data){
 				$("#st_name").val(data[0].st_name);
 				$("#display_stname").html(data[0].st_name);
+				$("#event_url").attr("src","/prq/uploads/MA/"+data[0].st_main_paper);
+				
 			}
 		});
 	}
@@ -562,6 +549,8 @@ window.onload = function() {
     });
 	*/
   //출처 ㅡ 「페이지 벗어날때 확인창 띄우기 - 따블류 랩」 https://lab.hv-l.net/?document_srl=172498
+	/*이벤트 진행중인 상점인지 체크*/
+	get_event();
 };/*window.onload = function() {..}*/
 
 
@@ -600,6 +589,40 @@ if(is_sms_browser)
 }else{
 	console.log(is_sms_browser);
 }
+
+/****************
+* get_event() 
+* 블로그 자동 사용여부를 가져옵니다.
+* 
+****************/
+function get_event(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5006";
+	var is_event=false;
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			if(!data.success){
+			alert("이벤트 진행중인 상점이 아닙니다.");
+			location.href="/prq/page/"+$("#st_no").val();
+			}
+			$.each(data.posts,function(key,val){
+				is_event=val.pv_value=="on";
+				c
+				if(!is_event)
+				{
+				alert("이벤트 진행중인 상점이 아닙니다.");
+			location.href="/prq/page/"+$("#st_no").val();
+				}
+				
+			});
+		}
+	});
+}
+
 
 </script>
 <style type="text/css">

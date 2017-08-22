@@ -211,6 +211,7 @@ class Blog_m extends CI_Model
 		$sql_array[]="bl_content1='".$arrays['content1']."',";
 		$sql_array[]="bl_content2='".$arrays['content2']."',";
 		$sql_array[]="bl_content3='".$arrays['content3']."',";
+		$sql_array[]="bl_gifticon_type='".$arrays['bl_gifticon_type']."',";
 		$sql_array[]="bl_datetime=now();";
 		$sql=join("",$sql_array);
 		$result = $this->prq->query($sql);

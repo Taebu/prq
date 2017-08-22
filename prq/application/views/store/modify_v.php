@@ -1,4 +1,9 @@
 <script type="text/javascript">
+/* 문서 로드시 */
+window.onload = function () {
+	
+};
+
 
 function modify_ds(){
 var param=$("#write_action").serialize();
@@ -18,8 +23,14 @@ function showDropzone (){
 //	$("#my-awesome-dropzone1").html("...");
 }
 </script>
-	<article id="board_area">
-	<div class="row wrapper border-bottom white-bg page-heading">
+<style>
+.popover-content{
+    padding: 9px 14px;
+    white-space: pre-wrap;
+}
+</style>
+<article id="board_area">
+<div class="row wrapper border-bottom white-bg page-heading">
 <div class="col-lg-10">
 <h2>상점 수정</h2>
 <ol class="breadcrumb">
@@ -280,14 +291,14 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
-<div class="form-group"><label class="col-sm-2 control-label">대표 이미지</label>
+<div class="form-group"><label class="col-sm-2 control-label">이벤트 이미지</label>
 <div class="col-sm-10">
 <div id="my-awesome-dropzone4" class="dropzone">
 
 <div class="dz-default dz-message"></div>
 </div><!-- #my-awesome-dropzone4 -->
 
-<span class="help-block m-b-none">"대표 이미지"을 드래그 하거나 선택해 주세요.</span>
+<span class="help-block m-b-none">"이벤트 이미지"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -403,7 +414,18 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 
 <div class="row">
 <div class="col-md-12">
-<div class="form-group"><label class="col-sm-2 control-label">이벤트 사용여부</label>
+<div class="form-group"><label class="col-sm-2 control-label popover-top"  data-toggle="popover-top" data-content="■ 개발 목적
+- 소비자 혜택
+리뷰를 작성하면 CU상품권(2000원) 및 포인트적립(2000원) 선택하여 혜택을 제공
+-매장
+기존 주문이 없는 고객 DB를 이용하여 이벤트 진행
+-영업자
+다양한 이벤트 제공을 통하여 영업에 활성화
+■ 개발 진행
+PRQ 서버
+1. 이벤트 진행 매장 “상점” 에서 이벤트 기능 추가 및 이미지 추가
+2. 리뷰URL에서 이벤트 매장 마케팅 “이미지” 변경.
+3. 리뷰URL에서 CU상품권(2000원) 및 포인트적립(2000원) 선택 기능 추가." title="기프티콘 이벤트">이벤트 사용여부 <br>(code : 5006)</label>
 <div class="col-sm-10"><div class="switch">
 <div class="onoffswitch">
 	<input type="checkbox" class="onoffswitch-checkbox" id="is_event" name="is_event" onclick='javascript:set_event(this)'>
@@ -420,7 +442,7 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 
 <div class="row">
 <div class="col-md-12">
-<div class="form-group"><label class="col-sm-2 control-label">블로그 홍보 사용여부</label>
+<div class="form-group"><label class="col-sm-2 control-label">블로그 홍보 사용여부 <br>(code : 5003)</label>
 <div class="col-sm-10"><div class="switch">
 <div class="onoffswitch">
 	<input type="checkbox" class="onoffswitch-checkbox" id="is_blogurl" name="is_blogurl" onclick='javascript:set_blogurl(this)'>
@@ -658,6 +680,8 @@ function textAreaAdjustOn() {
 	document.getElementById("st_middle_msg").style.height = (25+document.getElementById("st_middle_msg").scrollHeight)+"px";
 }
 
+
+
 /****************
 * set_blogurl(this)
 * 블로그url 사용/여부를 기록 합니다.
@@ -854,7 +878,7 @@ function set_blogauto(v)
 /****************
 * set_origin() 
 *  원산지를 기록 합니다.
-* 
+* 5001
 ****************/
 function set_origin(){
 	var st_no=$("#st_no").val();
@@ -977,6 +1001,29 @@ function get_blogauto(){
 	});
 }
 
+/****************
+* get_event() 
+* 블로그 자동 사용여부를 가져옵니다.
+* 
+****************/
+function get_event(){
+	var param="pv_no="+$("#st_no").val()+"&pv_code=5006";
+	var is_event=false;
+
+	$.ajax({
+	url:"/prq/ajax/get_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				is_event=val.pv_value=="on";
+				$("#is_event").prop('checked', is_event);
+				//chk_blogauto();
+			});
+		}
+	});
+}
 /****************
 * set_values(v,code)
 * 코드 밸류 값을 갱신 합니다. 
@@ -1130,20 +1177,20 @@ function chk_blogauto()
 
 /****************
 * set_event(this)
-* 블로그url 사용/여부를 기록 합니다.
+* 기프티콘 이벤트 사용/여부를 기록 합니다.
 * 
 ****************/
 function set_event(v)
 {
-	console.log($("#is_blogurl").is(':checked'));
-	var is_blogurl=$("#is_blogurl").is(':checked');
+	console.log($("#is_event").is(':checked'));
+	var is_event=$("#is_event").is(':checked');
 	
-	var is_use_str=is_blogurl?"사용":"미사용";
+	var is_use_str=is_event?"사용":"미사용";
 	var k=is_use_str?"Y":"N";
 	console.log(k);
 	swal({
-	title: "정말 변경 하시겠습니까?",
-	text: "해당 상점을 블로그 \""+is_use_str+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+	title: "기프티콘 이벤트 사용여부?",
+	text: "정말로 이벤트이미지 및 혜택버튼을 \""+is_use_str+"\"으로 하시겠습니까?<br>변경 사유를 작성해 주세요.",
 	html:true,
 	type: "input",
 	showCancelButton: true,
@@ -1151,32 +1198,35 @@ function set_event(v)
 	cancelOnConfirm: false,
 	confirmButtonText: "네, 변경할래요!",
 	cancelButtonText: "아니요, 취소할래요!",
-	animation: "slide-from-top",   showLoaderOnConfirm: true,
+	animation: "slide-from-top",
+	showLoaderOnConfirm: true,
 	allowEscapeKey:true,
-	inputPlaceholder: "변경 사유는 로그에 기록 됩니다." }, function(inputValue){
-		//$(v).prop('checked', !is_blogurl);
+	inputPlaceholder: "변경 사유는 로그에 기록 됩니다." 
+	}, function(inputValue){
+	//$(v).prop('checked', !is_event);
 	//if (inputValue === false) return false;
 	if(inputValue === false){
-		$("#is_blogurl").prop('checked', !is_blogurl);
+		$("#is_event").prop('checked', !is_event);
 		swal("취소!", "취소 하였습니다.", "error");
 		// return false;
 		return;
 	}
+	
 	if (inputValue.length<3) {
 	  swal.showInputError("3자이상 사유를 적어 주세요.");
 	  return false
 	}
 
 	var param=$("#write_action").serialize();
-	var data_url=$("#is_blogurl").is(':checked')?"on":"off";
+	var data_url=$("#is_event").is(':checked')?"on":"off";
 	param=param+"&mb_status="+k;
 	/*class 에서 mb_reason을 선언 해 주지 않았기 때문에 값을 못가져오는 경우의 에러 발생 다음에는 참고 하도록 하자.*/
 	param=param+"&mb_reason="+inputValue;
 	param=param+"&pv_value="+data_url;
-	param=param+"&pv_code=5002";
+	param=param+"&pv_code=5006";
 	//console.log(param);
 	$.ajax({
-	url:"/prq/ajax/chg_status/prq_isblog",
+	url:"/prq/ajax/chg_status/prq_isevent",
 		data:param,
 		dataType:"json",
 		type:"POST",
@@ -1185,7 +1235,7 @@ function set_event(v)
 			if(data.success){
 				//alert("변경에 성공하였습니다.");
 				swal("변경!", "변경에 성공하였습니다.. 변경 사유 : "+inputValue, "success");
-				$("#is_blogurl").prop('checked', is_blogurl);
+				$("#is_event").prop('checked', is_event);
 			}
 			if(data=="9000"){
 				//swal("로그인!", "로그인 되지 않았습니다. 로그인 하시겠습니까?", "error");
@@ -1202,7 +1252,7 @@ function set_event(v)
 	
 					/*취소를 눌렀을 때*/
 					if (inputValue === false){
-						//$("#is_blogurl").prop('checked', !is_blogurl);
+						//$("#is_event").prop('checked', !is_event);
 						//return false;
 					} 
 
@@ -1256,6 +1306,10 @@ chk_blogauto();
 */
 get_blogauto();
 
+/* 기프티콘 사용여부 
+code 5006
+*/
+get_event();
 /*네이버 자동에 사용할 아이디를 불러 옵니다.*/
 
 
@@ -1268,6 +1322,11 @@ get_naverapi_id();
 
 /* 네이버 블로그 카테고리를 불러 옵니다 5초뒤에 */
 setTimeout(get_naver_category, 5000); // 5000ms(5초)가 경과하면 이 함수가 실행됩니다.
+
+/* 툴팁 활성화 */
+$(".popover-top").popover({trigger: 'hover click','placement': 'top'}); 
+
+
 };/*window.onload = function() {..}*/
 
 

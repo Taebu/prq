@@ -319,7 +319,7 @@ foreach ($list as $lt){
 	<?php }	else if($lt->prq_table=="prq_isblog"||$lt->prq_table=="prq_isblogauto"){?>
 	<td scope="row"><?php echo $lt->lo_status;?></td>
 	<?php }else{?>
-	<td scope="row"><?php echo get_status($lt->lo_status);?></td>
+	<td scope="row"><?php echo $lt->lo_status;?></td>
 	<?php }?>
 <!-- 	<td scope="row"><?php echo $lt->lo_how;?></td> -->
 	<td scope="row"><?php echo $lt->lo_reason;?></td>

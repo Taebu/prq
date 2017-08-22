@@ -403,6 +403,9 @@
     <script src="/prq/include/js/plugins/flot/jquery.flot.symbol.js"></script>
     <script src="/prq/include/js/plugins/flot/jquery.flot.time.js"></script>
 
+	<!-- Flot demo-->
+    <!-- <script src="/prq/include/js/demo/flot-demo.js"></script> -->
+
     <!-- Custom and plugin javascript -->
     <script src="/prq/include/js/inspinia.js"></script>
     <script src="/prq/include/js/plugins/pace/pace.min.js"></script>

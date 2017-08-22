@@ -299,8 +299,17 @@ echo "배달시간 : 24시간\n";
 <p class="help-block"><?php echo validation_errors(); ?></p>
 </div>
 
+<div class="form-group" style="text-align:center;font-size:17px;">
+	<label class="col-sm-2 control-label">이벤트 혜택 선택</label>
+	<div class="col-sm-10" style="">
+	<?php echo $views->bl_gifticon_type=="cu_2000"?"CU 상품권 2,000원":"";?>
+	<?php echo $views->bl_gifticon_type=="cash_2000"?"현금 2,000원":"";?>
+	
+	</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
 <div class="form-group">
 <!-- <div class="col-sm-10 col-sm-offset-2"> -->
+
 <div class="col-sm-12">
 <button type="button" class="btn btn-info btn-block" onclick="set_ds();set_member()" id="write_btn">리뷰 수정하기</button>
 <button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('ceo_allow');">사장 승인</button>

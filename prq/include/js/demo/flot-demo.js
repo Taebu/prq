@@ -1,3 +1,4 @@
+
 //Flot Bar Chart
 $(function() {
     var barOptions = {
@@ -15,7 +16,7 @@ $(function() {
                 }
             }
         },
-        xaxis: {
+    	xaxis: {
             tickDecimals: 0
         },
         colors: ["#1ab394"],
@@ -31,9 +32,12 @@ $(function() {
         },
         tooltip: true,
         tooltipOpts: {
-            content: "x: %x, y: %y"
+            content: "8월 %x일, %y콜"
         }
     };
+	
+	if("undefined"===typeof(barData))
+	{
     var barData = {
         label: "bar",
         data: [
@@ -45,8 +49,57 @@ $(function() {
             [6, 44]
         ]
     };
-    $.plot($("#flot-bar-chart"), [barData], barOptions);
+	}
+	$.plot($("#flot-bar-chart"), [barData], barOptions);
 
+
+    function doPlot(position) {
+        $.plot($("#flot-line-chart-multi"), [{
+            data: oilprices,
+            label: "Oil price ($)"
+        }, {
+            data: exchangerates,
+            label: "USD/EUR exchange rate",
+            yaxis: 2
+        }], {
+            xaxes: [{
+                mode: 'time'
+            }],
+            yaxes: [{
+                min: 0
+            }, {
+                // align if we are to the right
+                alignTicksWithAxis: position == "right" ? 1 : null,
+                position: position,
+                tickFormatter: euroFormatter
+            }],
+            legend: {
+                position: 'sw'
+            },
+            colors: ["#1ab394"],
+            grid: {
+                color: "#999999",
+                hoverable: true,
+                clickable: true,
+                tickColor: "#D4D4D4",
+                borderWidth:0,
+                hoverable: true //IMPORTANT! this is needed for tooltip to work,
+
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "%s for %x was %y",
+                xDateFormat: "%y-%0m-%0d",
+
+                onHover: function(flotItem, $tooltipEl) {
+                    // console.log(flotItem, $tooltipEl);
+                }
+            }
+
+        });
+    }
+
+    doPlot("right");
 });
 
 $(function() {

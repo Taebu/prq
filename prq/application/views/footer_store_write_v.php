@@ -248,7 +248,9 @@
 		/* 메뉴 이미지 */
 		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("st_menu_paper"));
 
-		/* 대표 이미지 */
+		/* 대표 이미지 - 이벤트 이미지로 변경 
+		2017-08-22 (화) 15:16:30 
+		*/
 		$("#my-awesome-dropzone4").dropzone(set_dropzone_config("st_main_paper"));
 
 		/*End Dropzone*/		

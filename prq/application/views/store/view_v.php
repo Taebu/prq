@@ -148,10 +148,10 @@
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
-								<div class="form-group"><label class="col-sm-2 control-label">대표</label>
+								<div class="form-group"><label class="col-sm-2 control-label">이벤트</label>
                                     <div class="col-sm-10">
 									<div id="my-awesome-dropzone4" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone4 -->
-									<img src="/prq/uploads/MA/<?php echo $views->st_main_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">대표 이미지 입니다.</span></div><!-- .col-sm-10 -->
+									<img src="/prq/uploads/MA/<?php echo $views->st_main_paper;?>" onerror="this.src='http://static.plaync.co.kr/lineage/bbs/noimg_200_150.gif'" width="100" height="100"><span class="help-block m-b-none">이벤트 이미지 입니다.</span></div><!-- .col-sm-10 -->
                                 </div><!-- .form-group -->
                                 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 							</div>

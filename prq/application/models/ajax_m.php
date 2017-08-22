@@ -1986,7 +1986,7 @@ ERROR:
 		$json['success']=false;
 		$sql=array();
 		$sql[]="SELECT ";
-		$sql[]=" st_name ";
+		$sql[]=" * ";
 		$sql[]="FROM ";
 		$sql[]="`prq_store` ";
 		$sql[]=" where st_no='".$st_no."';";
@@ -2519,6 +2519,59 @@ ERROR:
 	  );
 	  $result = $this->blog_m->set_access_token($write_data);
 	  */	
+	}
+
+//	function chg_status_
+	/** chg_status_event */
+	function chg_status_event($array)
+	{
+		
+		$result=$this->set_values($array);
+
+		$json=array();
+		$json['success']=false;
+		$json['posts']=array();
+		
+		$arr_no= explode (",", $array['join_chk_seq']);
+		
+		$ip_addr= $this->input->ip_address();
+		$referrer=$this->agent->referrer();
+		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		$prq_table=$array['prq_table'];
+		
+		/* 블로그 상태 변경시 */
+		$st=$array['mb_status'];
+
+
+
+		foreach($arr_no as $an)
+		{
+			$items=array();
+
+			//$items['mb_status']=$this->get_status_isblog($array['mb_status']);
+			$items['mb_status']=$array['mb_status'];
+
+			$items['mb_no']=$an;
+			array_push($json['posts'],$items);
+
+			$sql=array();
+			$sql[]="INSERT INTO `prq_log` SET ";
+			$sql[]=" mb_id='".$mb_id."', ";
+			$sql[]=" lo_ip='".$ip_addr."', ";
+			$sql[]=" mb_no='".$an."', ";
+			$sql[]=" prq_table='".$prq_table."', ";
+			$sql[]=" lo_how='ajax', ";
+			$sql[]=" lo_reason='".$lo_reason."', ";
+			$sql[]=" lo_status='".$array['pv_value']."', ";
+			$sql[]=" lo_datetime=now(); ";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+			$json['success']=$query;
+		}
+		
+		echo json_encode($json);
+		
 	}
 }
 /* End of file ajax_m.php */

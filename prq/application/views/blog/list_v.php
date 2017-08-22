@@ -5,6 +5,19 @@
 조회 리스트 페이지 기능 개선
 
 */
+
+function get_gifticon($code)
+{
+	switch ($code) {
+	case "cu_2000":
+		$result='<button type="button" class="btn btn-success btn-xs">CU상품권</button>';
+		break;
+	case "cash_2000":
+		$result='<button type="button" class="btn btn-danger btn-xs">현금</button>';
+		break;
+	}
+	return $result;
+}
 ?>
 <script type="text/javascript" src="http://prq.co.kr/prq/include/js/jquery-2.1.1.js"></script>
 <script type="text/javascript">
@@ -174,11 +187,13 @@
 				</a></b>
 			</td>
 			<td style="text-align:right;font-weight:bold;font-size:11px;background:#fff;">No.<?php echo $lt->st_no;?></td>
-			<td style="text-align:right;font-weight:bold;font-size:11px;background:#fff;"><?php echo get_status_blog($lt->bl_status);?></td>
+			<td style="text-align:right;font-weight:bold;font-size:11px;background:#fff;"><?php echo $lt->bl_gifticon_type!=""?get_gifticon($lt->bl_gifticon_type):"";?></td>
+			<td style="text-align:left;font-weight:bold;font-size:11px;background:#fff;"><?php echo get_status_blog($lt->bl_status);?></td>
 		</tr>
 		<tr>
 			<td style="width:62%;"><img src="/prq/img/new/tel.png" style="width:12px;margin-top:-3px;"> <?php echo $lt->bl_hp;?></td>
 			<td style="text-align:right;font-size:11px;"><?php echo $lt->bl_datetime;?></td>
+
 		</tr>
 		<?php
 		}

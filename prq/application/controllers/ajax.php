@@ -32,7 +32,7 @@ class Ajax extends CI_Controller {
 
 	public function chg_status()
 	{
-			if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
+		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 
 			
@@ -82,6 +82,8 @@ class Ajax extends CI_Controller {
 				$result = $this->ajax_m->chg_status_blog($write_data);
 			}else if($table=="prq_isblogauto"){
 				$result = $this->ajax_m->chg_status_blog($write_data);
+			}else if($table=="prq_isevent"){
+				$result = $this->ajax_m->chg_status_event($write_data);
 			}else if($table!="prq_member"){
 				$result = $this->ajax_m->chg_status_code($write_data);
 			}

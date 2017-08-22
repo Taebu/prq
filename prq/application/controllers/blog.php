@@ -240,6 +240,7 @@ class Blog extends CI_Controller {
 					'content1' => $array_content[0],
 					'content2' => $array_content[1],
 					'content3' => $array_content[2],
+					'bl_gifticon_type' => $this->input->post('bl_gifticon_type', TRUE),
 					'post_data' => $this->input->post(null, TRUE),
 				);
 				$result = $this->blog_m->insert_blog($write_data);
@@ -766,6 +767,7 @@ class Blog extends CI_Controller {
 					'content1' => $array_content[0],
 					'content2' => $array_content[1],
 					'content3' => $array_content[2],
+					'bl_gifticon_type' => $this->input->post('bl_gifticon_type', TRUE),
 					'post_data' => $this->input->post(null, TRUE),
 				);
 				$result = $this->blog_m->insert_blog($write_data);
@@ -888,6 +890,7 @@ class Blog extends CI_Controller {
 					'content1' => $array_content[0],
 					'content2' => $array_content[1],
 					'content3' => $array_content[2],
+					'bl_gifticon_type' => $this->input->post('bl_gifticon_type', TRUE),
 					'post_data' => $this->input->post(null, TRUE),
 				);
 				$result = $this->blog_m->insert_blog($write_data);
@@ -945,6 +948,8 @@ class Blog extends CI_Controller {
 			//exit;
 		}
  	}
+
+
 }
 
 /* End of file blog.php */

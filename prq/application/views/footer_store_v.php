@@ -95,6 +95,9 @@ Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "You can not upload any
 			file_key["mb_distributors_paper"]="DS";
 			/* 통장 사본 */
 			file_key["mb_bank_paper"]="BK";
+			/* 이벤트 이미지 */
+			file_key["mb_bank_paper"]="MA";
+
 			thisDropzone.options.myDropzone={
 			autoProcessQueue: true,
 			uploadMultiple: false,
@@ -238,7 +241,7 @@ console.log('error');
 		/* 통장 사본 */
 		$("#my-awesome-dropzone3").dropzone(set_dropzone_config("mb_bank_paper"));
 
-		/* 통장 사본 */
+		/* dropzone4  */
 		$("#my-awesome-dropzone4").dropzone(set_dropzone_config("mb_bank_paper"));
 
 		});
