@@ -11,7 +11,7 @@ function checkAll(formname){
 	for(var i=0;i<df.elements.length;i++){
 		if(df[i].type=="checkbox"){
 //			(df[i].checked == true)?df[i].checked = false:df[i].checked = true;
-			df[i].checked = !df[i].checked;
+			df[i].checked = document.getElementById("chk_all").checked;;
 
 		}
 	}

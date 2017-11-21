@@ -169,9 +169,10 @@ class Store extends CI_Controller {
 		/* 원산지 정보 가져오기 */
 		$data['st_origin'] = $this->store_m->get_origin($data['list']);
 		$data['group_cnt'] =  json_decode(json_encode($this->store_m->get_groupcnt()), True);
-
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('store/tlist_v', $data);
+		}else if($this->uri->segment(3)=="prq_ata_pay"){
+			$this->load->view('store/ata_pay/list_v', $data);
 		}else{
 			$this->load->view('store/list_v', $data);
 		}
@@ -303,7 +304,11 @@ class Store extends CI_Controller {
 			else
 			{
 				//쓰기폼 view 호출
+				if($this->uri->segment(3)=="prq_ata_pay"){
+				$this->load->view('store/ata_pay/write_v');	
+				}else{
 				$this->load->view('store/write_v');	
+				}
 			}
 		}
 		else

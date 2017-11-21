@@ -160,15 +160,18 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
 					 ?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록</a></li>
                         </ul>
                     </li>
 					<?php 
-					 echo $this->uri->segment(1)=="partner"?'<li class="active">':'<li>';?>
+					 echo $this->uri->segment(1)=="partner"?'<li class="active">':'<li>';
+					 
+					 ?>
                         <a href="#">
 						<i class="fa fa-th-large"></i> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
+                            <?php echo $this->uri->segment(3)=="prq_member"?'<li class="active">':'<li>';?><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
+                            <!-- <?php echo $this->uri->segment(3)=="prq_ata_pay"?'<li class="active">':'<li>';?><a href="/prq/partner/lists/prq_ata_pay/page/1">알림톡 입금 목록 <span class="label label-primary pull-right">NEW</span></a></li> -->
                         </ul>
                     </li>
                     </li>
@@ -186,7 +189,8 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         <a href="#">
 						<i class="fa fa-pie-chart"></i><span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
+                            <?php echo $this->uri->segment(3)=="prq_store"?'<li class="active">':'<li>';?><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
+                            <?php echo $this->uri->segment(3)=="prq_ata_pay"?'<li class="active">':'<li>';?><a href="/prq/store/lists/prq_ata_pay/page/1">알림톡 입금 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php 
@@ -340,6 +344,7 @@ if($mb_gcode=='G3'){
 						<i class="fa fa-th-large"></i> <span class="nav-label">대리점 관리</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="/prq/partner/lists/prq_member/page/1">대리점 목록</a></li>
+                            <li><a href="/prq/partner/lists/prq_ata_pay/page/1">알림톡 입금 목록</a></li>
                         </ul>
                     </li>
                     </li>

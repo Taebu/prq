@@ -1,4 +1,4 @@
-        <div class="footer">
+<div class="footer">
             <div class="pull-right">
 			Page rendered in <strong>{elapsed_time}</strong> seconds. {memory_usage}
                 <!-- 10GB of <strong>250GB</strong> Free. -->
@@ -404,7 +404,9 @@
     <script src="/prq/include/js/plugins/flot/jquery.flot.time.js"></script>
 
 	<!-- Flot demo-->
-    <!-- <script src="/prq/include/js/demo/flot-demo.js"></script> -->
+	<?php if("chart"==$this->uri->segment(1)){?>
+    <script src="/prq/include/js/demo/flot-demo.js"></script>
+	<?php } ?>
 
     <!-- Custom and plugin javascript -->
     <script src="/prq/include/js/inspinia.js"></script>

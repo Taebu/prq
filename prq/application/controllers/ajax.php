@@ -831,7 +831,7 @@ class Ajax extends CI_Controller {
 	  $header = "Bearer ".$access_token; // Bearer 다음에 공백 추가
 
 	  $title=$this->input->post("pb_title", TRUE);
-	  $contents=$this->input->post("hidden_contents", TRUE);
+	  $contents=urlencode($this->input->post("hidden_contents", TRUE));
 	  $pb_naver_id=$this->input->post("pb_naver_id", TRUE);
 	  $pb_category=$this->input->post("pb_category", TRUE);
 	  $st_no=$this->input->post("st_no", TRUE);
@@ -1076,8 +1076,16 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		//echo "Error 내용:".$response;
 		echo $response;
 		}
-
+	}
+	
+	/* js 파일을 만들어 서버 성능을 향상 시킵니다. 
+	http://prq.co.kr/prq/ajax/make_js
+	*/
+	public function make_js()
+	{
+		$json=$this->ajax_m->make_js();
+		echo $json;
 	}
 }
-/* End of file ajax_board.php */
-/* Location: ./bbs/application/controllers/ajax_board.php */
+/* End of file ajax.php */
+/* Location: ./prq/application/controllers/ajax.php */

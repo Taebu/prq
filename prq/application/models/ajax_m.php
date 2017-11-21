@@ -2573,6 +2573,31 @@ ERROR:
 		echo json_encode($json);
 		
 	}
+
+	function make_js()
+	{
+		$sql = "select st_no,prq_fcode,st_name from prq_store;";
+		$json=array();
+		$json['store']=array();
+		$query = $this->prq->query($sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+
+		foreach($query->result_array() as $list){
+			array_push($json['store'],$list);
+		}
+
+		$string_json=json_encode($json);
+		$new_jsfile=sprintf("/*%s*/\nvar store=%s;",date("Y-m-d H:i:s"),$string_json);
+
+		$file=fopen("/var/www/html/prq/include/js/mysql/prq_store.js","w");
+		fwrite($file,$new_jsfile);
+		fclose($file);
+
+		$json['success']=true;
+		return json_encode($json);
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */

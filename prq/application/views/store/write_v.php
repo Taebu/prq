@@ -95,7 +95,7 @@ echo $prq_fcode;
 	<option value="FR0005">네네치킨(FR0005)</option>
 </select>
 <?php }else if($mb_gcode!="G5"){?>
-<select name="prq_fcode" id="prq_fcode" class="form-control" onchange="get_mb_id(this.value)" onclick="get_mb_id(this.value)" ></select> 
+<select name="prq_fcode" id="prq_fcode" class="select2_demo_1 form-control" onchange="get_mb_id(this.value)" onclick="get_mb_id(this.value)" ></select> 
 <?php }?>
 <span class="help-block m-b-none">상점을 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
@@ -645,27 +645,32 @@ function textAreaAdjust(o) {
 
 
 
-window.onload = function() {
-textAreaAdjust(document.getElementById("st_middle_msg"));
-$( "#mb_id" ).focusout(function() {
-chk_vali_id();
+window.onload = function() 
+{
+	textAreaAdjust(document.getElementById("st_middle_msg"));
+	$( "#mb_id" ).focusout(function() {
+		chk_vali_id();
+	}).blur(function() {
+	blur++;
+	chk_vali_id();
+	});
+	/*mb_code로 등록 정보 변경*/
+	//chg_gname();
 
-})
-.blur(function() {
-blur++;
-chk_vali_id();
-});
-/*mb_code로 등록 정보 변경*/
-//chg_gname();
-/*24시간인지 체크*/
-chk_btn_status();
-/*멀티 셀렉트 구현 chosen-select */
-$(".chosen-select").chosen();
-var code=$("#prq_fcode").val();
-get_frcode(code);
-get_frmail();
+	/*24시간인지 체크*/
+	chk_btn_status();
+	
+	/*멀티 셀렉트 구현 chosen-select */
+	$(".chosen-select").chosen();
+	
+	var code=$("#prq_fcode").val();
+	get_frcode(code);
+	get_frmail();
 
-chk_byte();
+	chk_byte();
+
+	/*select chosen */
+	$(".select2_demo_1").select2();
 };/*window.onload = function() {..}*/
 
 

@@ -54,8 +54,8 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 		}
 
 		function set_write(){
-		$('#bd_search').attr('action', "/prq/store/write/prq_store/page/1");
-          $("#bd_search").submit();		
+		$('#bd_search').attr('action', "/prq/store/write/prq_ata_pay/page/1");
+    $("#bd_search").submit();		
 		
 		}
 
@@ -205,7 +205,7 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5><span class="mb_gname">상점</span>  리스트 정보 입니다. <small><span class="mb_gname">총판</span>의 정보 및 계약서를 작성해 주세요.</small></h5>
+                            <h5>알림톡 결재 리스트 정보 입니다. <small>검색 정보를 작성해 주세요.</small></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -287,20 +287,9 @@ $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
-<!-- <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button> -->
-<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기 <?php echo $wa_cnt;?></button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중 <?php echo $pr_cnt;?></button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료 <?php echo $ac_cnt;?></button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">네이버신규등록 <?php echo $ad_cnt;?></button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">네이버권한신청 <?php echo $ec_cnt;?></button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패 <?php echo $ca_cnt;?></button>
-<button type="button" class="btn btn-sm btn-free" onclick="chg_list('fr');">무료 <?php echo $fr_cnt;?></button>
-</div><!-- .btn_area -->
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('join');">정상 <?php echo $wa_cnt;?></button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지 <?php echo $pr_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지 <?php echo $ac_cnt;?></button></div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
 <?php 
@@ -313,18 +302,39 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 			<thead>
 				<tr>
 					<th scope="col">
-					<div class="checkbox checkbox-primary"><input type="checkbox" name="chk_all" id="chk_all" onclick="checkAll('write_action');chk_btn_status()"><label for="chk_all"></label></div>
+					<div class="checkbox checkbox-primary">
+						<input type="checkbox" name="chk_all" id="chk_all" onclick="checkAll('write_action');chk_btn_status()">
+						<label for="chk_all"></label>
+					</div>
 					</th>
-					<th scope="col">No</th>
-					<th scope="col">코드</th>
+					<th scope="col">시작일</th>
+					<th scope="col">자동출금일</th>
 					<th scope="col">상점명</th>
-					<th scope="col">아이디</th>
-					<th scope="col">풀코드</th>
+					<th scope="col">충전금액</th>
+					<th scope="col">결재구분</th>
+					<th scope="col">월발송건</th>
 					<th scope="col">상태</th>
-					<th scope="col">등록일자</th>
 				</tr>
 			</thead>
 			<tbody>
+		<tr>
+		<td scope="col">
+		<div class="checkbox checkbox-primary">
+		<input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="chk_5" value="5">
+		<label for="chk_5"></label></div>
+		</td>
+		<td scope="col">17-11-17</td>
+		<td scope="col">매월 17일</td>
+		<td scope="col">또래오래 영등포점</td>
+		<td scope="col">10,000원</td>
+		<td scope="col">정기결재</td>
+		<td scope="col">1,000건</td>
+		<td scope="col">
+		<button type="button" class="btn btn-success btn-xs">정상</button>
+		<button type="button" class="btn btn-warning btn-xs">중지</button>
+		<button type="button" class="btn btn-danger  btn-xs">해지</button>
+		</td>
+		</tr>
 <?php
 //print_r($fr_names);
 //print_r($pt_names);
@@ -370,8 +380,9 @@ $index=array_search($lt->st_no, $pv_no);
 .warning	Indicates a warning that might need attention
 .danger	Indicates a dangerous or potentially negative action -->
 		<td scope="col">
-		<div class="checkbox checkbox-primary"><input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="<?php printf("chk_%s",$lt->st_no);?>" value="<?php echo $lt->st_no;?>"><label for="<?php printf("chk_%s",$lt->st_no);?>"></label></div>
+		<div class="checkbox checkbox-primary"><input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="<?php printf("chk_%s",$lt->st_no);?>" value="<?php echo $lt->st_no;?>"><label for="<?php printf("chk_%s",$lt->ap_no);?>"></label></div>
 		</td>
+
  		<td scope="row"><?php echo $lt->st_no;?></td>
 <!--		<td scope="row"><?php echo $index!=""?'e':'u';?></td> -->
 		<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
@@ -387,7 +398,7 @@ $index=array_search($lt->st_no, $pv_no);
 }
 
 if(!$list){
-echo "<tr><td colspan=9 style='text-align:center'>상점 리스트가 존재 하지 않습니다.</td></tr>";
+echo "<tr><td colspan=9 style='text-align:center'>알림톡 입금 리스트가 존재 하지 않습니다.</td></tr>";
 }
 ?>
 
@@ -404,18 +415,9 @@ echo "<tr><td colspan=9 style='text-align:center'>상점 리스트가 존재 하
 <?php 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
-<!-- <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button> -->
-<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기 </button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">1,2개 미흡</button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('join');">정상 <?php echo $wa_cnt;?></button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지 <?php echo $pr_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지 <?php echo $ac_cnt;?></button>
 </div><!-- .btn_area -->
 <?php }?>
 </div>

@@ -91,17 +91,12 @@ function get_cidinfo(){
 				object.push('<select  class="form-control" onchange="set_cidport(this.id,this.value)" id="'+val.st_no+'">');
 				console.log(val.st_port);
 				chk_port=val.st_port;
-				str=val.st_port==0?"selected":"";
-				object.push('<option value="0" '+str+'>0</option>');
-				str=val.st_port==1?"selected":"";
-				object.push('<option value="1" '+str+'>1</option>');
-				str=val.st_port==2?"selected":"";
-				object.push('<option value="2" '+str+'>2</option>');
-				str=val.st_port==3?"selected":"";
-				object.push('<option value="3" '+str+'>3</option>');
-				str=val.st_port==4?"selected":"";
-				object.push('<option value="4" '+str+'>4</option>');
-				object.push('</select>');
+        for(var i=0;i<31;i++)
+        {
+				str=val.st_port==i?"selected":"";
+				object.push('<option value="'+i+'" '+str+'>'+i+'</option>');
+        }
+        object.push('</select>');
 				object.push('</td>');
 				object.push('<td>'+val.st_name+'</td>');
 				object.push('<td>'+val.st_cidtype+'</td>');

@@ -21,6 +21,7 @@ echo form_open('/board/write/prq_member', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 ?>
 <input type="hidden" name="mode" value="manual">
+<input type="hidden" name="spim_yn" value="false">
 <div class="row">
 <div class="col-lg-12">
 <div class="ibox float-e-margins">
@@ -112,7 +113,7 @@ $mb_code=$this->input->post('mb_code',TRUE);
 </label>
 <div class="col-sm-10">
 <div class="checkbox checkbox-primary">
-<input id="spim_yn" name="spim_yn" type="checkbox" onclick="javascript:chk_on();">
+<input id="spim_yn" type="checkbox" onclick="javascript:chk_on();">
 <label for="spim_yn">대량 발송 on</label></div><!-- checkbox-primary -->
 </div>
 </div>
@@ -340,7 +341,7 @@ function set_gcm(){
 	setCookie("receiver_num", $("#receiver_num").val(), 365);
 	setCookie("mno_type", $(':radio[name="mno_type"]:checked').val(), 365);
 	setCookie("is_mms", $(':radio[name="is_mms"]:checked').val(), 365);
-
+$('[name=spim_yn]').val($('#spim_yn').is(":checked")?"on":"off");
 var param=$("#write_action").serialize();
 //alert(param);
 if($("#phone").val().length<4){
@@ -361,7 +362,8 @@ if($("#message").val().length<4){
 	$("#message").focus();
 	return;
 }
-	
+
+
 $.ajax({
 url:"/prq/set_gcm.php",
 type: "POST",

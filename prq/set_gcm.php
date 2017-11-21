@@ -10,7 +10,6 @@
 */
 include_once "./db_info.php";
 
-
 /*
 1.*/
 $select_sql=array();
@@ -83,7 +82,7 @@ echo json_encode($json);
 /* if($mode=="crontab"){...} */
 
 /* 수동 단일 전송 */
-if($mode=="manual"&&!$spim_yn=="on")
+if($mode=="manual"&&$spim_yn=="off")
 {
 
 if($mno_type=="LG"){

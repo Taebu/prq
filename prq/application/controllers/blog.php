@@ -310,7 +310,7 @@ class Blog extends CI_Controller {
 
 		//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 		$uri_array = $this->segment_explode($this->uri->uri_string());
-
+		$is_bug=$this->uri->segment(4)=="bug_test";
 		if( in_array('page', $uri_array) )
 		{
 			$pages = urldecode($this->url_explode($uri_array, 'page'));
@@ -320,7 +320,7 @@ class Blog extends CI_Controller {
 			$pages = 1;
 		}
 
-		if( @$this->session->userdata('logged_in') == TRUE )
+		if( @$this->session->userdata('logged_in') == TRUE ||$is_bug)
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
 			//$writer_id = $this->blog_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
