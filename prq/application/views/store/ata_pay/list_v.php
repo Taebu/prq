@@ -48,6 +48,21 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 			}
 		});
 
+
+		function get_status(s)
+		{
+			var result="";
+
+			if(s=="join"){
+				result="정상";
+			}else if(s=="stop"){
+				result="중지";
+			}else if(s=="terminate"){
+				result="해지";
+			}
+			return result;
+		}
+
 		function board_search_enter(form) {
 			var keycode = window.event.keyCode;
 			if(keycode == 13) $("#search_btn").click();
@@ -75,12 +90,61 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 			//alert(code+" : "+param);
 		}
 		
+
+		String.prototype.toKorChars = function() {
+    var cCho  = [ 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ],
+        cJung = [ 'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ' ],
+        cJong = [ '', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' ],
+        cho, jung, jong;
+
+    var str = this,
+        cnt = str.length,
+        chars = [],
+        cCode;
+
+    for (var i = 0; i < cnt; i++) {
+        cCode = str.charCodeAt(i);
+        
+        if (cCode == 32) { continue; }
+
+        // 한글이 아닌 경우
+        if (cCode < 0xAC00 || cCode > 0xD7A3) {
+            chars.push(str.charAt(i));
+            continue;
+        }
+
+        cCode  = str.charCodeAt(i) - 0xAC00;
+
+        jong = cCode % 28; // 종성
+        jung = ((cCode - jong) / 28 ) % 21 // 중성
+        cho  = (((cCode - jong) / 28 ) - jung ) / 21 // 초성
+
+        chars.push(cCho[cho], cJung[jung]);
+        if (cJong[jong] !== '') { chars.push(cJong[jong]); }
+    }
+
+    return chars;
+}
+
+function is_jong(str)
+{
+	var chk_jong=str.toKorChars();
+	var index=chk_jong.length-1;
+	var cJong = ['ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ','1','3','6','7','8' ];
+	var a = cJong.indexOf(chk_jong[index]);
+	var result=a>-1;
+	return result;
+}
+
 		/* 리스트 상태를 변경, 로그를 기록 합니다. */
 		function swal_status(code)
 		{
+			var status=get_status(code);
+			var key="";
+			key=is_jong(status)?status+"\"으로":status+"\"로";
 			swal({
-				title: "정말 변경 하시겠습니까?",
-				text: "해당 리스트를 \""+get_status(code)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
+				title: "사유를 기입해 주세요.",
+				text: "해당 리스트를 \""+key+" 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
 				html:true,
 				type: "input",
 				showCancelButton: true,
@@ -109,7 +173,7 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 				param=param+"&mb_reason="+inputValue;
 				console.log(param);
 				$.ajax({
-				url:"/prq/ajax/chg_status/prq_store",
+				url:"/prq/ajax/chg_status/prq_ata_pay",
 					data:param,
 					dataType:"json",
 					type:"POST",
@@ -169,19 +233,6 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 <button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">1,2개 미흡</button>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패</button>
 */
-		function get_status(code)
-		{
-			var object=[];
-			object['wa']='대기';
-			object['pr']='처리중';
-			object['ac']='완료';
-			//object['ad']='승인거부';
-			object['ad']='네이버신규등록';
-			object['ec']='네이버권한신청';
-			object['ca']='설치실패';
-			object['fr']='무료';
-			return object[code];
-		}
 
 		
 
@@ -276,6 +327,33 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 	<div class='col-sm-12'>
 
 <?php 
+
+
+
+function get_status3($s)
+{
+	$result="";
+	$status=array();
+	$status[]=array('status'=>'success','name'=>"정상");
+	$status[]=array('status'=>'warning','name'=>"중지");
+	$status[]=array('status'=>'danger','name'=>"해지");
+
+	if($s=="join"){
+		$result=$status[0];
+	}else if($s=="stop"){
+		$result=$status[1];
+	}else if($s=="terminate"){
+		$result=$status[2];
+	}
+	return $result;
+}
+
+	
+	 
+	
+
+
+
 /* cookie에서 멤버 gcode 불러 오기 */
 foreach($group_cnt as $gc)
 {
@@ -317,24 +395,6 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 				</tr>
 			</thead>
 			<tbody>
-		<tr>
-		<td scope="col">
-		<div class="checkbox checkbox-primary">
-		<input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="chk_5" value="5">
-		<label for="chk_5"></label></div>
-		</td>
-		<td scope="col">17-11-17</td>
-		<td scope="col">매월 17일</td>
-		<td scope="col">또래오래 영등포점</td>
-		<td scope="col">10,000원</td>
-		<td scope="col">정기결재</td>
-		<td scope="col">1,000건</td>
-		<td scope="col">
-		<button type="button" class="btn btn-success btn-xs">정상</button>
-		<button type="button" class="btn btn-warning btn-xs">중지</button>
-		<button type="button" class="btn btn-danger  btn-xs">해지</button>
-		</td>
-		</tr>
 <?php
 //print_r($fr_names);
 //print_r($pt_names);
@@ -368,31 +428,26 @@ $sub_ptcode=substr($lt->prq_fcode,0,12);
 $index=array_search($sub_ptcode, $pt_code);
 $sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
 $index=array_search($lt->st_no, $pv_no);
+$billtm=strtotime($lt->ap_autobill_date);
+$st_dt=date("y-m-d",$billtm);
+$autobill_date=date("d",$billtm);
+$ap_autobill_YN=$lt->ap_autobill_YN=="Y"?"정기결재":"1회 출금";
+$ap_status=get_status3($lt->ap_status);
+$ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 
 ?>
-<?php if($index>-1&&strlen($st_origin[$index]['pv_value'])>3){?>
 	<tr>
-	<?php }else{?>
-	<tr class="green">
-	<?php }?>
-<!-- .active	Applies the hover color to a particular row or cell
-.success	Indicates a successful or positive action
-.warning	Indicates a warning that might need attention
-.danger	Indicates a dangerous or potentially negative action -->
 		<td scope="col">
-		<div class="checkbox checkbox-primary"><input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="<?php printf("chk_%s",$lt->st_no);?>" value="<?php echo $lt->st_no;?>"><label for="<?php printf("chk_%s",$lt->ap_no);?>"></label></div>
+		<div class="checkbox checkbox-primary"><input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="<?php printf("chk_%s",$lt->ap_no);?>" value="<?php echo $lt->ap_no;?>"><label for="<?php printf("chk_%s",$lt->ap_no);?>"></label></div>
 		</td>
-
- 		<td scope="row"><?php echo $lt->st_no;?></td>
-<!--		<td scope="row"><?php echo $index!=""?'e':'u';?></td> -->
-		<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;?></td>
-		<td><?php echo $lt->st_name;?> 
-		<span id="ttno_<?php echo $lt->st_no;?>"></span></td>
-		<td><?php echo $lt->mb_id;?></td>
-		<td><?php echo $lt->prq_fcode;?></td>
-		<td><?php echo get_status2($lt->st_status);?></td> 
-
-		<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
+ 		<td><?php echo $st_dt;?></td>
+ 		<td><?php printf("매월 %s일 ",$autobill_date);?></td>
+		<td><?php echo $lt->st_name;?> </td>
+		<td><?php echo number_format($lt->ap_price)."원";?></td>
+<!-- 		<td><?php echo $lt->prq_fcode;?></td> -->
+		<td><?php echo $ap_autobill_YN;?></td>
+		<td><?php echo number_format($lt->ap_price/10)."건";?></td>
+		<td><?php echo $ap_status;?></td>
 	</tr>
 <?php
 }

@@ -29,7 +29,7 @@
 			{
 			echo "<li>";
 			echo $lo->lo_datetime;echo "&nbsp;";
-			echo get_status2($lo->lo_status);echo "&nbsp;";
+			echo get_status($lo->lo_status);echo "&nbsp;";
 			echo $lo->lo_reason;echo "&nbsp;";
 			echo "</li>";
 			}

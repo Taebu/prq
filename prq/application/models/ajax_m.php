@@ -577,6 +577,9 @@ class Ajax_m extends CI_Model
 		case "fr":
 			$result='<button type="button" class="btn btn-free btn-xs">무료</button>';
 			break;
+		case "tm":
+			$result='<button type="button" class="btn btn-danger btn-xs">해지</button>';
+			break;
 		case "delete":
 			$result='<button type="button" class="btn btn-danger btn-xs">삭제</button>';
 			break;
@@ -2597,6 +2600,56 @@ ERROR:
 
 		$json['success']=true;
 		return json_encode($json);
+	}
+	
+	/* ata_pay */
+	function chg_status_ata_pay($array)
+	{
+		$json=array();
+		$sql=array();
+		$json['success']=false;
+		if($array['prq_table']=="prq_ata_pay"){
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" ap_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="ap_no in (".$array['join_chk_seq'].");";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+			$json['success']=$query;
+		}
+		
+		$arr_no= explode (",", $array['join_chk_seq']);
+
+		$json['posts']=array();
+		$ip_addr= $this->input->ip_address();
+		$referrer=$this->agent->referrer();
+		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		$prq_table=$array['prq_table'];
+		
+		/* 블로그 상태 변경시 */
+		$st=$array['mb_status'];
+		foreach($arr_no as $an)
+		{
+			$items=array();
+			$sql=array();
+			$sql[]="INSERT INTO `prq_log` SET ";
+			$sql[]=sprintf(" mb_id='%s', ",$array['pv_no']);
+			$sql[]=sprintf(" lo_ip='%s', ",$ip_addr);
+			$sql[]=sprintf(" mb_no='%s', ",$an);
+			$sql[]=sprintf(" prq_table='%s', ",$prq_table);
+			$sql[]=sprintf(" lo_reason='%s', ",$lo_reason);
+			$sql[]=sprintf(" lo_status='%s', ",$array['mb_status']);
+			$sql[]=" lo_how='ajax', ";
+			$sql[]=" lo_datetime=now(); ";
+			$join_sql=join("",$sql);
+			$query = $this->prq->query($join_sql);
+			$items['mb_status']=$array['mb_status'];
+			$items['mb_no']=$an;
+			array_push($json['posts'],$items);
+		}
+		$json['success']=$query;
+		echo json_encode($json);
 	}
 }
 /* End of file ajax_m.php */

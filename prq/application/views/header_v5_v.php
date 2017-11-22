@@ -22,9 +22,11 @@
     <!-- Sweet Alert -->
     <link href="/prq/include/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-
+    <!-- Sweet Alert2 -->
+    <link rel="stylesheet" href="https://npmcdn.com/sweetalert2@4.0.15/dist/sweetalert2.min.css">
     <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 <script type="text/javascript">
+console.log("header_v5_v.php");
 var application="<?php echo $this->uri->segment(1);?>";
 var method="<?php echo $this->uri->segment(2);?>";
 	var pdata={application:application,method:method};

@@ -220,8 +220,8 @@ success: function(data) {
 		/* */
 		setTimeout(function(){
 			console.log('setTimeout');
-			//$(location).attr('href', "/prq/appjoin/pview/modu_agreement/board_id/"+data.last_id+"/page/1");}
-		, 5000);
+			//$(location).attr('href', "/prq/appjoin/pview/modu_agreement/board_id/"+data.last_id+"/page/1");
+		},5000);
 		
 	}else if(data.success==false){
 		swal("작성실패","작성에 실패 했습니다.","error");

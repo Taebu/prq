@@ -180,6 +180,7 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 			object['ec']='네이버권한신청';
 			object['ca']='설치실패';
 			object['fr']='무료';
+			object['tm']='해지';
 			return object[code];
 		}
 
@@ -277,6 +278,7 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 
 <?php 
 /* cookie에서 멤버 gcode 불러 오기 */
+$tm_cnt="0";
 foreach($group_cnt as $gc)
 {
 	${$gc['st_status']."_cnt"}=$gc['cnt'];
@@ -287,12 +289,6 @@ $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
-<!-- <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button> -->
 <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기 <?php echo $wa_cnt;?></button>
 <button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중 <?php echo $pr_cnt;?></button>
 <button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료 <?php echo $ac_cnt;?></button>
@@ -300,6 +296,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">네이버권한신청 <?php echo $ec_cnt;?></button>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패 <?php echo $ca_cnt;?></button>
 <button type="button" class="btn btn-sm btn-free" onclick="chg_list('fr');">무료 <?php echo $fr_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('tm');">해지 <?php echo $tm_cnt;?></button>
 </div><!-- .btn_area -->
 <?php }?>
 <div class="table-responsive">
@@ -379,8 +376,7 @@ $index=array_search($lt->st_no, $pv_no);
 		<span id="ttno_<?php echo $lt->st_no;?>"></span></td>
 		<td><?php echo $lt->mb_id;?></td>
 		<td><?php echo $lt->prq_fcode;?></td>
-		<td><?php echo get_status2($lt->st_status);?></td> 
-
+		<td><?php echo get_status($lt->st_status);?></td> 
 		<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->st_no;?>/page/<?php echo $page;?>"><?php echo $lt->st_datetime;?></a></td>
 	</tr>
 <?php
@@ -404,18 +400,14 @@ echo "<tr><td colspan=9 style='text-align:center'>상점 리스트가 존재 하
 <?php 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
-<!-- <button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button> -->
-<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기 </button>
-<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료</button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">1,2개 미흡</button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패</button>
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기 <?php echo $wa_cnt;?></button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중 <?php echo $pr_cnt;?></button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">완료 <?php echo $ac_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">네이버신규등록 <?php echo $ad_cnt;?></button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">네이버권한신청 <?php echo $ec_cnt;?></button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">설치실패 <?php echo $ca_cnt;?></button>
+<button type="button" class="btn btn-sm btn-free" onclick="chg_list('fr');">무료 <?php echo $fr_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('tm');">해지 <?php echo $tm_cnt;?></button>
 </div><!-- .btn_area -->
 <?php }?>
 </div>

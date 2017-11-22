@@ -425,6 +425,9 @@
     <!-- Sweet alert -->
     <script src="/prq/include/js/plugins/sweetalert/sweetalert.min.js"></script>
 
+		<!-- Sweet alert2 -->
+    <!-- <script src="/prq/include/js/plugins/sweetalert2/sweetalert2.min.js"></script> -->
+	
 	<!-- Toastr script -->
     <script src="/prq/include/js/plugins/toastr/toastr.min.js"></script>
     <!-- Main script -->	
@@ -522,7 +525,7 @@ if($("#logged_in").val()==""){
 setTimeout(function(){console.log('setTimeout');$(location).attr('href', "/prq/auth/");}, 2000);
 
 }
-console.log("footer_v.5php");
+console.log("footer_v5_v.php");
 </script>
 </body>
 </html>

@@ -52,6 +52,7 @@ class Ajax extends CI_Controller {
 			$join_ds_code=join("','",$chk_seq);
 
 			$st_no = $this->input->post("st_no", TRUE);
+			$ap_no = $this->input->post("ap_no", TRUE);
 			$pv_code = $this->input->post("pv_code", TRUE);
 			$pv_value = $this->input->post("pv_value", TRUE);
 
@@ -84,6 +85,8 @@ class Ajax extends CI_Controller {
 				$result = $this->ajax_m->chg_status_blog($write_data);
 			}else if($table=="prq_isevent"){
 				$result = $this->ajax_m->chg_status_event($write_data);
+			}else if($table=="prq_ata_pay"){
+				$result = $this->ajax_m->chg_status_ata_pay($write_data);
 			}else if($table!="prq_member"){
 				$result = $this->ajax_m->chg_status_code($write_data);
 			}

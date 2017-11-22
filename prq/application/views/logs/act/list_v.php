@@ -301,8 +301,6 @@ if(count($list)==0){?>
 <tr><td scope="row" colspan='11' class='text-center'> 조회한 ACTION Log가 없습니다.</td></tr>
 <?php }
 
-
-
 foreach ($list as $lt){
 
 ?>
@@ -312,16 +310,7 @@ foreach ($list as $lt){
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td scope="row"><?php echo $lt->prq_fcode;?></td>
 	<td scope="row"><?php echo $lt->prq_table;?></td>
-	<?php if($lt->prq_table=="prq_blog"){?>
-	<td scope="row"><?php echo get_status_blog($lt->lo_status);?></td>
-	<?php }else if($lt->prq_table=="prq_store"){?>
-	<td scope="row"><?php echo get_status2($lt->lo_status);?></td>
-	<?php }	else if($lt->prq_table=="prq_isblog"||$lt->prq_table=="prq_isblogauto"){?>
-	<td scope="row"><?php echo $lt->lo_status;?></td>
-	<?php }else{?>
-	<td scope="row"><?php echo $lt->lo_status;?></td>
-	<?php }?>
-<!-- 	<td scope="row"><?php echo $lt->lo_how;?></td> -->
+	<td scope="row"><?php echo get_status($lt->lo_status);?></td>
 	<td scope="row"><?php echo $lt->lo_reason;?></td>
 	<td scope="row"><?php echo $lt->lo_datetime;?></td>
 </tr>

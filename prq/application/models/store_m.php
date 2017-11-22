@@ -707,6 +707,29 @@ mysql> select * from prq_member_code;
 
     	return $result;
     }
+		
+		/**/
+		function insert_atapay($arrays)
+	 	{
+			$sql_array=array();
+			$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
+			$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
+			$sql_array[]="st_name='".$arrays['st_name']."',";
+			$sql_array[]="st_no='".$arrays['st_no']."',";
+			$sql_array[]="ap_price='".$arrays['ap_price']."',";
+			$sql_array[]="ap_autobill_yn='".$arrays['ap_autobill_yn']."',";
+			$sql_array[]="ap_autobill_date='".$arrays['ap_autobill_date']."',";
+			$sql_array[]="ap_status='".$arrays['ap_status']."',";
+			$sql_array[]="ap_datetime=now();";
+			$sql=join("",$sql_array);
+			$result = $this->db->query($sql);
+			
+			$last_id=$this->db->insert_id();
+			
+			//결과 반환
+			return $last_id;
+			
+ 	}
 }
 
 /* End of file store_m.php */

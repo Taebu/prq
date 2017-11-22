@@ -117,36 +117,46 @@ if (!function_exists('array_column')) {
 
 if (!function_exists('get_status')) {
 	/* 가맹점 상태 보기 */
-	function get_status($code)
+	function get_status($k)
 	{
-		switch ($code) {
-		case "wa":
-			$result='<button type="button" class="btn btn-default btn-xs">대기</button>';
-			break;
-		case "pr":
-			$result='<button type="button" class="btn btn-primary btn-xs">처리중</button>';
-			break;
-		case "ac":
-			$result='<button type="button" class="btn btn-success btn-xs">승인</button>';
-			break;
-		case "ad":
-			$result='<button type="button" class="btn btn-danger btn-xs">승인거부</button>';
-			break;
-		case "ec":
-			$result='<button type="button" class="btn btn-info btn-xs">연계완료</button>';
-			break;
-		case "ca":
-			$result='<button type="button" class="btn btn-warning btn-xs">해지</button>';
-			break;
-		case "delete":
-			$result='<button type="button" class="btn btn-danger btn-xs">삭제</button>';
-			break;
-		case "modify":
-			$result='<button type="button" class="btn btn-warning btn-xs">수정</button>';
-			break;
+		$result=array();
+		$array=array();
+		/* 알림톡 경우 상태 */
+		$array['stop']=array('key'=>'warning','value'=>'중지');
+		$array['join']=array('key'=>'success','value'=>'정상');
+		$array['terminate']=array('key'=>'danger','value'=>'해지');
 
-		}
+		/* 블로그 상태 */
+		$array['on']=array('key'=>'success','value'=>'사용');
+		$array['off']=array('key'=>'danger','value'=>'해지');
+		
+		/* 상점 */
+		$array['wa']=array('key'=>'default','value'=>'대기');
+		$array['pr']=array('key'=>'primary','value'=>'처리중');
+		$array['ac']=array('key'=>'success','value'=>'완료');
+		$array['ad']=array('key'=>'danger','value'=>'네이버신규등록');
+		$array['ec']=array('key'=>'info','value'=>'네이버권한신청');
+		$array['ca']=array('key'=>'warning','value'=>'설치실패');
+		$array['fr']=array('key'=>'free','value'=>'무료');
+		$array['tm']=array('key'=>'danger','value'=>'해지');
+		$array['delete']=array('key'=>'danger','value'=>'삭제');
+		$array['modify']=array('key'=>'warning','value'=>'수정');
+		
 
+		/* get_status_blog */
+		$array['view']=array('key'=>'default','value'=>'포스팅');
+		$array['review']=array('key'=>'default','value'=>'sms_send');
+		$array['sms_send']=array('key'=>'success','value'=>'사장 승인');
+		$array['ceo_allow']=array('key'=>'success','value'=>'사장 거부');
+		$array['ceo_deny']=array('key'=>'danger','value'=>'사장 거부');
+		
+		$array['co_blog_allow']=array('key'=>'success','value'=>'일반 승인');
+		$array['co_blog_deny']=array('key'=>'danger','value'=>'일반 거부');
+		$array['po_blog_allow']=array('key'=>'success','value'=>'포인트 승인');
+		$array['po_blog_deny']=array('key'=>'danger','value'=>'포인트 거부');
+
+		$result=$array[$k];
+		$result=sprintf("<button class='btn btn-xs btn-%s'>%s</button>",$result['key'],$result['value']);
 		return $result;
 	}
 }/* end get_status */
