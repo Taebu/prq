@@ -362,8 +362,10 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 					<th scope="col">수신인</th>
 					<th scope="col">발신인</th>
 					<th scope="col">상태</th>
+					<th scope="col">상태</th>	
 					<th scope="col">보낸 상태</th>
 					<th scope="col">전송일</th>
+					<th scope="col">*발송량</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -376,10 +378,15 @@ if(count($list)==0){
 }
 foreach ($list as $lt)
 {
+	/*
+echo "<pre>";
+	print_r($lt);
+echo "</pre>";
+*/
 $code=$controllers->logs_m->get_mmt_id($lt->at_mmt_no,$lt->at_datetime);
 
-$result_code=isset($code[0]->mt_report_code_ib)?$code[0]->mt_report_code_ib:"E999";
-$result_code=$controllers->logs_m->getAtaCode($result_code);
+$result_code=isset($lt->at_result)?$lt->at_result:"0000";
+$result_code=$controllers->logs_m->getAtaCode($lt->at_result);
 ?>
 				<tr>
 					<td scope="row"><?php echo $lt->at_no;?></td>
@@ -387,8 +394,10 @@ $result_code=$controllers->logs_m->getAtaCode($result_code);
 					<td scope="row"><?php echo phone_format($lt->at_receiver);?></td>
 					<td scope="row"><?php echo phone_format($lt->at_sender);?></td>
 					<td scope="row"><?php echo $lt->at_result;?></td>
+					<td scope="row"><?php echo $lt->at_status;?></td>
 					<td scope="row"><?php echo $result_code;?></td>
 					<td scope="row"><?php echo $lt->at_datetime;?></td>
+					<td scope="row"><?php printf("%s /%s",$lt->at_month_cnt,$lt->at_month_limit);?></td>
 				</tr>
 <?php
 }

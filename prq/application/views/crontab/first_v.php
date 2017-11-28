@@ -38,7 +38,7 @@ header("Content-Type:text/html;charset=utf-8");
 <p>이 문서 실제 위치는 /prq/application/views/crontab/first_v.php 에 위치 합니다. </p>
 <p>[ 2016-05-19 (목) ] prq_first_log 추가</p>
 <p>crontab -e 에서 </p>
-<p><input type="checkbox" name="" id="" checked>구현] * * * * * /etc/sh/set_mms.sh로 돌아가도록 설정 되어 있으며, 1분마다 구동 설정 되어 있습니다.</p>
+<p><input type="checkbox" name="" id="" checked>구현] * * * * * /etc/set_mms.sh로 돌아가도록 설정 되어 있으며, 1분마다 구동 설정 되어 있습니다.</p>
 <p><input type="checkbox" name="" id="">미구현] 그래서 curl -u http://prq.co.kr/prq/crontab/view 링크를 실행시 같이 구동 되도록 설정</p>
 <p></p>
 

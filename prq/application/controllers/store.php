@@ -241,6 +241,7 @@ class Store extends CI_Controller {
 						'st_name' => $this->input->post('st_name', TRUE),
 						'st_no' => $this->input->post('st_no', TRUE),
 						'ap_price' => $this->input->post('ap_price', TRUE),
+						'ap_reserve' => $this->input->post('ap_reserve', TRUE),
 						'ap_autobill_yn' => $this->input->post('ap_autobill_yn', TRUE),
 						'ap_autobill_date' => $this->input->post('ap_autobill_date', TRUE),
 						'ap_status' => $this->input->post('ap_status', TRUE),

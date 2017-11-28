@@ -549,6 +549,7 @@ class Crontab_m extends CI_Model
 		$sql=array();
 		$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
 		$sql[]="date_client_req=SYSDATE(), ";
+		$sql[]="date_client_req=SYSDATE(), ";
 //		$sql[]="template_code='R00001',";	//구 @배달맛톡 템플릿
 		$sql[]="template_code='T00006',";
 		$sql[]="content='".$array['msg']."',";
@@ -631,6 +632,320 @@ class Crontab_m extends CI_Model
 		//지난 콜로그 반환
     	return $result;
     }
+
+
+
+	/**
+	 * 알림톡 전송 대기 리스트 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_ata()
+    {
+			/* 알림톡 전송 대기 인것 가져오기  */
+			$sql = "SELECT * FROM `prq_ata_log` WHERE 1=1 order by at_no desc;";
+			$query = $this->db->query($sql);
+
+			//댓글 리스트 반환
+			$result = $query->result();
+			return $result;
+    }
+
+
+	/*
+	set_ata_pay($array)
+	/prq/ajax/set_ata_pay
+	@param $array data
+	@return json
+	*/
+	function set_ata_pay($array)
+	{
+
+		
+		$json=array();
+		$json['success']=false;
+		/* msg_status 2 ATA전송 */
+		if($array['at_status']=="2")
+		{
+			/* Biztalk 전송 */
+			$sql=array();
+			$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
+			$sql[]=sprintf("date_client_req='%s', ",$array['date_client_req']);
+			$sql[]="template_code='T00006',";
+			$sql[]=sprintf("subject='%s', ",$array['subject']);
+			$sql[]="content='".$array['msg']."',";
+			$sql[]="recipient_num='".$array['mb_hp']."',";
+			$sql[]="callback='".$array['tel']."',";
+			$sql[]="msg_status='1',";
+			$sql[]="sender_key='dbae1c54597868639f649ecc40d68dd45d100cb7', "; //@배달톡톡 키
+			$sql[]="service_type='3', ";
+			$sql[]="msg_type='1008';";
+			$join_sql=join("",$sql);
+			$json['query']=$join_sql;
+			$query = $this->db->query($join_sql);
+			$insert_id = $this->db->insert_id();
+			$status=$query?"성공":"실패";
+			$sql=array();
+			$sql[]="UPDATE `prq_ata_log` SET ";
+			$sql[]=" at_subject='".$array['subject']."', ";
+			$sql[]=" at_content='".$array['msg']."', ";
+			$sql[]=" at_receiver='".$array['mb_hp']."', ";
+			$sql[]=" at_sender='".$array['tel']."', ";
+			$sql[]=" at_mmt_no='".$insert_id."', ";
+			$sql[]=sprintf(" at_status='%s', ",$array['at_status']);
+			$sql[]=" at_datetime=now() ";
+			$sql[]=sprintf(" where at_no='%s';",$array['at_no']);
+			$join_sql=join("",$sql);
+			$query = $this->db->query($join_sql);
+		}
+
+		/* msg_status 3 ATA결과 
+			상태가 3 전송확인이고
+			전송 상태가 Y,N인 경우만 갱신.
+			공백이면 갱신하지 않는다.
+		*/
+		if($array['at_status']=="3"&&$array['at_success']=="Y"||$array['at_status']=="3"&&$array['at_success']=="N")
+		{
+			/* 알림톡 페이 갱신 */
+			$sql=array();
+			$sql[]="UPDATE `prq_ata_pay` SET ";
+			if($array['at_success']=="Y"){
+				$sql[]=" ap_limit_cnt=ap_limit_cnt+1 ";
+			}else if($array['at_success']=="N"){
+				$sql[]=" ap_false_cnt=ap_false_cnt+1 ";
+			}
+			$sql[]=sprintf(" where ap_no='%s';",$array['ap_no']);
+			$join_sql=join("",$sql);
+			$query = $this->db->query($join_sql);
+
+			/*알림톡 로그 상태 갱신 */
+			$sql=array();
+			$sql[]="UPDATE `prq_ata_log` SET ";
+			$sql[]=sprintf(" at_result='%s', ",$array['at_result']);
+			$sql[]=sprintf(" at_status='%s' ",$array['at_status']);
+			$sql[]=sprintf(" where at_no='%s';",$array['at_no']);
+			$join_sql=join("",$sql);
+
+			$query = $this->db->query($join_sql);
+		}
+
+		/* msg_status 4 ATA결과 
+			상태가 4 전송초과
+		*/
+		if($array['at_status']=="4")
+		{
+			/* 알림톡 페이 갱신 */
+			/*
+			$sql=array();
+			$sql[]="UPDATE `prq_ata_pay` SET ";
+			if($array['at_success']=="Y"){
+				$sql[]=" ap_limit_cnt=ap_limit_cnt+1 ";
+			}else if($array['at_success']=="N"){
+				$sql[]=" ap_false_cnt=ap_false_cnt+1 ";
+			}
+			$sql[]=sprintf(" where ap_no='%s';",$array['ap_no']);
+			$join_sql=join("",$sql);
+			$query = $this->db->query($join_sql);
+			*/
+			/*알림톡 로그 상태 갱신 */
+			$sql=array();
+			$sql[]="UPDATE `prq_ata_log` SET ";
+			$sql[]=sprintf(" at_result='%s', ",$array['at_result']);
+			$sql[]=sprintf(" at_status='%s' ",$array['at_status']);
+			$sql[]=sprintf(" where at_no='%s';",$array['at_no']);
+			$join_sql=join("",$sql);
+
+			$query = $this->db->query($join_sql);
+		}
+		if($query)
+		{
+			$json['result']="성공.";
+			$json['sql']=$join_sql;
+			$json['success']=true;
+		}else{
+			$json['result']="실패.";
+		}
+
+		echo json_encode($json);
+	}
+
+
+	/**
+	* ATA 코드 정보 가져 오기
+	*
+	* @author Taebu,Moon <mtaebu@gmail.com>
+	* @param string $table 게시판 테이블
+	* @param string $id 게시물번호
+	* @return array
+	*/
+	function get_mmt_id($no, $datetime)
+	{
+		$datecode=date("Ym",strtotime($datetime));
+		$sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_log_".$datecode." WHERE mt_pr='".$no."';";
+		$query = $this->db->query($sql);
+
+		//댓글 리스트 반환
+		$result = $query->result();
+		$count = $query->num_rows();
+		$result['count']=$count;
+		if($count==0)
+		{
+			
+				 $sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_tran WHERE mt_pr='".$no."';";
+					$query = $this->db->query($sql);
+					$result = $query->result();
+			
+		}
+		return $result;
+	}
+
+	/*
+	작성일 : 2016-04-26 (화)
+	fn getAtaCode()
+	@status=""
+	*/
+	function getAtaCode($status="")
+	{
+		/* OLD ATA V.1.0.4 전송결과코드 */
+		$array['1000']="성공"; /* 1000 성공에 대하여서만 과금. */
+		$array['2000']="전송 시간 초과";
+		$array['2001']="메시지 전송 불가 (예기치 않은 오류 발생)카카오톡을 사용하지 않는 사용자72시간 이내에 카카오톡 사용 이력이 없는 사용자알림톡 차단을 선택한 사용자";
+		$array['3009']="메시지 형식 오류";
+		$array['3014']="알 수 없는 메시지 상태";
+		$array['3023']="메시지 문법 오류";
+		$array['3024']="발신 프로필 키가 유효하지 않음";
+		$array['3025']="메시지 전송 실패 (테스트 시, 친구관계가 아닌 경우)";
+		$array['3026']="메시지와 템플릿의 일치성 확인시 오류 발생";
+		$array['3027']="카카오톡을 사용하지 않는 사용자 (전화번호 오류)카카오톡을 사용하지 않는 사용자 (050 안심번호)";
+		$array['3029']="메시지가 존재하지 않음";
+		$array['3030']="메시지 일련번호가 중복됨";
+		$array['3031']="메시지가 비어 있음";
+		$array['3032']="메시지 길이 제한 오류 (공백 포함 1000 자)";
+		$array['3033']="템플릿을 찾을 수 없음";
+		$array['3034']="메시지가 템플릿과 일치하지 않음";
+		$array['3035']="5 초 이내에 메시지를 중복 발송";
+		$array['1001']="Server Busy (RS 내부 저장 Queue Full)";
+		$array['1002']="수신번호 형식 오류";
+		$array['1003']="회신번호 형식 오류";
+		$array['1009']="CLIENT_MSG_KEY 없음";
+		$array['1010']="CONTENT 없음";
+		$array['1012']="RECIPIENT_INFO 없음";
+		$array['1013']="SUBJECT 없음";
+		$array['1018']="전송 권한 없음";
+		$array['1019']="TTL 초과";
+		$array['1020']="charset conversion error";
+		$array['1099']="인증 실패";
+		$array['E901']="수신번호가 없는 경우";
+		$array['E903']="제목 없는 경우";
+		$array['E904']="메시지가 없는 경우";
+		$array['E905']="회신번호가 없는 경우";
+		$array['E906']="메시지키가 없는 경우";
+		$array['E915']="중복메시지";
+		$array['E916']="인증서버 차단번호";
+		$array['E917']="고객DB 차단번호";
+		$array['E918']="USER CALLBACK FAIL";
+		$array['E919']="발송 제한 시간인 경우, 메시지 재발송 처리가 금지 된 경우";
+		$array['E920']="서비스 타입이 알림톡인 경우, 메시지 테이블에 파일그룹키가 있는 경우";
+		$array['E999']="기타오류";
+
+		/* NEW ATA V.1.0.5 전송결과코드 */
+		$array['1000']="성공";
+		$array['2000']="전송 시간 초과";
+		$array['2001']="메시지 전송 불가 (예기치 않은 오류 발생)";
+		$array['3009']="메시지 형식 오류";
+		$array['3014']="알 수 없는 메시지 상태";
+		$array['3023']="메시지 문법 오류(JSON형식오류)";
+		$array['3024']="발신 프로필 키가 유효하지 않음";
+		$array['3025']="메시지 전송 실패 (테스트 시, 친구관계가 아닌 경우)";
+		$array['3026']="메시지와 템플릿의 일치성 확인시 오류 발생";
+		$array['3027']="카카오톡을 사용하지 않는 사용자 (전화번호 오류 / 050 안심번호)";
+		$array['3029']="메시지가 존재하지 않음";
+		$array['3030']="메시지 일련번호가 중복됨";
+		$array['3031']="메시지가 비어 있음";
+		$array['3032']="메시지 길이 제한 오류 (공백 포함 1000 자)";
+		$array['3033']="템플릿을 찾을 수 없음";
+		$array['3034']="메시지가 템플릿과 일치하지 않음";
+		$array['3035']="5 초 이내에 메시지를 중복 발송";
+		$array['3040']="허브 파트너 키가 유효하지 않음";
+		$array['3041']="Request Body에서 Name을 찾을수 없음";
+		$array['3042']="발신 프로필을 찾을 수 없음";
+		$array['3043']="삭제된 발신 프로필";
+		$array['3044']="차단 상태의 발신 프로필";
+		$array['3045']="차단 상태의 옐로아이디";
+		$array['3046']="닫힘 상태의 옐로아이디";
+		$array['3047']="삭제된 옐로아이디";
+		$array['3048']="계약정보를 찾을수 없음";
+		$array['3049']="내부 시스템 오류로 메시지 전송 실패";
+		$array['3050']="카카오톡을 사용하지 않는 사용자<br>72시간 이내에 카카오톡 사용 이력이 없는 사용자<br>알림톡 차단을 선택한 사용자";
+		$array['3051']="메시지가 발송되지 않은 상태";
+		$array['3052']="메시지 확인 정보를 찾을 수 없음";
+		$array['3054']="메시지 발송 가능한 시간이 아님";
+		$array['3055']="메시지 그룹 정보를 찾을 수 없음";
+		$array['3056']="메시지 전송 결과를 찾을 수 없음";
+		$array['9998']="시스템에 문제가 발생하여 담당자가 확인중(현재 서비스 제공중이 아님)";
+		$array['9999']="시스템에 문제가 발생하여 담당자가 확인중(시스템에 알 수 없는 오류 발생)";
+		$array['1001']="Server Busy (RS 내부 저장 Queue Full)";
+		$array['1002']="수신번호 형식 오류";
+		$array['1003']="회신번호 형식 오류";
+		$array['1009']="CLIENT_MSG_KEY 없음";
+		$array['1010']="CONTENT 없음";
+		$array['1012']="RECIPIENT_INFO 없음";
+		$array['1013']="SUBJECT 없음";
+		$array['1018']="전송 권한 없음";
+		$array['1019']="TTL 초과";
+		$array['1020']="charset conversion error";
+		$array['1099']="인증 실패";
+		$array['E901']="수신번호가 없는 경우";
+		$array['E903']="제목 없는 경우";
+		$array['E904']="메시지가 없는 경우";
+		$array['E905']="회신번호가 없는 경우";
+		$array['E906']="메시지키가 없는 경우";
+		$array['E915']="중복메시지";
+		$array['E916']="인증서버 차단번호";
+		$array['E917']="고객DB 차단번호";
+		$array['E918']="USER CALLBACK FAIL";
+		$array['E919']="발송 제한 시간인 경우, 메시지 재발송 처리가 금지 된 경우";
+		$array['E920']="서비스 타입이 알림톡인 경우, 메시지 테이블에 파일그룹키가 있는 경우";
+		$array['E999']="기타오류";	
+		
+		/* 사용자 정의 코드*/
+		$array['0000']="전송대기";	
+		$array['9999']="할당전송초과";	
+
+		if (array_key_exists($key, $array)) {
+			$result=$array[$key];
+		}else{
+			$result="기타오류";
+		}
+
+		return $result;
+	}
+
+	function get_ap_limit_cnt($ap_no)
+  {
+		$ap_limit_cnt=0;
+		$sql=array();
+		$sql[]="select ap_limit_cnt from prq.prq_ata_pay ";
+		$sql[]="where ap_no=".$ap_no." limit 1;";
+
+		$str_sql=join("",$sql);
+ 		$query = $this->db->query($str_sql);
+
+		if ( $query->num_rows() > 0 )
+		{
+			//맞는 데이터가 있다면 해당 내용 반환
+			$result = $query->row();
+			$ap_limit_cnt=$result->ap_limit_cnt;
+		}
+
+		//지난 콜로그 반환
+	    
+    	return $ap_limit_cnt;
+    }
+
 }
 
 /* End of file crontab_m.php */

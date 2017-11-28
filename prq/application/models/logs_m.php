@@ -371,7 +371,9 @@ class Logs_m extends CI_Model
 		}else if($table=="prq_log"){
 			$sql[]=" order by lo_datetime desc ";
 		}else if($table=="prq_ata_log"){
-			$sql[]=" order by at_datetime desc ";
+			$sql[]="  order by at_no desc ";
+/*2017-11-23 (목) 15:32:03  로그 9월 분 때문에 한시적인 설정 */
+//			$sql[]=" where date(at_datetime)=date(now())  order by at_datetime desc ";
 		}else if($table=="prq_first_log"){
 			$sql[]=" order by pf_no desc ";
 		}else if($table=="prq_sms_log"){
@@ -397,8 +399,8 @@ class Logs_m extends CI_Model
 		
 		$sql[] =$limit_query.";";
 
-		//`echo join("",$sql);
-   		$query = $this->db->query(join("",$sql));
+		//echo join("",$sql);
+		$query = $this->db->query(join("",$sql));
 
 		if ( $type == 'count' )
      	{
@@ -782,16 +784,16 @@ class Logs_m extends CI_Model
 
      	//댓글 리스트 반환
 	    $result = $query->result();
-		$count = $query->num_rows();
-		$result['count']=$count;
-		if($count==0)
-		{
-		
-		   $sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_tran WHERE mt_pr='".$no."';";
-	   		$query = $this->db->query($sql);
-		    $result = $query->result();
-		
-		}
+			$count = $query->num_rows();
+			$result['count']=$count;
+			if($count==0)
+			{
+			
+				 $sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_tran WHERE mt_pr='".$no."';";
+					$query = $this->db->query($sql);
+					$result = $query->result();
+			
+			}
     	return $result;
     }
 
@@ -800,7 +802,7 @@ class Logs_m extends CI_Model
 	fn getAtaCode()
 	@status=""
 	*/
-	function getAtaCode($status="")
+	function getAtaCode($key="")
 	{
 		/* OLD ATA V.1.0.4 전송결과코드 */
 		$array['1000']="성공";
@@ -904,7 +906,16 @@ class Logs_m extends CI_Model
 		$array['E920']="서비스 타입이 알림톡인 경우, 메시지 테이블에 파일그룹키가 있는 경우";
 		$array['E999']="기타오류";	
 		
-		return $array[$status];
+		/* 사용자 정의 코드*/
+		$array['0000']="전송대기";	
+		$array['9999']="할당전송초과";	
+		if (array_key_exists($key, $array)) {
+			$result=$array[$key];
+		}else{
+			$result="기타오류";
+		}
+
+		return $result;
 	}
 
 						

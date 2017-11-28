@@ -4,21 +4,12 @@
 <div class="col-lg-10">
 <h2>알림톡 결재 등록</h2>
 <ol class="breadcrumb">
-<li>
-<a href="index.html">Home</a>
-</li>
-<li>
-<a>상점 관리</a>
-</li>
-<li class="active">
-<strong>알림톡 입금 등록</strong>
-</li>
-</ol>
-</div>
-<div class="col-lg-2">
-
-</div>
-</div>
+<li><a href="/prq/">Home</a></li>
+<li><a>상점 관리</a></li>
+<li class="active"><strong>알림톡 입금 등록</strong></li></ol>
+</div><!-- .col-lg-10 -->
+<div class="col-lg-2"></div><!-- .col-lg-2 -->
+</div><!-- .row wrapper border-bottom white-bg page-heading -->
 <div class="wrapper wrapper-content animated fadeInRight">
 <?php 
 $attributes = array(
@@ -26,7 +17,7 @@ $attributes = array(
 'id' => 'write_action',
 'onsubmit'=>'javascript:set_data();'
 );
-echo form_open('/store/write/prq_store/board_id/', $attributes);
+echo form_open('/store/write/prq_ata_pay/', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
@@ -102,7 +93,7 @@ echo $prq_fcode;
 </div><!-- .radio .radio-info .radio-inline -->
 
 <div class="radio radio-info radio-inline">
-<input type="radio" name="ap_autobill_yn" id="ap_autobill_yn_2"  value='N' ><label for="ap_autobill_yn_2">1회 충전</label>
+<input type="radio" name="ap_autobill_yn" id="ap_autobill_yn_2"  value='N' ><label for="ap_autobill_yn_2">일시결제</label>
 </div><!-- .radio .radio-info .radio-inline -->
  <span class="help-block m-b-none">- 정기 결제시 매월 출금일로 부터 자동 출금(CMS) 합니다.</span>
 </div><!-- .col-sm-10 -->
@@ -139,10 +130,43 @@ echo $prq_fcode;
 
  <span class="help-block m-b-none">- 정기 결제시 매월 입금로 부터 자동 출금(CMS) 합니다.</span>
 </div><!-- .col-sm-10 -->
-
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+
+
+<div class="form-group"><label class="col-sm-2 control-label">예약발송</label>
+<div class="col-sm-10 ">
+<div class="radio radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_1" value='0' checked><label for="ap_reserve_1">즉시발송</label>
+</div><!-- .radio .radio-success .radio-inline -->
+<div class="radio radio-primary radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_2" value='10'><label for="ap_reserve_2">10분</label>
+</div><!-- .radio .radio-info .radio-inline -->
+
+<div class="radio radio-success radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_3" value='20'><label for="ap_reserve_3">20분</label>
+</div><!-- .radio .radio-danger .radio-inline -->
+
+<div class="radio radio-info radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_4" value='30'><label for="ap_reserve_4">30분</label>
+</div><!-- .radio .radio-warning .radio-inline -->
+
+<div class="radio radio-warning radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_5" value='40'><label for="ap_reserve_5">40분</label>
+</div><!-- .radio .radio-success .radio-inline -->
+
+<div class="radio radio-danger radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_6" value='50'><label for="ap_reserve_6">50분</label>
+</div><!-- .radio .radio-success .radio-inline -->
+
+<div class="radio radio-primary radio-inline">
+<input type="radio" name="ap_reserve" id="ap_reserve_7" value='60'><label for="ap_reserve_7">60분</label>
+</div><!-- .radio .radio-success .radio-inline -->
+<span class="help-block m-b-none">- CID로그 기준으로 알림톡 발송 시간을 설정합니다.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="col-md-12">
 <div class="controls">

@@ -2651,6 +2651,37 @@ ERROR:
 		$json['success']=$query;
 		echo json_encode($json);
 	}
+
+	function make_store()
+	{
+		$sql = "select st_no,st_name,st_status from prq_store;";
+		$json=array();
+		$json['store']=array();
+		$query = $this->prq->query($sql);
+		
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+		$object[]='<?php';
+		$object[]='$arr[\'store\']=array();';
+		foreach($query->result_array() as $list){
+
+			$object[]='$product=array(';
+			$object[]=sprintf('\'st_no\'=>\'%s\',',$list['st_no']);
+			$object[]=sprintf('\'st_name\'=>\'%s\',',$list['st_name']);
+			$object[]=sprintf('\'st_status\'=>\'%s\',',$list['st_status']);
+			$object[]=');';
+			$object[]='array_push($arr[\'store\'],$product);';
+		}
+
+//		$string_php=join("\r\n",$object);
+		$string_php=join("",$object);
+		$new_phpfile=$string_php;
+
+		$file=fopen("/var/www/html/prq/include/php/prq_store.php","w");
+		fwrite($file,$new_phpfile);
+		fclose($file);
+
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */

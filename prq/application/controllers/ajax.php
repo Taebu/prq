@@ -1089,6 +1089,15 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		$json=$this->ajax_m->make_js();
 		echo $json;
 	}
+
+	/* js 파일을 만들어 서버 성능을 향상 시킵니다. 
+	http://prq.co.kr/prq/ajax/make_js
+	*/
+	public function make_store()
+	{
+		$json=$this->ajax_m->make_store();
+		echo $json;
+	}
 }
 /* End of file ajax.php */
 /* Location: ./prq/application/controllers/ajax.php */

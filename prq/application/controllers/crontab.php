@@ -60,6 +60,7 @@ class Crontab extends CI_Controller {
  		//view 호출
  		$this->load->view('crontab/first_v', $data);
  	}
+
 	/**
 	 * 게시물 보기
 	 */
@@ -113,6 +114,19 @@ class Crontab extends CI_Controller {
  		$this->load->view('crontab/maxcnt_v', $data);
  	}
 
+	/**
+	 * 알림톡 리스트 가져오기 
+	 */
+	function ata()
+ 	{
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+		$data['list'] = $this->crontab_m->get_ata();
+		$data['controller']=$this; 
+
+ 		//view 호출
+ 		$this->load->view('crontab/ata_v', $data);
+ 	}
+  
 	
 }
 

@@ -717,6 +717,7 @@ mysql> select * from prq_member_code;
 			$sql_array[]="st_name='".$arrays['st_name']."',";
 			$sql_array[]="st_no='".$arrays['st_no']."',";
 			$sql_array[]="ap_price='".$arrays['ap_price']."',";
+			$sql_array[]="ap_reserve='".$arrays['ap_reserve']."',";
 			$sql_array[]="ap_autobill_yn='".$arrays['ap_autobill_yn']."',";
 			$sql_array[]="ap_autobill_date='".$arrays['ap_autobill_date']."',";
 			$sql_array[]="ap_status='".$arrays['ap_status']."',";
@@ -726,6 +727,14 @@ mysql> select * from prq_member_code;
 			
 			$last_id=$this->db->insert_id();
 			
+			/* 상점 정보 갱신 */
+			$sql_array=array();
+			$sql_array[]="UPDATE `prq`.`prq_store` SET ";
+			$sql_array[]="`st_ata_YN`='Y' ";
+			$sql_array[]="WHERE `st_no`='".$arrays['st_no']."';";
+			$sql=join("",$sql_array);
+			$result = $this->db->query($sql);
+
 			//결과 반환
 			return $last_id;
 			
