@@ -41,3 +41,4 @@ echo "<a href=\"/bbs/auth/login\" class=\"btn btn-primary\">로그인</a>";
 			<li><a rel="external" href="/bbs/<?php echo $this->uri->segment(1);?>/lists/<?php echo $this->uri->segment(3);?>">게시판 프로젝트</a></li>
 		</ul>
 	</nav><!-- gnb End -->
+	<!-- header_va.php -->

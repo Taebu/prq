@@ -211,10 +211,10 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                             <?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
 							<?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
                             <?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
-							<?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA</a></li>
-                            <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST</a></li>
+                            <?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST<span class="label label-danger pull-right">사용안함</span></a></li>
                             <?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
-                            <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-danger pull-right">사용안함</span></a></li>
                             <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST<span class="label label-warning pull-right">NEW</span></a></li>
 						</ul>
                     </li>
@@ -682,3 +682,4 @@ if($mb_gcode=='G5'){
 
         </nav>
 </div><!-- .row border-bottom -->
+<!-- header_write_v.php -->

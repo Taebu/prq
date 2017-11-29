@@ -125,6 +125,7 @@ if (!function_exists('get_status')) {
 		$array['stop']=array('key'=>'warning','value'=>'중지');
 		$array['join']=array('key'=>'success','value'=>'정상');
 		$array['terminate']=array('key'=>'danger','value'=>'해지');
+		$array['expire']=array('key'=>'danger','value'=>'만료');
 
 		/* 블로그 상태 */
 		$array['on']=array('key'=>'success','value'=>'사용');

@@ -126,7 +126,19 @@ class Crontab extends CI_Controller {
  		//view 호출
  		$this->load->view('crontab/ata_v', $data);
  	}
-  
+
+	/**
+	 * 알림톡 리스트 가져오기 
+	 */
+	function ata_pay()
+ 	{
+ 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+		$data['list'] = $this->crontab_m->get_ata_pay();
+		$data['controller']=$this; 
+
+ 		//view 호출
+ 		$this->load->view('crontab/ata_pay_v', $data);
+ 	}
 	
 }
 

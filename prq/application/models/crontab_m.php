@@ -646,7 +646,7 @@ class Crontab_m extends CI_Model
     function get_ata()
     {
 			/* 알림톡 전송 대기 인것 가져오기  */
-			$sql = "SELECT * FROM `prq_ata_log` WHERE 1=1 order by at_no desc;";
+			$sql = "SELECT * FROM `prq_ata_log` WHERE 1=1 and at_status in (1,2) order by at_no desc limit 15;";
 			$query = $this->db->query($sql);
 
 			//댓글 리스트 반환
@@ -946,6 +946,62 @@ class Crontab_m extends CI_Model
     	return $ap_limit_cnt;
     }
 
+	/**
+	 * 알림톡 전송 설정 리스트 가져오기
+	 * /prq/crontab/ata_pay crontab -e 에서 하루에 매장 계약 정보에 따라 초기화 하는 과정을 거친다.
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function get_ata_pay()
+    {
+			/* 알림톡 전송 대기 인것 가져오기  */
+			$sql = "SELECT * FROM `prq_ata_pay` where ap_status='join';";
+			$query = $this->db->query($sql);
+
+			//댓글 리스트 반환
+			$result = $query->result();
+			return $result;
+    }
+
+	/**
+	 * 알림톡 전송 설정 정보 
+	 * /prq/crontab/ata_pay crontab -e 에서 하루에 매장 계약 정보에 따라 초기화 하는 과정을 거친다.
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param string $table 게시판 테이블
+	 * @param string $id 게시물번호
+	 * @return array
+	 */
+    function insert_ata_pay($array)
+    {
+		$sql=array();
+		$sql[] = "update prq_ata_pay SET ";
+		$sql[] = sprintf("`ap_status`='%s' ","expire");
+		$sql[] = sprintf(" where ap_no='%s';",$array['ap_no']);
+		$str_sql=join("",$sql);
+		$query = $this->db->query($str_sql);
+		$sql=array();
+		$sql[] = "insert into prq_ata_pay SET ";
+		$sql[] = sprintf("`st_no`='%s',",$array['st_no']);
+		$sql[] = sprintf("`st_name`='%s',",$array['st_name']);
+		$sql[] = sprintf("`prq_fcode`='%s',",$array['prq_fcode']);
+		$sql[] = sprintf("`ap_name`='%s',",$array['ap_name']);
+		$sql[] = sprintf("`ap_price`='%s',",$array['ap_price']);
+		$sql[] = sprintf("`ap_limit`='%s',",$array['ap_limit']);
+		$sql[] = sprintf("`ap_limit_cnt`='%s',",$array['ap_limit_cnt']);
+		$sql[] = sprintf("`ap_false_cnt`='%s',",$array['ap_false_cnt']);
+		$sql[] = sprintf("`ap_status`='%s',",$array['ap_status']);
+		$sql[] = sprintf("`terminate_date`='%s',",$array['`terminate_date']);
+		$sql[] = sprintf("`stop_date`='%s',",$array['stop_date']);
+		$sql[] = sprintf("`join_date`='%s',",$array['join_date']);
+		$sql[] = sprintf("`ap_autobill_YN`='%s',",$array['ap_autobill_YN']);
+		$sql[] = sprintf("`ap_autobill_date`='%s',",$array['ap_autobill_date']);
+		$sql[] = sprintf("`ap_reserve`='%s',",$array['ap_reserve']);
+		$sql[] = "`ap_datetime`=now();";
+		$str_sql=join("",$sql);
+   	$query = $this->db->query($str_sql);
+    }
 }
 
 /* End of file crontab_m.php */

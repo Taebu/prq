@@ -35,13 +35,21 @@ header("Content-Type:text/html;charset=utf-8");
 
  </head>
  <body>
-<p>접근 경로 http://prq.co.kr/prq/crontab/ata</p>
-<p>이 문서 실제 위치는 /prq/application/views/crontab/ata_v.php 에 위치 합니다. </p>
-<p>[ 2017-11-24 (금) 17:33:37  ] prq_ata_log 추가</p>
-<p>crontab -e 에서 </p>
-<p><input type="checkbox" name="" id="" checked>구현] * * * * * /etc/set_mms.sh로 돌아가도록 설정 되어 있으며, 1분마다 구동 설정 되어 있습니다.</p>
-<p><input type="checkbox" name="" id="">미구현] 그래서 curl -u http://prq.co.kr/prq/crontab/view 링크를 실행시 같이 구동 되도록 설정</p>
-<p></p>
+<pre>
+접근 경로 http://prq.co.kr/prq/crontab/ata
+이 문서 실제 위치는 /prq/application/views/crontab/ata_v.php 에 위치 합니다. 
+[ 2017-11-24 (금) 17:33:37  ] prq_ata_log 추가
+
+crontab -e 에서
+<input type="checkbox" name="" id="" checked>구현] * * * * * /etc/set_mms.sh로 돌아가도록 설정 되어 있으며, 1분마다 구동 설정 되어 있습니다.
+<input type="checkbox" name="" id="">미구현] 그래서 curl -u http://prq.co.kr/prq/crontab/view 링크를 실행시 같이 구동 되도록 설정
+상태 코드에 대한 설명
+1. 로그 발생
+- join 상점이 "정상" 가맹점인 경우
+- 해지, 정지 된 매장은 로그를 발생하지 않습니다.
+</p>
+
+</pre>
 <?php 
 include_once($_SERVER['DOCUMENT_ROOT'].'/prq/include/php/prq_store.php');
 
@@ -79,14 +87,15 @@ foreach($black_list as $bl){
 *******************************************************************************/
 echo "<table class='ibk_board mlr30'>";
 echo "<tr>";
-echo "<th>pf_no</th>";
-echo "<th>날짜</th>";
-echo "<th>아이디</th>";
-echo "<th>포트</th>";
-echo "<th>전화1</th>";
-echo "<th>전화2</th>";
-echo "<th>pf_state</th>";
-echo "<th>pf_name</th>";
+echo "<th>상태</th>";
+echo "<th>전송결과</th>";
+echo "<th>비즈톡 결과코드</th>";
+echo "<th>성공갯수 / 제한갯수</th>";
+echo "<th>고객번호(키)</th>";
+echo "<th>매장전화</th>";
+echo "<th>발송일(키)</th>";
+echo "<th>매장번호</th>";
+echo "<th>매장이름</th>";
 echo "<th>query</th>";
 echo "<th>전송여부</th>";
 echo "</tr>";
@@ -104,18 +113,18 @@ if(count($list)==0){
 
 foreach($list as $li)
 {
-
+	$st_names="";
+	$st_names=isset($st_name[$li->st_no])?$st_name[$li->st_no]:"";
 	echo "<tr>";
 
 	echo "<td>";
 	echo "<pre>";
 //	print_r($li);
 
-	echo $li->at_status;
 	$is_limit=false;
-	$st_names="";
 	$at_status=$controller->crontab_m->get_mmt_id($li->at_mmt_no,$li->at_datetime);
 	$mt_report_code_ib=isset($at_status[0]->mt_report_code_ib)?$at_status[0]->mt_report_code_ib:"";
+	echo "</td><td>";
 	if($mt_report_code_ib=="1000"&&$mt_report_code_ib!="")
 	{
 		$at_success="Y";
@@ -126,15 +135,25 @@ foreach($list as $li)
 	}else{
 		echo "전송대기";
 	}
-	echo $mt_report_code_ib;
-	echo "</td>";
-	echo "<td>";
 //	echo $li->at_no;
 	//	if($ap_limit_cnt>=
 	$ap_limit_cnt=$controller->crontab_m->get_ap_limit_cnt($li->ap_no);
 	/* 리미트 여부 */
 	$is_limit=$ap_limit_cnt>=$li->at_month_limit;
+	echo "</td><td>";
+	echo $mt_report_code_ib;
+	echo "</td><td>";
 	echo $ap_limit_cnt."/".$li->at_month_limit;
+	echo "</td><td>";
+	echo $li->at_receiver;
+	echo "</td><td>";
+	echo $li->at_sender;
+	echo "</td><td>";
+	echo $li->at_date;
+	echo "</td><td>";
+	echo $li->st_no;
+	echo "</td><td>";
+	echo $st_names;
 	echo "</td>";
 	echo "</tr>";
 
@@ -208,7 +227,6 @@ foreach($list as $li)
 		} /* if($at_success=="Y"||$at_success=="N"){...} */
 	} /* if($li->at_status=="2"&&!$is_limit)...} */	
 	
-echo "</pre>";
 
 }/*foreach($list as $li){...}*/
 echo "</table>";

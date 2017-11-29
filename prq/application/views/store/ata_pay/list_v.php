@@ -337,6 +337,7 @@ function get_status3($s)
 	$status[]=array('status'=>'success','name'=>"정상");
 	$status[]=array('status'=>'warning','name'=>"중지");
 	$status[]=array('status'=>'danger','name'=>"해지");
+	$status[]=array('status'=>'danger','name'=>"만료");
 
 	if($s=="join"){
 		$result=$status[0];
@@ -344,6 +345,8 @@ function get_status3($s)
 		$result=$status[1];
 	}else if($s=="terminate"){
 		$result=$status[2];
+	}else if($s=="expire"){
+		$result=$status[3];
 	}
 	return $result;
 }
