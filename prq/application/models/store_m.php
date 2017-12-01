@@ -165,9 +165,16 @@ class Store_m extends CI_Model
      	}else{
 		
 		}
+
+		if($table=='prq_store')
+		{
+			$order=" ORDER BY st_no DESC ";
+		}else{
+			$order=" ORDER BY ap_no DESC ";
+		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
-		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY st_no DESC".$limit_query;
+		$sql = "SELECT * FROM ".$table." ".$sword.$order.$limit_query;
    		$query = $this->db->query($sql);
 		//echo $sql;
 		if ( $type == 'count' )
@@ -577,12 +584,17 @@ mysql> select * from prq_member_code;
 	 * @author Taebu Moon <mtaebu@gmail.com>
 	 * @return array
 	 */
-    function get_groupcnt()
+    function get_groupcnt($table)
     {
-    	$sql = "select st_status,count(*) cnt from prq_store group by st_status;";
+    	if($table=="prq_store")
+			{
+				$sql = "select st_status,count(*) cnt from prq_store group by st_status;";
+			}else if($table=="prq_ata_pay"){
+				$sql = "select ap_status,count(*) cnt from prq_ata_pay group by ap_status;";
+			}
    		$query = $this->db->query($sql);
 
-		$result = $query->result();
+			$result = $query->result();
 
     	return $result;
     }
@@ -711,12 +723,14 @@ mysql> select * from prq_member_code;
 		/**/
 		function insert_atapay($arrays)
 	 	{
+			$ap_limit=$arrays['ap_price']/10;
 			$sql_array=array();
 			$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 			$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
 			$sql_array[]="st_name='".$arrays['st_name']."',";
 			$sql_array[]="st_no='".$arrays['st_no']."',";
 			$sql_array[]="ap_price='".$arrays['ap_price']."',";
+			$sql_array[]=sprintf("ap_limit='%s',",$ap_limit);
 			$sql_array[]="ap_reserve='".$arrays['ap_reserve']."',";
 			$sql_array[]="ap_autobill_yn='".$arrays['ap_autobill_yn']."',";
 			$sql_array[]="ap_autobill_date='".$arrays['ap_autobill_date']."',";

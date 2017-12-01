@@ -168,10 +168,15 @@ class Store extends CI_Controller {
 
 		/* 원산지 정보 가져오기 */
 		$data['st_origin'] = $this->store_m->get_origin($data['list']);
-		$data['group_cnt'] =  json_decode(json_encode($this->store_m->get_groupcnt()), True);
+		if($this->uri->segment(3)=="prq_ata_pay"){
+		$data['group_cnt'] =  json_decode(json_encode($this->store_m->get_groupcnt("prq_ata_pay")), True);
+		}else{
+		$data['group_cnt'] =  json_decode(json_encode($this->store_m->get_groupcnt("prq_store")), True);
+		}
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('store/tlist_v', $data);
 		}else if($this->uri->segment(3)=="prq_ata_pay"){
+			echo "prq_ata_pay";
 			$this->load->view('store/ata_pay/list_v', $data);
 		}else{
 			$this->load->view('store/list_v', $data);
@@ -222,7 +227,6 @@ class Store extends CI_Controller {
 				//$this->form_validation->set_rules('st_name', '상점 이름', 'required');
 				//$this->form_validation->set_rules('st_tel', '상점 전화번호', 'required');
 				$this->form_validation->set_rules('st_name', '매장명', 'required');
-				$this->form_validation->set_rules('prq_fcode', '풀코드', 'required');
 			}
 			if ( $this->form_validation->run() == TRUE )
 			{

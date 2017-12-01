@@ -11,7 +11,7 @@ class Main extends CI_Controller
 		# code...
 		parent::__construct();
 		$this->load->database();
-		$this->load->model('todo_m');
+//		$this->load->model('todo_m');
 		$this->load->helper(array('url','date'));
 
 	}
@@ -81,7 +81,11 @@ class Main extends CI_Controller
  		$this->todo_m->delete_todo($id);
  		redirect('/main/lists/');
  	}
-
+	
+	function error_404()
+	{
+	 		$this->load->view('errors/error_404');
+	}
 
 }
 /* End of file main.php*/

@@ -59,6 +59,8 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 				result="중지";
 			}else if(s=="terminate"){
 				result="해지";
+			}else if(s=="expire"){
+				result="만료";
 			}
 			return result;
 		}
@@ -245,7 +247,7 @@ function is_jong(str)
 		<div class="container-fluid">
 
     <div class='row'>
-<?php echo form_open('/prq/store/lists/prq_store/', array('id'=>'bd_search', 'class'=>'well form-search'));?>
+<?php echo form_open('/store/lists/prq_ata_pay/', array('id'=>'bd_search', 'class'=>'well form-search'));?>
 <!--form id="bd_search" method="post" class="well form-search" -->
 
 <input type="hidden" name="page" id="page" value="<?php echo $this->uri->segment(5);?>">
@@ -322,7 +324,8 @@ function is_jong(str)
 				'id' => 'write_action',
 				'name' => 'write_action'
 			);
-			echo form_open('board/write/ci_board', $attributes);
+
+			echo form_open('//write/ci_board', $attributes);
 		?>
 	<div class='col-sm-12'>
 
@@ -337,7 +340,7 @@ function get_status3($s)
 	$status[]=array('status'=>'success','name'=>"정상");
 	$status[]=array('status'=>'warning','name'=>"중지");
 	$status[]=array('status'=>'danger','name'=>"해지");
-	$status[]=array('status'=>'danger','name'=>"만료");
+	$status[]=array('status'=>'info','name'=>"만료");
 
 	if($s=="join"){
 		$result=$status[0];
@@ -356,11 +359,12 @@ function get_status3($s)
 	
 
 
+$join_cnt=$expire_cnt=$stop_cnt=$terminate_cnt=0;
 
 /* cookie에서 멤버 gcode 불러 오기 */
 foreach($group_cnt as $gc)
 {
-	${$gc['st_status']."_cnt"}=$gc['cnt'];
+	${$gc['ap_status']."_cnt"}=$gc['cnt'];
 
 }
 
@@ -368,9 +372,10 @@ $mb_gcode=$this->input->cookie('mb_gcode', TRUE);
 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('join');">정상 <?php echo $wa_cnt;?></button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지 <?php echo $pr_cnt;?></button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지 <?php echo $ac_cnt;?></button></div><!-- .btn_area -->
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('join');">정상 <?php echo $join_cnt;?></button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지 <?php echo $stop_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지 <?php echo $terminate_cnt;?></button>
+<button type="button" class="btn btn-sm btn-info">만료 <?php echo $expire_cnt;?></button></div><!-- .btn_area -->
 <?php }?>
 <div class="row"><div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">등록</a></div></div>
 <div class="table-responsive">
@@ -440,9 +445,11 @@ $ap_autobill_YN=$lt->ap_autobill_YN=="Y"?"정기결재":"일시결재";
 $ap_status=get_status3($lt->ap_status);
 $ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 $ap_reserve=$lt->ap_reserve=="0"?"즉시발송":$lt->ap_reserve."분";
+/*
 echo '<pre>';
 print_r($lt);
 echo '</pre>';
+*/
 ?>
 	<tr>
 		<td scope="col">
@@ -479,9 +486,10 @@ echo "<tr><td colspan=9 style='text-align:center'>알림톡 입금 리스트가 
 <?php 
 if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <div class="btn_area">
-<button type="button" class="btn btn-sm btn-success" onclick="chg_list('join');">정상 <?php echo $wa_cnt;?></button>
-<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지 <?php echo $pr_cnt;?></button>
-<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지 <?php echo $ac_cnt;?></button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('join');">정상 <?php echo $join_cnt;?></button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지 <?php echo $stop_cnt;?></button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지 <?php echo $terminate_cnt;?></button>
+<button type="button" class="btn btn-sm btn-info">만료 <?php echo $expire_cnt;?></button>
 </div><!-- .btn_area -->
 <?php }?>
 </div>

@@ -143,6 +143,18 @@ if (!function_exists('get_status')) {
 		$array['delete']=array('key'=>'danger','value'=>'삭제');
 		$array['modify']=array('key'=>'warning','value'=>'수정');
 		
+		/* ocid */
+		$array[0]=array('key'=>'default','value'=>'미발신');
+		$array[1]=array('key'=>'success','value'=>'발신');
+		$array[2]=array('key'=>'warning','value'=>'일반번호');
+		$array[3]=array('key'=>'danger','value'=>'수신거부');
+		$array[4]=array('key'=>'info','value'=>'150건초과');
+		$array[5]=array('key'=>'warning','value'=>'업소누락');
+		$array[6]=array('key'=>'free','value'=>'정보부족');
+		$array[7]=array('key'=>'danger','value'=>'해지');
+		$array[31]=array('key'=>'default','value'=>'대기');
+		$array[32]=array('key'=>'warning','value'=>'설치실패');
+		$array[33]=array('key'=>'danger','value'=>'해지');
 
 		/* get_status_blog */
 		$array['view']=array('key'=>'default','value'=>'포스팅');

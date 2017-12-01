@@ -421,7 +421,7 @@ foreach ($list as $lt)
 <td scope="row"><?php echo $lt->cd_port;?></td>
 <td scope="row"><?php echo phone_format($lt->cd_callerid);?></td>
 <!--<td scope="row"><?php echo $lt->cd_calledid;?></td> -->
-<td scope="row"><?php echo get_state($lt->cd_state);?></td>
+<td scope="row"><?php echo get_status($lt->cd_state);?></td>
 <td scope="row"><?php echo $lt->cd_name;?></td>
 <td scope="row"><?php echo phone_format($lt->cd_tel);?></td>
 <td scope="row"><?php echo phone_format($lt->cd_hp);?></td>

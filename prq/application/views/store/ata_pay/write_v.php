@@ -15,9 +15,9 @@
 $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action',
-'onsubmit'=>'javascript:set_data();'
+'onsubmit'=>'return set_atapay();'
 );
-echo form_open('/store/write/prq_ata_pay/', $attributes);
+echo form_open('/store/write/prq_ata_pay', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $mb_code=$this->input->post('mb_code',TRUE);
 $prq_fcode=$this->input->cookie('prq_fcode',TRUE);
@@ -175,7 +175,7 @@ echo $prq_fcode;
 
 <div class="form-group">
 <div class="col-sm-4 col-sm-offset-2">
-<button class="btn btn-primary" type="button" onclick="set_atapay()">저장</button>
+<button class="btn btn-primary" type="submit">저장</button>
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성</button> -->
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <button class="btn btn-white" type="reset">취소</button>
@@ -211,6 +211,8 @@ var vali_names= [
     ];
 
 function set_atapay(){
+
+
 var param=$("#write_action").serialize();
 //param=param.replace(/&/gi, "\n&");
 
@@ -223,7 +225,7 @@ if($("[name="+vali_names[i].name+"]").val()=="")
 	$("[name="+vali_names[i].name+"]").focus();
 	$("[name="+vali_names[i].name+"]").parent().parent().addClass("has-error");
 	toastr.error("\""+vali_names[i].hname+"\"이(가) 없습니다.");
-	return;
+	return false;
 }
 else if($("[name="+vali_names[i].name+"]").val().length>=2)
 {
@@ -232,30 +234,17 @@ else if($("[name="+vali_names[i].name+"]").val().length>=2)
 }
 
 }/* for(var i in vali_names){...} */
-
-$.ajax({
-url:"/prq/store/write/prq_ata_pay",
-type: "POST",
-data:param,
-dataType:"json",
-success: function(data) {
-	if(data.success){
-		swal("작성완료","작성완료 되었습니다.","success");
-		/* */
-		setTimeout(function(){
-			console.log('setTimeout');
-			//$(location).attr('href', "/prq/appjoin/pview/modu_agreement/board_id/"+data.last_id+"/page/1");
-		},5000);
-		
-	}else if(data.success==false){
-		swal("작성실패","작성에 실패 했습니다.","error");
-	}else{
-		swal("오류","알수 없는 오류가 있습니다..","error");
-	}
-
-}	
-});
+return true;
 }
+
+/********************************************************************************
+*
+*
+*
+*
+*
+*
+********************************************************************************/
 function set_ds(){
 var param=$("#write_action").serialize();
 param=param.replace(/&/gi, "\n&");

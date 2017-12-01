@@ -383,7 +383,7 @@ echo "<pre>";
 	print_r($lt);
 echo "</pre>";
 */
-$code=$controllers->logs_m->get_mmt_id($lt->at_mmt_no,$lt->at_datetime);
+//$code=$controllers->logs_m->get_mmt_id($lt->at_mmt_no,$lt->at_datetime);
 
 $result_code=isset($lt->at_result)?$lt->at_result:"0000";
 $result_code=$controllers->logs_m->getAtaCode($lt->at_result);
