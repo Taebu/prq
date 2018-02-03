@@ -317,15 +317,21 @@ echo $bl_content3;?><!-- #form_data -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 <div style="text-align:center;margin-top:30px;">
-	<ul style="margin:0;padding:0;list-style:none;color:#fff;font-weight:bold;font-size:15px;">
-		<li style="float:left;width:48%;background:#676a6c;border-radius:25px;padding:10px;cursor:pointer" onclick="javascript:set_point('ceo_deny');">
-			사 장 거 절
+	<ul style="margin:0;padding:0;list-style:none;color:#fff;font-weight:100;font-size:15px;">
+		<li class="col-lg-4" style="padding:5px;">
+			<div style="background:#0a285a;border-radius:5px;padding:10px;cursor:pointer" onclick="javascript:set_point('ceo_deny');">
+				사 장 거 절
+			</div>
 		</li>
-		<li style="float:right;width:48%;background:#34c5ed;border-radius:25px;padding:10px;cursor:pointer" onclick="javascript:set_point('ceo_allow');">
+		<li class="col-lg-4" style="padding:5px">
+			<div style="background:#2d5baa;border-radius:5px;padding:10px;cursor:pointer" onclick="javascript:set_point('ceo_allow');">
 			사 장 승 인
+			</div>
 		</li>
-		<li style="float:left;width:100%;background:#ff0000;border-radius:25px;padding:10px;cursor:pointer;margin-top:10px" onclick="javascript:location.href='/prq/blog/modify/<?php echo $this->uri->segment(3);?>';">
+		<li class="col-lg-4" style="padding:5px">
+			<div style="background:#89bbe4;border-radius:5px;cursor:pointer;padding:10px;" onclick="javascript:location.href='/prq/blog/modify/<?php echo $this->uri->segment(3);?>';">
 			수 정 하 기
+			</div>
 		</li>
 		<li style="clear:both;"></li>
 	</ul>

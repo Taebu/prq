@@ -226,6 +226,16 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                             <?php echo $this->uri->segment(3)=="modu_agreement"?'<li class="active">':'<li>';?><a href="/prq/appjoin/lists/modu_agreement">모두톡톡 계약서</a></li>
 							</ul>
                     </li>
+	<?php 
+	$is_menu12=$this->uri->segment(1)=="biztalk"||$this->uri->segment(1)=="template";
+	echo $is_menu12?'<li class="active">':'<li>';?>
+	<a href="#"><i class="fa fa-files-o"></i><span class="nav-label">biztalk </span><span class="fa arrow"></span></a>
+	<ul class="nav nav-second-level collapse">
+	<?php echo $this->uri->segment(3)=="plusfriend"?'<li class="active">':'<li>';?><a href="/prq/biztalk/lists/plusfriend">플러스친구 <span class="label label-primary pull-right">NEW</span></a></li>
+	<?php echo $this->uri->segment(3)=="template"?'<li class="active">':'<li>';?><a href="/prq/template/lists/template">템플릿관리</a></li>
+	</ul>
+	</li>
+				
 				</ul>
             </div>
         </nav>

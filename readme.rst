@@ -4,9 +4,21 @@ PRQ는 무엇인가?
 
 PRQ는 각 핸드폰 단말기의 무료 MMS를 이용 원하는 서비스를 할 수 있도록 서비스 합니다. 
 
+2017-12-05 (화) 11:24:59 
+비즈톡 설치 위치 ata 
+Starting atasvc
+[prq@.21]$ ./atasvc status
+The daemon is running.
+[prq@.21]$ pwd
+/home/biztalk/ATA
+[prq@.21]$
+
+
 2016-05-13 (금)
 SKB 0506 번호 세팅 [ 테스트 완료 - 구동 시작 ]
 2016-05-16 (월) 실적용
+
+
 *******************
 Release Information
 *******************

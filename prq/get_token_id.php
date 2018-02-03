@@ -18,7 +18,7 @@ function get_token_id_app($cell)
 
 	$row=mysql_fetch_assoc(mysql_query($sql));
 	/* 중복된 아이디 지우기 2016-05-09 (월) 부터 일주일간*/
-	$row['token_id']="null";
+	//$row['token_id']="null";
 	return $row['token_id'];
 }
 

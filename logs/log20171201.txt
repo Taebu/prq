@@ -1,0 +1,26 @@
+Dec 01, 2017 4:51:53 PM kr.co.prq.prq_cdr.PRQ_CDR main
+INFO: PRQ_CDR program started!
+Dec 01, 2017 4:51:53 PM kr.co.prq.prq_cdr.DBConn dbConCheck
+WARNING: null
+Dec 01, 2017 4:51:53 PM kr.co.prq.prq_cdr.DBConn dbConCheck
+WARNING: java.lang.NullPointerException
+	at kr.co.prq.prq_cdr.Env.loadEnvFile(Env.java:141)
+	at kr.co.prq.prq_cdr.Env.getInstance(Env.java:72)
+	at kr.co.prq.prq_cdr.DBConn.dbConCheck(DBConn.java:38)
+	at kr.co.prq.prq_cdr.DBConn.getConnection(DBConn.java:91)
+	at kr.co.prq.prq_cdr.Prq_cmd_queue.doMainProcess(Prq_cmd_queue.java:38)
+	at kr.co.prq.prq_cdr.PRQ_CDR.doWork(PRQ_CDR.java:238)
+	at kr.co.prq.prq_cdr.PRQ_CDR.doMainProcess(PRQ_CDR.java:78)
+	at kr.co.prq.prq_cdr.PRQ_CDR.main(PRQ_CDR.java:39)
+
+Dec 01, 2017 4:51:53 PM kr.co.prq.prq_cdr.PRQ_CDR main
+WARNING: ErrPOS015
+Dec 01, 2017 4:51:53 PM kr.co.prq.prq_cdr.PRQ_CDR main
+WARNING: java.lang.RuntimeException: ErrPOS015
+	at kr.co.prq.prq_cdr.DBConn.dbConCheck(DBConn.java:72)
+	at kr.co.prq.prq_cdr.DBConn.getConnection(DBConn.java:91)
+	at kr.co.prq.prq_cdr.Prq_cmd_queue.doMainProcess(Prq_cmd_queue.java:38)
+	at kr.co.prq.prq_cdr.PRQ_CDR.doWork(PRQ_CDR.java:238)
+	at kr.co.prq.prq_cdr.PRQ_CDR.doMainProcess(PRQ_CDR.java:78)
+	at kr.co.prq.prq_cdr.PRQ_CDR.main(PRQ_CDR.java:39)
+

@@ -39,10 +39,13 @@ $gcm = new GCM();
 PRQ_CDR.src.kr.co.prq.prq_cdr.PRQ_CDR.class */
 if($mode=="crontab")
 {
+/*
 $is_happycall=false;
+
 if($happycall==true){
 $is_happycall=$happycall;
 }
+*/
 $messages = array( 
 	"title" =>$title,
 	"message" =>$message,

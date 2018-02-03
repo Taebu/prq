@@ -96,8 +96,6 @@ echo "<th>매장전화</th>";
 echo "<th>발송일(키)</th>";
 echo "<th>매장번호</th>";
 echo "<th>매장이름</th>";
-echo "<th>query</th>";
-echo "<th>전송여부</th>";
 echo "</tr>";
 
 /*****************************************************
@@ -106,7 +104,7 @@ echo "</tr>";
 * $list=array(); 리스트 초기화 시
 * print_r($list); 리스트 내용 조회시
 *****************************************************/
-
+$at_success="";
 if(count($list)==0){
 	echo '<tr><td scope="row" colspan="12" style="text-align:center"> 조회한 `알림톡 전송대기`목록이 없습니다.</td></tr>';
 }
@@ -125,6 +123,9 @@ foreach($list as $li)
 	$at_status=$controller->crontab_m->get_mmt_id($li->at_mmt_no,$li->at_datetime);
 	$mt_report_code_ib=isset($at_status[0]->mt_report_code_ib)?$at_status[0]->mt_report_code_ib:"";
 	echo "</td><td>";
+	echo "mt_report_code_ib : ".$mt_report_code_ib;
+
+
 	if($mt_report_code_ib=="1000"&&$mt_report_code_ib!="")
 	{
 		$at_success="Y";
@@ -133,6 +134,7 @@ foreach($list as $li)
 		$at_success="N";
 		echo "전송실패";
 	}else{
+
 		echo "전송대기";
 	}
 //	echo $li->at_no;

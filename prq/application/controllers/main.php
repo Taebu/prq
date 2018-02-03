@@ -8,10 +8,10 @@ class Main extends CI_Controller
 	
 	function __construct()
 	{
-		# code...
+		//# code...
 		parent::__construct();
 		$this->load->database();
-//		$this->load->model('todo_m');
+		$this->load->model('todo_m');
 		$this->load->helper(array('url','date'));
 
 	}
@@ -36,7 +36,7 @@ class Main extends CI_Controller
 	*/
 	public function view()
 	{
-		# code...
+		//# code...
 		//todo 번호에 해당하는 데이터 가져오기
 		$id = $this->uri->segment(3);
 		$data['views']=$this->todo_m->get_view($id);
@@ -76,16 +76,13 @@ class Main extends CI_Controller
  	*/
 	function delete()
  	{
- 		# code...
+ 		//# code...
  		$id= $this->uri->segment(3);
  		$this->todo_m->delete_todo($id);
  		redirect('/main/lists/');
  	}
 	
-	function error_404()
-	{
-	 		$this->load->view('errors/error_404');
-	}
+
 
 }
 /* End of file main.php*/

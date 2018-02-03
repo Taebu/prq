@@ -48,6 +48,11 @@
 				
 				return false;
 			  });  
+
+				$('.contents').click(function(){
+					$(this).toggleClass('ellip');
+				});
+		// 출처: http://findfun.tistory.com/264 [즐거움을 찾자 Find Fun!!]
 		});
 		
 		/*cid를 검색합니다.*/
@@ -237,7 +242,12 @@
 			object['ca']='해지';
 			return object[code];
 		}
+
+
 	</script>
+<style>
+.ellip{float:left;max-width:398px;height:30px;overflow:hidden;white-space:nowrap;font-weight:normal;text-overflow:ellipsis;cursor:pointer;margin-top:-1;}
+</style>
 	<article id="board_area">
 		<header>
 			<h1></h1>
@@ -386,11 +396,19 @@ echo "</pre>";
 //$code=$controllers->logs_m->get_mmt_id($lt->at_mmt_no,$lt->at_datetime);
 
 $result_code=isset($lt->at_result)?$lt->at_result:"0000";
-$result_code=$controllers->logs_m->getAtaCode($lt->at_result);
+if($lt->at_status=="2")
+{
+	$result_code="ATA 전송 대기";
+}else if($lt->at_status=="3")
+{
+	$result_code="ATA 전송 결과 : ".$controllers->logs_m->getAtaCode($lt->at_result);
+}else{
+	$result_code=$controllers->logs_m->getAtaCode($lt->at_result);
+}
 ?>
 				<tr>
 					<td scope="row"><?php echo $lt->at_no;?></td>
-					<td scope="row"><?php echo $lt->at_subject;?><br><?php echo nl2br($lt->at_content);?></td>
+					<td scope="row" class='contents ellip'><?php echo $lt->at_subject;?><br><?php echo nl2br($lt->at_content);?></td>
 					<td scope="row"><?php echo phone_format($lt->at_receiver);?></td>
 					<td scope="row"><?php echo phone_format($lt->at_sender);?></td>
 					<td scope="row"><?php echo $lt->at_result;?></td>

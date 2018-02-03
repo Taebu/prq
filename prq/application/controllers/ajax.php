@@ -595,11 +595,13 @@ class Ajax extends CI_Controller {
 		calledid=01020135535&
 		comname=COM3
 		*/
+		
 		$UserID= $this->input->post("userid", TRUE);
 		$port= $this->input->post("port", TRUE);
 		$callerid= $this->input->post("callerid", TRUE);
 		$calledid = $this->input->post("calledid", TRUE);
 		$comname = $this->input->post("comname", TRUE);
+		
 
 		$write_data = array(
 			'UserID'=>$UserID,

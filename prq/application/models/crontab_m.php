@@ -785,8 +785,8 @@ class Crontab_m extends CI_Model
 	{
 		$datecode=date("Ym",strtotime($datetime));
 		$sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_log_".$datecode." WHERE mt_pr='".$no."';";
-		$query = $this->db->query($sql);
-
+		$query = $this->db->query($sql) or die("test");
+		
 		//댓글 리스트 반환
 		$result = $query->result();
 		$count = $query->num_rows();

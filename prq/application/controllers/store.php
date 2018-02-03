@@ -176,7 +176,7 @@ class Store extends CI_Controller {
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('store/tlist_v', $data);
 		}else if($this->uri->segment(3)=="prq_ata_pay"){
-			echo "prq_ata_pay";
+			//echo "prq_ata_pay";
 			$this->load->view('store/ata_pay/list_v', $data);
 		}else{
 			$this->load->view('store/list_v', $data);

@@ -258,39 +258,45 @@ echo "<img src='".$img_url."'>\n\n";
 };?>
 
 
-<span style="font-size:25pt">
+<br><br><span style="font-size:11pt">
 <?php echo $views->bl_content1;?>
 <?php echo $views->bl_content2;?>
 <?php echo $views->bl_content3;?>
 
 
 
-고객님이 작성한 리뷰입니다.
+<br><br><br>고객님이 작성한 리뷰입니다.
 
-'<?php echo $store->st_name;?>'에 대한 고객님의 점수는.(5/5점)
+<br><br>'<?php echo $store->st_name;?>'에 대한 고객님의 점수는.(5/5점)
 
-<img src='http://prq.co.kr/prq/uploads/blog/star_five.png'>
+<br><br><img src='http://prq.co.kr/prq/uploads/blog/star_five.png'>
 
-.....	지도 등록...
+<br><br>.....	지도 등록...
 
-매장 홈페이지 주소 : 
+<br><br>매장 홈페이지 주소 : 
 <a href='http://prq.co.kr/prq/page/<?php echo $store->st_no;?>'>http://prq.co.kr/prq/page/<?php echo $store->st_no;?></a>
 
-<?php
+<br><br><?php
 if($store->st_alltime=="on"){
 echo "배달시간 : 24시간\n";
 }else{?>
-배달시간 :  <?php echo $store->st_open;?> ~ <?php echo $store->st_closed;?>
+<br><br>배달시간 :  <?php echo $store->st_open;?> ~ <?php echo $store->st_closed;?>
 <?php }?>
-배달지역 : <?php echo $store->st_destination;?>
+<br>배달지역 : <?php echo $store->st_destination;?>
 
-적립되는 전화 번호 : <?php echo $store->st_vtel;?>
+<br>적립되는 전화 번호 : <?php echo $store->st_vtel;?>
 
-일반번호 : <?php echo $store->st_tel;?>
+<br>일반번호 : <?php echo $store->st_tel;?><br><br>
 </span>
 <a href="tel:1599-7571">
 <img src='http://prq.co.kr/prq/uploads/blog/talktalk_review.jpg'>
 </a>
+
+<br>
+<a href="market://details?id=com.anp.bdmt">
+<img src='http://prq.co.kr/prq/uploads/blog/bdtalkApp.png'>
+</a>
+
 </center>
 </textarea>
 </div><!-- .naver_blogapi -->
@@ -310,7 +316,7 @@ echo "배달시간 : 24시간\n";
 <div class="form-group">
 <!-- <div class="col-sm-10 col-sm-offset-2"> -->
 
-<div class="col-sm-12">
+<!-- <div class="col-sm-12">
 <button type="button" class="btn btn-info btn-block" onclick="set_ds();set_member()" id="write_btn">리뷰 수정하기</button>
 <button type="button" class="btn btn-primary btn-block" onclick="javascript:set_status('ceo_allow');">사장 승인</button>
 <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_status('ceo_deny');">사장 거부</button>
@@ -321,8 +327,36 @@ echo "배달시간 : 24시간\n";
 <div class="naver_blogapi" style='display:none'>
  <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_blog();">블로그 등록</button>
   <button type="button" class="btn btn-danger btn-block" onclick="javascript:set_category();">카테고리  갱신</button>
-</div><!-- #naver_blogapi -->
-
+</div> --><!-- #naver_blogapi -->
+<!-- ================================================================== -->
+<div class="col-sm-12">
+	<div style="padding:5px;border:0px solid red;">
+	<button type="button" class="btn btn-info btn-block" style="background:#89bbe4;border:1px solid #89bbe4;border-radius:0;" onclick="set_ds();set_member()" id="write_btn">리뷰 수정하기</button>
+	</div>
+	<ul style="padding:0;margin:0;list-style:none;">
+		<li style="padding:0 5px 0 5px;" class="col-xs-12 col-lg-4">
+			<button type="button" class="btn btn-primary col-xs-12 col-lg-6" style="border-radius:0;padding:12px 0;background:#2d5baa;border:1px solid #2d5baa;" onclick="javascript:set_status('ceo_allow');">사장 승인</button>
+			<button type="button" class="btn btn-danger col-xs-12 col-lg-6" style="border-radius:0;padding:12px 0;background:#0a285a;border:1px solid #0a285a;" onclick="javascript:set_status('ceo_deny');">사장 거부</button>
+		</li>
+		<li style="padding:0 5px 0 5px;" class="col-xs-12 col-lg-4">
+			<button type="button" class="btn btn-primary col-xs-12 col-lg-6" style="border-radius:0;padding:12px 0;background:#2d5baa;border:1px solid #2d5baa;" onclick="javascript:set_status('co_blog_allow');">일반 승인</button>
+			<button type="button" class="btn btn-danger col-xs-12 col-lg-6" style="border-radius:0;padding:12px 0;background:#0a285a;border:1px solid #0a285a;" onclick="javascript:set_status('co_blog_deny');">일반 거부</button>
+		</li>
+		<li style="padding:0 5px 0 5px;" class="col-xs-12 col-lg-4">
+			<button type="button" class="btn btn-primary col-xs-12 col-lg-6" style="border-radius:0;padding:12px 0;background:#2d5baa;border:1px solid #2d5baa;" onclick="javascript:set_status('po_blog_allow');">배달 포인트 승인</button>
+			<button type="button" class="btn btn-danger col-xs-12 col-lg-6" style="border-radius:0;padding:12px 0;background:#0a285a;border:1px solid #0a285a;" onclick="javascript:set_status('po_blog_deny');">배달 포인트 거부</button>
+		</li>
+	</ul>
+	<ul style="padding:0;margin:0;list-style:none;">
+		
+		<li>
+			
+		</li>
+		<li>
+			
+		</li>
+	</ul>
+</div>
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <!-- <button class="btn btn-white" type="reset">취소</button> -->
 <!-- <button class="btn btn-primary" type="button" onclick="set_ds()">파람...</button> -->

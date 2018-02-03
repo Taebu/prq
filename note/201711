@@ -16,3 +16,18 @@ msg_status	3	ATA결과
 김윤호
 02-2186-4887
 175.126.111.21
+
+;
+setTimeout(function() {
+document.querySelector(".close-padding").click();
+console.log("3초 뒤 배너 삭제");
+}, 3000); 
+
+
+while(true){
+if(!document.querySelectorAll(".video-ad-status-bar")[0].hidden){
+
+}else{
+	break;
+}
+}
