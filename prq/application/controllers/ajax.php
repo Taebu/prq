@@ -103,6 +103,58 @@ class Ajax extends CI_Controller {
 			echo "9000"; //로그인 필요 에러
 		}
 	}
+	
+	/**
+	* 함수이름 : chg_status_template()
+	* 기능 : 템플릿 상태 변경과 변경 사유 로그를 남긴다.
+	* 입력 : 로그인 상태일때 bt_template.bt_no, 변경사유, 변경
+	* 출력 : 비로그인시 9000, 로그인시 입력 결과 json 형태 
+	*/
+	public function chg_status_template()
+	{
+		if(@$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
+		{
+
+			
+			$table=$this->uri->segment(3);
+			$mb_status = $this->input->post("mb_status", TRUE);
+			$mb_id = $this->input->cookie('name', TRUE);
+			$mb_reason = $this->input->post("mb_reason", TRUE);
+			$chk_seq = $this->input->post("chk_seq", TRUE);
+			$join_chk_seq=join(",",$chk_seq);
+			$st_no = $this->input->post("st_no", TRUE);
+			/*
+			$array['prq_table']="bt_template"
+			$array['mb_status']
+			$array['mb_id'];
+			$array['mb_reason']
+			$array['join_chk_seq']
+			$array['pv_no']
+			*/
+			$write_data = array(
+				'prq_table'=>$table,
+				'mb_status'=>$mb_status,
+				'mb_id'=>$mb_id,
+				'mb_reason'=>$mb_reason,
+				'join_chk_seq' => $join_chk_seq,
+				'pv_no'=>$st_no,
+			);
+
+			$result = $this->ajax_m->chg_status_template($write_data);
+			/* json {"success":boolean} */
+			echo $result;
+			
+//			else
+//			{
+//				//글 내용이 없을 경우
+//				echo "1000";
+//			}
+		}
+		else
+		{
+			echo "9000"; //로그인 필요 에러
+		}
+	}
 
 	public function chg_status_naver()
 	{

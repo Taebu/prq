@@ -432,6 +432,66 @@ class Ajax_m extends CI_Model
 		}
 	}
 
+	/*******************************
+	* 함수이름 : chg_status_template
+	* 기   능 : bt_template 상태를 변경하고 변경 로그를 남긴다. 
+	* 입   력 : $array();
+	* 출   력 : json_encode($json['success']=true);
+	*******************************/
+	function chg_status_template($array)
+	{
+		$json=array();
+		$sql=array();
+		$json['success']=false;
+		/* 1. bt_template 상태를 변경 한다.*/
+		if($array['prq_table']=="bt_template")
+		{
+			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]=" bt_status='".$array['mb_status']."' ";
+			$sql[]="WHERE ";
+			$sql[]="bt_no in (".$array['join_chk_seq'].");";
+			$join_sql=join("",$sql);
+
+			$query = $this->prq->query($join_sql);
+			$json['success']=$query;
+		}
+		
+		$json['posts']=array();
+		/* 2. 선택한 갯수만큼 , 로 나눈다. */
+		$arr_no= explode (",", $array['join_chk_seq']);
+		$ip_addr= $this->input->ip_address();
+		$referrer=$this->agent->referrer();
+		$lo_reason=$array['mb_reason'];
+		$mb_id=$array['mb_id'];
+		/* 블로그 상태 변경시 */
+		/* 3. 선택한 갯수만큼 반복 한다. 상태를 변경 한다.*/
+		foreach($arr_no as $an)
+		{
+			$items=array();
+			$items['mb_no']=$an;
+			/* 3-1. 로그 메시지를 작성한다. */
+			$sql=array();
+			$sql[]="INSERT INTO `prq_log` SET ";
+			$sql[]=" mb_id='".$array['pv_no']."', ";
+			$sql[]=" lo_ip='".$ip_addr."', ";
+			$sql[]=" mb_no='".$an."', ";
+			$sql[]=" prq_table='".$array['prq_table']."', ";
+			$sql[]=" lo_how='ajax', ";
+			$sql[]=" lo_reason='".$lo_reason."', ";
+			$sql[]=" lo_status='".$array['mb_status']."', ";
+			$sql[]=" lo_datetime=now(); ";
+			$join_sql=join("",$sql);
+			/* 3-2. 로그를 디비에 기록한다. */
+			$query = $this->prq->query($join_sql);
+		}
+		/* 3-3. 반복이 끝난다. */
+
+		/* 2018-02-07 (수) 17:42:39 
+		* json으로 해당 메시지 성공 여부를 기록한다. 
+		* 4.json 메시지를 리턴한다. */
+		return json_encode($json);
+	}
+
 	/**/
 	function chg_status_code($array)
 	{

@@ -167,7 +167,9 @@ if (!function_exists('get_status')) {
 		$array['co_blog_deny']=array('key'=>'danger','value'=>'일반 거부');
 		$array['po_blog_allow']=array('key'=>'success','value'=>'포인트 승인');
 		$array['po_blog_deny']=array('key'=>'danger','value'=>'포인트 거부');
-
+		
+		/*비즈톡으로 추가 2018-02-07 (수) 18:05:14  */
+		$array['access']=array('key'=>'success','value'=>'정상');
 		$result=$array[$k];
 		$result=sprintf("<button class='btn btn-xs btn-%s'>%s</button>",$result['key'],$result['value']);
 		return $result;

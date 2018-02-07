@@ -122,17 +122,17 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 					<?php 
 					if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"){
 					echo $this->uri->segment(3)=="prq_dscode"?'<li class="active">':'<li>';
-					?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록<span class="label label-primary pull-right">NEW</span></a></li>
+					?><a href="/prq/codes/lists/prq_dscode/page/1">총판 코드 목록</a></li>
                     <?php 
 					 }/* 관리자 총판 구룹만 관리 하는 메뉴G1,G2 */
 					
 					echo $this->uri->segment(3)=="prq_ptcode"?'<li class="active">':'<li>';
-					?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+					?><a href="/prq/codes/write/prq_ptcode/page/1">대리점 코드</a></li>
                            <?php if($this->uri->segment(3)=="prq_frcode"){
 					echo '<li class="active">';
 					 }else{
 					echo '<li>';
-					 }?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드<span class="label label-primary pull-right">NEW</span></a></li>
+					 }?><a href="/prq/codes/write/prq_frcode/page/1">가맹점 코드</a></li>
                         </ul>
                     </li>
 					<?php 
@@ -140,7 +140,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 					 ?>
                         <a href="index.html"><i class="fa fa-diamond"></i> <span class="nav-label">총판 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/distributors/lists/prq_member/page/1">총판 목록</a></li>
                         </ul>
                     </li>
 					<?php 
@@ -158,7 +158,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 					 ?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 </a></li>
                         </ul>
                     </li>
 					<?php 
@@ -168,7 +168,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 						<i class="fa fa-pie-chart"></i><span class="nav-label">상점</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <?php echo $this->uri->segment(3)=="prq_store"?'<li class="active">':'<li>';?><a href="/prq/store/lists/prq_store/page/1">상점 목록</a></li>
-                            <?php echo $this->uri->segment(3)=="prq_ata_pay"?'<li class="active">':'<li>';?><a href="/prq/store/lists/prq_ata_pay/page/1">알림톡 입금 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="prq_ata_pay"?'<li class="active">':'<li>';?><a href="/prq/store/lists/prq_ata_pay/page/1">알림톡 입금 목록 </a></li>
                         </ul>
                     </li>
 					<?php 
@@ -211,11 +211,11 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
                             <?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
 							<?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
                             <?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
-                            <?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA</a></li>
                             <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST<span class="label label-danger pull-right">사용안함</span></a></li>
                             <?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
                             <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-danger pull-right">사용안함</span></a></li>
-                            <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST<span class="label label-warning pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST</a></li>
 						</ul>
                     </li>
 					<?php echo $this->uri->segment(1)=="appjoin"?'<li class="active">':'<li>';?>
@@ -229,10 +229,12 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 	<?php 
 	$is_menu12=$this->uri->segment(1)=="biztalk"||$this->uri->segment(1)=="template";
 	echo $is_menu12?'<li class="active">':'<li>';?>
-	<a href="#"><i class="fa fa-files-o"></i><span class="nav-label">biztalk </span><span class="fa arrow"></span></a>
+	<a href="#"><i class="fa fa-bold"></i><span class="nav-label">biztalk </span><span class="fa arrow"></span></a>
 	<ul class="nav nav-second-level collapse">
 	<?php echo $this->uri->segment(3)=="plusfriend"?'<li class="active">':'<li>';?><a href="/prq/biztalk/lists/plusfriend">플러스친구 <span class="label label-primary pull-right">NEW</span></a></li>
-	<?php echo $this->uri->segment(3)=="template"?'<li class="active">':'<li>';?><a href="/prq/template/lists/template">템플릿관리</a></li>
+	<?php 
+	$is_match=$this->uri->segment(3)=="bt_template"||$this->uri->segment(3)=="template";
+	echo $is_match?'<li class="active">':'<li>';?><a href="/prq/template/lists/template">템플릿관리 <span class="label label-primary pull-right">NEW</span></a></li>
 	</ul>
 	</li>
 				

@@ -36,7 +36,8 @@
 		
 		}
 
-		function chg_list(code){
+		function chg_list(code)
+		{
 			var param=$("#write_action").serialize();
 
 			if(param=="")
@@ -53,8 +54,6 @@
 		
 
 		function swal_status(code){
-
-			
 			swal({
 				title: "정말 변경 하시겠습니까?",
 				text: "해당 리스트를 \""+get_status(code)+"\"(으)로 변경 됩니다.<br> 진행 하시겠습니까?<br>변경 사유를 작성해 주세요.",
@@ -100,48 +99,7 @@
 						}
 					}
 				});
-
-//				swal("Nice!", "You wrote: " + inputValue, "success"); 
-				});
-			/*
-			
-			
-			*/
-			/*
-			swal({
-				title: "정말 변경 하시겠습니까?",
-				text: "해당 "+get_status(code)+"로 변경 됩니다.\n 진행 하시겠습니까?\n변경 사유",
-				type: "warning",
-				html:true,
-				showCancelButton: true,
-				timer: 2000,
-				showConfirmButton: false,
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "네, 변경할래요!",
-				closeOnConfirm: false
-			}, function () {
-
-				$.ajax({
-				url:"/prq/ajax/chg_status",
-					data:param,
-					dataType:"json",
-					type:"POST",
-					success:function(data){
-						if(data.success){
-							//alert("변경에 성공하였습니다.");
-							swal("변경!", "변경에 성공하였습니다..", "success");
-							$.each(data.posts,function(key,val){
-								$("#status_"+val.mb_no).html(val.mb_status);
-							});
-						}
-						if(!data.success){
-							//alert("변경에 실패하였습니다.");
-							swal("변경!", "변경에 실패하였습니다.", "warning");
-						}
-					}
-				});
-			});
-			*/
+			}); /* swal */
 		}
 
 		function chk_btn_status(){
@@ -287,7 +245,12 @@ echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
 		<table cellspacing="0" cellpadding="0" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col"><input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status();return false;"></th>
+					<th scope="col">
+			<div class="checkbox checkbox-primary">
+					<input type="checkbox" name="chk_all" onclick="checkAll('write_action');chk_btn_status();" id="chk_all"><label for="chk_all"></label>
+			</div>
+
+					</th>
 					<th scope="col">No</th>
 					<th scope="col">대리점 코드</th>
 					<th scope="col">대리점 아이디</th>
@@ -314,7 +277,11 @@ $st_cnt = array_column($st_count, 'cnt');
 
 foreach ($list as $lt){?>
 <tr>
-	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
+	<td scope="col">
+			<div class="checkbox checkbox-primary">
+			<input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()" id="chk_<?php echo $lt->mb_no;?>"><label for="chk_<?php echo $lt->mb_no;?>"></label>
+			</div>
+	</td>
 <!-- 	<td scope="col"><?php print_r($lt);?></td> -->
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td>	<a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td>
