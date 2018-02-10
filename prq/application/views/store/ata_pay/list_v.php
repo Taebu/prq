@@ -9,9 +9,6 @@
 * @Copyright (c) 2016, 태부
 */
 
-/* 싱크 상점 불러 오기 */
-$tt_no = array_column($sync_store, 'tt_no');
-$tt_no=array_unique($tt_no);
 
 ?>
 <style type="text/css">
@@ -24,8 +21,6 @@ table tr.green:nth-child(2n){
 </style>
 
 <script type="text/javascript">
-var tt_nos=[<?php echo join(",",$tt_no);?>];
-//console.log(tt_nos);
 
 		/* onload */
 		$(document).ready(function(){
@@ -42,11 +37,7 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 
 			/*버튼 비활성화.*/
 			chk_btn_status();
-			for(var i in tt_nos){
-				//console.log(tt_nos[i]);
-				$("#ttno_"+tt_nos[i]).html('<i class="fa fa-refresh  text-success"></i>');
-			}
-		});
+	});
 
 
 		function get_status(s)
@@ -379,65 +370,29 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 <?php }?>
 <div class="row"><div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">등록</a></div></div>
 <div class="table-responsive">
-<?php 
-		$mb_pcode=$this->input->cookie('mb_pcode', TRUE);
-		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
-		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-//echo $mb_pcode;echo $prq_fcode;echo $mb_gcode;
-		?>
-		<table cellspacing="0" cellpadding="0" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">
-					<div class="checkbox checkbox-primary">
-						<input type="checkbox" name="chk_all" id="chk_all" onclick="checkAll('write_action');chk_btn_status()">
-						<label for="chk_all"></label>
-					</div>
-					</th>
-					<th scope="col">시작일</th>
-					<th scope="col">자동출금일</th>
-					<th scope="col">상점명</th>
-					<th scope="col">충전금액</th>
-					<th scope="col">결재구분</th>
-					<th scope="col">월발송건</th>
-					<th scope="col">예약발송</th>
-					<th scope="col">상태</th>
-				</tr>
-			</thead>
-			<tbody>
+<table cellspacing="0" cellpadding="0" class="table table-striped">
+<thead>
+<tr>
+<th scope="col">
+<div class="checkbox checkbox-primary">
+	<input type="checkbox" name="chk_all" id="chk_all" onclick="checkAll('write_action');chk_btn_status()">
+	<label for="chk_all"></label>
+</div>
+</th>
+<th scope="col">시작일</th>
+<th scope="col">자동출금일</th>
+<th scope="col">상점명</th>
+<th scope="col">충전금액</th>
+<th scope="col">결재구분</th>
+<th scope="col">월발송건</th>
+<th scope="col">예약발송</th>
+<th scope="col">상태</th>
+</tr>
+</thead>
+<tbody>
 <?php
-//print_r($fr_names);
-//print_r($pt_names);
-
-/* 총팡 코드명 불러 오기 */
-$ds_code = array_column($ds_names, 'ds_code');
-$ds_name = array_column($ds_names, 'ds_name');
-
-/* 대리점 코드명 불러 오기 */
-$pt_code = array_column($pt_names, 'pt_code');
-$pt_name = array_column($pt_names, 'pt_name');
-
-
-//print_r($pt_code);
-//print_r($pt_name);
-
-
-$st_origin = json_decode(json_encode($st_origin), True);
-$pv_no = array_column($st_origin, 'pv_no');
-
-
 foreach ($list as $lt)
 {
-/*총판 코드 */
-$sub_dscode=substr($lt->prq_fcode,0,6);
-$index=array_search($sub_dscode, $ds_code);
-$sub_ds_name=$index>-1?$ds_name[$index]:"미등록코드";
-
-/*대리점 코드 */
-$sub_ptcode=substr($lt->prq_fcode,0,12);
-$index=array_search($sub_ptcode, $pt_code);
-$sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
-$index=array_search($lt->st_no, $pv_no);
 $billtm=strtotime($lt->ap_autobill_date);
 $st_dt=date("y-m-d",$billtm);
 $autobill_date=date("d",$billtm);
@@ -445,11 +400,7 @@ $ap_autobill_YN=$lt->ap_autobill_YN=="Y"?"정기결재":"일시결재";
 $ap_status=get_status3($lt->ap_status);
 $ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 $ap_reserve=$lt->ap_reserve=="0"?"즉시발송":$lt->ap_reserve."분";
-/*
-echo '<pre>';
-print_r($lt);
-echo '</pre>';
-*/
+
 ?>
 	<tr>
 		<td scope="col">
@@ -457,7 +408,7 @@ echo '</pre>';
 		</td>
  		<td><?php echo $st_dt;?></td>
  		<td><?php printf("매월 %s일 ",$autobill_date);?></td>
-		<td><?php echo $lt->st_name;?> </td>
+		<td><a rel="external" href="<?php printf("/prq/atapay/view/%s/board_id/%s/page/%s",$this->uri->segment(3),$lt->ap_no,$page);?>"><?php echo $lt->st_name;?></a></td>
 		<td><?php echo number_format($lt->ap_price)."원";?></td>
 <!-- 		<td><?php echo $lt->prq_fcode;?></td> -->
 		<td><?php echo $ap_autobill_YN;?></td>

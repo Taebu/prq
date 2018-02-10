@@ -824,17 +824,31 @@ class Template_m extends CI_Model
 	 * @param string $id 게시물번호
 	 * @return array
 	 */
+    function get_stores()
+    {
+    	//조회수 증가
+    	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
+   		//$this->prq->query($sql0);
+
+    	$sql = "SELECT * FROM `prq_store` ";
+   		$query = $this->prq->query($sql);
+
+     	//댓글 리스트 반환
+      return $query->result();
+    }
+
     function get_appids($arrays)
     {
     	//조회수 증가
     	//$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
    		//$this->prq->query($sql0);
 
-    	$sql = "SELECT * FROM bt_plusfriend ";
+    	$sql = "SELECT * FROM `bt_plusfriend` ";
    		$query = $this->prq->query($sql);
 
      	//댓글 리스트 반환
       return $query->result();
+
     }
 }
 

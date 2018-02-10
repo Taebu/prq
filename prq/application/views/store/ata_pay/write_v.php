@@ -190,9 +190,6 @@ echo $prq_fcode;
 </div><!-- .col-lg-12 -->
 </div><!-- .row -->
 
-</div><!-- .col-md-12 -->
-
-</div><!-- .col-md-12 Left Menu-->
 
 
 

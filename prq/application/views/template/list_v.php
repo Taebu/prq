@@ -284,9 +284,12 @@ echo '</tr>';
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지</button>
 <button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지</button>
 </div><!-- .btn_area -->
-<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination -->
-<div style="margin:20px;padding:30px"></div>
-</div>
+<div class="col-xs-12" style="text-align:center">
+<ul class="pagination pagination-lg" ><?php echo $pagination;?></ul><!-- .pagination -->
+</div><!-- .col-xs-12 -->
+<div style="margin:20px;padding:30px"></div><!-- m20 p30 -->
+</div><!-- 2 -->
+</div><!-- 3 -->
 <?php
 function get_blog_status($key){
 	$code['view']='포스팅';
@@ -398,8 +401,14 @@ function checkAll(formname){
 		}
 	}
 }
-
-function chk_btn_status(){
+/**************************
+* 함수이름 : chk_btn_status()
+* 기능설명 : 선택된 체크 박스를 감지해 하나 이상의 체크 박스시에만 버튼을 활성화 하고, 체크 된것이 없으면 비활성화 합니다.
+* 입   력 : 없음
+* 출   력 : 없음
+**************************/
+function chk_btn_status()
+{
 	var param=$("#write_action").serialize();
 	
 	if(param.indexOf("chk_seq")<0)

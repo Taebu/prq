@@ -227,7 +227,10 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 							</ul>
                     </li>
 	<?php 
-	$is_menu12=$this->uri->segment(1)=="biztalk"||$this->uri->segment(1)=="template";
+    $is_menu12=$this->uri->segment(1)=="biztalk";
+    $is_menu12=$is_menu12||$this->uri->segment(1)=="template";
+    $is_menu12=$is_menu12||$this->uri->segment(1)=="atapay";
+
 	echo $is_menu12?'<li class="active">':'<li>';?>
 	<a href="#"><i class="fa fa-bold"></i><span class="nav-label">biztalk </span><span class="fa arrow"></span></a>
 	<ul class="nav nav-second-level collapse">
@@ -235,6 +238,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 	<?php 
 	$is_match=$this->uri->segment(3)=="bt_template"||$this->uri->segment(3)=="template";
 	echo $is_match?'<li class="active">':'<li>';?><a href="/prq/template/lists/template">템플릿관리 <span class="label label-primary pull-right">NEW</span></a></li>
+    <?php echo $this->uri->segment(1)=="atapay"?'<li class="active">':'<li>';?><a href="/prq/atapay/lists/prq_ata_pay/page/1">알림톡결재 <span class="label label-primary pull-right">NEW</span></a></li>
 	</ul>
 	</li>
 				

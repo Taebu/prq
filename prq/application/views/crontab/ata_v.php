@@ -40,6 +40,12 @@ header("Content-Type:text/html;charset=utf-8");
 이 문서 실제 위치는 /prq/application/views/crontab/ata_v.php 에 위치 합니다. 
 [ 2017-11-24 (금) 17:33:37  ] prq_ata_log 추가
 
+[ 2018-02-09 (금) 17:33:37  ] 
+prq_ata_pay.bp_appid 추가 
+prq_ata_pay.bt_code 추가
+템플릿 코드를 불러와서 적용 되도록 할 것!!!
+
+
 crontab -e 에서
 <input type="checkbox" name="" id="" checked>구현] * * * * * /etc/set_mms.sh로 돌아가도록 설정 되어 있으며, 1분마다 구동 설정 되어 있습니다.
 <input type="checkbox" name="" id="">미구현] 그래서 curl -u http://prq.co.kr/prq/crontab/view 링크를 실행시 같이 구동 되도록 설정
@@ -109,8 +115,10 @@ if(count($list)==0){
 	echo '<tr><td scope="row" colspan="12" style="text-align:center"> 조회한 `알림톡 전송대기`목록이 없습니다.</td></tr>';
 }
 
+	echo "<pre>";
 foreach($list as $li)
 {
+	print_r($li);
 	$st_names="";
 	$st_names=isset($st_name[$li->st_no])?$st_name[$li->st_no]:"";
 	echo "<tr>";
