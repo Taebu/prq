@@ -1145,7 +1145,7 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 	}
 
 	/* js 파일을 만들어 서버 성능을 향상 시킵니다. 
-	http://prq.co.kr/prq/ajax/make_js
+	http://prq.co.kr/prq/ajax/make_store
 	*/
 	public function make_store()
 	{

@@ -198,80 +198,12 @@ class Template_m extends CI_Model
 	 */
 	function insert_blog($arrays)
  	{
-		$result=$this->input->post(null, TRUE);
-		$sql_array=array();
-		$sql_array[]="INSERT INTO prq_blog SET ";
-		$sql_array[]="st_no='".$arrays['st_no']."',";
-		$sql_array[]="st_name='".$arrays['st_name']."',";
-		$sql_array[]="bl_imgprefix='".$arrays['bl_imgprefix']."',";
-		$sql_array[]="bl_file='".$arrays['bl_file']."',";
-		$sql_array[]="bl_name='".$arrays['bl_name']."',";
-		$sql_array[]="bl_hp='".$arrays['bl_hp']."',";
-		$sql_array[]="bl_status='review',";
-		$sql_array[]="bl_content1='".$arrays['content1']."',";
-		$sql_array[]="bl_content2='".$arrays['content2']."',";
-		$sql_array[]="bl_content3='".$arrays['content3']."',";
-		$sql_array[]="bl_gifticon_type='".$arrays['bl_gifticon_type']."',";
-		$sql_array[]="bl_datetime=now();";
-		$sql=join("",$sql_array);
-		$result = $this->prq->query($sql);
-		$insert_id = $this->prq->insert_id();
-		//prq_store.st_hp_1;
-		$msg="블로그 리뷰 확인\n";
-		$msg.="http://prq.co.kr/prq/blog/view/".$insert_id;
-
-		$array=array('st_no'=>$arrays['st_no']);
-		$store=$this->get_store($array);
-		$store=json_decode(json_encode($store),true);
-		//print_r($store);
-		//echo $store['st_hp_1'];
-		$st_hp=$store['st_hp_1'];
-		$result_msg="test";
-		$sql_array=array();
-		$sql_array[]="insert into `site_push_log` set ";
-		$sql_array[]="stype='SMS',";
-		$sql_array[]="biz_code='central',";
-		$sql_array[]="caller='15999495',";
-		$sql_array[]="called='".$st_hp."',";
-		$sql_array[]="wr_subject='".$msg."',";
-		$sql_array[]="wr_content='push를 테스트 합니다.',";
-		$sql_array[]="regdate=now(),";
-		$sql_array[]="result='".$result_msg."';";
-		$sql=join("",$sql_array);
-		$results = $this->cashq->query($sql);
-		
-		$sql_array=array();
-		$sql_array[]="insert into SMSQ_SEND set";
-		$sql_array[]="	msg_type='S', ";
-		$sql_array[]="	dest_no='".$st_hp."',";
-		$sql_array[]="	call_back='15999495',";
-		$sql_array[]="	msg_contents='".$msg."' , ";
-		$sql_array[]="	sendreq_time=now();";
-
-		$sql=join("",$sql_array);
-		$results = $this->cashq->query($sql);
-		$results = true;
-		$sms_result=$results?"성공":"실패";
-		$sql_array=array();
-		$sql_array[]="INSERT INTO prq_sms_log SET ";
-		$sql_array[]="`sm_subject`='사장문자 확인',";
-		$sql_array[]="`sm_content`='".$msg."',";
-		$sql_array[]="`sm_type`='SMS',";
-		$sql_array[]="`sm_receiver`='".$st_hp."',";
-		$sql_array[]="`sm_sender`='0215999495',";
-		$sql_array[]="`sm_result`='".$sms_result."',";
-		$sql_array[]="`sm_datetime`=now(),";
-		$sql_array[]="`sm_status`='I',";
-		$sql_array[]="`sm_ipaddr`='".$this->input->ip_address()."',";
-		$sql_array[]="`sm_stno`='".$arrays['st_no']."';";
-
-		$sql=join("",$sql_array);
-		$results = $this->prq->query($sql);
-
-		$result=array(
-			'result' => $results,
-			'insert_id' => $insert_id
-		);
+		$insert_array = $arrays;
+		$table=$arrays['table'];
+		/* table key를 제거한다. */
+		$insert_array=array_diff_key($insert_array, 
+			array('table' => "",'reg_name'=>"",'reg_value'=>""));
+		$result = $this->db->insert($table, $insert_array);
 
 		//결과 반환
 		return $result;
@@ -426,44 +358,18 @@ class Template_m extends CI_Model
 	 */
 	function modify_blog($arrays)
  	{
-/*
-		$modify_array = array(
-				'subject' => $arrays['subject'],
-				'contents' => $arrays['contents']
-		);
-
+		$modify_array = $arrays;
 		$where = array(
-				'board_id' => $arrays['board_id']
+				'bt_no' => $arrays['bt_no']
 		);
-
-		$result = $this->prq->update($arrays['table'], $modify_array, $where);
-					'table' => "prq_blog",
-					'st_no' => $this->input->post('st_no', TRUE),
-					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
-					'bl_file' => $this->input->post('bl_file', TRUE),
-					'bl_name' => $this->input->post('bl_name', TRUE),
-					'bl_hp' => $this->input->post('bl_hp', TRUE),
-					'content1' => $array_content[0],
-					'content2' => $array_content[1],
-					'content3' => $array_content[2],
-					'post_data' => $this->input->post(null, TRUE),
-*/
-
-		$sql_array=array();
-
-		$sql_array[]="UPDATE ".$arrays['table']." SET ";
-		$sql_array[]="bl_imgprefix='".$arrays['bl_imgprefix']."',";
-		$sql_array[]="bl_file='".$arrays['bl_file']."',";
-		$sql_array[]="bl_name='".$arrays['bl_name']."',";
-		$sql_array[]="bl_hp='".$arrays['bl_hp']."',";
-		$sql_array[]="bl_content1='".$arrays['content1']."',";
-		$sql_array[]="bl_content2='".$arrays['content2']."',";
-		$sql_array[]="bl_content3='".$arrays['content3']."' ";
-		$sql_array[]="WHERE bl_no='".$arrays['bl_no']."';";
-		$sql=join("",$sql_array);
-		$result = $this->prq->query($sql);
+		$table=$arrays['table'];
+		/* table key를 제거한다. */
+		$modify_array=array_diff_key($modify_array, 
+			array('table' => "",'reg_name'=>"",'reg_value'=>""));
+		$result = $this->db->update($table, $modify_array, $where);
 		//결과 반환
 		return $result;
+
  	}
 
 	/**

@@ -1721,7 +1721,8 @@ ERROR:
 	이전 데이터 등록시 cd_unixtime
 	*/
 /*	if($array['UserID']!="0226789282@naver.com")
-	{*/
+	{*/	
+		if($array['port']=="0"){return;}
 		$sql=array();
 		$sql[]="INSERT INTO  `callerid`.`cdr` SET ";
 		$sql[]=" date=now(), ";
@@ -2714,20 +2715,22 @@ ERROR:
 
 	function make_store()
 	{
-		$sql = "select st_no,st_name,st_status from prq_store;";
+		$sql = "select st_no,st_name,st_status,st_vtel from prq_store;";
 		$json=array();
 		$json['store']=array();
 		$query = $this->prq->query($sql);
 		
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
-		$object[]='<?php';
+		$object[]='<?php
+		';
 		$object[]='$arr[\'store\']=array();';
 		foreach($query->result_array() as $list){
 
 			$object[]='$product=array(';
 			$object[]=sprintf('\'st_no\'=>\'%s\',',$list['st_no']);
 			$object[]=sprintf('\'st_name\'=>\'%s\',',$list['st_name']);
+			$object[]=sprintf('\'st_vtel\'=>\'%s\',',$list['st_vtel']);
 			$object[]=sprintf('\'st_status\'=>\'%s\',',$list['st_status']);
 			$object[]=');';
 			$object[]='array_push($arr[\'store\'],$product);';

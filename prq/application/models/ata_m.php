@@ -1,10 +1,11 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+ <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * 공통 로그에서 CID , GCM, MMS, ACT(action),ATA(biztalk) 로그 리스트 출력
  * 작성 : 2016-02-12 (금)
  * 수정 : 2016-05-17 (화)
- * 
+ * Mon Feb 12 10:25:24 2018
+  
  * @CID	cid	logs/cid
  * @GCM	gcm	logs/gcm
  * @MMS	mms	logs/mms
@@ -13,7 +14,7 @@
  * 2. [ 2016-05-17 (화) ] get_mmt_id 추가
  *
  * @author Taebu,Moon <mtaebu@gmail.com>
- * @version 1.0
+ * @version 1.0 
  */
 class Ata_m extends CI_Model
 {

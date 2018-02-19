@@ -214,8 +214,8 @@ class Template extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_name', '상점이름', 'required');
-			$this->form_validation->set_rules('st_no', '상점번호', 'required');
+			$this->form_validation->set_rules('appid', '앱아이디', 'required');
+			$this->form_validation->set_rules('bt_plusid', '플러스아이디', 'required');
 
 			if ( $this->form_validation->run() == TRUE )
 			{
@@ -225,56 +225,25 @@ class Template extends CI_Controller {
 
 				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
 
-				$img_src=$this->input->post('img_src', TRUE);
-
-				//$this->input->post(NULL, TRUE); 
-				$array_content=$this->input->post('content', TRUE);
-				
-				$write_data = array(
-					'st_no' => $this->input->post('st_no', TRUE),
-					'st_name' => $this->input->post('st_name', TRUE),
-					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
-					'bl_file' => $this->input->post('bl_file', TRUE),
-					'bl_name' => $this->input->post('bl_name', TRUE),
-					'bl_hp' => $this->input->post('bl_hp', TRUE),
-					'content1' => $array_content[0],
-					'content2' => $array_content[1],
-					'content3' => $array_content[2],
-					'bl_gifticon_type' => $this->input->post('bl_gifticon_type', TRUE),
-					'post_data' => $this->input->post(null, TRUE),
-				);
+				$write_data = $this->input->post(NULL, TRUE);
+				$reg_name=$this->input->post("reg_name");
+				$reg_value=$this->input->post("reg_value");
+				$i=0;
+				$reg_array=array();
+				foreach($reg_name as $rn)
+				{
+					$reg_array[]=$reg_name[$i]."=".$reg_value[$i];
+					$i++;
+				}
+				$write_data['bt_regex']=join("&",$reg_array);
 				$result = $this->template_m->insert_blog($write_data);
 				//print_r($result);
 				
 				
-				for($i=0;$i<count($img_src);$i++)
-				{
-					//echo $is;
-					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
-					$files=getimagesize($filelocation);
-
-					$write_data = array(
-						'pr_table' => "review",
-						'bl_no' => $result['insert_id'],
-						'bf_no' => $i,
-						'bf_source' => $img_src[$i],
-						'bf_file' => $img_src[$i],
-						'bf_download' => "0",
-						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
-						'bf_filesize' => filesize($filelocation),
-						'bf_width' => $files[0],
-						'bf_height' => $files[1],
-						'bf_type' => $files[2],
-					);
-					//print_r($write_data);
-					$result2 = $this->template_m->insert_file($write_data);
-					//echo $result2;
-				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
-
-				if ( $result['result'] )
+				if ( $result)
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/template/cview/'.$result['insert_id']);
+					alert('입력되었습니다.', '/prq/template/lists/');
 					exit;
 				}
 				else
@@ -289,7 +258,10 @@ class Template extends CI_Controller {
 			{
 				//쓰기폼 view 호출
 				//$this->load->view('template/write_v');	
-				$this->load->view('template/write_v');	
+				$data['appids'] = $this->template_m->get_appids(array());
+
+
+				$this->load->view('template/write_v',$data);	
 			}
 		}
 		else
@@ -335,13 +307,14 @@ class Template extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_no', 'st_no', 'required');
-			//$this->form_validation->set_rules('mb_addr2', '주소2', 'required');
+			$this->form_validation->set_rules('appid', '앱아이디', 'required');
+			$this->form_validation->set_rules('bt_plusid', '플러스아이디', 'required');
+
 
 			if ( $this->form_validation->run() == TRUE )
 			{
 //				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
-				if ( !$this->input->post('st_no', TRUE))
+				if ( !$this->input->post('bt_plusid', TRUE))
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
 					alert('비정상적인 접근입니다.', '/prq/store/lists/'.$this->uri->segment(3).'/page/'.$pages);
@@ -356,20 +329,25 @@ class Template extends CI_Controller {
 				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
 
 
-				//$this->input->post(NULL, TRUE); 
-				$array_content=$this->input->post('content', TRUE);
-				
-				$write_data = array(
-					'table' => "bt_template",
-					'bt_name' => $this->input->post('bl_name', TRUE),
-				);
+				$write_data = $this->input->post(NULL, TRUE);
+				$reg_name=$this->input->post("reg_name");
+				$reg_value=$this->input->post("reg_value");
+				$i=0;
+				$reg_array=array();
+				foreach($reg_name as $rn)
+				{
+					$reg_array[]=$reg_name[$i]."=".$reg_value[$i];
+					$i++;
+				}
+				$write_data['bt_regex']=join("&",$reg_array);
+				$write_data['table']=$this->uri->segment(3);
 				$result = $this->template_m->modify_blog($write_data);
 				
 
 				if ( $result)
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/template/view/'.$this->input->post('bl_no', TRUE).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/template/view/'.$this->input->post('bt_no', TRUE).'/page/'.$pages);
 					exit;
 				}
 				else

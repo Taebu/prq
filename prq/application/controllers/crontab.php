@@ -120,6 +120,7 @@ class Crontab extends CI_Controller {
 	function ata()
  	{
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+ 		
 		$data['list'] = $this->crontab_m->get_ata();
 		$data['controller']=$this; 
 

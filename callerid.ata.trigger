@@ -8,12 +8,15 @@ drop TRIGGER IF EXISTS cdr_inserted $$
 -- 1. cdr_inserted
 CREATE TRIGGER cdr_inserted AFTER INSERT ON callerid.cdr FOR EACH ROW
 BEGIN
+
+
 -- 2. 핸드폰 번호인지?
 SET @ishp=IF(substr(NEW.callerid,1,2)='01',true,false);
 -- 3. kt port 인가? (0번 포트)
 SET @iskt=IF(NEW.port=0,true,false);
 
 -- 4. 상점 정보 조회  
+
 select
 	st_name,st_tel_1,st_hp_1,st_no,st_status,st_ata_YN
 INTO
@@ -21,7 +24,7 @@ INTO
 FROM
 	prq.prq_store 
 WHERE
-	st_port=NEW.port and mb_id=NEW.UserID;
+	st_port=NEW.port and mb_id=NEW.UserID limit 1;
 -- 5. 매장이 @st_ata_YN='Y' 
 IF(@st_ata_YN='Y')THEN
 	-- 5-1. 매장 번호로 `prq`.`prq_ata_pay` 데이터를 조회한다. 
@@ -30,7 +33,7 @@ IF(@st_ata_YN='Y')THEN
 	 ap_status,ap_autobill_YN,ap_autobill_date,ap_reserve,ap_limit,ap_limit_cnt,ap_no,bp_appid,bt_code
 	INTO
 	 @ap_status,@ap_autobill_YN,@ap_autobill_date,@ap_reserve,@ap_limit,@ap_limit_cnt,@ap_no,@bp_appid,@bt_code
-	 from prq.prq_ata_pay where st_no=@st_no;
+	 from prq.prq_ata_pay where st_no=@st_no and ap_status='join' limit 1;
 
 	-- 5-2. 예약시간을 분으로 변경하여 변경한 만큼 더하여, 시스템 데이터에 더한다. 
 	SELECT DATE_ADD(SYSDATE(), INTERVAL @ap_reserve MINUTE) INTO @date_client_req;

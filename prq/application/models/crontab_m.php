@@ -549,7 +549,6 @@ class Crontab_m extends CI_Model
 		$sql=array();
 		$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
 		$sql[]="date_client_req=SYSDATE(), ";
-		$sql[]="date_client_req=SYSDATE(), ";
 //		$sql[]="template_code='R00001',";	//구 @배달맛톡 템플릿
 		$sql[]="template_code='T00006',";
 		$sql[]="content='".$array['msg']."',";
@@ -674,24 +673,26 @@ class Crontab_m extends CI_Model
 			$sql=array();
 			$sql[]="INSERT INTO biztalk.em_mmt_tran SET ";
 			$sql[]=sprintf("date_client_req='%s', ",$array['date_client_req']);
-			$sql[]="template_code='T00006',";
+			$sql[]=sprintf("template_code='%s',",$array['template_code']);
 			$sql[]=sprintf("subject='%s', ",$array['subject']);
-			$sql[]="content='".$array['msg']."',";
-			$sql[]="recipient_num='".$array['mb_hp']."',";
-			$sql[]="callback='".$array['tel']."',";
+			$sql[]=sprintf("content='%s',",$array['content']);
+			$sql[]=sprintf("recipient_num='%s',",$array['mb_hp']);
+			$sql[]=sprintf("callback='%s',",$array['tel']);
 			$sql[]="msg_status='1',";
-			$sql[]="sender_key='dbae1c54597868639f649ecc40d68dd45d100cb7', "; //@배달톡톡 키
+			$sql[]=sprintf("sender_key='%s', ",$array['sender_key']); //@배달톡톡 키
 			$sql[]="service_type='3', ";
 			$sql[]="msg_type='1008';";
 			$join_sql=join("",$sql);
+			
 			$json['query']=$join_sql;
 			$query = $this->db->query($join_sql);
 			$insert_id = $this->db->insert_id();
 			$status=$query?"성공":"실패";
+
 			$sql=array();
 			$sql[]="UPDATE `prq_ata_log` SET ";
 			$sql[]=" at_subject='".$array['subject']."', ";
-			$sql[]=" at_content='".$array['msg']."', ";
+			$sql[]=" at_content='".$array['content']."', ";
 			$sql[]=" at_receiver='".$array['mb_hp']."', ";
 			$sql[]=" at_sender='".$array['tel']."', ";
 			$sql[]=" at_mmt_no='".$insert_id."', ";
@@ -784,22 +785,38 @@ class Crontab_m extends CI_Model
 	function get_mmt_id($no, $datetime)
 	{
 		$datecode=date("Ym",strtotime($datetime));
-		$sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_log_".$datecode." WHERE mt_pr='".$no."';";
-		$query = $this->db->query($sql) or die("test");
-		
-		//댓글 리스트 반환
-		$result = $query->result();
-		$count = $query->num_rows();
-		$result['count']=$count;
-		if($count==0)
+		/* 1. 테이블 존재 여부 부터 판단한다. */
+		$sql='select exists(SELECT 1 FROM information_schema.tables ';
+		$sql.=' WHERE table_schema= \'biztalk\'  ';
+		$sql.=sprintf(' AND table_name = \'em_mmt_log_%s\') a',$datecode);
+		$query = $this->db->query($sql);
+		$verify = $query->row_array();
+
+		/* 2. 테이블이 존재 한다면 . */
+		if(isset($verify)&&$verify['a']>0)
 		{
+			/* 2-1. 테이블이 존재하면 로그에 결과에  mt_report_code_ib 키배열에 비즈톡이 제공한 결과값을 리턴한다. */
+			$sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_log_".$datecode." WHERE mt_pr='".$no."';";
+			$query = $this->db->query($sql) or die("test");
 			
-				 $sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_tran WHERE mt_pr='".$no."';";
-					$query = $this->db->query($sql);
-					$result = $query->result();
-			
+			//댓글 리스트 반환
+			$result = $query->result();
+			$count = $query->num_rows();
+			$result['count']=$count;
+			/* 2-1-1. 결과 값이 존재 하지 않으면 처음 보낸 테이블의 결과 값을 조회한다. */
+			if($count==0)
+			{
+				$sql = "SELECT mt_report_code_ib FROM biztalk.em_mmt_tran WHERE mt_pr='".$no."';";
+				$query = $this->db->query($sql);
+				$result = $query->result();
+			}
+		}else{
+			/* 2-2. 테이블이 	존재하지 않으면 mt_report_code_ib 키배열에 0000을 리턴한다. */
+			$result = array('mt_report_code_ib' =>'0000');
 		}
+		/* 3. 결과 값을 리턴한다. */
 		return $result;
+		/* 4. 종료한다. */
 	}
 
 	/*
@@ -1000,7 +1017,30 @@ class Crontab_m extends CI_Model
 		$sql[] = sprintf("`ap_reserve`='%s',",$array['ap_reserve']);
 		$sql[] = "`ap_datetime`=now();";
 		$str_sql=join("",$sql);
-   	$query = $this->db->query($str_sql);
+   		$query = $this->db->query($str_sql);
+    }
+
+    /*******************************
+    * 기능설명 : 
+    *
+    *
+    *
+    ********************************/
+    function get_template($bp_appid,$bt_code)
+    {
+    	$sql = "SELECT * FROM bt_template ";
+    	$sql.=sprintf("where appid='%s' and bt_code='%s' and bt_type='ata';",$bp_appid,$bt_code);
+   		$query = $this->db->query($sql);
+		$row = $query->row_array();
+
+		return $row;
+    }
+
+    function get_plusid()
+    {
+ 	  	$sql = "SELECT * FROM bt_plusfriend ";
+   		$query = $this->db->query($sql);
+   		return $query->result(); 
     }
 }
 

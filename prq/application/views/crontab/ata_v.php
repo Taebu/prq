@@ -1,11 +1,12 @@
-<?php
+ <?php
 /********************************************************
 * 1분마다 콜로그를 조회하여 gcm과 mms 를 전송하는 페이지 크론탭에 등록 되어 있습니다.
 * location : /prq/application/views/crontab/ata_v.php
 * url : /prq/crontab/ata
 * 작성일 : 2017-11-24 (금) 17:33:02 
-* 수정일 : 
+* 수정일 : 2018-02-12 (월) 10:16:02
 * 1. [ 2017-11-24 (금) 17:33:09  ] prq_ata_log 추가
+
 ********************************************************/
 $host_name="localhost";
 $db_name="prq";
@@ -21,6 +22,26 @@ extract($_POST);
 $ROOT = $_SERVER['DOCUMENT_ROOT'];
 header("Content-Type:text/html;charset=utf-8");
 //phpinfo();
+/*
+이름 : get_rand_int
+기능 : 임의의 길이(기본값은 6) 만큼 숫자를 반환한다.
+입력 : 길이
+출력 : 임의의 6자리 혹은 입력한 길이만큼의 수 
+작성 : 문태부
+*/
+function get_rand_int($length=6)
+{
+	# code...
+	$pool = '0123456789';
+	$str = '';
+	for ($i = 0; $i < $length; $i++)
+	{
+		$str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
+	}
+	$word = $str;
+	return $word;
+}
+#{넘버링6자리숫자}=function.get_rand_int
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,7 +82,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/prq/include/php/prq_store.php');
 
 // Using the $records array from Example #1
 $st_name= array_column($arr['store'], 'st_name', 'st_no');
-
+$st_vtel= array_column($arr['store'], 'st_vtel', 'st_no');
 
 /****************************************************************************** 
 * 1. 블랙 리스트 가져오기 
@@ -114,20 +135,25 @@ $at_success="";
 if(count($list)==0){
 	echo '<tr><td scope="row" colspan="12" style="text-align:center"> 조회한 `알림톡 전송대기`목록이 없습니다.</td></tr>';
 }
-
+$plusfriend=$controller->crontab_m->get_plusid();
+$plusfriend=json_decode(json_encode($plusfriend),true);
 	echo "<pre>";
+//print_r($plusfriend);
 foreach($list as $li)
 {
-	print_r($li);
+	echo "<pre>";
+	//print_r($li);
+	echo "</pre>";
 	$st_names="";
 	$st_names=isset($st_name[$li->st_no])?$st_name[$li->st_no]:"";
 	echo "<tr>";
-
-	echo "<td>";
+	echo "<td>"; 
 	echo "<pre>";
 //	print_r($li);
 
 	$is_limit=false;
+
+	/* 보낸상태를 조회합니다. */
 	$at_status=$controller->crontab_m->get_mmt_id($li->at_mmt_no,$li->at_datetime);
 	$mt_report_code_ib=isset($at_status[0]->mt_report_code_ib)?$at_status[0]->mt_report_code_ib:"";
 	echo "</td><td>";
@@ -166,7 +192,8 @@ foreach($list as $li)
 	echo $st_names;
 	echo "</td>";
 	echo "</tr>";
-
+	//$template=$controller->crontab_m->get_template("bkc","K00001");
+	echo "</pre>";
 	/* 전송 대기 */
 	if($li->at_status=="1"&&$is_limit){
 		/* 전송 초과 */
@@ -179,48 +206,66 @@ foreach($list as $li)
 		/* ATA전송확인완료  */
 		$controller->crontab_m->set_ata_pay($ata_info);
 	}else if($li->at_status=="1"&&!$is_limit){
-	
+	/* 전송이 가능한 상황인 경우 정보를 불러온다. */
 	$st_names=isset($st_name[$li->st_no])?$st_name[$li->st_no]:"";
 	//	echo "st_name : ".$st_names;
+	/* 템플릿 정보 가져오기 */
+	//$template=$controller->crontab_m->get_template($li->bp_appid,$li->bt_code);
+	//echo "<pre>";
+	//print_r($template);
+	//echo "</pre>";
+	
 	if($st_names!="")
 	{
-		$message=array();
-		$message[]="[".$st_names."]을 이용해주셔서 감사합니다.";
-		$message[]="적립번호 : [".$li->at_sender."]";
-		$message[]="";
-		$message[]="고객님에게 \"2,000원\" 적립 해드렸습니다.";
-		$message[]="\"배달톡톡\" 어플로 접속하시면 확인가능합니다.";
-		$message[]="";
-		$message[]="[새로운 미션내용]";
-		$message[]="5회 주문시 현금 최대 10,000원";
-		$message[]="10회 주문시 현금 최대 20,000원";
-		$message[]="적립기간 : 주문일 부터 60일 후 소멸";
-		$message[]="";
-		$message[]="요즘 트랜드에 맞게 배달음식을 주문 시 마다 현금적립 어플을 새롭게 출시 하였습니다.";
-		$message[]="고객님만을 위한 배달어플을 지금 확인 하세요\!";
-		$message[]="";
-		$message[]="적립금 관련 궁금한 점은 1599-9495 으로 문의해 주세요";
-		$message[]="";
-		$message[]="\"배달톡톡\" 앱 포인트 확인 링크";
-		$message[]="http://bdtalk.co.kr/m/p/";
-		$msg=join("\n",$message);
-//		echo $msg;
-	
+		$template=$controller->crontab_m->get_template($li->bp_appid,$li->bt_code);
+		
+		$key = array_search($li->bp_appid, array_column($plusfriend, 'bp_appid'));
+		$sender_key=$plusfriend[$key]['bp_senderid'];
+		
+		echo "<pre>";	
+
+		$arr_string=$template['bt_content'];
+
+		$exp_regex=explode("&",$template['bt_regex']);	
+		
+		$store=array(
+			"name"=>$st_names,
+			"tel"=>$st_vtel[$li->st_no],
+			"homepage"=>sprintf("http://prq.co.kr/prq/page/%s",$li->st_no)
+		);
+		
+		$agencyMember=array(
+			"point_items"=>"5회 주문시, 최대 10,000원\n10회 주문시, 최대 20,000원",
+			"min_point"=>"15,000",
+			"cell"=>"010-7743-0009");
+		$function=array(
+			"get_rand_int"=>get_rand_int(),
+		);
+		foreach($exp_regex as $er)
+		{
+			$keys=explode("=",$er);
+			//echo $keys[0]." / ".$keys[1];
+			$table_split=explode(".",$keys[1]);
+			$replace_string=${$table_split[0]}[$table_split[1]]; 
+			//printf("table_name : %s, table_column : %s\n",$table_split[0],$table_split[1]);
+			$arr_string=str_replace($keys[0],$replace_string,$arr_string);
+		}
+		$template_code=$template['bt_code'];
 		$ata_info = array(
 		'date_client_req'=>$li->date_client_req,
-		'msg'=>$msg,
+		'template_code'=>$template_code,
+		'subject'=>"알림톡페이테스트",
+		'content'=>$arr_string,
+		'sender_key'=>$sender_key,
 		'mb_hp'=>$li->at_receiver,
 		'tel'=>$li->at_sender,
 		'at_no'=>$li->at_no,
-		'subject'=>"알림톡페이테스트",
 		'at_status'=>"2"
 		);
 	
-		echo "</pre>>";
-		/* ATA전송대기 */
+		echo "</pre>";
 		$controller->crontab_m->set_ata_pay($ata_info);
 	}
-	
 	/* ATA전송확인 */
 	}else if($li->at_status=="2"&&!$is_limit){
 		if($at_success=="Y"||$at_success=="N")

@@ -61,6 +61,12 @@ function get_gifticon($code)
 			var keycode = window.event.keyCode;
 			if(keycode == 13) $("#search_btn").click();
 		}
+
+
+function set_write(){
+$('#bd_search').attr('action', "/prq/template/write/bt_template/page/1");
+  $("#bd_search").submit();		
+}
 </script>
 <style type="text/css">
 	.black {
@@ -191,6 +197,9 @@ echo form_open('board/write/ci_board', $attributes);
 	<li>Biztalk &gt plusFriend &gt list</li>
 </ul>
 <!-- list.php -->
+
+<div class="row"><div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
+
 <div class="btn_area">
 <button type="button" class="btn btn-sm btn-success" onclick="chg_list('wa');">정상</button>
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('wa');">중지</button>
@@ -284,6 +293,9 @@ echo '</tr>';
 <button type="button" class="btn btn-sm btn-warning" onclick="chg_list('stop');">중지</button>
 <button type="button" class="btn btn-sm btn-danger" onclick="chg_list('terminate');">해지</button>
 </div><!-- .btn_area -->
+
+<div class="row"><div class='col-sm-11'></div><div class='col-sm-1'> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
+
 <div class="col-xs-12" style="text-align:center">
 <ul class="pagination pagination-lg" ><?php echo $pagination;?></ul><!-- .pagination -->
 </div><!-- .col-xs-12 -->
