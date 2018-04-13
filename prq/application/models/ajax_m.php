@@ -1722,7 +1722,10 @@ ERROR:
 	*/
 /*	if($array['UserID']!="0226789282@naver.com")
 	{*/	
-		if($array['port']=="0"){return;}
+		/* 
+		2018-02-14 18:06:17 block
+		2018-02-19 15:15:58 unblock*/ 
+		//if($array['port']=="0"){return;}
 		$sql=array();
 		$sql[]="INSERT INTO  `callerid`.`cdr` SET ";
 		$sql[]=" date=now(), ";

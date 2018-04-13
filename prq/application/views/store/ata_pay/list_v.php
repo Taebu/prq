@@ -298,7 +298,8 @@ function is_jong(str)
         <!--</div><!-- .col-sm-6 -->
     </div><!-- .row -->
 
-    <div class='row'>
+<div class='row'>
+
 	<div class='col-sm-12 right'>
             <div class='form-group'><input type="button" value="검색" id="search_btn" class="btn btn-primary" /> </div>
         </div>
@@ -309,7 +310,14 @@ function is_jong(str)
 	</div><!-- .row -->
 
 <div class='row'>
-		<?php 
+<pre>
+[ 2018-04-13 (금) 17:02:15  ]
+신규 상점 등록 시 반드시 실행해 줄것!!! 
+http://prq.co.kr/prq/ajax/make_store
+
+미실행시 전송 되지 않을 수 있다.
+</pre>
+    <?php 
 			$attributes = array(
 				'class' => 'form-horizontal', 
 				'id' => 'write_action',

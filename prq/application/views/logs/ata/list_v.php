@@ -371,8 +371,9 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 					<th scope="col" width="400px">내용</th>
 					<th scope="col">수신인</th>
 					<th scope="col">발신인</th>
-					<th scope="col">상태</th>
+					<th scope="col">알림톡코드</th>
 					<th scope="col">상태</th>	
+					<th scope="col">상점번호</th>	
 					<th scope="col">보낸 상태</th>
 					<th scope="col">전송일</th>
 					<th scope="col">*발송량</th>
@@ -388,7 +389,7 @@ if(count($list)==0){
 }
 foreach ($list as $lt)
 {
-	/*
+/*
 echo "<pre>";
 	print_r($lt);
 echo "</pre>";
@@ -413,6 +414,7 @@ if($lt->at_status=="2")
 					<td scope="row"><?php echo phone_format($lt->at_sender);?></td>
 					<td scope="row"><?php echo $lt->at_result;?></td>
 					<td scope="row"><?php echo $lt->at_status;?></td>
+					<td scope="row"><a href="/prq/store/view/prq_store/board_id/<?php echo $lt->st_no;?>/page/1"><?php echo $lt->st_no;?></a></td>
 					<td scope="row"><?php echo $result_code;?></td>
 					<td scope="row"><?php echo $lt->at_datetime;?></td>
 					<td scope="row"><?php printf("%s /%s",$lt->at_month_cnt,$lt->at_month_limit);?></td>
@@ -420,26 +422,25 @@ if($lt->at_status=="2")
 <?php
 }
 ?>
-
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="12" style="text-align:left">
-					<?php if($mb_gcode=="G1"){?>
-					<div class="btn_area">
-					<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
-					<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
-					<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
-					<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
-					<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
-					<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button></div><!-- .btn_area --><?php }?></th>
-				</tr>
-				<tr>
-					<th colspan="12" style="text-align:center;border-top:0">
-					<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
-				</tr>
-			</tfoot>
-		</table>
+</tbody>
+<tfoot>
+<tr>
+<th colspan="12" style="text-align:left">
+<?php if($mb_gcode=="G1"){?>
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button></div><!-- .btn_area --><?php }?></th>
+</tr>
+<tr>
+<th colspan="12" style="text-align:center;border-top:0">
+<ul class="pagination pagination-lg"><?php echo $pagination;?></ul><!-- .pagination --></th>
+</tr>
+</tfoot>
+</table>
 </div><!-- .table-responsive -->
 
 

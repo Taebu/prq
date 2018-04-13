@@ -2,7 +2,7 @@
 /********************************************************
 * 1분마다 콜로그를 조회하여 gcm과 mms 를 전송하는 페이지 크론탭에 등록 되어 있습니다.
 * location : /prq/application/views/crontab/ata_v.php
-* url : /prq/crontab/ata
+* url : http://prq.co.k/prq/crontab/ata
 * 작성일 : 2017-11-24 (금) 17:33:02 
 * 수정일 : 2018-02-12 (월) 10:16:02
 * 1. [ 2017-11-24 (금) 17:33:09  ] prq_ata_log 추가
@@ -66,6 +66,9 @@ prq_ata_pay.bp_appid 추가
 prq_ata_pay.bt_code 추가
 템플릿 코드를 불러와서 적용 되도록 할 것!!!
 
+[ 2018-04-13 (금) 17:02:15  ]
+상점 등록 후 실행해 줄것!!!
+http://prq.co.kr/prq/ajax/make_store
 
 crontab -e 에서
 <input type="checkbox" name="" id="" checked>구현] * * * * * /etc/set_mms.sh로 돌아가도록 설정 되어 있으며, 1분마다 구동 설정 되어 있습니다.
@@ -201,7 +204,8 @@ foreach($list as $li)
 		'at_no'=>$li->at_no,
 		'at_status'=>"4",
 		'at_result'=>'9999',
-		'at_success'=>$at_success
+		'at_success'=>$at_success,
+
 		);
 		/* ATA전송확인완료  */
 		$controller->crontab_m->set_ata_pay($ata_info);
@@ -231,16 +235,19 @@ foreach($list as $li)
 		$store=array(
 			"name"=>$st_names,
 			"tel"=>$st_vtel[$li->st_no],
-			"homepage"=>sprintf("http://prq.co.kr/prq/page/%s",$li->st_no)
+			"homepage"=>sprintf("http://prq.co.kr/prq/page/%s",$li->st_no),
+			"point"=>"2,000"
 		);
 		
 		$agencyMember=array(
 			"point_items"=>"5회 주문시, 최대 10,000원\n10회 주문시, 최대 20,000원",
 			"min_point"=>"15,000",
 			"cell"=>"010-7743-0009");
+
 		$function=array(
 			"get_rand_int"=>get_rand_int(),
 		);
+		
 		foreach($exp_regex as $er)
 		{
 			$keys=explode("=",$er);

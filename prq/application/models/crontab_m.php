@@ -731,13 +731,10 @@ class Crontab_m extends CI_Model
 			$join_sql=join("",$sql);
 
 			$query = $this->db->query($join_sql);
-		}
-
 		/* msg_status 4 ATA결과 
 			상태가 4 전송초과
 		*/
-		if($array['at_status']=="4")
-		{
+    }else if($array['at_status']=="4"){
 			/* 알림톡 페이 갱신 */
 			/*
 			$sql=array();
@@ -760,13 +757,28 @@ class Crontab_m extends CI_Model
 			$join_sql=join("",$sql);
 
 			$query = $this->db->query($join_sql);
+		/* */
+    }else if($array['ap_status']=='expired')
+		{
+			/*알림톡 로그 상태 갱신 
+				UPDATE `prq_ata_pay` SET ap_status='expired' where ap_no='{$list[ap_no]}';
+			*/
+			$sql=array();
+			$sql[]="UPDATE `prq_ata_pay` SET ";
+			$sql[]=sprintf(" ap_status='%s' ",$array['ap_status']);
+			$sql[]=sprintf(" where ap_no='%s';",$array['ap_no']);
+			$join_sql=join("",$sql);
+
+			//$query = $this->db->query($join_sql);			
 		}
+
 		if($query)
 		{
 			$json['result']="성공.";
 			$json['sql']=$join_sql;
 			$json['success']=true;
 		}else{
+			$json['sql']=$join_sql;
 			$json['result']="실패.";
 		}
 
@@ -992,32 +1004,40 @@ class Crontab_m extends CI_Model
 	 */
     function insert_ata_pay($array)
     {
-		$sql=array();
-		$sql[] = "update prq_ata_pay SET ";
-		$sql[] = sprintf("`ap_status`='%s' ","expire");
-		$sql[] = sprintf(" where ap_no='%s';",$array['ap_no']);
-		$str_sql=join("",$sql);
-		$query = $this->db->query($str_sql);
-		$sql=array();
-		$sql[] = "insert into prq_ata_pay SET ";
-		$sql[] = sprintf("`st_no`='%s',",$array['st_no']);
-		$sql[] = sprintf("`st_name`='%s',",$array['st_name']);
-		$sql[] = sprintf("`prq_fcode`='%s',",$array['prq_fcode']);
-		$sql[] = sprintf("`ap_name`='%s',",$array['ap_name']);
-		$sql[] = sprintf("`ap_price`='%s',",$array['ap_price']);
-		$sql[] = sprintf("`ap_limit`='%s',",$array['ap_limit']);
-		$sql[] = sprintf("`ap_limit_cnt`='%s',",$array['ap_limit_cnt']);
-		$sql[] = sprintf("`ap_false_cnt`='%s',",$array['ap_false_cnt']);
-		$sql[] = sprintf("`ap_status`='%s',",$array['ap_status']);
-		$sql[] = sprintf("`terminate_date`='%s',",$array['`terminate_date']);
-		$sql[] = sprintf("`stop_date`='%s',",$array['stop_date']);
-		$sql[] = sprintf("`join_date`='%s',",$array['join_date']);
-		$sql[] = sprintf("`ap_autobill_YN`='%s',",$array['ap_autobill_YN']);
-		$sql[] = sprintf("`ap_autobill_date`='%s',",$array['ap_autobill_date']);
-		$sql[] = sprintf("`ap_reserve`='%s',",$array['ap_reserve']);
-		$sql[] = "`ap_datetime`=now();";
-		$str_sql=join("",$sql);
-   		$query = $this->db->query($str_sql);
+			$sql=array();
+			$sql[] = "update prq_ata_pay SET ";
+			$sql[] = sprintf("`ap_status`='%s' ","expire");
+			$sql[] = sprintf(" where ap_no='%s';",$array['ap_no']);
+			$str_sql=join("",$sql);
+			$query = $this->db->query($str_sql);
+			
+			/* 정기결재인 경우만 갱신 연장  처리*/
+			if($array['ap_autobill_YN']=="Y")
+			{
+				$sql=array();
+				$sql[] = "insert into prq_ata_pay SET ";
+				$sql[] = sprintf("`st_no`='%s',",$array['st_no']);
+				$sql[] = sprintf("`st_name`='%s',",$array['st_name']);
+				$sql[] = sprintf("`bt_code`='%s',",$array['bt_code']);
+				$sql[] = sprintf("`bp_appid`='%s',",$array['bp_appid']);
+				$sql[] = sprintf("`prq_fcode`='%s',",$array['prq_fcode']);
+				$sql[] = sprintf("`ap_name`='%s',",$array['ap_name']);
+				$sql[] = sprintf("`ap_price`='%s',",$array['ap_price']);
+				$sql[] = sprintf("`ap_limit`='%s',",$array['ap_limit']);
+				$sql[] = sprintf("`ap_limit_cnt`='%s',",$array['ap_limit_cnt']);
+				$sql[] = sprintf("`ap_false_cnt`='%s',",$array['ap_false_cnt']);
+				$sql[] = sprintf("`ap_status`='%s',",$array['ap_status']);
+				$sql[] = sprintf("`terminate_date`='%s',",$array['terminate_date']);
+				$sql[] = sprintf("`stop_date`='%s',",$array['stop_date']);
+				$sql[] = sprintf("`join_date`='%s',",$array['join_date']);
+				$sql[] = sprintf("`ap_autobill_YN`='%s',",$array['ap_autobill_YN']);
+				$sql[] = sprintf("`ap_autobill_date`='%s',",$array['ap_autobill_date']);
+				$sql[] = sprintf("`ap_reserve`='%s',",$array['ap_reserve']);
+				$sql[] = "`ap_datetime`=now();";
+				$str_sql=join("",$sql);
+
+				$query = $this->db->query($str_sql);
+			}
     }
 
     /*******************************
