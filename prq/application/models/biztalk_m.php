@@ -319,6 +319,12 @@ class Biztalk_m extends CI_Model
 		return $result;
  	}
 
+	function insert_plusfriend($table,$insert_array)
+ 	{
+		$result = $this->db->insert($table, $insert_array);
+		//결과 반환
+		return $result;
+ 	}
 	/**
 	 * 멤버의 회원 가입 코드를 가져온다. 
 	 * 1. 조회 : 기존 코드의 최대값을 조회

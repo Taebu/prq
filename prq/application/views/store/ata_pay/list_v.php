@@ -30,7 +30,7 @@ table tr.green:nth-child(2n){
 					return false;
 				} else {
 //					var act = '/prq/store/lists/ci_board/q/'+$("#q").val()+'/page/1';
-					var act = '/prq/store/lists/prq_store/page/1';
+					var act = '/prq/store/lists/prq_ata_pay/page/1';
 					$("#bd_search").attr('action', act).submit();
 				}
 			});
@@ -278,24 +278,11 @@ function is_jong(str)
         </div><!-- .col-sm-6 -->
         <div class='col-sm-6'>
             <div class='form-group'>
-                <label for="mb_id">아이디</label>
-                <input class="form-control" id="mb_id" name="mb_id" required="true" size="30" type="text" value="<?php echo $search['mb_id'];?>" OnKeyDown="javascript:board_search_enter();"/>
-            </div><!-- .form-group -->
-        </div><!-- .col-sm-6 -->
-    </div><!-- .row -->
-    <div class='row'>
-        <div class='col-sm-6'>    
             <div class='form-group'>
                 <label for="prq_fcode">풀코드</label>
                 <input class="form-control" id="prq_fcode" name="prq_fcode" size="30" type="text" value="<?php echo $search['prq_fcode'];?>" OnKeyDown="javascript:board_search_enter();"/>
             </div><!-- .form-group -->
         </div><!-- .col-sm-6 -->
-        <!--<div class='col-sm-6'>
-            <div class='form-group'>
-                <label for="user_firstname"><span class="mb_gname">총판</span>ID</label>
-                <input class="form-control" id="user_firstname" name="mb_status" required="true" size="30" type="text" OnKeyDown="javascript:board_search_enter();"/>
-            </div><!-- .form-group -->
-        <!--</div><!-- .col-sm-6 -->
     </div><!-- .row -->
 
 <div class='row'>

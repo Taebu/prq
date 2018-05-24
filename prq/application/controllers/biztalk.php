@@ -214,76 +214,33 @@ class Biztalk extends CI_Controller {
 			$this->load->library('form_validation');
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('st_name', '상점이름', 'required');
-			$this->form_validation->set_rules('st_no', '상점번호', 'required');
+			$this->form_validation->set_rules('bp_plusid', '플러스 친구', 'required');
+			$this->form_validation->set_rules('bp_senderid', '센더아이디', 'required');
 
-			if ( $this->form_validation->run() == TRUE )
+			if($this->form_validation->run() == TRUE)
 			{
 				$this->load->model('biztalk_m');
 				//주소중에서 blog 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 				$uri_array = $this->segment_explode($this->uri->uri_string());
-
 				$pages = in_array('page', $uri_array)?urldecode($this->url_explode($uri_array, 'page')):1;
-
-				$img_src=$this->input->post('img_src', TRUE);
-
-				//$this->input->post(NULL, TRUE); 
-				$array_content=$this->input->post('content', TRUE);
+        $insert=$this->input->post(null, TRUE);
+        $table=$this->uri->segment(3);
+        $result = $this->biztalk_m->insert_plusfriend($table,$insert);
 				
-				$write_data = array(
-					'st_no' => $this->input->post('st_no', TRUE),
-					'st_name' => $this->input->post('st_name', TRUE),
-					'bl_imgprefix' => $this->input->post('bl_imgprefix', TRUE),
-					'bl_file' => $this->input->post('bl_file', TRUE),
-					'bl_name' => $this->input->post('bl_name', TRUE),
-					'bl_hp' => $this->input->post('bl_hp', TRUE),
-					'content1' => $array_content[0],
-					'content2' => $array_content[1],
-					'content3' => $array_content[2],
-					'bl_gifticon_type' => $this->input->post('bl_gifticon_type', TRUE),
-					'post_data' => $this->input->post(null, TRUE),
-				);
-				$result = $this->biztalk_m->insert_blog($write_data);
-				//print_r($result);
-				
-				
-				for($i=0;$i<count($img_src);$i++)
-				{
-					//echo $is;
-					$filelocation=getcwd().'/uploads/'.$this->input->post('bl_imgprefix', TRUE)."/".$img_src[$i];
-					$files=getimagesize($filelocation);
-
-					$write_data = array(
-						'pr_table' => "review",
-						'bl_no' => $result['insert_id'],
-						'bf_no' => $i,
-						'bf_source' => $img_src[$i],
-						'bf_file' => $img_src[$i],
-						'bf_download' => "0",
-						'bf_content' => $this->input->post('bl_imgprefix', TRUE),
-						'bf_filesize' => filesize($filelocation),
-						'bf_width' => $files[0],
-						'bf_height' => $files[1],
-						'bf_type' => $files[2],
-					);
-					//print_r($write_data);
-					$result2 = $this->biztalk_m->insert_file($write_data);
-					//echo $result2;
-				} /*for($i=0;$i<=count($img_src);$i++){ ... } */
-
-				if ( $result['result'] )
+        
+				if ($result)
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/biztalk/cview/'.$result['insert_id']);
+					alert('입력되었습니다.', '/prq/biztalk/lists/bt_plusfriend');
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/biztalk/write/'.$this->uri->segment(3));
+					alert('다시 입력해 주세요.', '/prq/biztalk/write/bt_plusfriend');
 					exit;
 				}
-
+        
 			}
 			else
 			{

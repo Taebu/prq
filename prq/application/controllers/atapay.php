@@ -87,7 +87,7 @@ class Atapay extends CI_Controller {
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/atapay/lists/prq_store'.$page_url.'/page/',
+		'base_url'=> '/prq/atapay/lists/prq_ata_pay'.$page_url.'/page/',
 		'total_rows' => $this->atapay_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 25,
 		'uri_segment' => $uri_segment,

@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //$config['base_url'] = 'http://123.142.52.91/';
-$config['base_url'] = 'http://prq.cashq.co.kr/';
+$config['base_url'] = 'https://prq.cashq.co.kr/';
 
 /*
 |--------------------------------------------------------------------------

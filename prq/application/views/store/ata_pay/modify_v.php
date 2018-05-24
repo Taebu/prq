@@ -1,9 +1,10 @@
-<pre>
+<!-- <pre> -->
 <?php
-print_r($views);
+//print_r($views);
 ?>
-</pre>
-<!-- D:\Share\04.Paid_PG\products-WB0R5L90S\Static_Full_Version\form_advanced.html -->
+<!-- </pre> -->
+<!-- 
+D:\Users\Taebu\My Documents\2.회사\2.9.Paid_PG\products-WB0R5L90S\Static_Full_Version\form_advanced.html -->
 <script src="/prq/include/js/mysql/prq_store.js" type="text/javascript"></script>
     <link href="/prq/include/css/plugins/select2/select2.min.css" rel="stylesheet">
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -66,10 +67,13 @@ foreach($member as $mb)
 
 <div class="form-group"><label class="col-sm-2 control-label">매장명 </label>
 <div class="col-sm-10">
+
 <select name="st_no" id="st_no" class="select2_demo_1 form-control" onchange="javascript:set_name()"><?php
+
+
 foreach($store as $st)
 {
-	$is_match=$st->prq_fcode==$views->prq_fcode;
+	$is_match=$st->st_no==$views->st_no;
 	printf($is_match?"<option value='%s' selected>%s</option>":"<option value='%s'>%s</option>",$st->st_no,$st->st_name);
 }?></select><!-- #st_name -->
 <span class="help-block m-b-none">가맹점을 선택 후 매장명을 선택해 주세요. <br>

@@ -245,6 +245,7 @@
 
 
 	</script>
+
 <style>
 .ellip{float:left;max-width:398px;height:30px;overflow:hidden;white-space:nowrap;font-weight:normal;text-overflow:ellipsis;cursor:pointer;margin-top:-1;}
 </style>
@@ -339,7 +340,10 @@
 </div>
 	</div>
 	</div><!-- .row -->
+<?php
+include_once "/var/www/html/prq/include/php/prq_store.php";
 
+?>
 <div class='row'>
 		<?php 
 			$attributes = array(
@@ -369,6 +373,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 				<tr>
 					<th scope="col">번호</th>
 					<th scope="col" width="400px">내용</th>
+					<th scope="col">상점명</th>
 					<th scope="col">수신인</th>
 					<th scope="col">발신인</th>
 					<th scope="col">알림톡코드</th>
@@ -381,6 +386,13 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 			</thead>
 			<tbody>
 <?php
+
+function array_2dimensional_search($array,$key_name,$key_value,$find_name)
+{
+	$k = array_search($key_value, array_column($array, $key_name));
+	return $array[$k][$find_name];
+}
+
 /*리스트가 없으면 없는 값 출력*/
 if(count($list)==0){
 ?>
@@ -389,14 +401,10 @@ if(count($list)==0){
 }
 foreach ($list as $lt)
 {
-/*
-echo "<pre>";
-	print_r($lt);
-echo "</pre>";
-*/
-//$code=$controllers->logs_m->get_mmt_id($lt->at_mmt_no,$lt->at_datetime);
+$st_name=array_2dimensional_search($arr['store'],"st_no",$lt->st_no,"st_name");
 
 $result_code=isset($lt->at_result)?$lt->at_result:"0000";
+
 if($lt->at_status=="2")
 {
 	$result_code="ATA 전송 대기";
@@ -406,10 +414,12 @@ if($lt->at_status=="2")
 }else{
 	$result_code=$controllers->logs_m->getAtaCode($lt->at_result);
 }
+
 ?>
 				<tr>
 					<td scope="row"><?php echo $lt->at_no;?></td>
 					<td scope="row" class='contents ellip'><?php echo $lt->at_subject;?><br><?php echo nl2br($lt->at_content);?></td>
+					<td scope="row"><?php echo $st_name;?></td>
 					<td scope="row"><?php echo phone_format($lt->at_receiver);?></td>
 					<td scope="row"><?php echo phone_format($lt->at_sender);?></td>
 					<td scope="row"><?php echo $lt->at_result;?></td>

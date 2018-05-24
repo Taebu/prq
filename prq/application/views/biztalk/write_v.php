@@ -23,7 +23,7 @@ $attributes = array(
 'class' => 'form-horizontal', 
 'id' => 'write_action'
 );
-echo form_open('/codes/write/prq_dscode', $attributes);
+echo form_open('/biztalk/write/bt_plusfriend', $attributes);
 //echo form_open_multipart('/dropzone/upload', $attributes);
 $ds_code=$this->input->post('ds_code',TRUE);
 $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
@@ -63,13 +63,13 @@ $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">플러스친구</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="bt_plusid" name="bt_plusid"> <span class="help-block m-b-none" id="mb_name_assist">플러스친구를 등록 합니다. 예) `배달톡톡` 이면 `@배달톡톡`</span>
+<div class="col-sm-10"><input type="text" class="form-control" id="bp_plusid" name="bp_plusid"> <span class="help-block m-b-none" id="mb_name_assist">플러스친구를 등록 합니다. 예) `배달톡톡` 이면 `@배달톡톡`</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">센더키</label>
-<div class="col-sm-10"><input type="text" class="form-control" id="bt_senderkey" name="bt_senderkey"> <span class="help-block m-b-none text-danger" id="mb_name_assist">*주의 선택 기재사항이지만 센더키가 없으면 알림톡이 발송되지 않습니다. </span>
+<div class="col-sm-10"><input type="text" class="form-control" id="bp_senderid" name="bp_senderid"> <span class="help-block m-b-none text-danger" id="mb_name_assist">*주의 선택 기재사항이지만 센더키가 없으면 알림톡이 발송되지 않습니다. </span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->

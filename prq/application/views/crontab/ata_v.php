@@ -236,7 +236,7 @@ foreach($list as $li)
 			"name"=>$st_names,
 			"tel"=>$st_vtel[$li->st_no],
 			"homepage"=>sprintf("http://prq.co.kr/prq/page/%s",$li->st_no),
-			"point"=>"2,000"
+			"point"=>"첫 다운로드 2,000"
 		);
 		
 		$agencyMember=array(

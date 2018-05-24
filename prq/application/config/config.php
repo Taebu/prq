@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://prq.co.kr/prq/';
+$config['base_url']	= 'https://prq.co.kr/prq/';
 
 /*
 |--------------------------------------------------------------------------

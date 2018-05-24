@@ -533,4 +533,5 @@ function set_name()
 	$("[name=st_name]").val($("#st_no option:selected").text());
 
 }
+console.log("/var/www/html/prq/application/views/store/ata_pay/write_v.php");
 </script>

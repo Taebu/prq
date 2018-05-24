@@ -98,85 +98,101 @@ class Store_m extends CI_Model
 
 
 	/**
-	 * 게시물 목록 가져오기
-	 *
-	 * @author Taebu <mtaebu@gmail.com>
-	 * @param string $table 게시판 테이블
-	 * @param string $type 총 게시물 수 또는 게시물 배열을 반환할 지를 결정하는 구분자
-	 * @param string $offset 게시물 가져올 순서
-	 * @param string $limit 한 화면에 표시할 게시물 갯수
-	 * @param string $search_word 검색어
-	 * @return array
-	 */
-    function get_list2($table='prq_store', $type='', $offset='', $limit='', $search_array=array())
-    {
+	* 게시물 목록 가져오기
+	*
+	* @author Taebu <mtaebu@gmail.com>
+	* @param string $table 게시판 테이블
+	* @param string $type 총 게시물 수 또는 게시물 배열을 반환할 지를 결정하는 구분자
+	* @param string $offset 게시물 가져올 순서
+	* @param string $limit 한 화면에 표시할 게시물 갯수
+	* @param string $search_word 검색어
+	* @return array
+	*/
+	function get_list2($table='prq_store', $type='', $offset='', $limit='', $search_array=array())
+	{
 		$sword= ' WHERE 1=1 ';
-		if($table==""){
-		$table='prq_store';
-		}
-		if (empty($search_array))
-     	{
-     		//검색어가 있을 경우의 처리
-     		$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
-     	}
-
-
-		$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
-		$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
-
-		/*총판인 경우*/
-		if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
-			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
-		/*대리점인 경우*/
-		}else if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
-			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
-		/*가맹점인 경우*/
-		}else if( $mb_gcode=="G5"&&strlen($prq_fcode)>5){
-			$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+		
+		if($table=="prq_ata_pay"){
+			$table='prq_ata_pay';
+		}else if($table==""){
+			$table='prq_store';
 		}
 
-
-
-
-		if ( $search_array['mb_id'] != '' )
+		/* 가맹점 검색 */
+		if($table=='prq_store')
 		{
-			//검색어가 있을 경우의 처리
-			$sword .= ' and mb_id like "%'.$search_array['mb_id'].'%" ';
+			if (empty($search_array))
+			{
+				//검색어가 있을 경우의 처리
+				$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+			}
+
+			$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
+			$mb_gcode=$this->input->cookie('mb_gcode', TRUE);
+
+			/*총판인 경우*/
+			if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
+				$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+			/*대리점인 경우*/
+			}else if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
+				$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+			/*가맹점인 경우*/
+			}else if( $mb_gcode=="G5"&&strlen($prq_fcode)>5){
+				$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+			}
+
+			if ( $search_array['mb_id'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and mb_id like "%'.$search_array['mb_id'].'%" ';
+			}
+			
+			if ( $search_array['st_name'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and st_name like "%'.$search_array['st_name'].'%" ';
+			}
+
+			if ( $search_array['prq_fcode'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and prq_fcode like "%'.$search_array['prq_fcode'].'%" ';
+			}
+
+		}
+
+		/* 알림톡 결제 내역 검색 */
+		if($table=='prq_ata_pay')
+		{
+			if ( $search_array['st_name'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and st_name like "%'.$search_array['st_name'].'%" ';
+			}
+			if ( $search_array['prq_fcode'] != '' )
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= ' and prq_fcode like "%'.$search_array['prq_fcode'].'%" ';
+			}
 		}
 		
-		if ( $search_array['st_name'] != '' )
+		/* 리미트 조건 ( ** 공통사항 ) */
+		$limit_query = '';
+		if ( $limit != '' OR $offset != '' )
 		{
-			//검색어가 있을 경우의 처리
-			$sword .= ' and st_name like "%'.$search_array['st_name'].'%" ';
+			//페이징이 있을 경우의 처리
+			$limit_query = ' LIMIT '.$offset.', '.$limit;
 		}
 
-		if ( $search_array['prq_fcode'] != '' )
-		{
-			//검색어가 있을 경우의 처리
-			$sword .= ' and prq_fcode like "%'.$search_array['prq_fcode'].'%" ';
-		}
-
-    	$limit_query = '';
-
-    	if ( $limit != '' OR $offset != '' )
-     	{
-     		//페이징이 있을 경우의 처리
-     		$limit_query = ' LIMIT '.$offset.', '.$limit;
-     	}else{
-		
-		}
-
+		/*  검색 */
 		if($table=='prq_store')
 		{
 			$order=" ORDER BY st_no DESC ";
 		}else{
 			$order=" ORDER BY ap_no DESC ";
 		}
-//		$table="ci_board";
-    	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
 		$sql = "SELECT * FROM ".$table." ".$sword.$order.$limit_query;
-   		$query = $this->db->query($sql);
-		//echo $sql;
+		$query = $this->db->query($sql);
 		if ( $type == 'count' )
      	{
      		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
@@ -214,9 +230,7 @@ class Store_m extends CI_Model
 	    $result = $query->row();
 
     	return $result;
-    }
-
-
+	}
 
 	/**
 	 * 게시물 입력

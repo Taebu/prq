@@ -207,7 +207,10 @@ foreach($appids as $app)
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+<div class="controls">
 
+<p class="help-block"><?php echo validation_errors(); ?></p>
+</div>
 <div class="form-group">
 <div class="col-sm-12" style="text-align:center">
 <button type="submit" class="btn btn-primary" id="write_btn">작성</button>

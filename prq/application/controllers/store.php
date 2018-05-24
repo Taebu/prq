@@ -67,7 +67,7 @@ class Store extends CI_Controller {
 		//검색어 초기화
 		$search_word = $page_url = '';
 		$uri_segment = 5;
-
+    $table=$this->uri->segment(3);
 		//주소중에서 q(검색어) 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
 		$uri_array = $this->segment_explode($this->uri->uri_string());
 
@@ -80,18 +80,6 @@ class Store extends CI_Controller {
 			$uri_segment = 7;
 		}
 
-		//페이지네이션 라이브러리 로딩 추가
-		/*
-			<ul class="pagination pagination-lg">
-			<li><a href="/prq/board/lists/ci_board/page/1"><i class="fa fa-chevron-left"></i> <i class="fa fa-chevron-left"></i></a></li>
-			<li><a href="/prq/board/lists/ci_board/page/1"><i class="fa fa-chevron-left"></i></a></li>
-			<li><a href="/prq/board/lists/ci_board/page/1">1</a></li>
-			<li><a href="/prq/board/lists/ci_board/page/5">2</a></li>
-			<li><a href="/prq/board/lists/ci_board/page/10">3</a></li>
-			<li class="disabled"><a href="#">4</a></li>
-			<li><a href="/prq/board/lists/ci_board/page/20">5</a></li>
-			<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>&nbsp;</ul>
-		*/
 		$search_array = array(
 			'st_name'=>$this->input->post('st_name', TRUE),
 			'mb_id'=>$this->input->post('mb_id', TRUE),
@@ -100,16 +88,15 @@ class Store extends CI_Controller {
  		
 		$this->load->library('pagination');
 
-		/*
-		$config['base_url'] = '/prq/board/lists/ci_board'.$page_url.'/page/'; //페이징 주소
-		$config['total_rows'] = $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word); //게시물의 전체 갯수
-		$config['per_page'] = 10; //한 페이지에 표시할 게시물 수
-		$config['uri_segment'] = $uri_segment; //페이지 번호가 위치한 세그먼트
-		*/
+		if($table=="prq_ata_pay"){
+			$base_url='/prq/store/lists/prq_ata_pay'.$page_url.'/page/';
+		}else{
+			$base_url='/prq/store/lists/prq_store'.$page_url.'/page/';
+		}
 
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/store/lists/prq_store'.$page_url.'/page/',
+		'base_url'=> $base_url,
 		//'total_rows' => $this->store_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'total_rows' => $this->store_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 25,
@@ -173,9 +160,10 @@ class Store extends CI_Controller {
 		}else{
 		$data['group_cnt'] =  json_decode(json_encode($this->store_m->get_groupcnt("prq_store")), True);
 		}
+		
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('store/tlist_v', $data);
-		}else if($this->uri->segment(3)=="prq_ata_pay"){
+		}else if($table=="prq_ata_pay"){
 			//echo "prq_ata_pay";
 			$this->load->view('store/ata_pay/list_v', $data);
 		}else{

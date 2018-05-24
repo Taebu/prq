@@ -59,6 +59,11 @@ function get_gifticon($code)
 			var keycode = window.event.keyCode;
 			if(keycode == 13) $("#search_btn").click();
 		}
+
+function set_write(){
+$('#bd_search').attr('action', "/prq/biztalk/write/bt_plusfriend/page/1");
+  $("#bd_search").submit();		
+}
 </script>
 <style type="text/css">
 	.black {
@@ -179,6 +184,7 @@ function get_gifticon($code)
 	<li>Biztalk &gt plusFriend &gt list</li>
 </ul>
 <!-- list.php -->
+<div class="row"><div class="col-sm-11"></div><div class="col-sm-1"> <a href="javascript:set_write();" class="btn btn-success">쓰기</a></div></div>
 <table cellspacing="0" cellpadding="0" class="table table-striped">
  <thead>
 		<tr>

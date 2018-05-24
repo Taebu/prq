@@ -341,10 +341,11 @@ class Template extends CI_Controller {
 				}
 				$write_data['bt_regex']=join("&",$reg_array);
 				$write_data['table']=$this->uri->segment(3);
-				$result = $this->template_m->modify_blog($write_data);
+        print_r($write_data);
+				$result = $this->template_m->modify_template($write_data);
 				
 
-				if ( $result)
+				if ($result)
 				{
 					//글 작성 성공시 게시판 목록으로
 					alert('수정되었습니다.', '/prq/template/view/'.$this->input->post('bt_no', TRUE).'/page/'.$pages);
@@ -363,6 +364,16 @@ class Template extends CI_Controller {
 				//echo "<pre>";
 				//print_r($this->uri);
 				//게시물 내용 가져오기
+        $write_data = $this->input->post(NULL, TRUE);
+				$i=0;
+				$reg_array=array();
+				foreach($reg_name as $rn)
+				{
+					$reg_array[]=$reg_name[$i]."=".$reg_value[$i];
+					$i++;
+				}
+				$write_data['bt_regex']=join("&",$reg_array);
+        print_r($write_data);
 				$data['views'] = $this->template_m->get_view("bt_template", $this->uri->segment(5));
 
 				$data['appids'] = $this->template_m->get_appids(array());

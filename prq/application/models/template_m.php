@@ -356,7 +356,7 @@ class Template_m extends CI_Model
 	 * @param array $arrays 테이블명, 게시물번호, 게시물제목, 게시물내용 1차 배열
 	 * @return boolean 입력 성공여부
 	 */
-	function modify_blog($arrays)
+	function modify_template($arrays)
  	{
 		$modify_array = $arrays;
 		$where = array(
@@ -365,7 +365,7 @@ class Template_m extends CI_Model
 		$table=$arrays['table'];
 		/* table key를 제거한다. */
 		$modify_array=array_diff_key($modify_array, 
-			array('table' => "",'reg_name'=>"",'reg_value'=>""));
+			array('bt_no' => "",'table' => "",'reg_name'=>"",'reg_value'=>""));
 		$result = $this->db->update($table, $modify_array, $where);
 		//결과 반환
 		return $result;

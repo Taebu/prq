@@ -1,8 +1,10 @@
- <pre>
+<!--  <pre> -->
 <?php
-print_r($views);
-?>
-</pre>
+//print_r($views);
+
+//print_r($store);
+?><!-- 
+</pre> -->
 <!-- D:\Share\04.Paid_PG\products-WB0R5L90S\Static_Full_Version\form_advanced.html -->
 
 <script src="/prq/include/js/mysql/prq_store.js" type="text/javascript"></script>
@@ -76,7 +78,7 @@ foreach($member as $mb)
 <select name="st_no" id="st_no" class="select2_demo_1 form-control" onchange="javascript:set_name()"><?php
 foreach($store as $st)
 {
-	$is_match=$st->prq_fcode==$views->prq_fcode;
+	$is_match=$st->st_no==$views->st_no;
 	printf($is_match?"<option value='%s' selected>%s</option>":"<option value='%s'>%s</option>",$st->st_no,$st->st_name);
 }?></select><!-- #st_name -->
 <span class="help-block m-b-none">가맹점을 선택 후 매장명을 선택해 주세요. <br>
@@ -623,7 +625,8 @@ $(function(){
 });
 });
 
-
+console.log("/var/www/html/prq/application/views/store/ata_pay/view_v.php");
 </script>
-    <!-- Select2 -->
-    <script src="/prq/include/js/plugins/select2/select2.full.min.js"></script>
+<?php echo $this->load->helper('url');?>
+<!-- Select2 -->
+<script src="/prq/include/js/plugins/select2/select2.full.min.js"></script>
