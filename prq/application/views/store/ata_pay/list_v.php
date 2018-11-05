@@ -376,6 +376,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 </th>
 <th scope="col">시작일</th>
 <th scope="col">입력일</th>
+<th scope="col">코드</th>
 <th scope="col">자동출금일</th>
 <th scope="col">상점명</th>
 <th scope="col">충전금액</th>
@@ -387,7 +388,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 </thead>
 <tbody>
 <?php
-
+//print_r($pt_code);
 
 foreach ($list as $lt)
 {
@@ -403,6 +404,8 @@ $ap_status=get_status3($lt->ap_status);
 $ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 $ap_reserve=$lt->ap_reserve=="0"?"즉시발송":$lt->ap_reserve."분";
 $view_url=sprintf("/prq/atapay/view/%s/ap_no/%s/page/%s",$this->uri->segment(3),$lt->ap_no,$page);
+$prq_fcode=substr($lt->prq_fcode,0,12);
+$code_name=$pt_code[$prq_fcode];
 
 $ata_yn=$store[$lt->st_no];
 $is_ata=$ata_yn=="Y";
@@ -416,6 +419,7 @@ $store_url=sprintf("/prq/store/modify/prq_store/st_no/%s/page/1",$lt->st_no);
 		</td>
  		<td><?php echo $st_dt;?></td>
  		<td><?php echo $lt->ap_datetime;?></td>
+ 		<td><?php echo $code_name;?></td>
  		<td><?php printf("매월 %s일 ",$autobill_date);?></td>
 		<td><a rel="external" href="<?php echo $view_url;?>"><?php echo $lt->st_name;?></a>
 		<a rel="external" href="<?php echo $store_url;?>"><?php printf('<button type="button" class="btn btn-%s btn-xs">%s</button>',$ata_status,$store[$lt->st_no]);?></a>

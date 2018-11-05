@@ -466,7 +466,29 @@ class Atapay_m extends CI_Model
 
    	return $result;
 	}
-}
 
+	function get_ptcode($list)
+	{
+		$list=json_decode(json_encode($list), True);
+		
+		$pt_code = array_column($list, 'prq_fcode');
+
+		foreach ($pt_code as $k => $v) {
+			$pt_code[$k]=substr($v,0,12);
+
+	}
+		$pt_code=array_unique ($pt_code);
+		$pt_code=array_values ($pt_code);
+
+		$this->db->select('pt_code,pt_name');
+		$this->db->where_in('pt_code', $pt_code);
+		$this->db->from('prq_ptcode');
+		$query = $this->db->get();
+
+    $result = $query->result();
+
+   	return $result;
+	}
+}
 /* End of file store_m.php */
 /* Location: ./prq/application/models/atapay_m.php */

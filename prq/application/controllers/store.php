@@ -165,6 +165,11 @@ class Store extends CI_Controller {
 		$data['store'] = array_column($data['store'], 'st_ata_YN','st_no');
 		//$data['store_ata'] =  $this->store_m->get_groupcnt($data['list']);
 		
+		$data['pt_code'] = $this->store_m->get_ptcodes($data['list']);		
+		$data['pt_code']=json_decode(json_encode($data['pt_code']), True);
+
+		$data['pt_code'] = array_column($data['pt_code'], 'pt_name','pt_code');
+		
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('store/tlist_v', $data);
 		}else if($table=="prq_ata_pay"){
