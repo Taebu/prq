@@ -145,6 +145,7 @@ class Store extends CI_Controller {
 
 		$data['list'] = $this->store_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_array);
 
+
 		$data['fr_names'] = json_decode(json_encode($this->store_m->get_frcode()), True);;
 		$data['pt_names'] = json_decode(json_encode($this->store_m->get_ptcode()), True);;
 		$data['ds_names'] = json_decode(json_encode($this->store_m->get_dscode()), True);;
@@ -159,6 +160,10 @@ class Store extends CI_Controller {
 		}else{
 		$data['group_cnt'] =  json_decode(json_encode($this->store_m->get_groupcnt("prq_store")), True);
 		}
+		$data['store'] = $this->store_m->get_store_ata($data['list']);		
+		$data['store']=json_decode(json_encode($data['store']), True);
+		$data['store'] = array_column($data['store'], 'st_ata_YN','st_no');
+		//$data['store_ata'] =  $this->store_m->get_groupcnt($data['list']);
 		
 		if($this->uri->segment(6)=="test"){
 			$this->load->view('store/tlist_v', $data);

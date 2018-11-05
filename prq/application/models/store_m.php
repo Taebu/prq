@@ -780,6 +780,20 @@ mysql> select * from prq_member_code;
 			return $last_id;
 			
  	}
+
+	function get_store_ata($list)
+	{
+		$list=json_decode(json_encode($list), True);
+		
+		$st_no = array_column($list, 'st_no');
+		$this->db->select('st_no, st_name, st_ata_YN');
+		$this->db->where_in('st_no', $st_no);
+		$this->db->from('prq_store');
+		$query = $this->db->get();
+    $result = $query->result();
+
+   	return $result;
+	}
 }
 
 /* End of file store_m.php */
