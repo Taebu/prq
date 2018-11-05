@@ -81,6 +81,7 @@ $mb_gcode=$this->input->cookie('mb_gcode',TRUE);
 
 <input type="hidden" id="st_main_paper" name="st_main_paper" value="<?php echo $views->st_main_paper;?>">
 <input type="hidden" id="st_main_paper_size" name="st_main_paper_size" value="<?php echo $views->st_main_paper_size;?>">
+<input type="hidden" id="hidden_st_ata_YN" name="hidden_st_ata_YN" value="<?php echo $views->st_ata_YN;?>">
 
 
 
@@ -527,6 +528,27 @@ PRQ 서버
 </div><!-- #auto_cat_area -->
 </div><!-- #naver_blogapi -->
 
+<div id="radio">
+<!-- code 5004 -->
+<div class="form-group"><label class="col-sm-2 control-label">ATA 상태값</label>
+<div class="col-sm-10">
+<div class="switch">
+	<div class="onoffswitch">
+				<input type="checkbox" class="onoffswitch-checkbox" name="st_ata_YN" id="st_ata_YN" >
+			<label class="onoffswitch-label" for="st_ata_YN">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+			</label>
+	</div><!-- .onoffswitch -->
+</div><!-- .switch -->
+
+<span class="help-block m-b-none">
+ATA 상태값이 "on" 시 자동으로 ATA log 페이지에 알림톡에 저장됩니다.<br>
+ATA 상태값이 "off" 시 OCID log 페이지에 콜로그 발생됩니다.
+</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+</div><!-- #radio -->
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>
 </div>
@@ -1326,6 +1348,8 @@ setTimeout(get_naver_category, 5000); // 5000ms(5초)가 경과하면 이 함수
 /* 툴팁 활성화 */
 $(".popover-top").popover({trigger: 'hover click','placement': 'top'}); 
 
+var is_ata_yn=$("#hidden_st_ata_YN").val()=="on"||$("#hidden_st_ata_YN").val()=="Y";
+$("#st_ata_YN").prop('checked', is_ata_yn);
 
 };/*window.onload = function() {..}*/
 

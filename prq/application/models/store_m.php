@@ -426,6 +426,8 @@ mysql> select * from prq_member_code;
 
 		$result = $this->db->update($arrays['table'], $modify_array, $where);
 */
+		$is_ata=$arrays['st_ata_YN']=="on";
+		$arrays['st_ata_YN']=$is_ata?"Y":"N";
 
 		$sql_array=array();
 		$sql_array[]="UPDATE ".$arrays['table']." SET ";
@@ -465,6 +467,7 @@ mysql> select * from prq_member_code;
 		$sql_array[]="st_top_msg='".$arrays['st_top_msg']."',";
 		$sql_array[]="st_middle_msg='".$arrays['st_middle_msg']."',";
 		$sql_array[]="st_bottom_msg='".$arrays['st_bottom_msg']."',";
+		$sql_array[]="st_ata_YN='".$arrays['st_ata_YN']."',";
 		$sql_array[]="st_business_num='".$arrays['st_business_num']."' ";
 		$sql_array[]="where st_no='".$arrays['st_no']."' ";
 		$sql=join("",$sql_array);
@@ -790,6 +793,7 @@ mysql> select * from prq_member_code;
 		$this->db->where_in('st_no', $st_no);
 		$this->db->from('prq_store');
 		$query = $this->db->get();
+
     $result = $query->result();
 
    	return $result;

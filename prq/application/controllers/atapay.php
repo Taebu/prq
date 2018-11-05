@@ -135,6 +135,9 @@ class Atapay extends CI_Controller {
 		$data['list'] = $this->atapay_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_array);
 		$data['group_cnt'] =  json_decode(json_encode($this->atapay_m->get_groupcnt("prq_ata_pay")), True);
 		//echo "prq_ata_pay";
+		$data['store'] = $this->atapay_m->get_store_ata($data['list']);		
+		$data['store']=json_decode(json_encode($data['store']), True);
+		$data['store'] = array_column($data['store'], 'st_ata_YN','st_no');
 		$this->load->view('store/ata_pay/list_v', $data);
 	}
 

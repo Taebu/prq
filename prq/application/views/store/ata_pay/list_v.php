@@ -403,8 +403,12 @@ $ap_status=get_status3($lt->ap_status);
 $ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 $ap_reserve=$lt->ap_reserve=="0"?"즉시발송":$lt->ap_reserve."분";
 $view_url=sprintf("/prq/atapay/view/%s/ap_no/%s/page/%s",$this->uri->segment(3),$lt->ap_no,$page);
+
 $ata_yn=$store[$lt->st_no];
 $is_ata=$ata_yn=="Y";
+$ata_status=$is_ata?"success":"danger";
+$store_url=sprintf("/prq/store/modify/prq_store/st_no/%s/page/1",$lt->st_no);
+
 ?>
 	<tr>
 		<td scope="col">
@@ -414,11 +418,7 @@ $is_ata=$ata_yn=="Y";
  		<td><?php echo $lt->ap_datetime;?></td>
  		<td><?php printf("매월 %s일 ",$autobill_date);?></td>
 		<td><a rel="external" href="<?php echo $view_url;?>"><?php echo $lt->st_name;?></a>
-<?php if($is_ata){ ?>
-<button type="button" class="btn btn-success btn-xs"><?php echo $store[$lt->st_no];?></button>	
-<?php }else{ ?>
-<button type="button" class="btn btn-danger btn-xs"><?php echo $store[$lt->st_no];?></button>	
-<?php } ?>
+		<a rel="external" href="<?php echo $store_url;?>"><?php printf('<button type="button" class="btn btn-%s btn-xs">%s</button>',$ata_status,$store[$lt->st_no]);?></a>
 		</td>
 		<td><?php echo number_format($lt->ap_price)."원";?></td>
 <!-- 		<td><?php echo $lt->prq_fcode;?></td> -->
