@@ -2748,6 +2748,32 @@ ERROR:
 		fclose($file);
 
 	}
+
+	function checksum($array)
+	{
+		/* 업데이트 업로드 초기 경로 업로드 */
+		$base_location="/var/www/html/prq/prqapp/update/";
+		/* 파일 위치를 구한다. */
+		$location=$base_location.$array['update_location'];
+
+		/* 파일 존재 여부를 is_file_exists 변수에 담는다. */
+		$is_file_exists=file_exists($location);
+		
+		/* 파라메터를 update_location 을 보내지 않았을 때 */
+		if($base_location==$location){
+			echo "not locate";
+		/* 해당 파일이 존재 하는 경우*/
+		}else if($is_file_exists){
+		/* 파일 위치를 md5_file 이라는 함수에 넣어 md5 결과를 호출한다. */
+		echo md5_file($location);
+		}else{
+		/* update_location 으로 파일 위치를 탐색하였으나 파일이 존재하지 않습니다. 의 상태를 
+		"is not file" 로 출력 */
+		echo "is not file";
+		}
+
+		///var/www/html/prq/prqapp/update/updaterApp/PowerUpdater.exe
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */

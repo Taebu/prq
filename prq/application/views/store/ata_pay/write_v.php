@@ -71,6 +71,38 @@ echo $prq_fcode;
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
+
+<div class="col-md-12">
+<div class="form-group"><label class="col-sm-2 control-label">플러스친구 </label>
+<div class="col-sm-10">
+<select name="bp_appid" id="bp_appid" class="select2_demo_1 form-control" onchange="chg_btcode(this.value)">
+<option value="">플러스 친구를 선택해 주세요. </option>
+<?php
+foreach($plusfriend as $pf)
+{
+
+	printf("<option value='%s'>%s</option>",$pf->bp_appid,$pf->bp_plusid);
+}?>
+</select> 
+<span class="help-block m-b-none">플러스 친구를 선택해 주세요. </span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">템플릿코드</label>
+<div class="col-sm-10">
+<select name="bt_code" id="bt_code" class="select2_demo_1 form-control">
+<option value="">템플릿 코드를 선택해 주세요. </option>
+<?php
+foreach($template as $tp)
+{
+	printf("<option value='%s'>%s</option>",$tp->bt_code,$tp->bt_code);
+}?></select><!-- #st_name -->
+<span class="help-block m-b-none">템플릿 코드를 선택해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
+<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
 <div class="form-group"><label class="col-sm-2 control-label">충전금액</label>
 <div class="col-sm-10 ">
 <div class="radio radio-info radio-inline">

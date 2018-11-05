@@ -1152,6 +1152,15 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		$json=$this->ajax_m->make_store();
 		echo $json;
 	}
+
+	/* update 할 파일의 md5로 체크 합업데이트할 파일과 비교하여 체크 합니다.
+	http://prq.co.kr/prq/ajax/checksum
+	*/
+	function checksum()
+	{
+		$array=$this->input->post(null, TRUE);
+		$this->ajax_m->checksum($array);
+	}
 }
 /* End of file ajax.php */
 /* Location: ./prq/application/controllers/ajax.php */

@@ -107,7 +107,7 @@ $mb_gcode=@$this->input->cookie('mb_gcode',TRUE);
 <div class="row">
 <div class="col-md-12">
 <!-- <form method="get" class="form-horizontal"> -->
-<input type="text" name="bt_no" id="bt_no" value="<?php echo $views->bt_no;?>">
+<input type="hidden" name="bt_no" id="bt_no" value="<?php echo $views->bt_no;?>">
 <div class="form-group"><label class="col-sm-2 control-label">appid</label>
 <div class="col-sm-10">
 <select name="appid" id="appid" class="form-control" onchange="javascript:chg_plusid()">

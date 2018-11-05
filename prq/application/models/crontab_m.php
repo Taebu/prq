@@ -1062,6 +1062,17 @@ class Crontab_m extends CI_Model
    		$query = $this->db->query($sql);
    		return $query->result(); 
     }
+
+		function set_ata_store($st_no)
+		{
+			$data = array(
+				'st_ata_YN' => 'Y'
+			);
+
+			$this->db->where('st_no', $st_no);
+			$query = $this->db->update('prq_store', $data);
+   		return $query->result(); 
+		}
 }
 
 /* End of file crontab_m.php */

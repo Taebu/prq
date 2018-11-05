@@ -24,7 +24,7 @@ $attributes = array(
 'id' => 'write_action',
 'onsubmit'=>'return set_atapay();'
 );
-echo form_open('/atapay/modify/prq_ata_pay', $attributes);
+echo form_open(sprintf('/atapay/modify/%s/ap_no/%s',"prq_ata_pay",$views->ap_no), $attributes);
 ?>
 <div class="form-group">
 <div class="col-sm-10 ">
@@ -112,7 +112,7 @@ foreach($plusfriend as $pf)
 foreach($template as $tp)
 {
 	$is_match=$tp->bt_code==$views->bt_code;
-	printf($is_match?"<option value='%s' selected>%s(%s - %s)</option>":"<option value='%s'>%s(%s - %s)</option>",$tp->bt_code,$tp->bt_name,$tp->bt_plusid,$tp->bt_code);
+	printf($is_match?"<option value='%s' selected>%s</option>":"<option value='%s'>%s</option>",$tp->bt_code,$tp->bt_code);
 }?></select><!-- #st_name -->
 <span class="help-block m-b-none">템플릿 코드를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
@@ -589,17 +589,22 @@ function set_name()
 }
 
 var template=<?php echo json_encode($template);?>;
-
-function chg_btcode(v,bt_code)
+//val
+function chg_btcode(bt_code)
 {
 	var object=[];
 	$.each(template,function(key,val){
-	if(v==val.appid)
+		console.log(val);
+		/*
+		val
+		*/
+	if(bt_code==val.appid)
 	{
 		if(val.bt_code==bt_code){
-			object.push("<option value='"+val.bt_code+"' selected>"+val.bt_name+"("+val.bt_plusid+" - "+val.bt_code+")</option>");
+//			object.push("<option value='"+val.bt_code+"' selected>"+val.bt_name+"("+val.bt_plusid+" - "+val.bt_code+")</option>");
+			object.push("<option value='"+val.bt_code+"' selected>"+val.bt_plusid+" ( "+val.bt_code+")</option>");
 		}else{
-			object.push("<option value='"+val.bt_code+"'>"+val.bt_name+"("+val.bt_plusid+" - "+val.bt_code+")</option>");
+			object.push("<option value='"+val.bt_code+"'>"+val.bt_plusid+" ( "+val.bt_code+")</option>");
 		}
 	}
 	});

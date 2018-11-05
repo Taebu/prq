@@ -40,12 +40,38 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 				}
 			});
 
+			$("#search_btn").click(function(){
+				if($("#q").val() == ''){
+					alert('검색어를 입력해주세요.');
+					return false;
+				} else {
+					var act = '/prq/store/lists/prq_store/q/'+$("#gc_receiver").val()+'/page/1';
+					$("#bd_search").attr('action', act).submit();
+				}
+			});
+
 			/*버튼 비활성화.*/
 			chk_btn_status();
 			for(var i in tt_nos){
 				//console.log(tt_nos[i]);
 				$("#ttno_"+tt_nos[i]).html('<i class="fa fa-refresh  text-success"></i>');
 			}
+
+
+			  $("ul.pagination a").click(function() {
+				var kk=$(this).attr('href').split("/");
+
+				var search_key=6;
+				if(kk.length == 7){
+				search_form(kk[6],'page');
+				}else{
+				search_form(kk[8],'search');
+				}
+				
+
+				return false;
+			  });  
+		
 		});
 
 		function board_search_enter(form) {
@@ -59,6 +85,16 @@ var tt_nos=[<?php echo join(",",$tt_no);?>];
 		
 		}
 
+		/*ocid를 검색합니다.*/
+		function search_form(p,type){
+			$("#page").val(p);
+			if(type=="search"){
+			var act = '/prq/store/lists/prq_store/q/'+$("#gc_receiver").val()+'/page/'+p;
+			}else{
+			var act = '/prq/store/lists/prq_store/page/'+p;
+			}
+			$("#bd_search").attr('action', act).submit();
+		}
 		/* 리스트 상태를 변경, 로그를 기록 합니다. */
 		function chg_list(code){
 			var param=$("#write_action").serialize();

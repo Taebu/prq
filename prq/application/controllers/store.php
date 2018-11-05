@@ -12,6 +12,7 @@ class Store extends CI_Controller {
 		$this->load->database();
 //		$this->load->model('board_m');
 		$this->load->model('store_m');
+		$this->load->model('atapay_m');
 		$this->load->helper('form');
 		$this->load->helper(array('url','date'));
 	}
@@ -80,11 +81,7 @@ class Store extends CI_Controller {
 			$uri_segment = 7;
 		}
 
-		$search_array = array(
-			'st_name'=>$this->input->post('st_name', TRUE),
-			'mb_id'=>$this->input->post('mb_id', TRUE),
-			'prq_fcode'=>$this->input->post('prq_fcode', TRUE)
-		);
+		$search_array = $this->input->post(null, TRUE);
  		
 		$this->load->library('pagination');
 
@@ -145,7 +142,9 @@ class Store extends CI_Controller {
 		$data['search']=$search_array;
 
 		//$data['list'] = $this->store_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
+
 		$data['list'] = $this->store_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_array);
+
 		$data['fr_names'] = json_decode(json_encode($this->store_m->get_frcode()), True);;
 		$data['pt_names'] = json_decode(json_encode($this->store_m->get_ptcode()), True);;
 		$data['ds_names'] = json_decode(json_encode($this->store_m->get_dscode()), True);;
@@ -231,6 +230,8 @@ class Store extends CI_Controller {
 						'table' => $this->uri->segment(3), //게시판 테이블명
 						'prq_fcode' => $this->input->post('prq_fcode', TRUE),
 						'st_name' => $this->input->post('st_name', TRUE),
+						'bp_appid' => $this->input->post('bp_appid', TRUE),
+						'bt_code' => $this->input->post('bt_code', TRUE),
 						'st_no' => $this->input->post('st_no', TRUE),
 						'ap_price' => $this->input->post('ap_price', TRUE),
 						'ap_reserve' => $this->input->post('ap_reserve', TRUE),
@@ -323,7 +324,9 @@ class Store extends CI_Controller {
 			{
 				//쓰기폼 view 호출
 				if($this->uri->segment(3)=="prq_ata_pay"){
-				$this->load->view('store/ata_pay/write_v');	
+					$data['plusfriend'] = $this->atapay_m->get_plusfriend();
+					$data['template'] = $this->atapay_m->get_template();
+				$this->load->view('store/ata_pay/write_v',$data);	
 				}else{
 				$this->load->view('store/write_v');	
 				}

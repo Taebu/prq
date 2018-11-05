@@ -196,7 +196,9 @@ class Atapay extends CI_Controller {
 			else
 			{
 				//쓰기폼 view 호출
-				$this->load->view('store/ata_pay/write_v');	
+		$data['plusfriend'] = $this->atapay_m->get_plusfriend();
+		$data['template'] = $this->atapay_m->get_template();
+				$this->load->view('store/ata_pay/write_v',$data);	
 			}
 		}
 		else

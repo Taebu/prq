@@ -77,6 +77,7 @@ class Store_m extends CI_Model
 		}
 //		$table="ci_board";
     	//$sql = "SELECT * FROM ".$table.$sword." AND board_pid = '0' ORDER BY board_id DESC".$limit_query;
+		
 		$sql = "SELECT * FROM ".$table." ".$sword."  ORDER BY st_no DESC".$limit_query;
    		$query = $this->db->query($sql);
 
@@ -110,7 +111,7 @@ class Store_m extends CI_Model
 	*/
 	function get_list2($table='prq_store', $type='', $offset='', $limit='', $search_array=array())
 	{
-		$sword= ' WHERE 1=1 ';
+		$where =array();
 		
 		if($table=="prq_ata_pay"){
 			$table='prq_ata_pay';
@@ -124,7 +125,8 @@ class Store_m extends CI_Model
 			if (empty($search_array))
 			{
 				//검색어가 있을 경우의 처리
-				$sword = ' WHERE subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+				//$this->db->like('subject', $search_word);
+				//$this->db->like('contents', $search_word);
 			}
 
 			$prq_fcode=$this->input->cookie('prq_fcode', TRUE);
@@ -132,33 +134,32 @@ class Store_m extends CI_Model
 
 			/*총판인 경우*/
 			if( $mb_gcode=="G3"&&strlen($prq_fcode)>5){
-				$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+				$this->db->like('prq_fcode', $prq_fcode);
 			/*대리점인 경우*/
 			}else if( $mb_gcode=="G4"&&strlen($prq_fcode)>5){
-				$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+				$this->db->like('prq_fcode', $prq_fcode);
 			/*가맹점인 경우*/
 			}else if( $mb_gcode=="G5"&&strlen($prq_fcode)>5){
-				$sword.= ' and prq_fcode like "'.$prq_fcode.'%" ';
+				$this->db->like('prq_fcode', $prq_fcode);
 			}
 
 			if ( $search_array['mb_id'] != '' )
 			{
 				//검색어가 있을 경우의 처리
-				$sword .= ' and mb_id like "%'.$search_array['mb_id'].'%" ';
+				$this->db->like('mb_id', $search_array['mb_id']);
 			}
 			
 			if ( $search_array['st_name'] != '' )
 			{
 				//검색어가 있을 경우의 처리
-				$sword .= ' and st_name like "%'.$search_array['st_name'].'%" ';
+				$this->db->like('st_name', $search_array['st_name']);
 			}
 
 			if ( $search_array['prq_fcode'] != '' )
 			{
 				//검색어가 있을 경우의 처리
-				$sword .= ' and prq_fcode like "%'.$search_array['prq_fcode'].'%" ';
+				$this->db->like('prq_fcode', $search_array['prq_fcode']);
 			}
-
 		}
 
 		/* 알림톡 결제 내역 검색 */
@@ -167,45 +168,53 @@ class Store_m extends CI_Model
 			if ( $search_array['st_name'] != '' )
 			{
 				//검색어가 있을 경우의 처리
-				$sword .= ' and st_name like "%'.$search_array['st_name'].'%" ';
+				$this->db->like('st_name', $search_array['st_name']);
 			}
 			if ( $search_array['prq_fcode'] != '' )
 			{
 				//검색어가 있을 경우의 처리
-				$sword .= ' and prq_fcode like "%'.$search_array['prq_fcode'].'%" ';
+				$this->db->like('prq_fcode', $search_array['prq_fcode']);
 			}
 		}
 		
 		/* 리미트 조건 ( ** 공통사항 ) */
-		$limit_query = '';
 		if ( $limit != '' OR $offset != '' )
 		{
 			//페이징이 있을 경우의 처리
-			$limit_query = ' LIMIT '.$offset.', '.$limit;
+			$this->db->limit($limit,$offset);
 		}
 
 		/*  검색 */
 		if($table=='prq_store')
 		{
-			$order=" ORDER BY st_no DESC ";
+			$this->db->order_by('st_no', 'DESC ');
+			if(!empty($search_array))
+			{
+				foreach($search_array as $key=>$value)
+				{
+					//echo $key;
+					//echo "=>";
+					//echo $value;
+					//echo "<br>";
+					//$this->db->like($key, $value);
+				}
+			}
 		}else{
-			$order=" ORDER BY ap_no DESC ";
+			$this->db->order_by('ap_no', 'DESC ');
 		}
-		$sql = "SELECT * FROM ".$table." ".$sword.$order.$limit_query;
-		$query = $this->db->query($sql);
+		$this->db->from($table);
+		$query = $this->db->get();
+
 		if ( $type == 'count' )
      	{
      		//리스트를 반환하는 것이 아니라 전체 게시물의 갯수를 반환
 	    	$result = $query->num_rows();
-
-	    	//$this->db->count_all($table);
      	}
      	else
      	{
      		//게시물 리스트 반환
 	    	$result = $query->result();
      	}
-
     	return $result;
     }
 
@@ -222,10 +231,12 @@ class Store_m extends CI_Model
     	//조회수 증가
 //    	$sql0 = "UPDATE ".$table." SET hits=hits+1 WHERE board_id='".$id."'";
 //   		$this->db->query($sql0);
-
+			/*
     	$sql = "SELECT * FROM ".$table." WHERE st_no='".$id."'";
    		$query = $this->db->query($sql);
-
+			*/
+			$this->db->from($table)->where("st_no",$id);
+			$query = $this->db->get();
      	//게시물 내용 반환
 	    $result = $query->row();
 
@@ -741,6 +752,8 @@ mysql> select * from prq_member_code;
 			$sql_array=array();
 			$sql_array[]="INSERT INTO ".$arrays['table']." SET ";
 			$sql_array[]="prq_fcode='".$arrays['prq_fcode']."',";
+			$sql_array[]="bp_appid='".$arrays['bp_appid: ']."',";
+			$sql_array[]="bt_code='".$arrays['bt_code']."',";
 			$sql_array[]="st_name='".$arrays['st_name']."',";
 			$sql_array[]="st_no='".$arrays['st_no']."',";
 			$sql_array[]="ap_price='".$arrays['ap_price']."',";

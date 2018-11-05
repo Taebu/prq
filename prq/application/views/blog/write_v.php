@@ -302,6 +302,7 @@
 
 			</div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
+console.log("write_v.php");
 var image_file_count=0;
 
 

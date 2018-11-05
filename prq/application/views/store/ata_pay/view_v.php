@@ -1,10 +1,10 @@
-<!--  <pre> -->
+<!-- <pre> -->
 <?php
 //print_r($views);
-
+//print_r($views);
 //print_r($store);
-?><!-- 
-</pre> -->
+?>
+<!-- </pre> -->
 <!-- D:\Share\04.Paid_PG\products-WB0R5L90S\Static_Full_Version\form_advanced.html -->
 
 <script src="/prq/include/js/mysql/prq_store.js" type="text/javascript"></script>
@@ -90,11 +90,10 @@ foreach($store as $st)
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 
-
 <div class="col-md-12">
 <div class="form-group"><label class="col-sm-2 control-label">플러스친구 </label>
 <div class="col-sm-10">
-<select name="bp_id" id="bp_id" class="select2_demo_1 form-control" onchange="chg_btcode(this.value)">
+<select name="bp_appid" id="bp_appid" class="select2_demo_1 form-control" onchange="chg_btcode(this.value)">
 <option value="">플러스 친구를 선택해 주세요. </option>
 <?php
 foreach($plusfriend as $pf)
@@ -113,10 +112,11 @@ foreach($plusfriend as $pf)
 <select name="bt_code" id="bt_code" class="select2_demo_1 form-control">
 <option value="">템플릿 코드를 선택해 주세요. </option>
 <?php
+
 foreach($template as $tp)
 {
 	$is_match=$tp->bt_code==$views->bt_code;
-	printf($is_match?"<option value='%s' selected>%s(%s - %s)</option>":"<option value='%s'>%s(%s - %s)</option>",$tp->bt_code,$tp->bt_name,$tp->bt_plusid,$tp->bt_code);
+	printf($is_match?"<option value='%s' selected>%s</option>":"<option value='%s'>%s</option>",$tp->bt_code,$tp->bt_code);
 }?></select><!-- #st_name -->
 <span class="help-block m-b-none">템플릿 코드를 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
@@ -231,7 +231,7 @@ foreach($template as $tp)
 
 <div class="form-group">
 <div class="col-sm-12" style="text-align: center">
-<a href="<?php printf("/prq/atapay/modify/%s/board_id/%s/page/%s",$this->uri->segment(3),$this->uri->segment(5),$this->uri->segment(7));?>" class="btn btn-warning">수정</a> 
+<a href="<?php printf("/prq/atapay/modify/%s/ap_no/%s/page/%s",$this->uri->segment(3),$this->uri->segment(5),$this->uri->segment(7));?>" class="btn btn-warning">수정</a> 
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성</button> -->
 <!-- <button type="submit" class="btn btn-primary" id="write_btn">작성 실제 적용</button> -->
 <button class="btn btn-white" type="reset">취소</button>
@@ -593,16 +593,17 @@ function set_name()
 
 var template=<?php echo json_encode($template);?>;
 
-function chg_btcode(v,bt_code)
+function chg_btcode(bt_code)
 {
 	var object=[];
 	$.each(template,function(key,val){
-	if(v==val.appid)
+	if(bt_code==val.appid)
 	{
 		if(val.bt_code==bt_code){
-			object.push("<option value='"+val.bt_code+"' selected>"+val.bt_name+"("+val.bt_plusid+" - "+val.bt_code+")</option>");
+//			object.push("<option value='"+val.bt_code+"' selected>"+val.bt_name+"("+val.bt_plusid+" - "+val.bt_code+")</option>");
+			object.push("<option value='"+val.bt_code+"' selected>"+val.bt_plusid+" ( "+val.bt_code+")</option>");
 		}else{
-			object.push("<option value='"+val.bt_code+"'>"+val.bt_name+"("+val.bt_plusid+" - "+val.bt_code+")</option>");
+			object.push("<option value='"+val.bt_code+"'>"+val.bt_plusid+" ( "+val.bt_code+")</option>");
 		}
 	}
 	});

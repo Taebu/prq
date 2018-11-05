@@ -363,6 +363,17 @@ class Template_m extends CI_Model
 				'bt_no' => $arrays['bt_no']
 		);
 		$table=$arrays['table'];
+		$reg_name=$arrays['reg_name'];
+		$reg_value=$arrays['reg_value'];
+		$i=0;
+		$reg_array=array();
+		foreach($reg_name as $rn)
+		{
+			$reg_array[]=$reg_name[$i]."=".$reg_value[$i];
+			$i++;
+		}
+		$arrays['bt_regex']=join("&",$reg_array);
+
 		/* table key를 제거한다. */
 		$modify_array=array_diff_key($modify_array, 
 			array('bt_no' => "",'table' => "",'reg_name'=>"",'reg_value'=>""));

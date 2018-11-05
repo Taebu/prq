@@ -437,6 +437,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2")
 	<th scope="col">No</th>
 	<th scope="col">등록일자</th>
 	<th scope="col">총판 ID</th>
+	<th scope="col">총판 명</th>
 	<th scope="col">코드</th>
 	<th scope="col">총판 상태</th>
 	<th scope="col">대리점</th>
@@ -449,11 +450,12 @@ echo "<tr><td colspan='12' style='text-align:center'>등록된 `총판`이 없�
 }
 
 $array_fr = array_column($count, 'mb_pcode');
-print_r($count);
+//print_r($count);
 $fr_cnt = array_column($count, 'cnt');
 
 foreach ($list as $lt)
 {
+	//print_r($lt);
 	$is_fr=array_search($lt->prq_fcode, $array_fr);
 	$fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
 ?>
@@ -462,6 +464,7 @@ foreach ($list as $lt)
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_datetime;?></a></td>
 	<td><?php echo $lt->mb_id;?></td>
+	<td><?php echo $lt->mb_name;?></td>
 	<td><?php echo $lt->prq_fcode;?></td>
 	<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
 	<td><?php echo $fr_count;?></td>

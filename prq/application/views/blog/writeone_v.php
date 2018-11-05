@@ -97,7 +97,10 @@
 
 						<div class="form-group">
 							<div style="text-align:center;color:#676a6c;padding-top:8px;">
-								<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 배달음식 사진을 2장이상 등록해주세요!
+								<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 사진을 2장이상 등록해주세요!
+							</div>
+							<div style="text-align:center;color:#676a6c;padding-top:8px;">
+								<img src="/prq/img/new/icon2.png" style="width:20px;margin-top:-5px;"> 실제 음식사진 필수!!!!
 							</div>
 							<div class="col-sm-10" style="width:100%;margin-top:10px;text-align:center;">
 								<!-- #my-awesome-dropzone1 -->
@@ -303,6 +306,7 @@
 
 			</div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
+console.log("writeone_v.php");
 var image_file_count=0;
 
 

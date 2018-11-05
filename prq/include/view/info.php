@@ -68,16 +68,16 @@ extract($_POST);
 			<div style="border:1px solid #ececec;width:98%;margin:15px 0 15px 0;"></div>
 			<div style="clear:both;"></div>
 			
-			<ul>
+<!-- 			<ul>
 				<li style="float:left;color:#808080;">주문방법</li>
 				<li style="float:left;margin-left:15px;font-weight:bold;">
 					배달/포장 가능
 				</li>
-			</ul>
+			</ul> -->
 
-			<div style="clear:both;"></div>
+			<!-- <div style="clear:both;"></div>
 			<div style="border:1px solid #ececec;width:98%;margin:15px 0 15px 0;"></div>
-			<div style="clear:both;"></div>
+			<div style="clear:both;"></div> -->
 			
 			<ul>
 				<li style="float:left;color:#808080;">휴 &nbsp;무 &nbsp;일</li>

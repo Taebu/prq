@@ -445,6 +445,7 @@ class Atapay_m extends CI_Model
    		//$this->prq->query($sql0);
 
     	$sql = "SELECT * FROM `bt_template` ";
+    	$sql = "SELECT * FROM `bt_template` group by bt_code;";
    		$query = $this->db->query($sql);
 
      	//댓글 리스트 반환

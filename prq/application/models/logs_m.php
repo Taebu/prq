@@ -219,6 +219,23 @@ class Logs_m extends CI_Model
 				$sword .= ' and gc_receiver like "%'.$search_array['gc_receiver'].'%" ';
 			}
 		}
+		
+		/* 2018-11-02 (금) 14:46:26  */
+		if($table=='prq_ata_log')
+		{
+			if (!empty($search_array['at_content']))
+			{
+				$sword .= sprintf(' and at_content like "%%%s%%" ',$search_array['at_content']);
+				//echo " at_content";
+			}
+			
+			if (!empty($search_array['at_receiver']))
+			{
+				//검색어가 있을 경우의 처리
+				$sword .= sprintf(' and at_receiver like "%%%s%%" ',$search_array['at_receiver']);
+			}
+			
+		}
 		/*
 			mysql> select * from prq_cdr order by cd_date desc limit 1\G;
 			*************************** 1. row ***************************
@@ -349,7 +366,7 @@ class Logs_m extends CI_Model
 		$sql[]=" FROM ".$table." ";
 		if($table=="prq_gcm_log"){
 			$sql[]=" where gc_status='I' ";
-			if ( $search_array != '' )
+			if (!empty($search_array))
      		{
 			$sql[]=$sword;
 			}
@@ -371,6 +388,11 @@ class Logs_m extends CI_Model
 		}else if($table=="prq_log"){
 			$sql[]=" order by lo_datetime desc ";
 		}else if($table=="prq_ata_log"){
+			$sql[]=" where 1=1 ";
+			if ( $search_array != '' )
+     		{
+			$sql[]=$sword;
+			}
 			$sql[]="  order by at_no desc ";
 /*2017-11-23 (목) 15:32:03  로그 9월 분 때문에 한시적인 설정 */
 //			$sql[]=" where date(at_datetime)=date(now())  order by at_datetime desc ";

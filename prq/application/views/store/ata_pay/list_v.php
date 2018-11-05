@@ -375,6 +375,7 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 </div>
 </th>
 <th scope="col">시작일</th>
+<th scope="col">입력일</th>
 <th scope="col">자동출금일</th>
 <th scope="col">상점명</th>
 <th scope="col">충전금액</th>
@@ -395,15 +396,16 @@ $ap_autobill_YN=$lt->ap_autobill_YN=="Y"?"정기결재":"일시결재";
 $ap_status=get_status3($lt->ap_status);
 $ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 $ap_reserve=$lt->ap_reserve=="0"?"즉시발송":$lt->ap_reserve."분";
-
+$view_url=sprintf("/prq/atapay/view/%s/ap_no/%s/page/%s",$this->uri->segment(3),$lt->ap_no,$page);
 ?>
 	<tr>
 		<td scope="col">
 		<div class="checkbox checkbox-primary"><input type="checkbox" name="chk_seq[]" onclick="chk_btn_status()" id="<?php printf("chk_%s",$lt->ap_no);?>" value="<?php echo $lt->ap_no;?>"><label for="<?php printf("chk_%s",$lt->ap_no);?>"></label></div>
 		</td>
  		<td><?php echo $st_dt;?></td>
+ 		<td><?php echo $lt->ap_datetime;?></td>
  		<td><?php printf("매월 %s일 ",$autobill_date);?></td>
-		<td><a rel="external" href="<?php printf("/prq/atapay/view/%s/board_id/%s/page/%s",$this->uri->segment(3),$lt->ap_no,$page);?>"><?php echo $lt->st_name;?></a></td>
+		<td><a rel="external" href="<?php echo $view_url;?>"><?php echo $lt->st_name;?></a></td>
 		<td><?php echo number_format($lt->ap_price)."원";?></td>
 <!-- 		<td><?php echo $lt->prq_fcode;?></td> -->
 		<td><?php echo $ap_autobill_YN;?></td>

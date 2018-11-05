@@ -51,7 +51,7 @@ $attributes = array(
 );
 //echo form_open('/board/modify/prq_member', $attributes);
 
-echo form_open('/store/modify/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
+echo form_open('/store/modify/'.$this->uri->segment(3).'/st_no/'.$this->uri->segment(5), array('id'=>'write_action', 'class'=>'form-horizontal'));
 
 //echo form_open_multipart('/dropzone/upload', $attributes);
 

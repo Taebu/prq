@@ -1,0 +1,106 @@
+﻿
+; HHD Software Serial Port Monitoring Control Filter Driver
+;
+; Copyright HHD Software Ltd.
+
+[Version]
+signature = "$Windows NT$"
+DriverPackageType=ClassFilter
+DriverPackageDisplayName="HHD Software Serial Port Monitoring Control"
+CatalogFile.ntx86=hhdspmc_x86.cat 
+CatalogFile.ntamd64=hhdspmc_x64.cat
+Class=Ports
+ClassGUID={4d36e978-e325-11ce-bfc1-08002be10318}
+Provider=%ClasFilt.Provider%
+DriverVer=05/05/2011,5.25.0.3249
+
+; Distribution Media information
+;
+[SourceDisksNames]
+1 = %ClasFilt.MediaDesc%
+
+[SourceDisksFiles]
+hhdspmc32.sys = 1
+hhdspmc64.sys = 1
+
+[DestinationDirs]
+DefaultDestDir = 12	; DIRID_DRIVERS
+
+[DefaultInstall.ntx86]
+CopyFiles = @hhdspmc32.sys
+AddReg = ClassFilter_AddReg.ntx86
+ 
+[DefaultInstall.ntamd64]
+CopyFiles = @hhdspmc64.sys
+AddReg = ClassFilter_AddReg.ntamd64
+
+[ClassFilter_AddReg.ntx86]
+HKLM, System\CurrentControlSet\Control\Class\{4d36e978-e325-11ce-bfc1-08002be10318}, UpperFilters, 0x00010008, hhdspmc32
+
+HKLM, System\CurrentControlSet\Control\Class\{4D36E96D-E325-11CE-BFC1-08002BE10318}, UpperFilters, 0x00010008, hhdspmc32
+
+HKLM, System\CurrentControlSet\Control\Class\{DF799E12-3C56-421B-B298-B6D3642BC878}, UpperFilters, 0x00010008, hhdspmc32
+
+HKLM, System\CurrentControlSet\Control\Class\{CA21561A-B1C4-4732-A18F-36ABBA9CB8B0}, UpperFilters, 0x00010008, hhdspmc32
+
+HKLM, System\CurrentControlSet\Control\Class\{9341CD95-4371-4A37-A5AF-FDB0A9D19631}, UpperFilters, 0x00010008, hhdspmc32
+
+      
+[ClassFilter_AddReg.ntamd64]
+HKLM, System\CurrentControlSet\Control\Class\{4d36e978-e325-11ce-bfc1-08002be10318}, UpperFilters, 0x00010008, hhdspmc64
+
+HKLM, System\CurrentControlSet\Control\Class\{4D36E96D-E325-11CE-BFC1-08002BE10318}, UpperFilters, 0x00010008, hhdspmc64
+
+HKLM, System\CurrentControlSet\Control\Class\{DF799E12-3C56-421B-B298-B6D3642BC878}, UpperFilters, 0x00010008, hhdspmc64
+
+HKLM, System\CurrentControlSet\Control\Class\{CA21561A-B1C4-4732-A18F-36ABBA9CB8B0}, UpperFilters, 0x00010008, hhdspmc64
+
+HKLM, System\CurrentControlSet\Control\Class\{9341CD95-4371-4A37-A5AF-FDB0A9D19631}, UpperFilters, 0x00010008, hhdspmc64
+
+
+[DefaultInstall.ntx86.Services]
+AddService = hhdspmc32, , clasfilt_Service_Inst.ntx86, clasfilt_EventLog_Inst.ntx86
+
+[DefaultInstall.ntamd64.Services]
+AddService = hhdspmc64, , clasfilt_Service_Inst.ntamd64, clasfilt_EventLog_Inst.ntamd64
+
+[clasfilt_Service_Inst.ntx86]
+DisplayName    = %ClasFilt.SvcDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_IGNORE%
+ServiceBinary  = %12%\hhdspmc32.sys
+
+[clasfilt_Service_Inst.ntamd64]
+DisplayName    = %ClasFilt.SvcDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_IGNORE%
+ServiceBinary  = %12%\hhdspmc64.sys
+
+[clasfilt_EventLog_Inst.ntx86]
+AddReg = clasfilt_EventLog_AddReg.ntx86
+
+[clasfilt_EventLog_Inst.ntamd64]
+AddReg = clasfilt_EventLog_AddReg.ntamd64
+
+[clasfilt_EventLog_AddReg.ntx86]
+HKR,,EventMessageFile, %REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\hhdspmc32.sys"
+HKR,,TypesSupported, %REG_DWORD%, 7
+
+[clasfilt_EventLog_AddReg.ntamd64]
+HKR,,EventMessageFile, %REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\hhdspmc64.sys"
+HKR,,TypesSupported, %REG_DWORD%, 7
+
+[Strings]
+ClasFilt.SvcDesc="HHD Software Serial Port Monitoring Control Filter Driver"
+ClasFilt.MediaDesc="HHD Software Serial Port Monitoring Control Installation Package"
+ClasFilt.Provider="HHD Software Ltd."
+
+; Useful constants
+SERVICE_KERNEL_DRIVER = 1
+SERVICE_DEMAND_START  = 3
+SERVICE_ERROR_IGNORE  = 0
+REG_EXPAND_SZ         = 0x00020000
+REG_DWORD             = 0x00010001
+FLG_REGSVR_DLLREGISTER = 0x00000001

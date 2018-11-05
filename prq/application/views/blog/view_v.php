@@ -41,10 +41,13 @@ $attributes = array(
 echo form_open('/blog/modify/', $attributes);
 
 $bf_file=$views->bl_file;
+IF($bf_file!=0){
+
 $arr_file=explode("_",$bf_file);
 $d1x=$arr_file[0];
 $d2x=$d1x+$arr_file[1];
 $d3x=$d2x+$arr_file[2];
+}
 ?>
 <!-- id="my-awesome-dropzone" class="" -->
 <input type="hidden" name="is_join" id="is_join" value="">
@@ -133,12 +136,24 @@ foreach($files as $fi){
                                     <div class="item gallery active">
                                         <div class="row">
 										<?php
+										IF(isset($d1x)){
 											for($i=0;$i<$d1x;$i++){
 												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
+
 												echo "<img src='".$arrays[$i]."' class=\"img-responsive\">";
 												echo "</div>";
-											}                                        
+											}
+											
+												}
+
+												if(!isset($d1x))
+											{
+												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
+												echo "첫번째 등록된 리뷰 사진이 없습니다.";
+												echo "</div>";
+											}
 										?>
+
 										</div>
                                     </div>
                                 </div>
@@ -196,11 +211,19 @@ echo $bl_content1;?><!-- #form_data -->
                                     <div class="item gallery active">
                                         <div class="row">
 										<?php
+										IF(isset($d2x)){
 											for($i=$d1x;$i<$d2x;$i++){
 												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
 												echo "<img src='".$arrays[$i]."' class=\"img-responsive\">";
 												echo "</div>";
-											}                                        
+											}                                  }
+
+											if(!isset($d2x))
+											{
+												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
+												echo "두번째, 등록된 리뷰 사진이 없습니다.";
+												echo "</div>";
+											}
 										?>
 										</div>
                                     </div>
@@ -261,11 +284,20 @@ echo $bl_content2;?><!-- #form_data -->
                                     <div class="item gallery active">
                                         <div class="row">
 										<?php
+										IF(isset($d3x)){
 											for($i=$d2x;$i<$d3x;$i++){
 												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
 												echo "<img src='".$arrays[$i]."' class=\"img-responsive\">";
 												echo "</div>";
-											}                                        
+											}
+											}
+
+											if(!isset($d3x))
+											{
+												echo "<div class=\"col-sm-12\" style=\"margin-bottom:0px\">";
+												echo "세번째, 등록된 리뷰 사진이 없습니다.";
+												echo "</div>";
+											}
 										?>
 										</div>
                                     </div>

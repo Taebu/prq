@@ -58,34 +58,32 @@ echo form_open('/auth/login', $attributes);
 			</div> -->
 			
 			<div>
-				<div style="font-weight:bold;font-size:19px;margin:35px 0 10px 0;">※ TOKTOK MESSAGE 프로그램 ※</div>
+				<!-- <div style="font-weight:bold;font-size:19px;margin:35px 0 10px 0;">※ TOKTOK MESSAGE 프로그램 ※</div>
 				<ul style="padding:0px;margin:0px;list-style:none;">
 					<li style="float:left;width:30%;">
 						<a target="_blank"><img src="/prq/img/login_icon1.png" width="100%"  data-toggle="modal" data-target="#myModal1"></a>
 					</li>
 					<li style="float:left;width:30%;margin-left:15px;">
-						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"> -->
 						<a target="_blank" data-toggle="modal" data-target="#myModal1"><img src="/prq/img/login_icon2.png" width="100%"></a>
 					</li>
 					<li style="float:right;width:30%;">
-						<!-- <a href="javascript:alert('준비중입니다.');" target="_blank"><img src="/prq/img/login_icon3.png" width="100%"></a> -->
 						<a target="_blank" data-toggle="modal" data-target="#myModal1"><img src="/prq/img/login_icon3.png" width="100%"></a>
 					</li>
 					<li style="clear:both;"></li>
-				</ul>
+				</ul> -->
 				
 				
 				<div style="clear:both;height:15px;"></div>
 				
 				<a href="/prq/down/dotNetFx40_Full_x86_x64.exe" style="color:#fff;">
-				<div style="background:#cecece;color:#000;padding:10px;font-weight:bold;border:1px solid #bbb;">
-					닷넷프레임워크 DOWN
+				<div class="col-xs-12 col-md-6" style="background:#cecece;color:#000;padding:10px;border:1px solid #bbb;">
+					닷넷프레임워크<br><b>설치 하기</b>
 				</div>
 				</a>
-				<div style="clear:both;height:10px;"></div>
+
 				<a href="/prq/down/sqlite-netFx40-setup-bundle-x86-2010-1.0.103.0.exe" style="color:#fff;">
-				<div style="background:#cecece;color:#000;padding:10px;font-weight:bold;border:1px solid #bbb;">
-					KT OK 전용 닷넷프레임워크 DOWN
+				<div class="col-xs-12 col-md-6" style="background:#cecece;color:#000;padding:10px;border:1px solid #bbb;">
+					KTOK닷넷프레임워크<br><b>설치 하기</b>
 				</div>
 				</a>
 

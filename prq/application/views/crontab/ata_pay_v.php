@@ -158,6 +158,9 @@ echo date( "Y-m-d", strtotime( "2009-01-31 +2 month" ) ); // PHP:  2009-03-31
 		'ap_datetime'=>$ls->ap_datetime,
 		);
 		$this->crontab_m->insert_ata_pay($array);
+		$this->crontab_m->set_ata_store($ls->st_no);
+		
+
 		echo "last time : ".$now_time." > ".$time;
 	}else{
 		echo "not last time : ".$now_time." > ".$time;

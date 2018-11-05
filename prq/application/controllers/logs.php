@@ -95,6 +95,8 @@ class Logs extends CI_Controller {
 			'sm_receiver'=>$this->input->post('sm_receiver', TRUE),
 			'sm_sender'=>$this->input->post('sm_sender', TRUE),
 			'sm_content'=>$this->input->post('sm_content', TRUE),
+			'at_content'=>$this->input->post('at_content', TRUE),
+			'at_receiver'=>$this->input->post('at_receiver', TRUE),
 			'hc_hp'=>$this->input->post('hc_hp', TRUE),
 			'cd_id'=>$this->input->post('cd_id', TRUE),
 			'cd_name'=>$this->input->post('cd_name', TRUE),

@@ -76,11 +76,13 @@ $url=$_SERVER['PATH_INFO'];
 				font-size: 20px;
 				letter-spacing: -1px;
 				color:#777979;
+				width: 450px;
 			}
 			#search1{
 				position: absolute;
 				top: 669px;
 				left: 875px;
+				width: 450px;
 			}
 			#search{
 				position:absolute;
@@ -88,6 +90,7 @@ $url=$_SERVER['PATH_INFO'];
 				left: 887px;
 				font-size: 15px;
 				font-family: '맑은 고딕','Malgun Gothic','돋움',Dotum,Helvetica,AppleGothic,Sans-serif;
+				width: 450px;
 			}
 			#anpr{
 				position:absolute;
@@ -165,7 +168,7 @@ $(function(){
 		<div id="number">☎ <?php echo phone_format($views->st_vtel);?></div>
 		<div id="url">http://prq.co.kr/prq<?php echo $url;?></div>
 		<div id="search0">
-			<ul style="padding:0;margin:0;list-style:none;">
+			<ul style="padding:0;margin:0;list-style:none;width: fit-content;">
 				<li>스마트폰으로 QR코드를 찍어보세요!</li>
 				<li>더욱 편리하게 홈페이지를 확인 하실 수 있습니다.</li>
 			</ul>
