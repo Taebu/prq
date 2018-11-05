@@ -372,7 +372,7 @@ class Template_m extends CI_Model
 			$reg_array[]=$reg_name[$i]."=".$reg_value[$i];
 			$i++;
 		}
-		$arrays['bt_regex']=join("&",$reg_array);
+		$modify_array['bt_regex']=join("&",$reg_array);
 
 		/* table key를 제거한다. */
 		$modify_array=array_diff_key($modify_array, 
