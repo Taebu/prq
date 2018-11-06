@@ -2774,6 +2774,29 @@ ERROR:
 
 		///var/www/html/prq/prqapp/update/updaterApp/PowerUpdater.exe
 	}
+
+	/*
+	2018-11-06 (화) 14:19:46 
+	톡톡메시지 for PC 박규선팀장 login 정보요청 #108
+		 Open	moonsungjun opened this issue 27 seconds ago · 0 comments Comments
+		2018년 11월6일 오전 회의사항
+		1시간 마다 로그인 정보 서버로 전달요청
+
+		tl_email
+		tl_type
+		tl_datetime
+		tl_unixtime
+		박규선팀장 전달사항
+		url주소 요청
+		작업기간 1일 소요. 8시간
+	*/
+	function set_talktalk_log($array)
+	{
+		$array = array_diff_key($array, array("tl_key"=>""));
+
+		$this->prq->insert('prq_talktalk_log',$array);
+//		$this->ajax_m->set_talktalk_log($array);
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */
