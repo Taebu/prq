@@ -269,6 +269,7 @@ foreach($list as $li)
 			$li->cd_hp=$st->st_hp_1;
 		}/* if($li->cd_port=="0"){...} */
 		
+		//$st->mb_id
 
 		/*mms 발송 여부*/
 		$chk_mms=true;
@@ -454,6 +455,8 @@ foreach($list as $li)
 			/********************************************************************************
 			* 10. void set_gcm
 			* - curl 전송
+			2018-11-12 (월) 10:12:07 
+			mb_id 추가 
 			********************************************************************************/
 			$config=array(
 				'is_mms'=>'true',
@@ -462,6 +465,7 @@ foreach($list as $li)
 				'title'=>$mms_title,
 				'receiver_num'=>$li->cd_callerid,
 				'phone'=>$li->cd_hp,
+				'mb_id'=>$st->mb_id,
 				'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper,
 				'mode'=>'crontab'
 			);

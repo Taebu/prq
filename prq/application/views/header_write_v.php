@@ -544,7 +544,8 @@ if($mb_gcode=='G5'){
 					 echo $this->uri->segment(1)=="franchise"?'<li class="active">':'<li>';?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 <span class="label label-primary pull-right">NEW</span></a></li>
+                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록</a></li>
+                            <li class="active"><a href="/prq/franchise/lists/prq_member_status/page/1">가맹점 상태 목록 <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php 

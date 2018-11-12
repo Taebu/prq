@@ -475,8 +475,7 @@ class Atapay_m extends CI_Model
 
 		foreach ($pt_code as $k => $v) {
 			$pt_code[$k]=substr($v,0,12);
-
-	}
+		}
 		$pt_code=array_unique ($pt_code);
 		$pt_code=array_values ($pt_code);
 

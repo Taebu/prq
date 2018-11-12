@@ -90,10 +90,15 @@ class Franchise extends CI_Controller {
 			'mb_email'=>$this->input->post('mb_email', TRUE),
 			'mb_hp'=>$this->input->post('mb_hp', TRUE)
 		);
-
+			$is_status_view=$this->uri->segment(3)=="prq_member_status";
+		if($is_status_view){
+		$base_url='/prq/franchise/lists/prq_member_status'.$page_url.'/page/';
+		}else{
+		$base_url='/prq/franchise/lists/prq_member'.$page_url.'/page/';
+		}
 		$config = array(
 		//페이지네이션 기본 설정
-		'base_url'=> '/prq/franchise/lists/prq_member'.$page_url.'/page/',
+		'base_url'=> $base_url,
 		//'total_rows' => $this->franchise_m->get_list($this->uri->segment(3), 'count', '', '', $search_word),
 		'total_rows' => $this->franchise_m->get_list2($this->uri->segment(3), 'count', '', '', $search_array),
 		'per_page' => 25,
@@ -143,12 +148,18 @@ class Franchise extends CI_Controller {
 		$data['search']=$search_array;
 
 //		$data['list'] = $this->franchise_m->get_list($this->uri->segment(3), '', $start, $limit, $search_word);
-		$data['list'] = $this->franchise_m->get_list2("prq_member", '', $start, $limit, $search_array);
+		$data['list'] = $this->franchise_m->get_list2($this->uri->segment(3), '', $start, $limit, $search_array);
 
 		$data['st_count'] = json_decode(json_encode($this->franchise_m->get_stcnt()), True);
 		$data['pt_names'] = json_decode(json_encode($this->franchise_m->get_ptcode()), True);
 		$data['ds_names'] = json_decode(json_encode($this->franchise_m->get_dscode()), True);
 		$data['controllers'] = $this;
+		$is_status_view=$this->uri->segment(3)=="prq_member_status";
+
+		if($is_status_view)
+		$this->load->view('franchise/status/list_v', $data);
+
+		if(!$is_status_view)
 		$this->load->view('franchise/list_v', $data);
 	}
 

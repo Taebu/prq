@@ -177,8 +177,10 @@ class Franchise_m extends CI_Model
     function get_list2($table='prq_member', $type='', $offset='', $limit='', $search_array=array())
     {
 		$sword= ' WHERE 1=1 ';
-		if($table==""){
-		$table='prq_member';
+		if($table=="prq_member_status"){
+			$table='prq_member';
+			$sword.= " and (mb_talktalkmessage_pc_status in ('danger','warning') OR mb_talktalkmessage_android_status in ('danger','warning')) ";
+			$sword.= " and mb_status in ('pr','ac') ";
 		}
 		$table='prq_member';
 		/*

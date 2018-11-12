@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script `cess allowed');
 /**
  * Crontab controller.
  * 생성 : 2016-02-03 (수)
@@ -140,6 +140,14 @@ class Crontab extends CI_Controller {
  		//view 호출
  		$this->load->view('crontab/ata_pay_v', $data);
  	}
+
+	/*
+	http://prq.co.kr/prq/crontab/set_talktalk_status
+	*/
+	function set_talktalk_status()
+	{
+		$this->crontab_m->set_talktalk_status();
+	}
 	
 }
 

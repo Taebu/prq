@@ -206,6 +206,7 @@ class Crontab_m extends CI_Model
 		$sql[]=" st_mno,";
 		$sql[]=" st_tel_1,";
 		$sql[]=" st_hp_1,";
+		$sql[]=" mb_id,";
 		$sql[]=" st_thumb_paper,";
 		$sql[]=" st_top_msg, ";
 		$sql[]=" st_middle_msg,";
@@ -250,6 +251,7 @@ class Crontab_m extends CI_Model
 		$sql[]=" st_mno,";
 		$sql[]=" st_tel_1,";
 		$sql[]=" st_hp_1,";
+		$sql[]=" mb_id,";
 		$sql[]=" st_thumb_paper,";
 		$sql[]=" st_top_msg, ";
 		$sql[]=" st_middle_msg,";
@@ -1073,6 +1075,125 @@ class Crontab_m extends CI_Model
 			$query = $this->db->update('prq_store', $data);
    		return $query->result(); 
 		}
+
+		function set_talktalk_status()
+		{
+			$json=array();
+			$pc_normal_status=0;
+			$pc_warning_status=0;
+			$pc_danger_status=0;
+
+			$android_normal_status=0;
+			$android_warning_status=0;
+			$android_danger_status=0;
+			/*
+			set_talktalk_status
+			prq_member.mb_talktalk_pc_unixtime 이 0 이상인 것을 조회한 만큼 반복한다.
+			1-1. mb_talktalk_pc_unixtime과 현재 시간을 비교하여 입력시간을 로그시간 차이 값을 구한다.
+			1-2. 구한 로그시간 차이를
+			72시간 이상는 "점검" 72x60x60<value
+			48시간 이하는 "정상" 48x60x60>value normal
+			48시간 이상은 "경고" 48x60x60<value
+			톡톡메시지 PC 상태 기본값 unknown = 알수 없음, normal=정상,warning=경고,danger=점검
+			1-3. 위의 값 status 상태 값을 정한다.
+			2. 끝낸다.
+			*/
+			$this->db->where('mb_talktalkmessage_pc_unixtime >', '0'); 
+			$this->db->select('mb_no,mb_email, mb_talktalkmessage_pc_status, mb_talktalkmessage_pc_unixtime'); 
+			$query = $this->db->get('prq_member');
+			$list = $query->result_array();
+
+			foreach($list as $ls){
+				$status=$this->get_talktalk_status($ls['mb_talktalkmessage_pc_unixtime']);
+
+				if($status=="warning"){$pc_warning_status++;}
+				if($status=="danger"){$pc_danger_status++;}
+				if($status=="normal"){$pc_normal_status++;}
+				$this->update_talktalk_member($ls['mb_no'],$status);
+			}
+				$json['pc_warning_status']=$pc_warning_status;
+				$json['pc_danger_status']=$pc_danger_status;
+				$json['pc_normal_status']=$pc_normal_status;
+
+			$this->db->flush_cache();
+			/*
+			set_talktalk_status
+			prq_member.mb_talktalk_pc_unixtime 이 0 이상인 것을 조회한 만큼 반복한다.
+			1-1. mb_talktalk_pc_unixtime과 현재 시간을 비교하여 입력시간을 로그시간 차이 값을 구한다.
+			1-2. 구한 로그시간 차이를
+			72시간 이상는 "점검" 72x60x60<value
+			48시간 이하는 "정상" 48x60x60>value normal
+			48시간 이상은 "경고" 48x60x60<value
+			톡톡메시지 PC 상태 기본값 unknown = 알수 없음, normal=정상,warning=경고,danger=점검
+			1-3. 위의 값 status 상태 값을 정한다.
+			2. 끝낸다.
+			*/
+			$this->db->where('mb_talktalkmessage_android_unixtime >', '0'); 
+			$this->db->select('mb_no,mb_email, mb_talktalkmessage_android_status, mb_talktalkmessage_android_unixtime'); 
+			$query = $this->db->get('prq_member');
+			$list = $query->result_array();
+
+			foreach($list as $ls){
+				$status=$this->get_talktalk_status($ls['mb_talktalkmessage_android_unixtime']);
+				if($status=="warning"){$android_warning_status++;}
+				if($status=="danger"){$android_danger_status++;}
+				if($status=="normal"){$android_normal_status++;}
+//				$this->update_talktalk_android_member($ls['mb_no'],$status);
+			}
+
+			$json['android_warning_status']=$android_warning_status;
+			$json['android_danger_status']=$android_danger_status;
+			$json['android_normal_status']=$android_normal_status;
+			echo json_encode($json);
+		}
+
+		function update_talktalk_member($mb_no,$status)
+		{
+			$data = array(
+				'mb_talktalkmessage_pc_status' => $status
+			);
+
+			$this->db->where('mb_no', $mb_no);
+			$query = $this->db->update('prq_member', $data);
+		}
+
+		function update_talktalk_android_member($mb_no,$status)
+		{
+			$data = array(
+				'mb_talktalkmessage_android_status' => $status
+			);
+
+			$this->db->where('mb_no', $mb_no);
+			$query = $this->db->update('prq_member', $data);
+		}
+		function get_talktalk_status($time)
+		{
+			$result="unknown";
+			$interval_time=time()-$time;
+			/* 72시간 이상은 "점검" 72x60x60<value*/
+			$is_72hour=72*60*60<$interval_time;
+
+			/* 48시간 이하는 "정상" 48x60x60>value normal*/
+			$is_48hour_below=48*60*60>$interval_time;
+
+			/* 48시간 이상은 "경고" 48x60x60<value*/
+			$is_48hour_more=48*60*60<$interval_time;
+			if($is_72hour)
+			{
+				$result="danger";
+			}else if($is_48hour_below)
+			{
+				$result="normal";
+			}else if($is_48hour_more){
+				$result="warning";
+			}
+
+			return $result;
+		}
+
+
+
+
 }
 
 /* End of file crontab_m.php */

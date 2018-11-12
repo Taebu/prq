@@ -1,15 +1,31 @@
 <?php
-/**
+/*********************************************************************************
 * 2017-01-11 (수) 15:16:17 
 * 부로 중지 java 로 개발 완료 
 * 2017-02-02 (목) 15:01:27 
 * 중지 된 줄 착각, java에서 호출하도록 되어 있다.
 * - PRQ_CDR.src.kr.co.prq.prq_cdr.Prq_cmd_queue.java
 * - 에서 URLConnection POST 방식으로 호출하게 되어 있다.
+set_gcm.php
 * happycall
-*/
-include_once "./db_info.php";
+http://prq.co.kr/prq/crontab/view
+에서  curl로에 요청으로 호출
+@param
+'is_mms'=>'true',
+'message'=>$msg,
+'st_no'=>$st->st_no,
+'title'=>$mms_title,
+'receiver_num'=>$li->cd_callerid,
+'phone'=>$li->cd_hp,
+'img_url'=>"http://prq.co.kr/prq/uploads/TH/".$st->st_thumb_paper,
+'mode'=>'crontab'
+- 2018-11-12 (월) 10:15:25 
+'mb_id'=>$st->mb_id
+추가
 
+********************************************************************************/
+include_once "./db_info.php";
+$mb_id=empty($_POST['mb_id'])?"":$_POST['mb_id'];
 /*
 1.*/
 $select_sql=array();
@@ -61,6 +77,7 @@ $push= json_decode($gcm->send_notification($registration_ids, $messages));
 $p_temp=isset($push->results[0]->message_id)?$push->results[0]->message_id:"";
 $result= (strpos($p_temp,"0:")!==false)?true:false;
 $result_msg= ($result)?"전달 성공":"전송 실패";
+$success=$result;
 $gc_ipaddr='123.142.52.91';
 $sql=array();
 $sql[]="INSERT INTO `prq_gcm_log` SET ";
@@ -75,6 +92,27 @@ $sql[]="gc_ipaddr='".$gc_ipaddr."',";
 $sql[]="gc_stno='".$st_no."',";
 $sql[]="gc_datetime=now();";
 $result=mysql_query(join("",$sql));
+
+$sql=sprintf("select mb_id from prq_store where st_no='%s';",$st_no);
+$query=mysql_query($sql);
+$store=mysql_fetch_assoc($query);
+
+if($success&&!empty($store['mb_id']))
+{
+	$sql=array();
+	$sql[]="update `prq_member` SET ";
+	$sql[]="mb_talktalkmessage_android_status='normal', ";
+	$sql[]=sprintf("mb_talktalkmessage_android_unixtime=%d ",time());
+	$sql[]=sprintf(" where mb_email='%s';",$store['mb_id']);
+	$result=mysql_query(join("",$sql));
+}else{
+	$sql=array();
+	$sql[]="update `prq_member` SET ";
+	$sql[]="mb_talktalkmessage_android_status='danger', ";
+	$sql[]=sprintf("mb_talktalkmessage_android_unixtime=%d ",time());
+	$sql[]=sprintf(" where mb_email='%s';",$store['mb_id']);
+	$result=mysql_query(join("",$sql));
+}
 $json=array();
 $json['success']=$result;
 //$json['sql']=join("",$sql);
@@ -124,12 +162,14 @@ $result=false;
 }
 $json['success']=$result;
 $json['push']=$push;
+$json['st_no']=$st_no;
 $json['sql']=$sql;
 
 echo json_encode($json);
 
 
 $result_msg= ($result)?"전달 성공":"전송 실패";
+$success=$result;
 $gc_ipaddr='123.142.52.91';
 $sql=array();
 $sql[]="INSERT INTO `prq_gcm_log` SET ";
@@ -144,6 +184,28 @@ $sql[]="gc_ipaddr='".$gc_ipaddr."',";
 $sql[]="gc_stno='".$st_no."',";
 $sql[]="gc_datetime=now();";
 mysql_query(join("",$sql));
+$sql=sprintf("select mb_id from prq_store where st_no='%s';",$st_no);
+$query=mysql_query($sql);
+$store=mysql_fetch_assoc($query);
+
+if($success&&!empty($store['mb_id']))
+{
+	$sql=array();
+	$sql[]="update `prq_member` SET ";
+	$sql[]="mb_talktalkmessage_android_status='normal', ";
+	$sql[]=sprintf("mb_talktalkmessage_android_unixtime=%d ",time());
+	$sql[]=sprintf(" where mb_email='%s';",$store['mb_id']);
+	$result=mysql_query(join("",$sql));
+}else{
+	$sql=array();
+	$sql[]="update `prq_member` SET ";
+	$sql[]="mb_talktalkmessage_android_status='danger', ";
+	$sql[]=sprintf("mb_talktalkmessage_android_unixtime=%d ",time());
+	$sql[]=sprintf(" where mb_email='%s';",$store['mb_id']);
+	$result=mysql_query(join("",$sql));
+}
+
+
 }
 /* if($mode=="manual"){...} */
 
@@ -167,6 +229,9 @@ if($happycall==true){
 $is_happycall=$happycall;
 }
 
+$sql=sprintf("select mb_id from prq_store where st_no='%s';",$st_no);
+$query=mysql_query($sql);
+$store=mysql_fetch_assoc($query);
 
 $mh=explode("\r\n",$many_hp);
 foreach($mh as $m){

@@ -2793,9 +2793,20 @@ ERROR:
 	function set_talktalk_log($array)
 	{
 		$array = array_diff_key($array, array("tl_key"=>""));
-
+		$array['tl_datetime']= date("Y-m-d H:i:s", $array['tl_unixtime']);
+		$array['tl_systemtime']= date("Y-m-d H:i:s", time());
 		$this->prq->insert('prq_talktalk_log',$array);
-//		$this->ajax_m->set_talktalk_log($array);
+
+
+		$this->update_member_talktalk($array['tl_id']);
+
+	}
+
+	function update_member_talktalk($mb_email)
+	{
+			$this->prq->set('mb_talktalkmessage_pc_unixtime', time());
+			$this->prq->where('mb_email', $mb_email);
+			$this->prq->update('prq_member');
 	}
 }
 /* End of file ajax_m.php */
