@@ -359,6 +359,8 @@ if($mb_gcode=="G1"||$mb_gcode=="G2"||$mb_gcode=="G3"||$mb_gcode=="G4"){?>
 	<th scope="col">날짜시간</th>
 	<th scope="col">APP</th>
 	<th scope="col">날짜시간</th>
+	<th scope="col">PROGRAM</th>
+	<th scope="col">VERSION</th>
 </tr>
 </thead>
 <tbody>
@@ -414,27 +416,22 @@ $fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
 		$interval_time=(int)((time()-$lt->mb_talktalkmessage_android_unixtime)/60);
 		$min2=change_recentTime($interval_time);
 	}
-	
+
 ?>
 <tr>
-	<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
 	<td scope="col"><input type="checkbox" name="chk_seq[]" value="<?php echo $lt->mb_no;?>" onclick="chk_btn_status()"></td>
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;	?></td>
-	<!-- <td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td> -->
 	<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</a></td>
 	<td scope="row"><?php echo $lt->mb_name;?></td>
-<!-- 	<td scope="row"><?php echo $lt->mb_business_num;?></td>
-	<td><?php echo $lt->mb_ceoname;?></td> -->
-<!-- 	<td><?php echo $lt->mb_hp;?></td> -->
-<!-- 	<td><a rel="external" href="/prq/franchise/lists/prq_member/page/1"><?php echo $fr_count;?></a></td> -->
 	<td><span id="status_<?php echo $lt->mb_no;?>"><?php echo $controllers->get_status($lt->mb_status);?></span></td>
 	<td><?php echo get_talktalk_status($lt->mb_talktalkmessage_pc_status);?></td>
-	<!-- <td><?php echo $lt->mb_talktalkmessage_pc_unixtime;?></td> -->
 	<td><?php echo $min;?></td>
-<!-- 	<td><?php echo  date("Y-m-d H:i:s", $lt->mb_talktalkmessage_pc_unixtime);;?></td> -->
 	<td><?php echo get_talktalk_status($lt->mb_talktalkmessage_android_status)?></td>
 	<td><?php echo $min2;?></td>
+	<td><?php echo $lt->mb_programname;?></td>
+	<td><?php echo $lt->mb_programversion;?></td>
+
 </tr>
 <?php
 }

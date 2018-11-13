@@ -218,7 +218,8 @@ class Franchise_m extends CI_Model
 		if ( $search_array['mb_name'] != '' )
 		{
 			//검색어가 있을 경우의 처리
-			$sword .= ' and mb_name like "%'.$search_array['mb_name'].'%" ';
+//			$sword .= ' and mb_name like "%'.$search_array['mb_name'].'%" ';
+			$sword .= ' and replace(mb_name,\' \',\'\') like "%'.$search_array['mb_name'].'%" ';
 		}
 
 
