@@ -1,171 +1,4 @@
-<!-- 	<script type="text/javascript" src="/prq/include/js/httpRequest.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		$("#comment_add").click(function(){
-			$.ajax({
-				url: "/prq/ajax_board/ajax_comment_add",
-				type: "POST",
-				data:{
-					"comment_contents":encodeURIComponent($("#input01").val()),
-					"csrf_test_name":getCookie('csrf_cookie_name'),
-					"table":"<?php echo $this->uri->segment(3);?>",
-					"board_id":"<?php echo $this->uri->segment(5);?>"
-				},
-				dataType: "html",
-				complete:function(xhr, textStatus){
-					if (textStatus == 'success')
-					{
-						if ( xhr.responseText == 1000 )
-						{
-							alert('댓글 내용을 입력하세요');
-						}
-						else if ( xhr.responseText == 2000 )
-						{
-							alert('다시 입력하세요');
-						}
-						else if ( xhr.responseText == 9000 )
-						{
-							alert('로그인하여야 합니다.');
-						}
-						else
-						{
-							$("#comment_area").html(xhr.responseText);
-							$("#input01").val('');
-						}
-					}
-				}
-			});
-		});
-	
-		$(".comment_delete").click(function(){
-			$.ajax({
-				url: "/prq/ajax_board/ajax_comment_delete",
-				type: "POST",
-				data:{
-					"csrf_test_name":getCookie('csrf_cookie_name'),
-					"table":"<?php echo $this->uri->segment(3);?>",
-					"board_id":$(this).attr("vals")
-				},
-				dataType: "text",
-				complete:function(xhr, textStatus){
-					if (textStatus == 'success')
-					{
-						if ( xhr.responseText == 9000 )
-						{
-							alert('로그인하여야 합니다.');
-						}
-						else if ( xhr.responseText == 8000 )
-						{
-							alert('본인의 댓글만 삭제할 수 있습니다.');
-						}
-						else if ( xhr.responseText == 2000 )
-						{
-							alert('다시 삭제하세요.');
-						}
-						else
-						{
-							$('#row_num_'+xhr.responseText).remove();
-							alert('삭제되었습니다.');
-						}
-					}
-				}
-			});
-		});
-	});
-	
-	function getCookie( name )
-	{
-		var nameOfCookie = name + "=";
-		var x = 0;
-	
-		while ( x <= document.cookie.length )
-		{
-			var y = (x+nameOfCookie.length);
-	
-			if ( document.cookie.substring( x, y ) == nameOfCookie ) {
-				if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
-					endOfCookie = document.cookie.length;
-	
-				return unescape( document.cookie.substring( y, endOfCookie ) );
-			}
-	
-			x = document.cookie.indexOf( " ", x ) + 1;
-	
-			if ( x == 0 )
-	
-			break;
-		}
-	
-		return "";
-	}
-	</script>
-	
-	
-	<article id="board_area">
-		<header>
-			<h1></h1>
-		</header>
-		<table cellspacing="0" cellpadding="0" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col"><?php echo $views->subject;?></th>
-					<th scope="col">이름 : <?php echo $views->user_name;?></th>
-					<th scope="col">조회수 : <?php echo $views->hits;?></th>
-					<th scope="col">등록일 : <?php echo $views->reg_date;?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th colspan="4">
-						<?php echo nl2br($views->contents);?>
-					</th>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="4"><a href="/prq/board/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> <a href="/prq/board/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> <a href="/prq/board/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> <a href="/prq/board/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a></th>
-				</tr>
-			</tfoot>
-		</table>
-	
-		<form class="form-horizontal" method="post" action="" name="com_add">
-		  <fieldset>
-		    <div class="control-group">
-		      <label class="control-label" for="input01">댓글</label>
-		      <div class="controls">
-		        <textarea class="input-xlarge" id="input01" name="comment_contents" rows="3"></textarea>
-				<input class="btn btn-primary" type="button" id="comment_add" value="작성">
-		        <p class="help-block"></p>
-		      </div>
-		    </div>
-		  </fieldset>
-		</form>
-		<div id="comment_area">
-			<table cellspacing="0" cellpadding="0" class="table table-striped" id="comment_table">
-	<?php
-	foreach ($comment_list as $lt)
-	{
-	?>
-				<tr id="row_num_<?php echo $lt->board_id;?>">
-					<th scope="row">
-						<?php echo $lt->user_id;?>
-					</th>
-					<td><?php echo $lt->contents;?></a></td>
-					<td><time datetime="<?php echo mdate("%Y-%M-%j", human_to_unix($lt->reg_date));?>"><?php echo $lt->reg_date;?></time></td>
-					<td><a href="#" class="comment_delete" vals="<?php echo $lt->board_id;?>"><i class="icon-trash"></i>삭제</a></td>
-				</tr>
-	<?php
-	}
-	?>
-			</table>
-		</div>
-	</article> -->
-<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
-<script type="text/javascript">
-
-
-</script>
-			<div class="row wrapper border-bottom white-bg page-heading">
+<div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>가맹점 수정</h2>
                     <ol class="breadcrumb">
@@ -198,7 +31,7 @@
 		<input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper">
 		<input type="hidden" name="mb_bank_paper" id="mb_bank_paper">
 		<input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
-		<input type="hidden" name="mb_id" id="mb_id" value="<?php echo $lt->mb_id;?>">
+		<input type="hidden" name="mb_id" id="mb_id" value="<?php echo $views->mb_id;?>">
 		<input type="hidden" name="mb_hp" id="mb_hp" value="<?php echo $views->mb_hp;?>">
 		
 			<div class="row">
@@ -378,11 +211,19 @@
 </div></div><!-- .row -->
 
 <div class="row"><div class="col-md-12">
+			<div class="form-group"><label class="col-sm-1 control-label">TOKEN 정보</label>
+			<div class="col-sm-11" id="token_info">#token_info</div><!-- .col-sm-10 #token_info -->
+			</div><!-- .form-group -->
+			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div></div><!-- .row -->
+
+<div class="row"><div class="col-md-12">
 			<div class="form-group"><label class="col-sm-1 control-label">MNO 정보</label>
 			<div class="col-sm-11" id="mno_info">mno info</div><!-- .col-sm-10 #mno_info -->
 			</div><!-- .form-group -->
 			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div></div><!-- .row -->
+
 <div>
 			  <div class="controls">
 		        <p class="help-block"><?php echo validation_errors(); ?></p>
@@ -390,18 +231,12 @@
 
 								<div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-<a href="/prq/<?php echo $this->uri->segment(1);?>/lists/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-primary">목록</a> 
-<a href="/prq/<?php echo $this->uri->segment(1);?>/modify/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-warning">수정</a> 
-<a href="/prq/<?php echo $this->uri->segment(1);?>/delete/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $this->uri->segment(5);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-danger">삭제</a> 
-<a href="/prq/<?php echo $this->uri->segment(1);?>/write/<?php echo $this->uri->segment(3);?>/page/<?php echo $this->uri->segment(7);?>" class="btn btn-success">쓰기</a>
+<a href="<?php echo $list_link;?>" class="btn btn-primary">목록</a> 
+<a href="<?php echo $modify_link;?>" class="btn btn-warning">수정</a> 
+<a href="<?php echo $delete_link;?>" class="btn btn-danger">삭제</a> 
+<a href="<?php echo $write_link;?>" class="btn btn-success">쓰기</a>
                                     </div>
-                                </div>
-				<!-- 						      <div class="form-actions">
-										      		        <button type="submit" class="btn btn-primary" id="write_btn">작성</button>
-										      		        <button class="btn" onclick="document.location.reload()">취소</button>
-										      		      </div> -->
-
-								<!-- .form-group -->
+                                </div><!-- .form-group -->
 
 								<div class="row"><div class="col-md-12">
 									<!-- <textarea id="form_data">#form_data</textarea> --><!-- #form_data -->
@@ -416,6 +251,7 @@
 
         </div><!-- .wrapper .wrapper-content .animated .fadeInRight -->
 <script type="text/javascript">
+console.log("root@175.126.111.21:/var/www/html/prq/application/views/franchise/view_v.php");
 	/*
 	server에 총판을 등록 합니다.
 
@@ -457,6 +293,9 @@ window.onload = function() {
 
 	/* mno 정보를 불러 옵니다.*/
 	get_mnoinfo();
+
+	/* token_id 정보를 불러 옵니다.*/
+	get_token_id();
 };
 /*End Dropzone*/	
 
@@ -602,8 +441,8 @@ function get_mnoinfo(){
 			var object=[];
 			var chk_port="";
 			var str="";
-			if(data.posts.length<1){
-			object.push('등록된 상점 MNO 정보가 없습니다.');
+			if(data.posts.length<1||data.posts.length>1){
+			object.push('등록된 상점 MNO 정보가 없거나 잘못된 정보를 불러 왔습니다.');
 			$("#mno_info").html(object.join(""));
 			return ;
 			}
@@ -628,6 +467,57 @@ function get_mnoinfo(){
         }
     });		
 }
+
+
+function get_token_id(){
+//	var param=$("#write_action").serialize();
+	if($.trim($("#mb_hp").val())=="")
+	{
+		$("#token_info").html('휴대폰 번호가 저장 되지 않았습니다.');
+		console.log("mb_hp none");
+		return;
+	}
+
+    $.ajax({
+		url:"/prq/ajax/get_token_id/"+$("#mb_hp").val().replace(/-/gi, ""),
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+			var object=[];
+			var chk_port="";
+			var str="";
+			
+			if(!data.success){
+			object.push('token_id 정보가 없거나 잘못된 정보를 불러 왔습니다.');
+			$("#token_info").html(object.join(""));
+			return ;
+			}
+			
+			if(data.success)
+			{
+			object.push("<table>");
+			object.push("<tr><td>");
+			object.push("token_id : ");
+			object.push("</td><td><b>");
+			object.push(data.token.token_id);
+			object.push("</td></tr>");
+			object.push("<tr><td>");
+			object.push("날짜 시간 : ");
+			object.push("</td><td><b>");
+			object.push(data.token.regdate);
+			object.push("</td></tr>");
+			object.push("</table>");
+			$("#token_info").html(object.join(""));
+			}
+        
+			}
+    });		
+}
+
 
 /*mno 정보를 삭제합니다.*/
 function set_mno(v){

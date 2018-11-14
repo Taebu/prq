@@ -362,6 +362,7 @@ $sub_pt_name=$index>-1?$pt_name[$index]:"미등록코드";
 
 $is_fr=array_search($lt->prq_fcode, $array_fr);
 $fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
+$external_link=sprintf("/prq/%s/view/%s/mb_no/%s/page/%s",$this->uri->segment(1),$this->uri->segment(3),$lt->mb_no,$page);
 ?>
 <tr>
 	<!-- <td scope="col"><input type="checkbox" name="chk_"></td> -->
@@ -369,7 +370,7 @@ $fr_count=$is_fr>-1?$fr_cnt[$is_fr]."개":"0개";
 	<td scope="row"><?php echo $lt->mb_no;?></td>
 	<td><?php echo $sub_ds_name;?> &gt; <?php echo $sub_pt_name;	?></td>
 	<!-- <td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->prq_fcode;?></a></td> -->
-	<td scope="row"><a rel="external" href="/prq/<?php echo $this->uri->segment(1);?>/view/<?php echo $this->uri->segment(3);?>/board_id/<?php echo $lt->mb_no;?>/page/<?php echo $page;?>"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</a></td>
+	<td scope="row"><a rel="external" href="<?php echo $external_link;?>"><?php echo $lt->mb_id;?>(<?php echo $lt->mb_email;?>)</a></td>
 	<td scope="row"><?php echo $lt->mb_name;?></td>
 <!-- 	<td scope="row"><?php echo $lt->mb_business_num;?></td>
 	<td><?php echo $lt->mb_ceoname;?></td> -->

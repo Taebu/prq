@@ -1182,6 +1182,26 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		$array=$this->input->post(null, TRUE);
 		$this->ajax_m->set_talktalk_log($array);
 	}
+	/*
+	http://prq.co.kr/prq/ajax/get_token_id
+	*/
+	function get_token_id()
+	{
+		$json=array();
+		$json['success']=false;
+		$mb_hp=$this->uri->segment(3);
+		$token=$this->ajax_m->get_token_id($mb_hp);
+		$json['success']=count($token)>0;
+		
+		if(count($token))
+		{
+			$json['token']=$token;
+		}else{
+		
+		}
+
+		echo json_encode($json);
+	}
 }
 /* End of file ajax.php */
 /* Location: ./prq/application/controllers/ajax.php */

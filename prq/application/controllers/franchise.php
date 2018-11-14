@@ -168,14 +168,21 @@ class Franchise extends CI_Controller {
 	 */
 	function view()
  	{
-		$table = $this->uri->segment(3);
-		$board_id = $this->uri->segment(5);
+		$class=$this->uri->segment(1);
+		$table=$this->uri->segment(3);
+		$mb_no=$this->uri->segment(5);
+		$page=$this->uri->segment(7);
 
- 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
- 		$data['views'] = $this->franchise_m->get_view($table, $board_id);
+		$data['list_link']=sprintf("/prq/%s/lists/%s/page/%s",$class,$table,$page);
+		$data['modify_link']=sprintf("/prq/%s/modify/%s/mb_no/%s/page/%s",$class,$table,$mb_no,$page);
+		$data['delete_link']=sprintf("/prq/%s/delete/%s/mb_no/%s/page/%s",$class,$table,$mb_no,$page);
+		$data['write_link']=sprintf("/prq/%s/write/%s/page/%s",$class,$table,$page);
+ 		
+		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+ 		$data['views'] = $this->franchise_m->get_view($table, $mb_no);
 
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
- 		$data['comment_list'] = $this->franchise_m->get_comment($table, $board_id);
+ 		$data['comment_list'] = $this->franchise_m->get_comment($table, $mb_no);
 
  		//view 호출
  		$this->load->view('franchise/view_v', $data);
@@ -275,6 +282,16 @@ class Franchise extends CI_Controller {
 	 */
 	function modify()
  	{
+		$class=$this->uri->segment(1);
+		$table=$this->uri->segment(3);
+		$mb_no=$this->uri->segment(5);
+		$page=$this->uri->segment(7);
+
+		$data['list_link']=sprintf("/prq/%s/lists/%s/page/%s",$class,$table,$page);
+		$data['modify_link']=sprintf("/prq/%s/modify/%s/mb_no/%s/page/%s",$class,$table,$mb_no,$page);
+		$data['delete_link']=sprintf("/prq/%s/delete/%s/mb_no/%s/page/%s",$class,$table,$mb_no,$page);
+		$data['write_link']=sprintf("/prq/%s/write/%s/page/%s",$class,$table,$page);
+ 		
 		//경고창 헬퍼 로딩
 	 	$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
@@ -377,7 +394,7 @@ class Franchise extends CI_Controller {
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/franchise/view/'.$this->uri->segment(3).'/board_id/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/franchise/view/'.$this->uri->segment(3).'/mb_no/'.$this->uri->segment(5).'/page/'.$pages);
 					exit;
 				}
 

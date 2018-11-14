@@ -116,6 +116,12 @@ function get_cidinfo(){
 
 function get_mnoinfo(){
 //	var param=$("#write_action").serialize();
+	if($.trim($("#mb_hp").val())=="")
+	{
+		$("#mno_info").html('휴대폰 번호가 저장 되지 않았습니다.');
+		console.log("mb_hp none");
+		return;
+	}
 
     $.ajax({
 //		url:"/prq/ajax/get_mnoinfo/"+$("#mb_id").val(),
@@ -130,11 +136,13 @@ function get_mnoinfo(){
 			var object=[];
 			var chk_port="";
 			var str="";
-			if(data.posts.length<1){
-			object.push('등록된 상점 MNO 정보가 없습니다.');
+			
+			if(data.posts.length<1||data.posts.length>1){
+			object.push('등록된 상점 MNO 정보가 없거나 잘못된 정보를 불러 왔습니다.');
 			$("#mno_info").html(object.join(""));
 			return ;
 			}
+			
 			object.push('<table class="table">');
 			object.push('<thead>');
 			object.push('<tr>');
@@ -158,6 +166,56 @@ function get_mnoinfo(){
         }
     });		
 }
+
+
+function get_token_id(){
+//	var param=$("#write_action").serialize();
+	if($.trim($("#mb_hp").val())=="")
+	{
+		$("#token_info").html('휴대폰 번호가 저장 되지 않았습니다.');
+		console.log("mb_hp none");
+		return;
+	}
+
+    $.ajax({
+		url:"/prq/ajax/get_token_id/"+$("#mb_hp").val().replace(/-/gi, ""),
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+            console.log(data);
+			var object=[];
+			var chk_port="";
+			var str="";
+			
+			if(!data.success){
+			object.push('token_id 정보가 없거나 잘못된 정보를 불러 왔습니다.');
+			$("#token_info").html(object.join(""));
+			return ;
+			}
+			
+			if(data.success)
+			{
+			object.push("<table>");
+			object.push("<tr><td>");
+			object.push("token_id : ");
+			object.push("</td><td><b>");
+			object.push(data.token.token_id);
+			object.push("</td></tr>");
+			object.push("<tr><td>");
+			object.push("날짜 시간 : ");
+			object.push("</td><td><b>");
+			object.push(data.token.regdate);
+			object.push("</td></tr>");
+			object.push("</table>");
+			$("#token_info").html(object.join(""));
+			}
+        
+			}
+    });		
+}
 //mysql> select st_name,st_cidtype,st_tel_1,st_hp_1 from prq_store where prq_fcode='DS0003PT0001FR0003';
 
 
@@ -175,7 +233,12 @@ get_cidinfo();
 
 /*mno 정보 불러 오기*/
 get_mnoinfo();
+
+/* token_id 정보를 불러 옵니다.*/
+get_token_id();
 };
+
+console.log("root@175.126.111.21:/var/www/html/prq/application/views/franchise/modify_v.php");
 </script>
 	<article id="board_area">
 
@@ -301,7 +364,7 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 
 <div class="form-group"><label class="col-sm-2 control-label">휴대폰 번호</label>
-<div class="col-sm-10"><input type="text" class="form-control" name="mb_hp" value="<?php echo $views->mb_hp;?>"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
+<div class="col-sm-10"><input type="text" class="form-control" name="mb_hp" id="mb_hp" value="<?php echo $views->mb_hp;?>"> <span class="help-block m-b-none">휴대폰 번호를 기입해 주세요..</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -333,10 +396,10 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 
 <div class="form-group"><label class="col-sm-2 control-label">계약서</label>
 <div class="col-sm-10">
-<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone1 -->
+<div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div><!-- #my-awesome-dropzone2 -->
 <!-- <div id="my-awesome-dropzone2">my-awesome-dropzone2</div> -->
 <!-- <div id="my-awesome-dropzone2" class="dropzone"><div class="dz-default dz-message"></div></div> --><!-- #my-awesome-dropzone2 -->
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"계약서"를 드래그 하거나 선택해 주세요.</span>
+<span class="help-block m-b-none">"계약서"를 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -350,7 +413,7 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 
 <!-- <div id="my-awesome-dropzone3">my-awesome-dropzone3</div> --><!-- #my-awesome-dropzone3 -->
 
-<!-- <input type="file" class="form-control" name="mb_hp"> --> <span class="help-block m-b-none">"통장 사본"을 드래그 하거나 선택해 주세요.</span>
+ <span class="help-block m-b-none">"통장 사본"을 드래그 하거나 선택해 주세요.</span>
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
@@ -393,6 +456,15 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 			</div><!-- .form-group -->
 			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
 </div></div><!-- .row -->
+
+
+<div class="row"><div class="col-md-12">
+			<div class="form-group"><label class="col-sm-1 control-label">TOKEN 정보</label>
+			<div class="col-sm-11" id="token_info">#token_info</div><!-- .col-sm-10 #token_info -->
+			</div><!-- .form-group -->
+			<div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+</div></div><!-- .row -->
+
 
 <div class="row"><div class="col-md-12">
 			<div class="form-group"><label class="col-sm-1 control-label">MNO 정보</label>

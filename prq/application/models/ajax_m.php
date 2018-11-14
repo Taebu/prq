@@ -2811,6 +2811,21 @@ ERROR:
 			$this->prq->where('mb_email', $array['tl_id']);
 			$this->prq->update('prq_member');
 	}
+
+	/*
+	2018-11-14 (수) 11:00:00 
+	https://www.codeigniter.com/userguide3/database/query_builder.html#selecting-data
+	https://www.codeigniter.com/userguide3/database/results.html
+	*/
+	function get_token_id($mb_hp)
+	{
+			$this->prq->where('phone', $mb_hp);
+			$query =$this->prq->get('prq_token_id');
+			$row = $query->row();
+
+			return $row;
+	}
+
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */
