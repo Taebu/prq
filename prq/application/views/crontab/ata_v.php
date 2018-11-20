@@ -142,6 +142,8 @@ $plusfriend=$controller->crontab_m->get_plusid();
 $plusfriend=json_decode(json_encode($plusfriend),true);
 	echo "<pre>";
 //print_r($plusfriend);
+
+
 foreach($list as $li)
 {
 	echo "<pre>";
@@ -149,6 +151,8 @@ foreach($list as $li)
 	echo "</pre>";
 	$st_names="";
 	$st_names=isset($st_name[$li->st_no])?$st_name[$li->st_no]:"";
+	$st_no=$li->st_no;
+	$codes=$controller->crontab_m->get_codes($st_no);
 	echo "<tr>";
 	echo "<td>"; 
 	echo "<pre>";
@@ -235,6 +239,7 @@ foreach($list as $li)
 		$store=array(
 			"name"=>$st_names,
 			"tel"=>$st_vtel[$li->st_no],
+			"kakao_order_url"=>$codes['codes']['c5007'],
 			"homepage"=>sprintf("http://prq.co.kr/prq/page/%s",$li->st_no),
 			"point"=>"첫 다운로드 2,000"
 		);

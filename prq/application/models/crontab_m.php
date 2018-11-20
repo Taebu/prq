@@ -1193,6 +1193,35 @@ class Crontab_m extends CI_Model
 
 
 
+	/*
+	2018-11-14 (수) 11:00:00 
+	https://www.codeigniter.com/userguide3/database/query_builder.html#selecting-data
+	https://www.codeigniter.com/userguide3/database/results.html
+	*/
+	function get_codes($st_no)
+	{
+		$json=array();
+		$json['success']=false;
+		$json['codes']=array();
+		$query =$this->db->get('prq_codes');
+		foreach($query->result_array() as $list){
+			$code="c".$list['code'];
+			$json['codes'][$code]="";
+		}
+
+		$this->db->where('pv_no', $st_no);
+		$query =$this->db->get('prq_values');
+
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows()>0?true:false;
+
+		foreach($query->result_array() as $list){
+			$code="c".$list['pv_code'];
+			$json['codes'][$code]=stripcslashes($list['pv_value']);
+		}
+		
+		return $json;
+	}
 
 }
 

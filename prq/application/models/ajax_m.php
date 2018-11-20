@@ -2826,6 +2826,45 @@ ERROR:
 			return $row;
 	}
 
+	/**
+	 * code gedes 상점 모든 정보 가져오기
+	 * @param string $st_no 상점명
+	 * @return json_array
+		{"success":true,
+		"codes":{
+			"5001":"\uc871\ubc1c(\uad6d\ub0b4\uc0b0), \ubcf4\uc308(\uce60\ub808\uc0b0or\uce90\ub098\ub2e4\uc0b0), \uc300(\uad6d\ub0b4\uc0b0), \uae40\uce58(\uad6d\ub0b4\uc0b0), \uace0\ucd94\uac00\ub8e8(\uad6d\ub0b4\uc0b0or\uc911\uad6d\uc0b0), \uae30\ud0c0(\uad6d\ub0b4\uc0b0)",
+			"5002":"on",
+			"5004":"",
+			"5003":"",
+			"5005":"",
+			"5006":"",
+			"5007":"
+			"}}
+	 */
+	function get_codes($st_no)
+	{
+		$json=array();
+		$json['success']=false;
+		$json['codes']=array();
+		$query =$this->prq->get('prq_codes');
+		foreach($query->result_array() as $list){
+			$code="c".$list['code'];
+			$json['codes'][$code]="";
+		}
+
+		$this->prq->where('pv_no', $st_no);
+		$query =$this->prq->get('prq_values');
+
+		/*조회된 갯수 여부*/
+		$json['success']=$query->num_rows() > 0;
+
+		foreach($query->result_array() as $list){
+			$code="c".$list['pv_code'];
+			$json['codes'][$code]=stripcslashes($list['pv_value']);
+		}
+		
+		echo json_encode($json);
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */

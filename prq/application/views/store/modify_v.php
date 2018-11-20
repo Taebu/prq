@@ -262,6 +262,12 @@ echo "<option value='".$aw."'".$sel_aw.">".$aw."</option>";
 </div><!-- .col-sm-10 -->
 </div><!-- .form-group -->
 <div class="hr-line-dashed"></div><!-- .hr-line-dashed -->
+
+<div class="form-group"><label class="col-sm-2 control-label">카카오<br>주문하기 <br>(code : 5007) <br>store.kakao_order_link</label>
+<div class="col-sm-10"><input type="text" class="form-control" name="code_5007" id="code_5007" value="" placeholder="카카오 주문하기 url주소를 입력해 주세요." onkeyup="javascript:set_values(this.value,'5007');" onkeydown="javascript:set_values(this.value,'5007');">
+<span class="help-block m-b-none text-danger font-bold">카카오 주문하기 url주소를 입력해 주세요.</span>
+</div><!-- .col-sm-10 -->
+</div><!-- .form-group -->
 </div><!-- .col-md-6 Left Menu-->
 
 <div class="col-md-12">
@@ -1123,6 +1129,58 @@ function get_naver_category(){
 	});
 }
 
+function get_codes(){
+
+	$.ajax({
+	url:"/prq/ajax/get_codes/"+$("#st_no").val(),
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			
+			$("#st_origin").val(data.codes.c5001);
+			
+			var is_blogurl=data.codes.c5002=="on";
+			$("#is_blogurl").prop('checked', is_blogurl);
+			
+			console.log(data.codes.c5003);
+			console.log(data.codes.c5004);
+			console.log(data.codes.c5005);
+			console.log(data.codes.c5006);
+			$("#code_5007").val(data.codes.c5007);
+//			$("#pb_category").val(val.pv_value).attr("selected", "selected");
+
+		}
+	});
+}
+
+
+
+function set_codes(){
+
+	$.ajax({
+	url:"/prq/ajax/set_codes/"+$("#st_no").val(),
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			
+			$("#st_origin").val(data.codes.c5001);
+			
+			var is_blogurl=data.codes.c5002=="on";
+			$("#is_blogurl").prop('checked', is_blogurl);
+			
+			console.log(data.codes.c5003);
+			console.log(data.codes.c5004);
+			console.log(data.codes.c5005);
+			console.log(data.codes.c5006);
+			console.log();
+			$("#code_5007").val(data.codes.c5007);
+//			$("#pb_category").val(val.pv_value).attr("selected", "selected");
+
+		}
+	});
+}
 
 /* 등록된 블로그API 네이버 아이디 가져오기 */
 function get_naverapi_id()
@@ -1314,12 +1372,12 @@ textAreaAdjustOn();
 /* 원산지를 가져옵니다.
  code 5001
 */
-get_origin();
+//get_origin();
 
 /* 블로그url 사용여부를 가져옵니다.
  code 5002
 */
-get_blogurl();
+//get_blogurl();
 
 chk_blogauto();
 
@@ -1351,6 +1409,8 @@ $(".popover-top").popover({trigger: 'hover click','placement': 'top'});
 var is_ata_yn=$("#hidden_st_ata_YN").val()=="on"||$("#hidden_st_ata_YN").val()=="Y";
 $("#st_ata_YN").prop('checked', is_ata_yn);
 
+/*상점에 관련된 모든 코드 불러오기 */
+get_codes();
 };/*window.onload = function() {..}*/
 
 

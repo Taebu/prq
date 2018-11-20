@@ -1,4 +1,4 @@
-<script type="text/javascript">
+aaaaaaaaaaaaaaaaaaaaa<script type="text/javascript">
 
 function modify_ds(){
 var param=$("#write_action").serialize();
@@ -1107,6 +1107,24 @@ function chk_blogauto()
 		$("#naver_blogapi").hide();
 	}
 }
+
+
+function get_codes(){
+
+	$.ajax({
+	url:"/prq/ajax/get_codes/"+$("#st_no").val(),
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.posts,function(key,val){
+				console.log(val);
+//			$("#pb_category").val(val.pv_value).attr("selected", "selected");
+			});
+		}
+	});
+}
+
 /* 홈페이지 로드시 */
 window.onload = function() {
 /*24시간인지 체크*/
@@ -1114,8 +1132,7 @@ chk_btn_status();
 
 /*멀티 셀렉트 구현 chosen-select */
 $(".chosen-select").chosen();
-var code=$("#sel_prq_fcode").val().substring(0, 12);
-get_frcode(code);
+get_frcode($("#sel_prq_fcode").val().substring(0, 12));
 
 get_frmail();
 
@@ -1152,6 +1169,9 @@ get_naverapi_id();
 
 /* 네이버 블로그 카테고리를 불러 옵니다 5초뒤에 */
 setTimeout(get_naver_category, 5000); // 5000ms(5초)가 경과하면 이 함수가 실행됩니다.
+
+/*상점에 관련된 모든 코드 불러오기 */
+get_codes();
 };/*window.onload = function() {..}*/
 
 

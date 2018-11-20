@@ -810,7 +810,13 @@ class Ajax extends CI_Controller {
 		echo $result;
 	}
 	
-	//get_values
+	/* 
+	get_values
+	prq/ajax/get_values
+	post
+	@param pv_no (st_no)
+	@param pv_code (5000)<-상점 코드
+	*/
 	function get_values()
 	{
 		$pv_no=$this->input->post("pv_no", TRUE);
@@ -1182,6 +1188,7 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		$array=$this->input->post(null, TRUE);
 		$this->ajax_m->set_talktalk_log($array);
 	}
+	
 	/*
 	http://prq.co.kr/prq/ajax/get_token_id
 	*/
@@ -1201,6 +1208,15 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		}
 
 		echo json_encode($json);
+	}
+
+	/*
+	http://prq.co.kr/prq/ajax/get_codes/st_no
+	*/
+	function get_codes()
+	{
+		$st_no=$this->uri->segment(3);
+		$this->ajax_m->get_codes($st_no);
 	}
 }
 /* End of file ajax.php */

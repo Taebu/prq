@@ -189,6 +189,16 @@ class Store extends CI_Controller {
 		$table = $this->uri->segment(3);
 		$board_id = $this->uri->segment(5);
 
+		$class=$this->uri->segment(1);
+		$table=$this->uri->segment(3);
+		$mb_no=$this->uri->segment(5);
+		$page=$this->uri->segment(7);
+
+		$data['list_link']=sprintf("/prq/%s/lists/%s/page/%s",$class,$table,$page);
+		$data['modify_link']=sprintf("/prq/%s/modify/%s/st_no/%s/page/%s",$class,$table,$mb_no,$page);
+		$data['delete_link']=sprintf("/prq/%s/delete/%s/st_no/%s/page/%s",$class,$table,$mb_no,$page);
+		$data['write_link']=sprintf("/prq/%s/write/%s/page/%s",$class,$table,$page);
+
  		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
  		$data['views'] = $this->store_m->get_view($table, $board_id);
 		$array=json_decode(json_encode($data['views']), True);
