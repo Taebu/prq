@@ -87,6 +87,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/prq/include/php/prq_store.php');
 $st_name= array_column($arr['store'], 'st_name', 'st_no');
 $st_vtel= array_column($arr['store'], 'st_vtel', 'st_no');
 
+
 /****************************************************************************** 
 * 1. 블랙 리스트 가져오기 
 * 
@@ -230,7 +231,6 @@ foreach($list as $li)
 		$key = array_search($li->bp_appid, array_column($plusfriend, 'bp_appid'));
 		$sender_key=$plusfriend[$key]['bp_senderid'];
 		
-		echo "<pre>";	
 
 		$arr_string=$template['bt_content'];
 
@@ -239,7 +239,7 @@ foreach($list as $li)
 		$store=array(
 			"name"=>$st_names,
 			"tel"=>$st_vtel[$li->st_no],
-			"kakao_order_url"=>$codes['codes']['c5007'],
+			"kakao_order_link"=>$codes['codes']['c5007'],
 			"homepage"=>sprintf("http://prq.co.kr/prq/page/%s",$li->st_no),
 			"point"=>"첫 다운로드 2,000"
 		);
@@ -253,6 +253,11 @@ foreach($list as $li)
 			"get_rand_int"=>get_rand_int(),
 		);
 		
+		$prq_ata_log=array(
+			"date_client_req"=>$li->date_client_req,
+		);
+
+
 		foreach($exp_regex as $er)
 		{
 			$keys=explode("=",$er);

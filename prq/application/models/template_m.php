@@ -367,16 +367,18 @@ class Template_m extends CI_Model
 		$reg_value=$arrays['reg_value'];
 		$i=0;
 		$reg_array=array();
+		$remove_key=array();
 		foreach($reg_name as $rn)
 		{
 			$reg_array[]=$reg_name[$i]."=".$reg_value[$i];
+			$remove_key["keyvalue_".$i]="";
 			$i++;
 		}
 		$modify_array['bt_regex']=join("&",$reg_array);
 
 		/* table key를 제거한다. */
 		$modify_array=array_diff_key($modify_array, 
-			array('bt_no' => "",'table' => "",'reg_name'=>"",'reg_value'=>""));
+			array('bt_no' => "",'table' => "",'reg_name'=>"",'reg_value'=>""),$remove_key);
 		$result = $this->db->update($table, $modify_array, $where);
 		//결과 반환
 		return $result;

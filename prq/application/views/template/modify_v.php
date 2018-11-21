@@ -15,7 +15,18 @@ function chg_template_rule($point_items,$option="")
 		for($i=0;$i<count($setmenu_a);$i++)
 		{
 			$setm= explode("=",$setmenu_a[$i]);
-			$array[]='<div class="row" id="regex_'.$i.'">';
+			$array[]=sprintf('<div class="row" id="regex_%s">',$i);
+
+			$is_storename=$setm[1]=="store.name"?"checked":"";
+			$is_storetel=$setm[1]=="store.tel"?"checked":"";
+			$is_storehomepage=$setm[1]=="store.homepage"?"checked":"";
+			$is_storekakao_order_link=$setm[1]=="store.kakao_order_link"?"checked":"";
+			$is_storepoint=$setm[1]=="store.point"?"checked":"";
+			$is_functionget_rand_int=$setm[1]=="function.get_rand_int"?"checked":"";
+			$is_agencyMemberpoint_items=$setm[1]=="agencyMember.point_items"?"checked":"";
+			$is_agencyMembermin_point=$setm[1]=="agencyMember.min_point"?"checked":"";
+			$is_prq_ata_logdate_client_req=$setm[1]=="prq_ata_log.date_client_req"?"checked":"";
+
 			if($option=="view"){
 			$array[]=sprintf(' %s %s <br>',$setm[0],$setm[1]);
 			}else{
@@ -23,11 +34,11 @@ function chg_template_rule($point_items,$option="")
 			$array[]='<label for="ex2">key name</label>';
 			$array[]=sprintf('<input type="text" name="reg_name[]" value="%s" class="form-control"> ',$setm[0]);
 			$array[]='</div>';
-			
 			$array[]='<div class="col-xs-5">';
 			$array[]='<label for="ex2">key value</label>';
-			$array[]=sprintf('<input type="text" name="reg_value[]" value="%s" class="form-control">',$setm[1]);
+			$array[]=sprintf('<input type="text" name="reg_value[]" value="%s" id="reg_value_%d" class="form-control">',$setm[1],$i);
 			$array[]='</div>';
+
 			}
 			
 			if($option=="add")
@@ -40,7 +51,58 @@ function chg_template_rule($point_items,$option="")
 				}
 				$array[]='</div>';
 			}
+
+			
+			$array[]='<div class="col-xs-12">';
+			$array[]='<div class="radio radio-white radio-inline">';
+			$array[]=sprintf('<input type="radio" name="keyvalue_%d" id="keyvalue_%d_0" value="store.name" %s><label for="keyvalue_%d_0" onclick="javascript:set_keyvalue(\'%d\',\'store.name\');"><span class="btn btn-xs btn-white">업체명</span></label>',$i,$i,$is_storename,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';
+			$array[]='<div class="radio radio-primary radio-inline">';
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_1" value="store.tel" %s><label for="keyvalue_%s_1" onclick="javascript:set_keyvalue(\'%d\',\'store.tel\');"><span class="btn btn-xs btn-success">050번호</span></label>',$i,$i,$is_storetel,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';
+			$array[]='<div class="radio radio-info radio-inline">';
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_2" value="store.homepage" %s><label for="keyvalue_%s_2" onclick="javascript:set_keyvalue(\'%d\',\'store.homepage\');"><span class="btn btn-xs btn-info">홈페이지</span></label>',$i,$i,$is_storehomepage,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';
+			$array[]='<div class="radio radio-success radio-inline">';
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_3" value="store.kakao_order_link" %s><label for="keyvalue_%s_3" onclick="javascript:set_keyvalue(\'%d\',\'store.kakao_orde_link\');"><span class="btn btn-xs btn-primary">카카오주문링크</span></label>',$i,$i,$is_storekakao_order_link,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+      $array[]='';																							
+			$array[]='<div class="radio radio-danger radio-inline">';	
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_4" value="store.point" %s><label for="keyvalue_%s_4" onclick="javascript:set_keyvalue(\'%d\',\'store.point\');"><span class="btn btn-xs btn-danger">포인트</span></label>',$i,$i,$is_storepoint,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';																							
+																																
+			$array[]='<div class="radio radio-warning radio-inline">';	
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_5" value="function.get_rand_int" %s><label for="keyvalue_%s_5" onclick="javascript:set_keyvalue(\'%d\',\'function.get_rand_int\');"><span class="btn btn-xs btn-warning">랜덤6자리</span></label>',$i,$i,$is_functionget_rand_int,$i,$i);		
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';																							
+																																
+			$array[]='<div class="radio radio-white radio-inline">';	
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_6" value="agencyMember.point_items" %s><label for="keyvalue_%s_6" onclick="javascript:set_keyvalue(\'%d\',\'agencyMember.point_items\');"><span class="btn btn-xs btn-white">미션내용</span></label>',$i,$i,$is_agencyMemberpoint_items,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';
+
+			$array[]='<div class="radio radio-primary radio-inline">';
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_7" value="agencyMember.min_point" %s><label for="keyvalue_%s_7" onclick="javascript:set_keyvalue(\'%d\',\'agencyMember.min_point\');"><span class="btn btn-xs btn-success">최소주문금액</span></label>',$i,$i,$is_agencyMembermin_point,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+			$array[]='';
+
+			$array[]='<div class="radio radio-info radio-inline">';
+			$array[]=sprintf('<input type="radio" name="keyvalue_%s" id="keyvalue_%s_8" value="prq_ata_log.date_client_req" %s><label for="keyvalue_%s_8" onclick="javascript:set_keyvalue(\'%d\',\'prq_ata_log.date_client_req\');"><span class="btn btn-xs btn-info">주문시간</span></label>',$i,$i,$is_prq_ata_logdate_client_req,$i,$i);
+			$array[]='</div><!-- .radio .radio-info .radio-inline -->';
+
+			
+			$array[]='</div><!-- .col-xs-12 -->';
+
+	
+//			$array[]='<span class="help-block m-b-none" id="mb_name_assist">- 0:미적립,1:사용가능,2:신청중,3:현금지급,4:삭제</span>';
+			
 			$array[]=sprintf('</div><!-- .row #regex_%s -->',$i);
+
+
 			$regex_index++;
 		}
 	}
@@ -163,24 +225,25 @@ foreach($appids as $app)
 </td>
 <div class="form-group"><label class="col-sm-2 control-label">적립타입</label>
 <div class="col-sm-10">
-<div class="radio radio-primary radio-inline">
+<div class="radio radio-white radio-inline">
 <input type="radio" name="po_status" id="po_status_0" value='0' checked><label for="po_status_0"><span class="btn btn-xs btn-white">미적립</span></label>
-</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .radio .radio-white .radio-inline -->
 
-<div class="radio radio-warning radio-inline">
+<div class="radio radio-primary radio-inline">
 <input type="radio" name="po_status" id="po_status_1" value='1'><label for="po_status_1"><span class="btn btn-xs btn-success">사용가능</span></label>
-</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .radio .radio-primary .radio-inline -->
 
-<div class="radio radio-danger radio-inline">
+<div class="radio radio-info radio-inline">
 <input type="radio" name="po_status" id="po_status_2" value='2'><label for="po_status_2"><span class="btn btn-xs btn-info">신청중</span></label>
 </div><!-- .radio .radio-info .radio-inline -->
 
-<div class="radio radio-danger radio-inline">
+<div class="radio radio-success radio-inline">
 <input type="radio" name="po_status" id="po_status_3" value='3'><label for="po_status_3"><span class="btn btn-xs btn-primary">현금지급</span></label>
-</div><!-- .radio .radio-info .radio-inline --><div class="radio radio-danger radio-inline">
+</div><!-- .radio .radio-success.radio-inline -->
 
+<div class="radio radio-white radio-inline">
 <input type="radio" name="po_status" id="po_status_terminate" value='terminate'><label for="po_status_terminate"><span class="btn btn-xs btn-free">삭제</span></label>
-</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .radio .radio-white .radio-inline -->
 
 <span class="help-block m-b-none" id="mb_name_assist">- 0:미적립,1:사용가능,2:신청중,3:현금지급,4:삭제</span>
 
@@ -409,6 +472,10 @@ function remove_regex(id)
 	$("#regex_"+id).remove();
 }
 
+function set_keyvalue(k1,k2)
+{
+	$("#reg_value_"+k1).val(k2);
+}
 window.onload = function() {
 
 $( "#mb_id" ).focusout(function() {
