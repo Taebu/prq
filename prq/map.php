@@ -64,6 +64,11 @@ var mapOptions = {
     zoom: 10
 };
 var map = new naver.maps.Map('map2', mapOptions);
+
+var marker = new naver.maps.Marker({
+    position: new naver.maps.LatLng(latitude, longitude),
+    map: map
+});
 </script>
 </body>
 </html>
