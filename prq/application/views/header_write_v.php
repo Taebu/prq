@@ -158,7 +158,8 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 					 ?>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">가맹점 관리</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록 </a></li>
+                            <?php echo $this->uri->segment(3)=="prq_member"?'<li class="active">':'<li>';?><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록</a></li>
+                            <?php echo $this->uri->segment(3)=="prq_member_status"?'<li class="active">':'<li>';?><a href="/prq/franchise/lists/prq_member_status/page/1">가맹점 상태 목록  <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php 
@@ -204,18 +205,18 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 					<?php echo $this->uri->segment(1)=="logs"?'<li class="active">':'<li>';?>
                         <a href="#">
 						<i class="fa fa-files-o"></i><span class="nav-label">LOGS</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <?php echo $this->uri->segment(3)=="cid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/cid">CID</a></li>
-                            <?php echo $this->uri->segment(3)=="ocid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ocid">OCID</a></li>
-                            <?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
-                            <?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
-							<?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
-                            <?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
-                            <?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA</a></li>
-                            <?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST<span class="label label-danger pull-right">사용안함</span></a></li>
-                            <?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
-                            <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-danger pull-right">사용안함</span></a></li>
-                            <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST</a></li>
+							<ul class="nav nav-second-level collapse">
+								<?php echo $this->uri->segment(3)=="cid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/cid">CID</a></li>
+								<?php echo $this->uri->segment(3)=="ocid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ocid">OCID</a></li>
+								<?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
+								<?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
+								<?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
+								<?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
+								<?php echo $this->uri->segment(3)=="ata"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ata">ATA</a></li>
+								<?php echo $this->uri->segment(3)=="first"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/first">FIRST<span class="label label-danger pull-right">사용안함</span></a></li>
+								<?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
+								<?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-danger pull-right">사용안함</span></a></li>
+								<?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST</a></li>
 						</ul>
                     </li>
 					<?php echo $this->uri->segment(1)=="appjoin"?'<li class="active">':'<li>';?>

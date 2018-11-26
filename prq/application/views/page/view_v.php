@@ -619,7 +619,10 @@ function chk7days2()
 	$('.dialog-clone').hide();
 
 }
-if(cookie.get("chk7days")=="true"||jindo.$Agent().os().ios||jindo.$Agent().os().win||jindo.$Agent().navigator().getName()=="chrome")
+
+//if(cookie.get("chk7days")=="true"||jindo.$Agent().os().ios||jindo.$Agent().os().win||jindo.$Agent().navigator().getName()=="chrome")
+
+if(cookie.get("chk7days")=="true"||jindo.$Agent().os().ios||jindo.$Agent().os().win)
 {
 	console.log("아이퐁");
 	console.log("Window");
