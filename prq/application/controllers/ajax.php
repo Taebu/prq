@@ -1218,6 +1218,34 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		$st_no=$this->uri->segment(3);
 		$this->ajax_m->get_codes($st_no);
 	}
+	/*
+	2018-12-12 (수) 17:53:41 
+
+	*/
+	function set_talktalkcid_for_pc()
+	{
+		$array=$this->input->post(null, TRUE);
+		$this->ajax_m->set_talktalkcid_for_pc($array);
+	}
+
+	/*
+	2018-12-13 (목) 17:19:30 
+	http://prq.co.kr/prq/ajax/get_talktalkcid_for_pc
+	*/
+	function get_talktalkcid_for_pc()
+	{
+		$json=array();
+		$json['success']=false;
+		$array=array();
+
+		$cid=$this->ajax_m->get_talktalkcid_for_pc($array);
+		$json['success']=count($cid)>0;
+		if(count($cid))
+		{
+			$json['bbd_info']=$cid;
+		}
+		echo json_encode($json);
+	}
 }
 /* End of file ajax.php */
 /* Location: ./prq/application/controllers/ajax.php */

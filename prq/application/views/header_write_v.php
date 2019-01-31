@@ -208,6 +208,7 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){?>
 							<ul class="nav nav-second-level collapse">
 								<?php echo $this->uri->segment(3)=="cid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/cid">CID</a></li>
 								<?php echo $this->uri->segment(3)=="ocid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ocid">OCID</a></li>
+								<?php echo $this->uri->segment(3)=="tcid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/tcid">TCID<span class="label label-warning pull-right">NEW</span></a></li>
 								<?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
 								<?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
 								<?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>

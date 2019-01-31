@@ -1073,7 +1073,7 @@ class Crontab_m extends CI_Model
 
 			$this->db->where('st_no', $st_no);
 			$query = $this->db->update('prq_store', $data);
-   		return $query->result(); 
+   		//$query->result(); 
 		}
 
 		function set_talktalk_status()

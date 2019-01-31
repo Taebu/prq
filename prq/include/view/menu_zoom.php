@@ -88,7 +88,12 @@
         </div>
     </div> 
 
-<img class="menu_img imageCache" src="http://prq.co.kr/prq/uploads/ME/<?php echo $_GET['me_src'];?>" style="width: 100%; z-index: -1;" draggable="false" alt="메뉴이미지" /> 
+<div id="imgScroll" style="overflow: scroll;
+    width: 100%;
+    height: 500px;">
+<img class="menu_img imageCache" src="http://prq.co.kr/prq/uploads/ME/<?php echo $_GET['me_src'];?>" style="width: 100%;
+ z-index: -1;" alt="메뉴이미지" /> 
+ </div>
     <script type="text/javascript">
 	function closePopup() {
 		if ( history.length == 1 ) {
@@ -99,5 +104,7 @@
 			history.go(-1);
 		}
 	}
+var h = window.innerHeight;
+	document.getElementById("imgScroll").style.height =h;
 	</script>
 	

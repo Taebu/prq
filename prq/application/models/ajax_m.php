@@ -2865,6 +2865,24 @@ ERROR:
 		
 		echo json_encode($json);
 	}
+
+	function set_talktalkcid_for_pc($array)
+	{
+		$array['bt_datetime']= date("Y-m-d H:i:s");
+		$this->prq->replace('bbd_talktalkclick_pc_log',$array);
+	}
+
+	function get_talktalkcid_for_pc($array)
+	{
+			$this->prq->order_by('bt_no', 'DESC');
+			$query =$this->prq->get('bbd_talktalkclick_pc_log');
+			$row=array();
+			foreach($query->result_array() as $list){
+				array_push($row,$list);
+			}
+		
+			return $row;
+	}
 }
 /* End of file ajax_m.php */
 /* Location: ./application/models/ajax_m.php */
