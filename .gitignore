@@ -13,6 +13,8 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.iso
+*.exe
 
 # Windows shortcuts
 *.lnk
@@ -46,4 +48,5 @@ Temporary Items
 *.tar
 
 prq/uploads/
+prq/prqapp/
 

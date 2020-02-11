@@ -85,8 +85,15 @@ class Ajax_m extends CI_Model
 		$sql=array();
 		$json['success']=false;
 		if($array['prq_table']=="prq_member"){
-			$sql[]="update `".$array['prq_table']."` set ";
+			$sql[]="update `prq_member` set ";
+			if($array['mb_status']=="ca")
+			{
+			$sql[]="`mb_leave_date`='".date("Y-m-d")."', ";
+			}else{
+			$sql[]="`mb_leave_date`='', ";
+			}
 			$sql[]=" mb_status='".$array['mb_status']."' ";
+
 			$sql[]="WHERE ";
 			$sql[]="mb_no in (".$array['join_chk_seq'].");";
 		}else if($array['prq_table']=="prq_store"){
@@ -1158,6 +1165,7 @@ class Ajax_m extends CI_Model
 	*/
 	function get_email($array)
 	{
+
 		$json=array();
 		$json['success']=false;
 		$sql=array();
@@ -1174,14 +1182,47 @@ class Ajax_m extends CI_Model
 		/*조회된 갯수 여부*/
 		$json['success']=$query->num_rows() > 0;
 		
+		$json['is_casol_YN']="N";
+		$json['is_use_YN']="N";
+		$json['mb_id']="";
+		$json['bender']="";
+
 		/* 조회 결과가 성공 이라면 */
 		if($query->num_rows() > 0){
+
 			$row = $query->row();
 			$mb_id=$row->mb_id;
-			echo $json['success']?"TRUE":"FALSE";
-			echo ",".$mb_id;
-			//echo ",".$join_sql;
-			//echo $this->input->ip_address();
+			$mb_no = $row->mb_no;
+			$codes=$this->get_codes($mb_no,"4","array");
+//			$json['row']=$row;
+			if($array['mode']=="json")
+			{
+				if($row->mb_status!="ca")
+				{
+					$lastDateOfThisMonth =strtotime('last day of this month') ;
+					$lastDay = date('Y-m-d', $lastDateOfThisMonth);
+					$json['success']=true;
+					$json['expiryDate']=$lastDay;
+					$json['mb_id']=$mb_id;
+					if($codes['codes']['c4006']=="casol")
+					{
+						$json['is_casol_YN']="Y";
+					}
+					$json['is_use_YN']="Y";
+				}else{
+					$json['success']=false;
+					$json['mb_id']="102867782";
+					$json['expiryDate']=$row->mb_leave_date;
+				}
+				echo json_encode($json);
+			}else{
+				if($row->mb_status!="ca")
+				{
+					echo "TRUE,".$mb_id;
+				}else{
+					echo "FALSE,102867782";
+				}			
+			}
 		}else{
 			echo "FALSE";
 			echo ",null";		
@@ -2841,11 +2882,12 @@ ERROR:
 			"5007":"
 			"}}
 	 */
-	function get_codes($st_no)
+	function get_codes($st_no,$pcode="5",$mode="json")
 	{
 		$json=array();
 		$json['success']=false;
 		$json['codes']=array();
+		$this->prq->like('pcode', $pcode, 'after');
 		$query =$this->prq->get('prq_codes');
 		foreach($query->result_array() as $list){
 			$code="c".$list['code'];
@@ -2853,6 +2895,8 @@ ERROR:
 		}
 
 		$this->prq->where('pv_no', $st_no);
+		$this->prq->like('pv_code', $pcode, 'after');
+		
 		$query =$this->prq->get('prq_values');
 
 		/*조회된 갯수 여부*/
@@ -2863,7 +2907,12 @@ ERROR:
 			$json['codes'][$code]=stripcslashes($list['pv_value']);
 		}
 		
+		if($mode=="json")
+		{
 		echo json_encode($json);
+		}else{
+		return $json;
+		}
 	}
 
 	function set_talktalkcid_for_pc($array)
@@ -2882,6 +2931,84 @@ ERROR:
 			}
 		
 			return $row;
+	}
+
+	
+	function checksum2021($array)
+	{
+		/* 업데이트 업로드 초기 경로 업로드 */
+		$base_location="/var/www/html/prq/prq2021app/update/";
+
+		/* 파일 위치를 구한다. */
+		$location=$base_location.$array['update_location'];
+
+		/* 파일 존재 여부를 is_file_exists 변수에 담는다. */
+		$is_file_exists=file_exists($location);
+		
+		/* 파라메터를 update_location 을 보내지 않았을 때 */
+		if($base_location==$location){
+			echo "not locate";
+		/* 해당 파일이 존재 하는 경우*/
+		}else if($is_file_exists){
+		/* 파일 위치를 md5_file 이라는 함수에 넣어 md5 결과를 호출한다. */
+		echo md5_file($location);
+		}else{
+		/* update_location 으로 파일 위치를 탐색하였으나 파일이 존재하지 않습니다. 의 상태를 
+		"is not file" 로 출력 */
+		echo "is not file";
+		}
+
+		// /var/www/html/prq/prq2021app/update/updaterApp/PowerUpdater.exe
+	}
+
+	function chg_status_naver_table($array)
+	{
+		//print_r($array);
+		$pv_code="4001";
+		$object = array();
+		$object['fr_submit']="4001";
+		$object['fr_install']="4002";
+		$object['fr_1st_payment']="4003";
+		$object['fr_2nd_payment']="4004";
+
+
+		$status = array();
+		$status['wait'] = '<button type="button" class="btn btn-default btn-xs">대기</button>';
+		$status['order'] = '<button type="button" class="btn btn-danger btn-xs">접수</button>';
+		$status['installing'] = '<button type="button" class="btn btn-danger btn-xs">설치중</button>';
+		$status['withhold'] = '<button type="button" class="btn btn-warning btn-xs">보류</button>';
+		$status['complete'] = '<button type="button" class="btn btn-primary btn-xs">완료</button>';
+		$status['in_progress'] ='<button type="button" class="btn btn-danger btn-xs">진행중</button>';
+		$status['decision_in_process'] = '<button type="button" class="btn btn-danger btn-xs">심사중</button>';
+	
+	
+		$k=$array['first_process'];
+		$k2=$array['seconde_process'];
+		$pv_code=$object[$k];
+		$mb_status=$status[$k2];
+
+		$pv_value=$array['mb_status'];
+		$pv_no=$array['mb_no'];
+
+		$json = array();
+		$json['success'] = true;
+		$json['posts'] = array();
+		foreach ($array['chk_seq'] as $key => $value) {
+		$product=array();
+		$product['mb_no']=$value;
+		$product['first_process']=$k;
+
+		$product['mb_status']='<button type="button" class="btn btn-danger btn-xs">심사중</button>';
+		$product['mb_status']=$mb_status;
+			array_push($json['posts'],$product);
+			$write_data = array(
+				'pv_no'=>$value,
+				'pv_code'=>$pv_code,
+				'pv_value'=>$pv_value,
+			);
+			$result = $this->ajax_m->set_values($write_data);
+		}
+		echo json_encode($json);
 	}
 }
 /* End of file ajax_m.php */

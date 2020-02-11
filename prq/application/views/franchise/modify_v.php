@@ -222,6 +222,77 @@ function get_token_id(){
 
 
 
+
+/****************
+* set_values(v,code)
+* 코드 밸류 값을 갱신 합니다. 
+* @param v 코드에 대한 값
+* @param code 코드에 대한 키
+* @return 등록 여부
+****************/
+function set_values(v,code){
+	var mb_no=$("#mb_no").val();
+	var pv_value=v;
+	var type = $("[name=code_"+code+"]").attr("type");
+	
+	console.log(mb_no+" : "+pv_value);
+	var param="pv_no="+mb_no+"&pv_value="+pv_value+"&pv_code="+code;
+
+	$.ajax({
+	url:"/prq/ajax/set_values/",
+	type: "POST",
+	data:param,
+	dataType:"json",
+	success: function(data) {
+			if(data.success){
+				toastr.success('수정성공.','코드를 수정 하였습니다.');
+			}else{
+				toastr.error('실패.','코드 수정에 실패 하였습니다.');
+			}
+			console.log(data);
+		}
+	});
+
+}
+
+
+
+function get_codes()
+{
+	var code_key="";
+	var object_type = "text";
+	$.ajax({
+	url:"/prq/ajax/get_codes/"+$("#mb_no").val()+"/4",
+	type: "POST",
+	data:"",
+	dataType:"json",
+	success: function(data) {
+			$.each(data.codes,function(key,val){
+				/* code 키를 가져 옵니다.*/
+				code_key= key.substr(-4);
+
+				/*code의 타입을 가져 옵니다. */
+				object_type = $("[name=code_"+code_key+"]").attr("type");
+
+				/* 코드의 타입이 text 이면 글자를 입력 합니다.*/
+				if(object_type=="text"){
+					$("[name=code_"+code_key+"]").val(val);
+
+				/* 코드의 타입이 radio 이면 해당 객체를 체크 합니다.*/
+				}else if(object_type=="radio"){
+					$('input:radio[name=code_'+code_key+']:input[value="' + val + '"]').attr("checked", true);
+
+				/* 코드의 타입이 checkbox 이면 해당 객체를 체크 합니다.*/
+				}else if(object_type=="checkbox"){
+					$("[name=code_"+code_key+"]").prop('checked', val=="Y"||val=="on");
+				}
+			});
+
+		}
+	});
+}
+
+
 window.onload = function() {
 //	/prq/board/write/prq_member
 //showDropzone();
@@ -236,6 +307,10 @@ get_mnoinfo();
 
 /* token_id 정보를 불러 옵니다.*/
 get_token_id();
+
+
+/*상점에 관련된 모든 코드 불러오기 */
+get_codes();
 };
 
 console.log("root@175.126.111.21:/var/www/html/prq/application/views/franchise/modify_v.php");
@@ -262,7 +337,8 @@ console.log("root@175.126.111.21:/var/www/html/prq/application/views/franchise/m
 <?php 
 $attributes = array(
 'class' => 'form-horizontal', 
-'id' => 'write_action'
+'id' => 'write_action',
+'name' => 'write_action'
 );
 //echo form_open('/board/modify/prq_member', $attributes);
 
@@ -278,6 +354,7 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 <input type="hidden" name="is_join" id="is_join">
 <input type="hidden" id="mode" value="modify">
 
+<input type="hidden" name="mb_no" id="mb_no" value="<?php echo $views->mb_no;?>">
 <input type="hidden" name="prq_fcode" id="prq_fcode" value="<?php echo $views->prq_fcode;?>">
 <input type="hidden" name="mb_business_paper" id="mb_business_paper" value="<?php echo $views->mb_business_paper;?>">
 <input type="hidden" name="mb_distributors_paper" id="mb_distributors_paper" value="<?php echo $views->mb_distributors_paper;?>">
@@ -474,6 +551,17 @@ echo form_open('/franchise/modify/'.$this->uri->segment(3).'/board_id/'.$this->u
 			<span class="help-block m-b-none">.</span>
 </div></div><!-- .row -->
 
+<div class="form-group"><label class="col-sm-2 control-label">카솔 사용 여부<br>(code : 4006)<br>
+<span class="label label-danger pull-right">NEW</span></label>
+<div class="col-sm-10 ">
+<div class="radio radio-info radio-inline">
+<input type="radio" name="code_4006" id="code_4006_1" value="talktalk" onclick="javascript:set_values(this.value,'4006');"><label for="code_4006_1">톡톡메시지</label>
+</div><!-- .radio .radio-info .radio-inline -->
+<div class="radio radio-info radio-inline">
+<input type="radio" name="code_4006" id="code_4006_2" value="casol" onclick="javascript:set_values(this.value,'4006');"><label for="code_4006_2">카솔</label>
+</div><!-- .radio .radio-info .radio-inline -->
+</div><!-- .col-sm-10 -->
+</div>
 <div>
 <div class="controls">
 <p class="help-block"><?php echo validation_errors(); ?></p>

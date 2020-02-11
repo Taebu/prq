@@ -88,14 +88,25 @@ class Franchise extends CI_Controller {
 			'mb_name'=>$this->input->post('mb_name', TRUE),
 			'mb_id'=>$this->input->post('mb_id', TRUE),
 			'mb_email'=>$this->input->post('mb_email', TRUE),
-			'mb_hp'=>$this->input->post('mb_hp', TRUE)
+			'mb_hp'=>$this->input->post('mb_hp', TRUE),
+			'mb_gcode'=>""
 		);
-			$is_status_view=$this->uri->segment(3)=="prq_member_status";
-		if($is_status_view){
+		
+		
+		$is_status_view=$this->uri->segment(3)=="prq_member_status";
+
+		$is_naver_view=$this->uri->segment(3)=="prq_member_naver";
+		
+		if($is_naver_view){
+		$base_url='/prq/franchise/lists/prq_member_naver'.$page_url.'/page/';
+		$search_array['mb_gcode']='G51';
+		}else if($is_status_view){
 		$base_url='/prq/franchise/lists/prq_member_status'.$page_url.'/page/';
 		}else{
 		$base_url='/prq/franchise/lists/prq_member'.$page_url.'/page/';
 		}
+		
+		
 		$config = array(
 		//페이지네이션 기본 설정
 		'base_url'=> $base_url,
@@ -156,11 +167,17 @@ class Franchise extends CI_Controller {
 		$data['controllers'] = $this;
 		$is_status_view=$this->uri->segment(3)=="prq_member_status";
 
-		if($is_status_view)
-		$this->load->view('franchise/status/list_v', $data);
-
-		if(!$is_status_view)
-		$this->load->view('franchise/list_v', $data);
+		$data['codes'] = $this->franchise_m->get_codes($data['list']);
+		$data['codes']=json_decode(json_encode($data['codes']), True);
+//		$data['codes'] = array_column($data['codes'], 'st_ata_YN','st_no');
+		if($is_naver_view)
+		{
+			$this->load->view('franchise/naver/list_v', $data);
+		}else if($is_status_view){
+			$this->load->view('franchise/status/list_v', $data);
+		}else {
+			$this->load->view('franchise/list_v', $data);
+		}
 	}
 
 	/**
@@ -172,6 +189,8 @@ class Franchise extends CI_Controller {
 		$table=$this->uri->segment(3);
 		$mb_no=$this->uri->segment(5);
 		$page=$this->uri->segment(7);
+		
+		
 
 		$data['list_link']=sprintf("/prq/%s/lists/%s/page/%s",$class,$table,$page);
 		$data['modify_link']=sprintf("/prq/%s/modify/%s/mb_no/%s/page/%s",$class,$table,$mb_no,$page);
@@ -179,13 +198,21 @@ class Franchise extends CI_Controller {
 		$data['write_link']=sprintf("/prq/%s/write/%s/page/%s",$class,$table,$page);
  		
 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
- 		$data['views'] = $this->franchise_m->get_view($table, $mb_no);
-
+ 		$data['views'] = $this->franchise_m->get_view("prq_member", $mb_no);
+		$array=array();
+		$array['mb_no']=$mb_no;
+		$data['logs'] = $this->franchise_m->get_logs($array);
 		//게시판 이름과 게시물 번호에 해당하는 댓글 리스트 가져오기
- 		$data['comment_list'] = $this->franchise_m->get_comment($table, $mb_no);
+ 		$data['comment_list'] = $this->franchise_m->get_comment("prq_member", $mb_no);
 
  		//view 호출
- 		$this->load->view('franchise/view_v', $data);
+		if($table=="prq_member_naver")
+		{
+			$this->load->view('franchise/naver/view_v', $data);
+		}else{
+			$this->load->view('franchise/view_v', $data);
+		}
+ 		
  	}
 
  	/**
@@ -196,7 +223,7 @@ class Franchise extends CI_Controller {
 		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-
+		$table_name=$this->uri->segment(3);
 		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//폼 검증 라이브러리 로드
@@ -253,21 +280,26 @@ class Franchise extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('입력되었습니다.', '/prq/franchise/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('입력되었습니다.', '/prq/franchise/lists/'.$table_name.'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 실패시 게시판 목록으로
-					alert('다시 입력해 주세요.', '/prq/franchise/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('다시 입력해 주세요.', '/prq/franchise/lists/'.$table_name.'/page/'.$pages);
 					exit;
 				}
 
 			}
 			else
 			{
+				if($table_name=="prq_member_naver"){
+
 				//쓰기폼 view 호출
+				$this->load->view('franchise/naver/write_v');
+				}else{
 				$this->load->view('franchise/write_v');
+				}
 			}
 		}
 		else
@@ -311,11 +343,11 @@ class Franchise extends CI_Controller {
 		if( @$this->session->userdata('logged_in') == TRUE  ||@$this->input->cookie('logged_in', TRUE) == TRUE)
 		{
 			//수정하려는 글의 작성자가 본인인지 검증
-			$writer_id = $this->franchise_m->writer_check($this->uri->segment(3), $this->uri->segment(5));
+			$writer_id = $this->franchise_m->writer_check("prq_member", $mb_no);
 /*
 			if( $writer_id->user_id != $this->session->userdata('username') )
 			{
-				alert('본인이 작성한 글이 아닙니다.', '/prq/franchise/view/'.$this->uri->segment(3).'/franchise_id/'.$this->uri->segment(5).'/page/'.$pages);
+				alert('본인이 작성한 글이 아닙니다.', '/prq/franchise/view/'.$table.'/franchise_id/'.$mb_no.'/page/'.$pages);
 				exit;
 			}
 */
@@ -331,15 +363,15 @@ class Franchise extends CI_Controller {
 				if ( !$this->input->post('mb_id', TRUE) AND !$this->input->post('mb_addr1', TRUE) )
 				{
 					//글 내용이 없을 경우, 프로그램단에서 한번 더 체크
-					alert('비정상적인 접근입니다.', '/prq/franchise/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('비정상적인 접근입니다.', '/prq/franchise/lists/'.$table.'/page/'.$pages);
 					exit;
 				}
 
 				//var_dump($_POST);
 				/*
 				$modify_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'franchise_id' => $this->uri->segment(5), //게시물번호
+					'table' => $table, //게시판 테이블명
+					'franchise_id' => $mb_no, //게시물번호
 					'subject' => $this->input->post('subject', TRUE),
 					'contents' => $this->input->post('contents', TRUE)
 				);
@@ -347,8 +379,8 @@ class Franchise extends CI_Controller {
 				$result = $this->franchise_m->modify_franchise($modify_data);
 */
 				$modify_data = array(
-					'table' => $this->uri->segment(3), //게시판 테이블명
-					'mb_no' => $this->uri->segment(5), //게시판 번호
+					'table' => $table, //게시판 테이블명
+					'mb_no' => $mb_no, //게시판 번호
 					'mb_id' => $this->input->post('mb_id', TRUE),
 					'mb_email' => $this->input->post('mb_email', TRUE),
 					'mb_name' => $this->input->post('mb_name', TRUE),
@@ -388,13 +420,13 @@ class Franchise extends CI_Controller {
 				if ( $result )
 				{
 					//글 작성 성공시 게시판 목록으로
-					alert('수정되었습니다.', '/prq/franchise/lists/'.$this->uri->segment(3).'/page/'.$pages);
+					alert('수정되었습니다.', '/prq/franchise/lists/'.$table.'/page/'.$pages);
 					exit;
 				}
 				else
 				{
 					//글 수정 실패시 글 내용으로
-					alert('다시 수정해 주세요.', '/prq/franchise/view/'.$this->uri->segment(3).'/mb_no/'.$this->uri->segment(5).'/page/'.$pages);
+					alert('다시 수정해 주세요.', '/prq/franchise/view/'.$table.'/mb_no/'.$mb_no.'/page/'.$pages);
 					exit;
 				}
 
@@ -402,10 +434,16 @@ class Franchise extends CI_Controller {
 			else
 			{
 				//게시물 내용 가져오기
-				$data['views'] = $this->franchise_m->get_view($this->uri->segment(3), $this->uri->segment(5));
+				$data['views'] = $this->franchise_m->get_view("prq_member", $mb_no);
 
 				//쓰기폼 view 호출
-				$this->load->view('franchise/modify_v', $data);
+				//modify view 호출
+				if($table=="prq_member_naver")
+				{
+					$this->load->view('franchise/naver/modify_v', $data);
+				}else{
+					$this->load->view('franchise/modify_v', $data);
+				}
 			}
 		}
 		else

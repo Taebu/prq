@@ -319,7 +319,7 @@ http://prq.co.kr/prq/ajax/make_store
 
 
 
-function get_status3($s)
+function get_status_ata_pay($s)
 {
 	$result="";
 	$status=array();
@@ -400,7 +400,7 @@ $billtm=strtotime($lt->ap_autobill_date);
 $st_dt=date("y-m-d",$billtm);
 $autobill_date=date("d",$billtm);
 $ap_autobill_YN=$lt->ap_autobill_YN=="Y"?"정기결재":"일시결재";
-$ap_status=get_status3($lt->ap_status);
+$ap_status=get_status_ata_pay($lt->ap_status);
 $ap_status=sprintf('<button type="button" id="status_%s" class="btn btn-%s btn-xs">%s</button>',$lt->ap_no,$ap_status['status'],$ap_status['name']);
 $ap_reserve=$lt->ap_reserve=="0"?"즉시발송":$lt->ap_reserve."분";
 $view_url=sprintf("/prq/atapay/view/%s/ap_no/%s/page/%s",$this->uri->segment(3),$lt->ap_no,$page);

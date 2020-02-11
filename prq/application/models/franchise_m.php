@@ -182,6 +182,7 @@ class Franchise_m extends CI_Model
 			$sword.= " and (mb_talktalkmessage_pc_status in ('danger','warning') OR mb_talktalkmessage_android_status in ('danger','warning')) ";
 			$sword.= " and mb_status in ('pr','ac') ";
 		}
+
 		$table='prq_member';
 		/*
 		if ( $search_word != '' )
@@ -198,11 +199,13 @@ class Franchise_m extends CI_Model
 		//echo "prq_fcode=>".$prq_fcode."<br/>";
 		//echo "mb_gcode=>".$mb_gcode."<br/>";
 		/* 관리자인 경우 */
-		if( $mb_gcode=="G1"|| $mb_gcode=="G2"){
+		if ($search_array['mb_gcode']=="G51")
+		{
+			$sword .= ' and mb_gcode="G51" ';
+		}else if( $mb_gcode=="G1"|| $mb_gcode=="G2"){
 			$sword.= ' and mb_gcode="G5" ';
 		}
-
-
+		
 		if ( $search_array['mb_id'] != '' )
 		{
 			//검색어가 있을 경우의 처리
@@ -633,6 +636,39 @@ mysql> select * from prq_member_code;
    		$query = $this->db->query($sql);
 
 		$result = $query->result();
+
+    	return $result;
+    }
+	
+	function get_codes($list)
+	{
+		$list=json_decode(json_encode($list), True);
+		$mb_no = array_column($list, 'mb_no');
+		$this->db->where_in('pv_no', $mb_no);
+		$this->db->from('prq_values');
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
+	}
+
+
+    /**
+	 * 로그 정보 가져오기
+	 *
+	 * @author Taebu Moon <mtaebu@gmail.com>
+	 * @param $array['table'] 프렌차이즈 테이블, 멤버
+	 * @param $array['mb_no'] 매장 이름
+	 * @return list
+	 */
+    function get_logs($array)
+    {
+
+    	$sql = "SELECT * FROM prq_log WHERE prq_table='prq_member' and mb_no='".$array['mb_no']."';";
+		//echo $sql;
+   		$query = $this->db->query($sql);
+
+     	//게시물 내용 반환
+	    $result = $query->result();
 
     	return $result;
     }

@@ -24,6 +24,16 @@
 				'id' => 'write_action'
 			);
 			echo form_open('board/write/prq_member', $attributes);
+			echo "<ul>";
+			foreach ($logs as $lo)
+			{
+			echo "<li>";
+			echo $lo->lo_datetime;echo "&nbsp;";
+			echo get_status3($lo->lo_status);echo "&nbsp;";
+			echo $lo->lo_reason;echo "&nbsp;";
+			echo "</li>";
+			}
+			echo "</ul>";
 		?>
 		<!-- id="my-awesome-dropzone" class="" -->
 		<input type="hidden" name="is_join" id="is_join" value="">
@@ -382,6 +392,8 @@ function get_cidinfo(){
         success: function(data) {
             console.log(data);
 			var object=[];
+			
+			var st_nos=[];
 			var chk_port="";
 			var str="";
 			if(data.posts.length<1){
@@ -397,6 +409,8 @@ function get_cidinfo(){
 			object.push('<th>st_cidtype</th>');
 			object.push('<th>st_tel_1</th>');
 			object.push('<th>st_hp_1</th>');
+			object.push('<th>mid</th>');
+			object.push('<th>발송방법</th>');
 			object.push('</tr>');
 			object.push('</thead>');
 			object.push('<tbody>');			
@@ -409,17 +423,51 @@ function get_cidinfo(){
 				object.push('<td>'+val.st_cidtype+'</td>');
 				object.push('<td>'+val.st_tel_1+'</td>');
 				object.push('<td>'+val.st_hp_1+'</td>');
+				object.push('<td><span id="code_5013_'+val.st_no+'">5013</span></td>');
+				object.push('<td><span id="code_5012_'+val.st_no+'">5012</span></td>');
+
 				object.push('</tr>');
+				st_nos.push(val.st_no);
+				
 			});
+
 			object.push('</tbody>');
 			object.push('</table>');
 			object.push('<span class="help-block m-b-none"></span>');
 			$("#cid_info").html(object.join(""));
+
+			for(var i in st_nos)
+			{
+				get_codes(st_nos[i]);
+			}
         }
     });		
 
 }
 
+function get_codes(st_no)
+{
+	$.ajax({
+		url:"/prq/ajax/get_codes/"+st_no,
+		type: "POST",
+        data:"",
+        cache: false,
+        async: false,
+        dataType:"json",
+        success: function(data) {
+			console.log(data.codes.c5012);
+			console.log(data.codes.c5013);
+            $("#code_5013_"+st_no).html(data.codes.c5013);
+			if(data.codes.c5012=="munjac")
+			{
+ 				$("#code_5012_"+st_no).html('<a class="btn btn-warning">문자씨</a>');
+			}else{
+				$("#code_5012_"+st_no).html('<a class="btn btn-danger">톡톡</a> ');
+			}
+
+        }
+    });		
+}
 function get_mnoinfo(){
 //	var param=$("#write_action").serialize();
 	if($.trim($("#mb_hp").val())=="")

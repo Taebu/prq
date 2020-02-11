@@ -256,7 +256,47 @@ if (!function_exists('get_status_blog')) {
 		}
 		return $result;
 	}	
-
+if (!function_exists('get_status3')) {
+	/* 가맹점 상태 보기 
+<div class="btn_area">
+<button type="button" class="btn btn-sm btn-default" onclick="chg_list('wa');">대기</button>
+<button type="button" class="btn btn-sm btn-primary" onclick="chg_list('pr');">처리중</button>
+<button type="button" class="btn btn-sm btn-success" onclick="chg_list('ac');">승인</button>
+<button type="button" class="btn btn-sm btn-danger" onclick="chg_list('ad');">승인거부</button>
+<button type="button" class="btn btn-sm btn-info" onclick="chg_list('ec');">연계완료</button>
+<button type="button" class="btn btn-sm btn-warning" onclick="chg_list('ca');">해지</button>
+</div>	*/
+	function get_status3($code)
+	{
+		switch ($code) {
+		case "wa":
+			$result='<button type="button" class="btn btn-xs btn-default">대기</button>';
+			break;
+		case "pr":
+			$result='<button type="button" class="btn btn-xs btn-primary">처리중</button>';
+			break;
+		case "ac":
+			$result='<button type="button" class="btn btn-xs btn-success">승인</button>';
+			break;
+		case "ad":
+			$result='<button type="button" class="btn btn-xs btn-danger">승인거부</button>';
+			break;
+		case "ec":
+			$result='<button type="button" class="btn btn-xs btn-info">연계완료</button>';
+			break;
+		case "ca":
+			$result='<button type="button" class="btn btn-xs btn-warning">해지</button>';
+			break;
+		case "delete":
+			$result='<button type="button" class="btn btn-xs btn-danger">삭제</button>';
+			break;
+		case "modify":
+			$result='<button type="button" class="btn btn-warning btn-xs">수정</button>';
+			break;
+		}
+		return $result;
+	}
+}
 }/* end get_status_blog */
 //echo realpath(__FILE__);;
 /* End of file */

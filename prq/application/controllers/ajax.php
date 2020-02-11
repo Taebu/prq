@@ -52,15 +52,20 @@ class Ajax extends CI_Controller {
 			$join_ds_code=join("','",$chk_seq);
 
 			$st_no = $this->input->post("st_no", TRUE);
+			$mb_no = $this->input->post("mb_no", TRUE);
 			$ap_no = $this->input->post("ap_no", TRUE);
 			$pv_code = $this->input->post("pv_code", TRUE);
 			$pv_value = $this->input->post("pv_value", TRUE);
 
+			$first_process = $this->input->post("first_process", TRUE);
+			$seconde_process = $this->input->post("seconde_process", TRUE);
+$chk_seq = $this->input->post("chk_seq", TRUE);
 			$write_data = array(
 				'prq_table'=>$table,
 				'mb_status'=>$mb_status,
 				'ds_name'=>$ds_name,
 				'mb_id'=>$mb_id,
+				'mb_no'=>$mb_no,
 				'mb_reason'=>$mb_reason,
 				'bl_url'=>$bl_url,
 				'st_hp_1'=>$st_hp_1,
@@ -70,7 +75,10 @@ class Ajax extends CI_Controller {
 				'join_ds_code' => $join_ds_code,
 				'pv_no'=>$st_no,
 				'pv_code'=>$pv_code,
-				'pv_value'=>$pv_value
+				'pv_value'=>$pv_value,
+				'first_process' =>$first_process,
+				'seconde_process' => $seconde_process,
+				'chk_seq'=>$chk_seq
 			);
 
 			if($table=="prq_member"){
@@ -87,6 +95,8 @@ class Ajax extends CI_Controller {
 				$result = $this->ajax_m->chg_status_event($write_data);
 			}else if($table=="prq_ata_pay"){
 				$result = $this->ajax_m->chg_status_ata_pay($write_data);
+			}else if($table=="prq_member_naver"){
+				$result = $this->ajax_m->chg_status_naver_table($write_data);
 			}else if($table!="prq_member"){
 				$result = $this->ajax_m->chg_status_code($write_data);
 			}
@@ -450,11 +460,13 @@ class Ajax extends CI_Controller {
 //		$mac_addr=$this->uri->segment(4);
 
 		$mb_email=$this->input->get("mb_email", TRUE);
+		$mode=$this->input->get("mode", TRUE);
 		$mb_password=$this->input->get("mb_password", TRUE);
 		$mac_addr=$this->input->get("mb_addr", TRUE);
 
 		$write_data = array(
 			'mb_email'=>$mb_email,
+			'mode'=>$mode,
 			'mb_password'=>$mb_password,
 			'mac_addr'=>$mac_addr
 		);
@@ -1112,13 +1124,14 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 	public function get_latlng()
 	{
 		// 네이버 지도 Open API 예제 - 주소좌표변환
-		$client_id = "aWWbsFdRSNQZL6Df5ATr";
-		$client_secret = "Xa48I3ttVp";
+		$client_id = "61pl4lsjmy";
+		$client_secret = "Vjlo5H7ldkWz7Mhd4R6ztLRIABj62DFfHYSYUehU";
 		//echo $this->uri->segment(3);
 		$encText = urlencode($this->uri->segment(3));
 		$encText = $this->uri->segment(3);
 		$url = "https://openapi.naver.com/v1/map/geocode?query=".$encText; // json
 		// $url = "https://openapi.naver.com/v1/map/geocode.xml?query=".$encText; // xml
+		$url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=".$encText;
 
 		$is_post = false;
 		$ch = curl_init();
@@ -1126,8 +1139,8 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 		curl_setopt($ch, CURLOPT_POST, $is_post);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$headers = array();
-		$headers[] = "X-Naver-Client-Id: ".$client_id;
-		$headers[] = "X-Naver-Client-Secret: ".$client_secret;
+		$headers[] = "X-NCP-APIGW-API-KEY-ID: ".$client_id;
+		$headers[] = "X-NCP-APIGW-API-KEY: ".$client_secret;
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		$response = curl_exec ($ch);
 		$status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -1212,11 +1225,19 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 
 	/*
 	http://prq.co.kr/prq/ajax/get_codes/st_no
+	http://prq.co.kr/prq/ajax/get_codes/st_no/pcode
 	*/
 	function get_codes()
 	{
 		$st_no=$this->uri->segment(3);
-		$this->ajax_m->get_codes($st_no);
+		if($this->uri->segment(4))
+		{
+			$pcode=$this->uri->segment(4);
+			$this->ajax_m->get_codes($st_no,$pcode);
+		}else{
+			$this->ajax_m->get_codes($st_no);
+		}
+
 	}
 	/*
 	2018-12-12 (수) 17:53:41 
@@ -1245,6 +1266,16 @@ if(isset($de_response->error_code)&&$de_response->error_code=="024")
 			$json['bbd_info']=$cid;
 		}
 		echo json_encode($json);
+	}
+	
+
+	/* update 할 파일의 md5로 체크 합업데이트할 파일과 비교하여 체크 합니다.
+	http://prq.co.kr/prq/ajax/checksum2021
+	*/
+	function checksum2021()
+	{
+		$array=$this->input->post(null, TRUE);
+		$this->ajax_m->checksum2021($array);
 	}
 }
 /* End of file ajax.php */
