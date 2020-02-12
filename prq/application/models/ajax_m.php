@@ -1223,9 +1223,15 @@ class Ajax_m extends CI_Model
 					echo "FALSE,102867782";
 				}			
 			}
+
 		}else{
-			echo "FALSE";
-			echo ",null";		
+			if($array['mode']=="json")
+			{			
+				echo json_encode($json);
+			}else{
+				echo "FALSE";
+				echo ",null";					
+			}
 		}
 	}
 
@@ -2938,7 +2944,7 @@ ERROR:
 	{
 		/* 업데이트 업로드 초기 경로 업로드 */
 		$base_location="/var/www/html/prq/prq2021app/update/";
-
+//		$base_location="/var/www/html/prq/prq2021app/update/updaterApp/PowerUpdater.exe
 		/* 파일 위치를 구한다. */
 		$location=$base_location.$array['update_location'];
 

@@ -382,9 +382,6 @@
                 </div>
 
             </div>
-
-
-
         </div><!-- #right-sidebar -->
     </div><!-- #wrapper -->
 
@@ -412,11 +409,11 @@
     <script src="/prq/include/js/inspinia.js"></script>
     <script src="/prq/include/js/plugins/pace/pace.min.js"></script>
 
-
-
    <!-- Input Mask-->
     <script src="/prq/include/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 
+    <!-- iCheck -->
+    <script src="/prq/include/js/plugins/iCheck/icheck.min.js"></script>
 
     <!-- Sparkline -->
     <script src="/prq/include/js/plugins/sparkline/jquery.sparkline.min.js"></script>

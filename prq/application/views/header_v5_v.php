@@ -25,6 +25,8 @@
     <!-- Sweet Alert2 -->
     <link rel="stylesheet" href="https://npmcdn.com/sweetalert2@4.0.15/dist/sweetalert2.min.css">
     <link href="/prq/include/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+    <link href="/prq/include/css/plugins/iCheck/custom.css" rel="stylesheet">
 <script type="text/javascript">
 console.log("header_v5_v.php");
 var application="<?php echo $this->uri->segment(1);?>";
@@ -184,7 +186,9 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         <ul class="nav nav-second-level">
                             <?php echo $this->uri->segment(3)=="prq_member"?'<li class="active">':'<li>';?><a href="/prq/franchise/lists/prq_member/page/1">가맹점 목록</a></li>
 												
-                            <?php echo $this->uri->segment(3)=="prq_member_status"?'<li class="active">':'<li>';?><a href="/prq/franchise/lists/prq_member_status/page/1">가맹점 상태 목록  <span class="label label-primary pull-right">NEW</span></a></li>
+                            <?php echo $this->uri->segment(3)=="prq_member_status"?'<li class="active">':'<li>';?><a href="/prq/franchise/lists/prq_member_status/page/1">가맹점 상태 목록</a></li>
+												
+                            <?php echo $this->uri->segment(3)=="prq_member_naver"?'<li class="active">':'<li>';?><a href="/prq/franchise/lists/prq_member_naver/page/1">N 가맹점 상태 목록  <span class="label label-primary pull-right">NEW</span></a></li>
                         </ul>
                     </li>
 					<?php 
@@ -232,8 +236,8 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                         <ul class="nav nav-second-level collapse">
                             <?php echo $this->uri->segment(3)=="cid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/cid">CID</a></li>
                             <?php echo $this->uri->segment(3)=="ocid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/ocid">OCID</a></li>
-														<?php echo $this->uri->segment(3)=="tcid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/tcid">TCID<span class="label label-warning pull-right">NEW</span></a></li>
-														<?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
+                            <?php echo $this->uri->segment(3)=="tcid"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/tcid">TCID</a></li>
+                            <?php echo $this->uri->segment(3)=="gcm"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/gcm">GCM</a></li>
                             <?php echo $this->uri->segment(3)=="sms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/sms">SMS</a></li>
                             <?php echo $this->uri->segment(3)=="mms"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/mms">MMS</a></li>
                             <?php echo $this->uri->segment(3)=="act"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/act">ACT</a></li>
@@ -242,6 +246,8 @@ if($mb_gcode=='G1'||$mb_gcode=='G2'){
                             <?php echo $this->uri->segment(3)=="vali"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/vali">VALI</a></li>
                             <?php echo $this->uri->segment(3)=="happy"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/happy">HAPPY<span class="label label-danger pull-right">사용안함</span></a></li>
                             <?php echo $this->uri->segment(3)=="post"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/post">POST</a></li>
+                            <?php echo $this->uri->segment(3)=="prq_cidpoint_log"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/prq_cidpoint_log">CIDPOINT</a></li>
+                            <?php echo $this->uri->segment(3)=="prq_munjac_log"?'<li class="active">':'<li>';?><a href="/prq/logs/lists/prq_munjac_log">MUNJAC<span class="label label-danger pull-right">NEW</span></a></li>
 							</ul>
                     </li>
 
